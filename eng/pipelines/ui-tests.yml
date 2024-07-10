@@ -89,7 +89,7 @@ parameters:
     type: object
     default:
       name: $(macosTestsVmPool)
-      vmImage: $(macosTestsVmImage)
+      vmImage: macOS-14
 
   - name: androidCompatibilityPool
     type: object
