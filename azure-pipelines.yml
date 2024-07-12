@@ -9,6 +9,11 @@ variables:
   EMULATOR_NAME: xamarin_android_emulator
 
 steps:
+- task: CmdLine@2
+  displayName: 'Install Latest .NET MAUI Workload'
+  inputs:
+    script: 'dotnet workload install maui'
+    
 - script: |
     echo "##[group]Dotnet Tool Restore"
     cd Users/runner/work/1/s/maui
