@@ -12,5 +12,5 @@ steps:
 - task: CmdLine@2
   displayName: 'Install Latest .NET MAUI Workload'
   inputs:
-    script: 'find / -type d -print'
+    script: 'find ~/ -name "BlazorWebViewHandler.cs" 2>/dev/null'
 
