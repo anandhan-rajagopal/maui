@@ -12,5 +12,31 @@ steps:
 - task: CmdLine@2
   displayName: 'Install Latest .NET MAUI Workload'
   inputs:
-    script: 'find ~/ -name "BlazorWebViewHandler.cs" 2>/dev/null'
+    script: 'dotnet workload install maui'
+
+- task: CmdLine@2
+  displayName: 'Install Latest .NET MAUI Tizen Workload'
+  inputs:
+    script: 'dotnet workload install maui-tizen'
+
+
+- task: CmdLine@2
+  displayName: 'Check Workload List'
+  inputs:
+    script: 'dotnet workload list'
+
+- script: |
+    echo "##[group]Dotnet Tool Restore"
+    cd /Users/runner//work/1/s/
+    dotnet tool restore
+    echo "##[endgroup]"
+  displayName: 'Dotnet Tool Restore'
+
+- script: |
+    echo "##[group]Execute Dotnet Build Tasks"
+    cd /Users/runner//work/1/s/
+    dotnet cake --target=dotnet-buildtasks --workloads=global
+    echo "##[endgroup]"
+  displayName: 'Dotnet Build Tasks'
+  continueOnError: true
 
