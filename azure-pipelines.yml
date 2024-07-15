@@ -27,6 +27,14 @@ steps:
   displayName: 'Dotnet Tool Restore'
 
 - script: |
+    echo "##[group]Execute Dotnet Workload Restore"
+    cd /Users/runner//work/1/s/src/essentials/src/
+    dotnet workload restore
+    echo "##[endgroup]"
+  displayName: 'Dotnet Workload Restore'
+  continueOnError: true
+
+- script: |
     echo "##[group]Execute Dotnet Build Tasks"
     cd /Users/runner//work/1/s/
     dotnet cake --target=dotnet-buildtasks --workloads=global
