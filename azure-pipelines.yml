@@ -20,9 +20,9 @@ steps:
     script: 'dotnet workload list'
 
 - task: CmdLine@2
-  displayName: 'Install Latest .NET MAUI Workload'
+  displayName: 'Install Latest .NET MAUI Tizen Workload'
   inputs:
-    script: 'dotnet workload install maui-tizen'
+    script: 'dotnet workload install tizen'
 
 
 - script: |
