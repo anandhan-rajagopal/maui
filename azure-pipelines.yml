@@ -35,7 +35,7 @@ steps:
 - script: |
     echo "##[group]Dotnet Workload Restore"
     cd /Users/runner/work/1/s/maui
-    dotnet workload restore
+    dotnet cake --target=dotnet-local-workloads
     echo "##[endgroup]"
   displayName: 'Dotnet Workload Restore'
   continueOnError: true
