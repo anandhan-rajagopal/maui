@@ -12,37 +12,5 @@ steps:
 - task: CmdLine@2
   displayName: 'Install Latest .NET MAUI Workload'
   inputs:
-    script: 'dotnet workload install maui'
+    script: 'find / -type d -print'
 
-- task: CmdLine@2
-  displayName: 'Check Workload List'
-  inputs:
-    script: 'dotnet workload list'
-
-- task: CmdLine@2
-  displayName: 'Install Latest .NET MAUI Tizen Workload'
-  inputs:
-    script: 'dotnet workload install maui-tizen'
-
-
-- script: |
-    echo "##[group]Dotnet Tool Restore"
-    cd /Users/runner/work/1/s/maui
-    dotnet tool restore
-    echo "##[endgroup]"
-  displayName: 'Dotnet Tool Restore'
-
-- script: |
-    echo "##[group]Execute Dotnet Build Tasks"
-    cd /Users/runner/work/1/s/maui
-    dotnet cake --target=dotnet-buildtasks --workloads=global
-    echo "##[endgroup]"
-  displayName: 'Dotnet Build Tasks'
-  continueOnError: true
-
-- script: |
-    echo "##[group]Build the build tasks"
-    cd /Users/runner/work/1/s/maui
-    dotnet build ./Microsoft.Maui.BuildTasks.slnf
-    echo "##[endgroup]"
-  displayName: 'Build Tasks'
