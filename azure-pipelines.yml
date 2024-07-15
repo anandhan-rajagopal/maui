@@ -25,9 +25,9 @@ steps:
     script: 'dotnet workload install maui-tizen'
 
 - task: CmdLine@2
-  displayName: 'Check Workload List'
+  displayName: 'Workload restore'
   inputs:
-    script: 'dotnet workload list'
+    script: 'dotnet workload restore'
 
 - script: |
     echo "##[group]Dotnet Tool Restore"
