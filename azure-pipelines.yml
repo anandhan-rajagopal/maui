@@ -13,6 +13,11 @@ steps:
   displayName: 'Install Latest .NET MAUI Workload'
   inputs:
     script: 'dotnet workload install maui'
+
+- task: CmdLine@2
+  displayName: 'Install Latest .NET MAUI Workload'
+  inputs:
+    script: 'dotnet workload install maui-tizen'
     
 - script: |
     echo "##[group]Dotnet Tool Restore"
