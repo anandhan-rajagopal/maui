@@ -16,7 +16,7 @@ steps:
     
 - script: |
     echo "##[group]Dotnet Tool Restore"
-    cd Users/runner/work/1/s/maui
+    cd /Users/runner/work/1/s/maui
     run dotnet tool restore
     echo "##[endgroup]"
   displayName: 'Dotnet Tool Restore'
