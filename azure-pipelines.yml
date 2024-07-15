@@ -22,7 +22,7 @@ steps:
 - task: CmdLine@2
   displayName: 'Install Latest .NET MAUI Tizen Workload'
   inputs:
-    script: 'dotnet workload install tizen'
+    script: 'dotnet workload install maui-tizen'
 
 
 - script: |
@@ -33,11 +33,11 @@ steps:
   displayName: 'Dotnet Tool Restore'
 
 - script: |
-    echo "##[group]Dotnet Workload Restore"
+    echo "##[group]Execute Dotnet Build Tasks"
     cd /Users/runner/work/1/s/maui
-    dotnet cake --target=dotnet-local-workloads
+    dotnet cake --target=dotnet-buildtasks --workloads=global
     echo "##[endgroup]"
-  displayName: 'Dotnet Workload Restore'
+  displayName: 'Dotnet Build Tasks'
   continueOnError: true
 
 - script: |
