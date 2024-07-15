@@ -24,10 +24,6 @@ steps:
   inputs:
     script: 'dotnet workload install maui-tizen'
 
-- task: CmdLine@2
-  displayName: 'Workload restore'
-  inputs:
-    script: 'dotnet workload restore'
 
 - script: |
     echo "##[group]Dotnet Tool Restore"
@@ -35,6 +31,14 @@ steps:
     dotnet tool restore
     echo "##[endgroup]"
   displayName: 'Dotnet Tool Restore'
+
+- script: |
+    echo "##[group]Dotnet Workload Restore"
+    cd /Users/runner/work/1/s/maui
+    dotnet workload restore
+    echo "##[endgroup]"
+  displayName: 'Dotnet Workload Restore'
+  continueOnError: true
 
 - script: |
     echo "##[group]Build the build tasks"
