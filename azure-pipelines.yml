@@ -20,3 +20,10 @@ steps:
     dotnet tool restore
     echo "##[endgroup]"
   displayName: 'Dotnet Tool Restore'
+
+- script: |
+    echo "##[group]Build the build tasks"
+    cd /Users/runner/work/1/s/maui
+    dotnet build ./Microsoft.Maui.BuildTasks.slnf
+    echo "##[endgroup]"
+  displayName: 'Build Tasks'
