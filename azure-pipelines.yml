@@ -12,13 +12,7 @@ steps:
 - task: CmdLine@2
   displayName: 'Install Latest .NET MAUI Workload'
   inputs:
-    script: 'dotnet workload install maui'
-
-- task: CmdLine@2
-  displayName: 'Install Latest .NET MAUI Tizen Workload'
-  inputs:
-    script: 'dotnet workload install maui-tizen'
-
+    script: 'dotnet workload install maui maui-android maui-windows maui-ios maui-maccatalyst maui-tizen android ios maccatalyst macos mobile-librarybuilder tvos'
 
 - task: CmdLine@2
   displayName: 'Check Workload List'
