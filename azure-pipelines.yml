@@ -14,7 +14,7 @@ steps:
   inputs:
     script: 'dotnet workload install maui'
     
-- script:
+- script: |
     echo "##[group]Dotnet Tool Restore"
     cd /Users/runner/work/1/s/maui
     dotnet tool restore
