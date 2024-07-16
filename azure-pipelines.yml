@@ -15,6 +15,12 @@ steps:
     script: 'dotnet workload install maui maui-android maui-windows maui-ios maui-maccatalyst maui-tizen android ios maccatalyst macos mobile-librarybuilder tvos'
 
 - task: CmdLine@2
+  displayName: 'Install Latest Tizen SDKs'
+  inputs:
+    script: 'curl -sSL https://github.com/Samsung/Tizen.NET/blob/main/workload/scripts/workload-install.ps1 | bash /dev/stdin -v net8.0'
+
+
+- task: CmdLine@2
   displayName: 'Check Workload List'
   inputs:
     script: 'dotnet workload list'
