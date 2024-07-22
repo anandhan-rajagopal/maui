@@ -1,12 +1,7 @@
-trigger:
-- main
+trigger: none
 
 pool:
-  vmImage: 'macos-latest'
-
-variables:
-  ANDROID_HOME: /Users/runner/Library/Android/sdk
-  EMULATOR_NAME: xamarin_android_emulator
+  vmImage: 'macOS-14'
 
 steps:
 - task: CmdLine@2
@@ -15,36 +10,63 @@ steps:
     script: 'dotnet workload install maui maui-android maui-windows maui-ios maui-maccatalyst maui-tizen android ios maccatalyst macos mobile-librarybuilder tvos'
 
 - task: CmdLine@2
-  displayName: 'Install Latest Tizen SDKs'
+  displayName: 'Install Tizen Workload'
   inputs:
-    script: 'curl -sSL https://github.com/Samsung/Tizen.NET/blob/main/workload/scripts/workload-install.ps1 | bash /dev/stdin -v net8.0'
-
+    script: 'curl -sSL https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.sh | sudo bash'
 
 - task: CmdLine@2
-  displayName: 'Check Workload List'
+  displayName: 'Install Node Workload'
   inputs:
-    script: 'dotnet workload list'
+    script: 'brew install node'
 
 - script: |
     echo "##[group]Dotnet Tool Restore"
-    cd /Users/runner//work/1/s/
+    cd $(Agent.BuildDirectory)/s/
     dotnet tool restore
     echo "##[endgroup]"
   displayName: 'Dotnet Tool Restore'
 
-- script: |
-    echo "##[group]Execute Dotnet Workload Restore"
-    cd /Users/runner//work/1/s/src/essentials/src/
-    dotnet workload restore
-    echo "##[endgroup]"
-  displayName: 'Dotnet Workload Restore'
-  continueOnError: true
+- task: CmdLine@2
+  displayName: 'Install Appium Workload'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/appium-install.ps1'
 
 - script: |
-    echo "##[group]Execute Dotnet Build Tasks"
-    cd /Users/runner//work/1/s/
-    dotnet cake --target=dotnet-buildtasks --workloads=global
+    echo "##[group]Install local dotnet"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake --target=dotnet
     echo "##[endgroup]"
-  displayName: 'Dotnet Build Tasks'
-  continueOnError: true
+  displayName: 'Install local dotnet'
 
+- script: |
+    echo "##[group]Build MSBuild Tasks"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake --target=dotnet-buildtasks --configuration="Release" --workloads=global
+    echo "##[endgroup]"
+  displayName: 'Build MSBuild Tasks'
+
+- script: |
+    echo "##[group]Build Mac UI Test Samples"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake --target=dotnet-samples --configuration="Release" --catalyst --verbosity=diagnostic --workloads=global --usenuget=false
+    echo "##[endgroup]"
+  displayName: 'Build Mac UI Test Samples'
+
+- script: |
+    echo "##[group]Run UI Test Mac"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -Script eng/devices/catalyst.cake --target=uitest --apiversion="10.13" --configuration="Release" --device=mac
+    echo "##[endgroup]"
+  displayName: 'Run UI Test Mac'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Test Results Folder'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'artifacts'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Test Results Folder'
+  inputs:
+    PathtoPublish: '$(Agent.BuildDirectory)/a/'
+    ArtifactName: 'test-results'
