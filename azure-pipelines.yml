@@ -3,7 +3,32 @@ trigger: none
 pool:
   vmImage: 'macOS-14'
 
+variables:
+  ANDROID_HOME: /Users/runner/Library/Android/sdk
+  ANDROID_SKD_ROOT: /Users/runner/Library/Android/sdk
+  EMULATOR_NAME: xamarin_android_emulator
+  APPIUM_HOME: $(System.DefaultWorkingDirectory)/.appium/
+
 steps:
+- checkout: self
+- script: |
+    echo "##[group]Install Android Command Line Tools"
+    mkdir -p $ANDROID_HOME/cmdline-tools
+    curl -Lo commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-mac-7583922_latest.zip
+    unzip commandlinetools.zip -d $ANDROID_HOME/cmdline-tools
+    mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+    echo "##[endgroup]"
+  displayName: 'Install Android Command Line Tools'
+
+- script: |
+    echo "##[group]Install Android SDK and Tools"
+    export ANDROID_HOME=/Users/runner/Library/Android/sdk
+    export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/emulator:$PATH
+    yes | sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "platforms;android-30" "build-tools;30.0.3" "system-images;android-30;google_apis_playstore;x86_64"
+    yes | sdkmanager --licenses
+    echo "##[endgroup]"
+  displayName: 'Install Android SDK'
+
 - task: CmdLine@2
   displayName: 'Install Latest .NET MAUI Workload'
   inputs:
@@ -23,6 +48,7 @@ steps:
     echo "##[group]Dotnet Tool Restore"
     cd $(Agent.BuildDirectory)/s/
     dotnet tool restore
+    echo APPIUM_HOME
     echo "##[endgroup]"
   displayName: 'Dotnet Tool Restore'
 
@@ -46,27 +72,15 @@ steps:
   displayName: 'Build MSBuild Tasks'
 
 - script: |
-    echo "##[group]Build Mac UI Test Samples"
+    echo "##[group]Build Android UI Test Samples"
     cd $(Agent.BuildDirectory)/s/
-    dotnet cake --target=dotnet-samples --configuration="Release" --catalyst --verbosity=diagnostic --workloads=global --usenuget=false
+    dotnet cake --target=dotnet-samples --configuration="Release" --workloads=global --android --usenuget=false
     echo "##[endgroup]"
-  displayName: 'Build Mac UI Test Samples'
+  displayName: 'Build Android UI Test Samples'
 
 - script: |
-    echo "##[group]Run UI Test Mac"
+    echo "##[group]Run Android UI Test Samples"
     cd $(Agent.BuildDirectory)/s/
-    dotnet cake -Script eng/devices/catalyst.cake --target=uitest --apiversion="10.13" --configuration="Release" --device=mac
+    dotnet cake -Script eng/devices/android.cake --target=uitest --configuration="Release" --test-filter "TestCategory=Border|TestCategory=BoxView|TestCategory=Brush"
     echo "##[endgroup]"
-  displayName: 'Run UI Test Mac'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Test Results Folder'
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'artifacts'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Test Results Folder'
-  inputs:
-    PathtoPublish: '$(Agent.BuildDirectory)/a/'
-    ArtifactName: 'test-results'
+  displayName: 'Run UI Test Samples'
