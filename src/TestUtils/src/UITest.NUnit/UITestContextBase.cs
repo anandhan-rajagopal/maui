@@ -1,4 +1,5 @@
-﻿using UITest.Core;
+﻿using NUnit.Framework;
+using UITest.Core;
 
 namespace UITest.Appium.NUnit
 {
@@ -64,6 +65,8 @@ namespace UITest.Appium.NUnit
 				_uiTestContext?.Dispose();
 				_uiTestContext = context.CreateUIClientContext(testConfig);
 			}
+
+			var contex23r = TestContext.CurrentContext;
 
 			if (_uiTestContext == null)
 			{

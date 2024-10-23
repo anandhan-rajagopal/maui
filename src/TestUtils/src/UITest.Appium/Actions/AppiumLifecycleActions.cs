@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium.Appium.Android;
+using OpenQA.Selenium.Appium.iOS;
 using OpenQA.Selenium.Appium.Windows;
 using UITest.Core;
 

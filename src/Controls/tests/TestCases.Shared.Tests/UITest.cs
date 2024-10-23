@@ -44,7 +44,7 @@ namespace Microsoft.Maui.TestCases.Tests
 
 		public override IConfig GetTestConfig()
 		{
-			var frameworkVersion = "net8.0";
+			var frameworkVersion = "net9.0";
 #if DEBUG
 			var configuration = "Debug";
 #else
@@ -84,11 +84,39 @@ namespace Microsoft.Maui.TestCases.Tests
 					break;
 			}
 
+			if (!String.IsNullOrEmpty(TestContext.CurrentContext.Test.ClassName))
+			{
+				config.SetStartupArg("StartingTestClass", TestContext.CurrentContext.Test.ClassName);
+			}
+
+			var commandLineArgs = Environment.GetEnvironmentVariable("TEST_COMMANDLINE_ARGS") ?? "";
+			if (!String.IsNullOrEmpty(commandLineArgs))
+			{
+				config.SetStartupArg("CommandLineArgs", commandLineArgs);
+			}
+
 			return config;
 		}
 
 		public override void Reset()
 		{
+
+			/*if (App is AppiumApp aa && aa.Driver is IOSDriver iOSDriver)
+			{
+
+
+				var settings = iOSDriver.Settings;
+				var sessionArgs = (Dictionary<string, object>)iOSDriver.SessionDetails["processArguments"];
+				var env = (Dictionary<string, object>)sessionArgs["env"];
+				env["StartingTestClass"] = $"{TestContext.CurrentContext.Test.ClassName}";
+
+				iOSDriver.SetSetting("processArguments", sessionArgs);
+
+
+				
+			}*/
+				
+
 			App.ResetApp();
 		}
 

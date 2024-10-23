@@ -1321,5 +1321,13 @@ namespace UITest.Appium
 		{
 			Wait(query, i => i == null, timeoutMessage, timeout, retryFrequency);
 		}
+
+
+		public static void SetStartupArg(this IConfig config, string key, string value)
+		{
+			var startupArg = config.GetProperty<Dictionary<string,string>>("StartupArgs") ?? new Dictionary<string, string>();
+			startupArg.Add(key, value);
+			config.SetProperty("StartupArgs", startupArg);
+		}
 	}
 }

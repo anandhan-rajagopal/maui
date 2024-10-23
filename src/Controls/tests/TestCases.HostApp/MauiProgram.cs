@@ -1,3 +1,4 @@
+﻿using System.Diagnostics;
 using Maui.Controls.Sample.Issues;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
