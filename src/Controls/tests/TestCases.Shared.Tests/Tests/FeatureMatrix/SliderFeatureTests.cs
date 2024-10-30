@@ -779,7 +779,6 @@ namespace Microsoft.Maui.TestCases.Tests
 		
 		[Test]
 		[Category(UITestCategories.Slider)]
- 
 		public void Slider_SetFlowDirectionAndMaxTrackColor_VerifyVisualState()
 		{
 			App.WaitForElement("ResetButton");
