@@ -3,7 +3,7 @@ using UITest.Appium;
 using UITest.Core;
 
 
-namespace MMicrosoft.Maui.TestCases.Tests
+namespace Microsoft.Maui.TestCases.Tests
 {
 	public class SliderFeatureTests : UITest
 	{
