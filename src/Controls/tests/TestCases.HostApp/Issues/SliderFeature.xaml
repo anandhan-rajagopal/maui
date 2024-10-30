@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui.Controls.Sample.Issues.SliderFeature"
+             Title="SliderFeature">
+
+  <StackLayout Padding="10" VerticalOptions="{OnPlatform  WinUI='CenterAndExpand'}" HorizontalOptions="Center">
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Start">
+      <Slider x:Name="SliderControl" WidthRequest="300" HeightRequest="50" AutomationId="SliderControl" 
+               DragStartedCommand="{Binding DragStartedCommand}"  DragCompletedCommand="{Binding DragCompletedCommand}" />
+
+    </StackLayout>
+    <Grid RowSpacing="5" HorizontalOptions="Center">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="1*" />
+        <ColumnDefinition Width="1*" />
+      </Grid.ColumnDefinitions>
+      <StackLayout Grid.Column="0" Spacing="6" Margin="{OnPlatform Android='30,20,0,0',  iOS='10,20,0,0', MacCatalyst='50,40,0,0'}">
+        <!-- Minimum Value -->
+        <Label Text="{Binding Source={x:Reference SliderControl}, Path=Minimum, StringFormat='Minimum: {0}'}" FontSize="15" AutomationId="MinimumValueLabel"/>
+        <Entry x:Name="MinimumEntry" AutomationId="MinimumEntry" TextChanged="OnMinimumChanged" Keyboard="Numeric" HorizontalOptions="Start" WidthRequest="100" />
+
+        <!-- Maximum Value -->
+        <Label Text="{Binding Source={x:Reference SliderControl}, Path=Maximum, StringFormat='Maximum: {0}'}" FontSize="15" AutomationId="MaximumValueLabel"/>
+        <Entry x:Name="MaximumEntry" AutomationId="MaximumEntry" TextChanged="OnMaximumChanged" Keyboard="Numeric" HorizontalOptions="Start" WidthRequest="100" />
+
+        <!-- Current Value -->
+        <Label Text="{Binding Source={x:Reference SliderControl}, Path=Value, StringFormat='Value: {0}'}" FontSize="15" AutomationId="ValueLabel"/>
+        <Entry x:Name="ValueEntry" AutomationId="ValueEntry" TextChanged="OnValueChanged" Keyboard="Numeric" HorizontalOptions="Start" WidthRequest="100" />
+
+        <!-- Flow Direction -->
+        <Label Text="Flow Direction:" FontSize="15" />
+        <StackLayout Orientation="Horizontal" >
+          <RadioButton x:Name="FlowDirectionLTR" AutomationId="FlowDirectionLTR" GroupName="FlowDirection" Content="LTR" IsChecked="True" FontSize="14" CheckedChanged="OnFlowDirectionChanged" />
+          <RadioButton x:Name="FlowDirectionRTL" AutomationId="FlowDirectionRTL" GroupName="FlowDirection" Content="RTL" FontSize="14" CheckedChanged="OnFlowDirectionChanged" />
+        </StackLayout>
+
+        <!-- Enable/Disable -->
+        <Label Text="Is Enabled:" FontSize="15" />
+        <StackLayout Orientation="Horizontal" >
+          <RadioButton x:Name="IsEnabledTrueRadio" AutomationId="IsEnabledTrueRadio" GroupName="IsEnabled" Content="True" IsChecked="True" FontSize="14" CheckedChanged="OnIsEnabledCheckedChanged" />
+          <RadioButton x:Name="IsEnabledFalseRadio" AutomationId="IsEnabledFalseRadio" GroupName="IsEnabled" Content="False" FontSize="14" CheckedChanged="OnIsEnabledCheckedChanged" />
+        </StackLayout>
+
+        <!-- Visible/Invisible -->
+        <Label Text="Is Visible:" FontSize="15" />
+        <StackLayout Orientation="Horizontal" >
+          <RadioButton x:Name="IsVisibleTrueRadio" AutomationId="IsVisibleTrueRadio" GroupName="IsVisible" Content="True" IsChecked="True" FontSize="14" CheckedChanged="OnIsVisibleCheckedChanged" />
+          <RadioButton x:Name="IsVisibleFalseRadio" AutomationId="IsVisibleFalseRadio" GroupName="IsVisible" Content="False" FontSize="14" CheckedChanged="OnIsVisibleCheckedChanged" />
+        </StackLayout>
+        <Label x:Name="DragStartStatusLabel" Text="StartedEvent" FontSize="15"   AutomationId="DragStartStatusLabel"/>
+        <Label x:Name="DragCompletedStatusLabel" Text="CompletedEvent" FontSize="15"  AutomationId="DragCompletedStatusLabel"/>
+      </StackLayout>
+      <StackLayout Grid.Column="1" Spacing="8" Margin="{OnPlatform  Android='20,20,0,0', WinUI='150,0,0,0', iOS='20,20,0,0', MacCatalyst='70,40,0,0'}">
+        <!-- Thumb Color -->
+        <Label Text="Thumb Color:" FontSize="15" HorizontalOptions="Start" />
+        <Button x:Name="ThumbColorButton" AutomationId="ThumbColorButton" Text="Green"
+                  Clicked="OnThumbColorButtonClicked" WidthRequest="100" HorizontalOptions="Start" />
+
+        <!-- Minimum Track Color -->
+        <Label Text="Minimum Track Color:" FontSize="15" HorizontalOptions="Start" />
+        <Button x:Name="MinTrackColorButton" AutomationId="MinTrackColorButton" Text="Fuchsia"
+                  Clicked="OnMinTrackColorButtonClicked" WidthRequest="100" HorizontalOptions="Start" />
+
+        <!-- Maximum Track Color -->
+        <Label Text="Maximum Track Color:" FontSize="15" HorizontalOptions="Start" />
+        <Button x:Name="MaxTrackColorButton" AutomationId="MaxTrackColorButton" Text="Red"
+                  Clicked="OnMaxTrackColorButtonClicked" WidthRequest="100" HorizontalOptions="Start" />
+
+        <!-- Background Color -->
+        <Label Text="Background Color:" FontSize="15" HorizontalOptions="Start" />
+        <Button x:Name="BackgroundColorButton" AutomationId="BackgroundColorButton" Text="Yellow"
+                  Clicked="OnBackgroundColorButtonClicked" WidthRequest="100" HorizontalOptions="Start" />
+
+        <!-- Thumb Image -->
+        <Label Text="Thumb Image:" FontSize="15" HorizontalOptions="Start" />
+        <Button x:Name="ThumbImageSourceButton" AutomationId="ThumbImageSourceButton" Text="Image"
+                  Clicked="OnThumbImageSourceButtonClicked" WidthRequest="100" HorizontalOptions="Start" />
+        <Label Text="Reset Button:" FontSize="15" HorizontalOptions="Start" />
+        <Button x:Name="ResetButton" AutomationId="ResetButton" Text="Reset" Clicked="OnResetButtonClicked" HorizontalOptions="Start"  WidthRequest="100"   />
+      </StackLayout>
+    </Grid>
+  </StackLayout>
+
+</ContentPage>
