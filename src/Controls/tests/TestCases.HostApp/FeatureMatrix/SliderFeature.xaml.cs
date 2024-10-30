@@ -1,8 +1,7 @@
 ﻿using System.Windows.Input;
 
-namespace Maui.Controls.Sample.Issues
+namespace Maui.Controls.Sample
 {
-	[Issue(IssueTracker.None, 0, "Check Properties for Slider Control", PlatformAffected.All)]
 	public partial class SliderFeature : ContentPage 
 	{
 		public ICommand DragStartedCommand { get;  }
@@ -106,10 +105,16 @@ namespace Maui.Controls.Sample.Issues
 			IsEnabledTrueRadio.IsChecked = true;
 			IsVisibleTrueRadio.IsChecked = true;
 
-#if ANDROID || WINDOWS
-		SliderControl.ThumbColor = Color.FromRgba(1,122,255,255) ;
-		SliderControl.MinimumTrackColor =  Color.FromRgba(1,122,255,255) ;
-		SliderControl.MaximumTrackColor = Color.FromRgba(227,227,229,255); 
+			//When set the null value to the color properties 
+			//the default color was not updated on other platforms expect windows
+#if WINDOWS
+			SliderControl.ThumbColor = null;
+			SliderControl.MinimumTrackColor =  null;
+			SliderControl.MaximumTrackColor = null;
+#elif ANDROID
+			SliderControl.ThumbColor = Color.FromRgba(1,122,255,255) ;
+			SliderControl.MinimumTrackColor =  Color.FromRgba(1,122,255,255) ;
+			SliderControl.MaximumTrackColor = Color.FromRgba(227,227,229,255); 
 #elif IOS || MACCATALYST
 			SliderControl.ThumbColor = Color.FromRgba(255, 255, 255, 255);
 			SliderControl.MinimumTrackColor = Color.FromRgba(1, 122, 255, 255);

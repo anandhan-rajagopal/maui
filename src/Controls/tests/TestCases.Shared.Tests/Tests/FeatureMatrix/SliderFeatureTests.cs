@@ -1,20 +1,24 @@
 ﻿using NUnit.Framework;
-using OpenQA.Selenium.Support.UI;
-using OpenQA.Selenium;
 using UITest.Appium;
 using UITest.Core;
 
 
-namespace Microsoft.Maui.TestCases.Tests.Issues
+namespace MMicrosoft.Maui.TestCases.Tests
 {
-	public class SliderFeatureTests : _IssuesUITest
+	public class SliderFeatureTests : UITest
 	{
+		public const string SliderFeatureMatrix = "Slider Feature Matrix";
+
 		public SliderFeatureTests(TestDevice device)
 			: base(device)
 		{
-
 		}
-		public override string Issue => "Check Properties for Slider Control";
+
+		protected override void FixtureSetup()
+		{
+			base.FixtureSetup();
+			App.NavigateToGallery(SliderFeatureMatrix);
+		}
 		[Test]
 		[Category(UITestCategories.Slider)]
 		public void Slider_ValidateDefaultValues_VerifyLabels()
@@ -601,6 +605,7 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 			App.WaitForElement("SliderControl", timeout: TimeSpan.FromSeconds(5));
 			VerifyScreenshot();
 		}
+		
 		[Test]
 		[Category(UITestCategories.Slider)]
 		public void Slider_SetIsEnableAndBackgroundColor_VerifyVisualState()
@@ -671,6 +676,7 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 			App.WaitForElement("SliderControl", timeout: TimeSpan.FromSeconds(5));
 			VerifyScreenshot();
 		}
+
 		[Test]
 		[Category(UITestCategories.Slider)]
 		public void Slider_SetBackgroundColorAndMinTrackColor_VerifyVisualState()
@@ -682,6 +688,7 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 			App.WaitForElement("SliderControl", timeout: TimeSpan.FromSeconds(5));
 			VerifyScreenshot();
 		}
+
 		[Test]
 		[Category(UITestCategories.Slider)]
 		public void Slider_SetBackgroundColorAndMaxTrackColor_VerifyVisualState()
@@ -708,6 +715,7 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 
 		[Test]
 		[Category(UITestCategories.Slider)]
+		
 		public void Slider_SetThumbImageSourceAndThumbColor_VerifyVisualState()
 		{
 			App.WaitForElement("ResetButton");
