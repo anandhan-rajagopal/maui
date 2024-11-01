@@ -111,19 +111,21 @@ namespace Maui.Controls.Sample
 			SliderControl.ThumbColor = null;
 			SliderControl.MinimumTrackColor =  null;
 			SliderControl.MaximumTrackColor = null;
+			SliderControl.BackgroundColor =null;
 #elif ANDROID
 			SliderControl.ThumbColor = Color.FromRgba(1,122,255,255) ;
 			SliderControl.MinimumTrackColor =  Color.FromRgba(1,122,255,255) ;
 			SliderControl.MaximumTrackColor = Color.FromRgba(227,227,229,255); 
+			SliderControl.BackgroundColor =Colors.Transparent;
 #elif IOS || MACCATALYST
 			SliderControl.ThumbColor = Color.FromRgba(255, 255, 255, 255);
 			SliderControl.MinimumTrackColor = Color.FromRgba(1, 122, 255, 255);
 			SliderControl.MaximumTrackColor = Color.FromRgba(227, 227, 229, 255);
-#endif
 			SliderControl.BackgroundColor = Colors.Transparent;
+#endif
 			SliderControl.ThumbImageSource = null;
-			DragStartStatusLabel.Text = "DragStartLabel";
-			DragCompletedStatusLabel.Text = "DragCompleteLabel";
+			DragStartStatusLabel.Text = "StartedEvent";
+			DragCompletedStatusLabel.Text = "CompletedEvent";
 
 		}
 	}

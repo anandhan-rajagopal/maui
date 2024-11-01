@@ -216,9 +216,11 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("ResetButton");
 #if WINDOWS 
 			App.DragCoordinates(550,240,580,240);
-#elif IOS 
+#elif IOS
             App.DragCoordinates(50,65,130,200);
-#endif 
+#elif ANDROID
+        App.TouchAndHold("SliderControl");     
+#endif
 			Task.Delay(TimeSpan.FromSeconds(15)).Wait();
 			Assert.That(App.WaitForTextToBePresentInElement("DragStartStatusLabel", "Drag Started"),
 			Is.True, "DragStartStatusLabel should display 'Drag Started' when dragging.");
@@ -233,8 +235,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("ResetButton");
 #if WINDOWS
 			App.DragCoordinates(550, 240, 580, 240);
-#elif IOS 
+#elif IOS
             App.DragCoordinates(50,65,130,200);
+#elif ANDROID
+        App.TouchAndHold("SliderControl");  
 #endif
 			App.Tap("DragCompletedStatusLabel");
 			Assert.That(App.WaitForTextToBePresentInElement("DragCompletedStatusLabel", "Drag Completed"),
@@ -755,7 +759,6 @@ namespace Microsoft.Maui.TestCases.Tests
 		[Category(UITestCategories.Slider)]
 		public void Slider_FlowDirection_RTL_SetValue_VerifyVisualState()
 		{
-
 			App.WaitForElement("ResetButton");
 			App.Tap("ResetButton");
 			App.Tap("FlowDirectionRTL");
