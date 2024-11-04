@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Maui.Controls.Sample"
              x:Class="Maui.Controls.Sample.SliderFeature"
              Title="SliderFeature">
+  <ContentPage.BindingContext>
+
+    <local:SliderViewModel x:Name="viewModel" />
+
+  </ContentPage.BindingContext>
 
   <StackLayout Padding="10" VerticalOptions="{OnPlatform  WinUI='CenterAndExpand'}" HorizontalOptions="Center">
-    <StackLayout HorizontalOptions="Center" VerticalOptions="Start">
-      <Slider x:Name="SliderControl" WidthRequest="300" HeightRequest="50" AutomationId="SliderControl" 
-               DragStartedCommand="{Binding DragStartedCommand}"  DragCompletedCommand="{Binding DragCompletedCommand}" />
-
+    <StackLayout x:Name="sliderContainer" HorizontalOptions="Center" VerticalOptions="Start">
+      <Slider WidthRequest="300" HeightRequest="50" AutomationId="SliderControl"  />
     </StackLayout>
     <Grid RowSpacing="5" HorizontalOptions="Center">
       <Grid.ColumnDefinitions>
@@ -17,15 +21,15 @@
       </Grid.ColumnDefinitions>
       <StackLayout Grid.Column="0" Spacing="6" Margin="{OnPlatform Android='30,20,0,0',  iOS='10,20,0,0', MacCatalyst='50,40,0,0'}">
         <!-- Minimum Value -->
-        <Label Text="{Binding Source={x:Reference SliderControl}, Path=Minimum, StringFormat='Minimum: {0}'}" FontSize="15" AutomationId="MinimumValueLabel"/>
+        <Label Text="{Binding Minimum, StringFormat='Minimum: {0}'}" FontSize="15" AutomationId="MinimumValueLabel"/>
         <Entry x:Name="MinimumEntry" AutomationId="MinimumEntry" TextChanged="OnMinimumChanged" Keyboard="Numeric" HorizontalOptions="Start" WidthRequest="100" />
 
         <!-- Maximum Value -->
-        <Label Text="{Binding Source={x:Reference SliderControl}, Path=Maximum, StringFormat='Maximum: {0}'}" FontSize="15" AutomationId="MaximumValueLabel"/>
+        <Label Text="{Binding Maximum, StringFormat='Maximum: {0}'}" FontSize="15" AutomationId="MaximumValueLabel"/>
         <Entry x:Name="MaximumEntry" AutomationId="MaximumEntry" TextChanged="OnMaximumChanged" Keyboard="Numeric" HorizontalOptions="Start" WidthRequest="100" />
 
         <!-- Current Value -->
-        <Label Text="{Binding Source={x:Reference SliderControl}, Path=Value, StringFormat='Value: {0:F0}'}" FontSize="15" AutomationId="ValueLabel"/>
+        <Label Text="{Binding Value, StringFormat='Value: {0:F0}'}" FontSize="15" AutomationId="ValueLabel"/>
         <Entry x:Name="ValueEntry" AutomationId="ValueEntry" TextChanged="OnValueChanged" Keyboard="Numeric" HorizontalOptions="Start" WidthRequest="100" />
 
         <!-- Flow Direction -->
@@ -48,8 +52,9 @@
           <RadioButton x:Name="IsVisibleTrueRadio" AutomationId="IsVisibleTrueRadio" GroupName="IsVisible" Content="True" IsChecked="True" FontSize="14" CheckedChanged="OnIsVisibleCheckedChanged" />
           <RadioButton x:Name="IsVisibleFalseRadio" AutomationId="IsVisibleFalseRadio" GroupName="IsVisible" Content="False" FontSize="14" CheckedChanged="OnIsVisibleCheckedChanged" />
         </StackLayout>
-        <Label x:Name="DragStartStatusLabel" Text="StartedEvent" FontSize="15"   AutomationId="DragStartStatusLabel"/>
-        <Label x:Name="DragCompletedStatusLabel" Text="CompletedEvent" FontSize="15"  AutomationId="DragCompletedStatusLabel"/>
+        <Label x:Name="DragStartStatusLabel" FontSize="15" AutomationId="DragStartStatusLabel" Text="{Binding DragStartStatus}" />
+        <Label x:Name="DragCompletedStatusLabel" FontSize="15" AutomationId="DragCompletedStatusLabel" Text="{Binding DragCompletedStatus}"  />
+
       </StackLayout>
       <StackLayout Grid.Column="1" Spacing="8" Margin="{OnPlatform  Android='20,20,0,0', WinUI='150,0,0,0', iOS='20,20,0,0', MacCatalyst='70,40,0,0'}">
         <!-- Thumb Color -->
