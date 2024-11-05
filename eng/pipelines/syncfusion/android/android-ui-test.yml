@@ -2,55 +2,85 @@ trigger: none
 pr: none
 
 pool:
-  vmImage: 'macOS-14'
+  vmImage: 'macos-14'
 
 variables:
   ANDROID_HOME: /Users/runner/Library/Android/sdk
   ANDROID_SKD_ROOT: /Users/runner/Library/Android/sdk
-  EMULATOR_NAME: xamarin_android_emulator
+  EMULATOR_NAME: DEVICE_TESTS_EMULATOR
   APPIUM_HOME: $(System.DefaultWorkingDirectory)/.appium/
 
 steps:
-- checkout: self
-- template: ../common/common.yml
+- task: UseDotNet@2
+  displayName: Use .NET SDK
+  inputs:
+    packageType: sdk
+    version: 8.0.303
 
 - script: |
-    echo Installing Android SDK tools...
-    mkdir -p $(ANDROID_HOME)
-    curl -o commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-mac-8512546_latest.zip
-    unzip -d $(ANDROID_HOME) commandlinetools.zip
-    mv $(ANDROID_HOME)/cmdline-tools $(ANDROID_HOME)/cmdline-tools-temp
-    mkdir $(ANDROID_HOME)/cmdline-tools
-    mv $(ANDROID_HOME)/cmdline-tools-temp $(ANDROID_HOME)/cmdline-tools/latest
-  displayName: 'Install Android SDK Command-line Tools'
+    echo "##[group]Launch Emulator"
+    cd /Users/runner//work/1/s/
+    dotnet tool install --global AndroidSDK.Tool
+    android sdk install --package "system-images;android-30;google_apis_playstore;x86_64"
+    android avd create --name DEVICE_TESTS_EMULATOR --sdk "system-images;android-30;google_apis_playstore;x86_64" --device "Nexus 5X"
+    android avd start --name DEVICE_TESTS_EMULATOR --no-window --no-audio --no-boot-anim --memory 2048 --cores 2 --verbose --wait-boot 
+  displayName: 'Launch Emulator'
+
+- task: CmdLine@2
+  displayName: 'Set Latest XCode Version'
+  inputs:
+    script: 'sudo xcode-select -s /Applications/Xcode_16.app/Contents/Developer'
+
+- task: CmdLine@2
+  displayName: 'Install Latest .NET MAUI Workload'
+  inputs:
+    script: 'dotnet workload install maui maui-android maui-windows maui-ios maui-maccatalyst maui-tizen android ios maccatalyst macos mobile-librarybuilder'
+
+- task: CmdLine@2
+  displayName: 'Install Tizen Workload'
+  inputs:
+    script: 'curl -sSL https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.sh | sudo bash'
+
+- task: CmdLine@2
+  displayName: 'Install Node'
+  inputs:
+    script: 'brew install node'
+
+- bash: |
+    echo "##vso[task.setvariable variable=JI_JAVA_HOME]$(JAVA_HOME_17_X64)"
+    echo "##vso[task.setvariable variable=JAVA_HOME]$(JAVA_HOME_17_X64)"
+  displayName: 'Setup JDK Paths'
+  condition: and(succeeded(), eq(variables['Agent.OS'], 'Darwin'))
 
 - script: |
-    echo Accepting licenses...
-    yes | $(ANDROID_HOME)/cmdline-tools/latest/bin/sdkmanager --licenses
+    echo "##[group]Dotnet Tool Restore"
+    cd /Users/runner//work/1/s/
+    dotnet tool restore
+  displayName: 'Dotnet Tool Restore'
 
-    echo Installing Android SDK components...
-    $(ANDROID_HOME)/cmdline-tools/latest/bin/sdkmanager "platform-tools" "build-tools;30.0.3" "platforms;android-30" "emulator" "system-images;android-30;google_apis_playstore;x86_64" "extras;google;google_play_services"
-  displayName: 'Install Android SDK Components'
+- task: CmdLine@2
+  displayName: 'Install Appium Workload'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/appium-install.ps1'
+- script: |
+    echo "##[group]Install local dotnet"
+    cd /Users/runner//work/1/s/
+    dotnet cake --target=dotnet --verbosity=diagnostic
+    echo "##[endgroup]"
+  displayName: 'Install local dotnet'
+
+- script: |
+    echo "##[group]Build MSBuild Tasks"
+    cd /Users/runner//work/1/s/
+    dotnet build ./Microsoft.Maui.BuildTasks.slnf
+    echo "##[endgroup]"
+  displayName: 'Build MSBuild Tasks'
 
 - script: |
     echo Setting up environment variables...
     echo "##vso[task.setvariable variable=ANDROID_HOME]$(ANDROID_HOME)"
     echo "##vso[task.setvariable variable=PATH]$(ANDROID_HOME)/platform-tools:$(ANDROID_HOME)/cmdline-tools/latest/bin:$(PATH)"
   displayName: 'Set Environment Variables'
-- task: CmdLine@2
-  displayName: 'Update SDK Manager'
-  inputs:
-    script: '$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --update'
-
-- task: CmdLine@2
-  displayName: 'Install Manager'
-  inputs:
-    script: '$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "emulator"'
-
-- task: CmdLine@2
-  displayName: 'Install Appium Workload'
-  inputs:
-    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/appium-install.ps1'
 
 - task: CmdLine@2
   displayName: 'Set Environment Variable'
@@ -60,26 +90,72 @@ steps:
 - script: |
     echo "##[group]Build Android UI Test Samples"
     cd $(Agent.BuildDirectory)/s/
-    dotnet cake --target=uitests-apphost --usenuget=false --verbosity=diagnostic
+    dotnet cake --target=uitests-apphost --configuration="Release" --android --verbosity=diagnostic --usenuget=false
     echo "##[endgroup]"
   displayName: 'Build Android UI Test Samples'
 
+# - script: |
+#     echo "##[group]Prepare Emulator"
+#     cd $(Agent.BuildDirectory)/s/
+#     dotnet cake -Script eng/devices/android.cake --target=uitest-prepare
+#     echo "##[endgroup]"
+#   displayName: 'Prepare Emulator'
+
 - script: |
-    echo "##[group]Prepare Emulator"
-    cd $(Agent.BuildDirectory)/s/
-    dotnet cake -Script eng/devices/android.cake --target=uitest-prepare
+    echo "##[group]Ensure Android Emulator is Connected"
+    adb devices
     echo "##[endgroup]"
-  displayName: 'Prepare Emulator'
+  displayName: 'Ensure Android Emulator is Connected'
+
+# - script: |
+#     echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-30;google_apis;x86_64'
+#     echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_emulator -k 'system-images;android-30;google_apis;x86_64' --force
+#   displayName: 'Create Android Emulator'
+
+# - script: |
+#     $ANDROID_HOME/emulator/emulator -avd test_emulator -no-window -no-audio -no-boot-anim -writable-system &
+#     adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 1; done'
+#     adb root
+#     adb shell settings put global adb_enabled 1
+#     adb devices
+#   displayName: 'Start Emulator and Authorize ADB'
+
+- script: |
+    echo "##[group]Start Appium Server"
+    adb devices
+    appium
+    echo "##[end group]"
+  displayName: 'Start Appium Server'
+  timeoutInMinutes: 1
+  continueOnError: true
+
+- script: |
+    echo "##[group]Install App to the Emulator"
+    adb install "/Users/runner/work/1/s/artifacts/bin/Controls.TestCases.HostApp/Release/net8.0-android/com.microsoft.maui.uitests-Signed.apk"
+    echo "##[endgroup]"
+  displayName: 'Install App to the Emulator'
+
 
 - script: |
     echo "##[group]Run Android UI Test Samples"
-    cd $(Agent.BuildDirectory)/s/
-    dotnet cake -Script eng/devices/android.cake --target=uitest --test-filter="TestCategory=Border"
+    cd $(Agent.BuildDirectory)/s/src/Controls/tests/TestCases.Android.Tests/
+    dotnet test --filter "TestCategory=Button"
     echo "##[endgroup]"
   displayName: 'Run Android UI Test Samples'
 
+- script: |
+    screencapture -x $(Build.ArtifactStagingDirectory)/screenshot.png
+  displayName: 'Take Screenshot on macOS'
+
 - task: PublishBuildArtifacts@1
-  displayName: 'Publish Test Results Folder'
   inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'Test Results for UI Test Android'
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/screenshot.png'
+    artifactName: 'screenshots'
+    publishLocation: 'Container'
+  displayName: 'Publish Screenshot as Artifact'
+
+# - task: PublishBuildArtifacts@1
+#   displayName: 'Publish Test Results Folder'
+#   inputs:
+#     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+#     ArtifactName: 'Test Results for UI Test Android'
