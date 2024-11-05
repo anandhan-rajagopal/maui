@@ -145,6 +145,7 @@ steps:
 - script: |
     echo "##[group]Run Android UI Test Samples"
     cd $(Agent.BuildDirectory)/s/src/Controls/tests/TestCases.Android.Tests/
+    dotnet tool restore
     dotnet test
     echo "##[endgroup]"
   displayName: 'Run Android UI Test Samples'
