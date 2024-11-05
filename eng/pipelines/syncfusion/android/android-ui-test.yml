@@ -17,7 +17,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'sdk'
-    version: '9.0.100-rc.2.24474.11'
+    version: '9.0.100-rc.1.24452.12'
     includePreviewVersions: true  # Enables the download of preview versions
   displayName: 'Install .NET 9 Preview SDK'
 
@@ -39,7 +39,7 @@ steps:
 - task: CmdLine@2
   displayName: 'Install Latest .NET MAUI Workload'
   inputs:
-    script: 'dotnet workload install maui maui-android maui-windows maui-ios maui-maccatalyst maui-tizen android ios maccatalyst macos mobile-librarybuilder'
+    script: 'dotnet workload install maui'
 
 - task: CmdLine@2
   displayName: 'Install Tizen Workload'
