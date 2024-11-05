@@ -12,6 +12,15 @@ variables:
 
 steps:
 
+- task: UseDotNet@2
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '9.0.100-rc.2.24474.11'
+    includePreviewVersions: true  # Enables the download of preview versions
+  displayName: 'Install .NET 9 Preview SDK'
+
 
 - script: |
     echo "##[group]Launch Emulator"
