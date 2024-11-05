@@ -11,11 +11,7 @@ variables:
   APPIUM_HOME: $(System.DefaultWorkingDirectory)/.appium/
 
 steps:
-- task: UseDotNet@2
-  displayName: Use .NET SDK
-  inputs:
-    packageType: sdk
-    version: 8.0.303
+
 
 - script: |
     echo "##[group]Launch Emulator"
@@ -72,7 +68,7 @@ steps:
 - script: |
     echo "##[group]Build MSBuild Tasks"
     cd /Users/runner//work/1/s/
-    dotnet build ./Microsoft.Maui.BuildTasks.slnf
+    dotnet cake --target=dotnet-buildtasks --workloads=local
     echo "##[endgroup]"
   displayName: 'Build MSBuild Tasks'
 
@@ -90,7 +86,7 @@ steps:
 - script: |
     echo "##[group]Build Android UI Test Samples"
     cd $(Agent.BuildDirectory)/s/
-    dotnet cake --target=uitests-apphost --configuration="Release" --android --verbosity=diagnostic --usenuget=false
+    dotnet cake --target=uitests-apphost --configuration="Release" --android --verbosity=diagnostic --usenuget=false --workloads=local
     echo "##[endgroup]"
   displayName: 'Build Android UI Test Samples'
 
@@ -131,7 +127,7 @@ steps:
 
 - script: |
     echo "##[group]Install App to the Emulator"
-    adb install "/Users/runner/work/1/s/artifacts/bin/Controls.TestCases.HostApp/Release/net8.0-android/com.microsoft.maui.uitests-Signed.apk"
+    adb install "/Users/runner/work/1/s/artifacts/bin/Controls.TestCases.HostApp/Release/net9.0-android/com.microsoft.maui.uitests-Signed.apk"
     echo "##[endgroup]"
   displayName: 'Install App to the Emulator'
 
@@ -139,7 +135,7 @@ steps:
 - script: |
     echo "##[group]Run Android UI Test Samples"
     cd $(Agent.BuildDirectory)/s/src/Controls/tests/TestCases.Android.Tests/
-    dotnet test --filter "TestCategory=Button"
+    dotnet test
     echo "##[endgroup]"
   displayName: 'Run Android UI Test Samples'
 
