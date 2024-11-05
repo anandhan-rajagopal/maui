@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Test Report - MAUI</title>
+    <meta name="description" content="Automated Test Results | .NET MAUI Framework" />
+    <meta name="keywords" content="Syncfusion, .NET MAUI, Automated Test Results, Testing Dashboard, Software Quality, Framework Testing" />
+    
+    <style type="text/css">
+        html, body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            font-size: 1rem; 
+            margin: 0; 
+            padding: 0; 
+            color: #333; 
+        }
+        body { 
+            padding: 2rem 1rem; 
+            font-size: 0.9rem; 
+        }
+        #html-content { 
+            margin: 0 auto; 
+            max-width: 70rem; 
+        }
+        header { 
+            display: flex; 
+            align-items: center; 
+        }
+        #title { 
+            margin: 0; 
+            flex-grow: 1; 
+            font-size: 1.6rem; 
+            font-weight: 600; 
+            color: #2a2a2a; 
+        }
+        #summary { 
+            margin: 0.5rem 0; 
+            font-size: 1.1rem; 
+        }
+        #test-summary ul { 
+            list-style-type: disc; 
+            padding: 0; 
+        }
+        #test-summary li { 
+            background: #f7f7f7; 
+            padding: 1rem 1rem 1rem 1.5rem; 
+            border: 1px solid #ddd; 
+            border-radius: 0.3rem; 
+            margin-bottom: 1rem; 
+            list-style-position: inside; 
+        }
+        #test-summary a { 
+            color: #007bff; 
+            text-decoration: none; 
+        }
+        #test-summary a:hover { 
+            text-decoration: underline; 
+        }
+    </style>
+    <link href="https://cdn.syncfusion.com/ej2/26.2.7/material.css" rel="stylesheet">
+    <script src="https://cdn.syncfusion.com/ej2/26.2.7/dist/ej2.min.js"></script>
+    <script src="https://cdn.syncfusion.com/ej2/syncfusion-helper.js"></script>
+</head>
+<body>
+    <br>
+<div id="html-content">
+    <header>
+        <h1 id="title">Test Report for MAUI Framework</h1>
+    </header>
+    <div id="metadata-container">
+        <div id="summary">
+            <div id="test-summary">
+                <!-- Syncfusion EJ2 Grid -->
+                <div id="Grid"></div>
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        var gridData = [{"URL":"index.html","NotExecuted":0,"FailedCases":0,"ClassName":"android","SkippedCases":0,"PassedCases":0, "TotalCases":0, "DisplayName":"Android"},
+                        {"URL":"index.html","NotExecuted":0,"FailedCases":0,"ClassName":"ios","SkippedCases":0,"PassedCases":0, "TotalCases":0, "DisplayName":"iOS"},
+                        {"URL":"index.html","NotExecuted":0,"FailedCases":0,"ClassName":"mac","SkippedCases":0,"PassedCases":0, "TotalCases":0, "DisplayName":"MacCatalyst"},
+                        {"URL":"index.html","NotExecuted":0,"FailedCases":0,"ClassName":"windows","SkippedCases":0,"PassedCases":0, "TotalCases":0, "DisplayName":"Windows"}];
+
+
+                        var grid = new ej.grids.Grid({
+                            dataSource: gridData,
+                            allowSorting: true,
+                            columns: [
+                                { field: 'ClassName', headerText: 'Test Name', width: 120, textAlign: 'Left', template: '<a href="${URL}">${DisplayName}</a>' },
+                                { field: 'TotalCases', headerText: 'Total no of cases', width: 150, textAlign: 'Right'  },
+                                { field: 'PassedCases', headerText: 'Success', width: 150, textAlign: 'Right'  },
+                                { field: 'FailedCases', headerText: 'Failed', width: 130, textAlign: 'Right' },
+                                { field: 'SkippedCases', headerText: 'Skipped', width: 130, textAlign: 'Right' },
+                                { field: 'NotExecuted', headerText: 'NotExecuted', width: 130, textAlign: 'Right' }
+                            ]
+                        });
+
+                        grid.appendTo('#Grid');
+                    });
+                </script>
+                <!-- End Syncfusion EJ2 Grid -->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

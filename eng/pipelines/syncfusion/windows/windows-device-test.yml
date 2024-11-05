@@ -1,0 +1,448 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  - group: s3-credentials
+    
+steps:
+- task: PowerShell@2
+  name: installJDK
+  inputs:
+    targetType: 'inline'
+    script: |   
+      $jdkUrl = "https://aka.ms/download-jdk/microsoft-jdk-11.0.24-windows-x64.msi"
+      $jdkMsi = "$env:TEMP\microsoft-jdk-11.0.24-windows-x64.msi"
+      $installDir = "C:\Program Files\Java\jdk-11"
+
+      
+      Write-Host "Downloading JDK..."
+      Invoke-WebRequest -Uri $jdkUrl -OutFile $jdkMsi
+
+     
+      if (-Not (Test-Path $installDir)) {
+          Write-Host "Creating installation directory..."
+          New-Item -ItemType Directory -Path $installDir -Force
+      }
+
+     
+      Write-Host "Installing JDK..."
+      Start-Process msiexec.exe -ArgumentList "/i `"$jdkMsi`" /quiet INSTALLDIR=`"$installDir`"" -NoNewWindow -Wait
+
+      
+      if (-Not (Test-Path $installDir)) {
+          Write-Host "Installation failed. Directory not found."
+          exit 1
+      }
+
+     
+      Write-Host "Configuring environment variables..."
+      [System.Environment]::SetEnvironmentVariable('JAVA_HOME', $installDir, [System.EnvironmentVariableTarget]::Machine)
+      $path = [System.Environment]::GetEnvironmentVariable('Path', [System.EnvironmentVariableTarget]::Machine)
+      if (-Not ($path -like "*$installDir\bin*")) {
+          [System.Environment]::SetEnvironmentVariable('Path', "$path;$installDir\bin", [System.EnvironmentVariableTarget]::Machine)
+      }
+
+     
+      Write-Host "Verifying Java installation..."
+      java -version
+        
+- script: |
+    echo "##[group]Dotnet Tool Restore"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet tool restore
+    echo "##[endgroup]"
+  displayName: 'Dotnet Tool Restore'    
+
+- script: |
+    echo "##[group]Install local dotnet"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake --target=dotnet
+    echo "##[endgroup]"
+  displayName: 'Install local dotnet'
+
+- script: |
+    echo "##[group]Build MSBuild Tasks"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake --target=dotnet-buildtasks --configuration="Release" 
+    echo "##[endgroup]"
+  displayName: 'Build MSBuild Tasks'
+  
+- script: |
+    echo "##[group]Perform Device Test BlazorWebView"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -script eng/devices/windows.cake --project="$(Agent.BuildDirectory)/s/src/BlazorWebView/tests/MauiDeviceTests/MauiBlazorWebView.DeviceTests.csproj" --device="unpackaged" --packageid=Microsoft.Maui.MauiBlazorWebView.DeviceTests
+    echo "##[endgroup]"
+  displayName: 'Perform Device Test BlazorWebView'
+  continueOnError: true  
+
+- task: CmdLine@2
+  displayName: 'HTML Conversion of blazorwebview'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/s/artifacts/bin/MauiBlazorWebView.DeviceTests/Debug/net8.0-windows10.0.19041.0/win10-x64/Microsoft.Maui.MauiBlazorWebView.DeviceTests.exe-results"'
+  continueOnError: true  
+
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = "$(Agent.BuildDirectory)\s\artifacts\bin\MauiBlazorWebView.DeviceTests\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Maui.MauiBlazorWebView.DeviceTests.exe-results\results"
+      $destDir = "$(Build.ArtifactStagingDirectory)\test-results\staging"
+      $newFileName = 'BlazorWebView.html'
+
+      # Ensure the destination directory exists
+      if (-not (Test-Path -Path $destDir)) {
+          Write-Host "Creating directory: $destDir"
+          New-Item -ItemType Directory -Force -Path $destDir
+      }
+
+      # Get the test result files
+      $files = Get-ChildItem -Path $sourceDir -Filter *.html
+
+      if ($files.Count -eq 0) {
+          Write-Host "No files matching the filter found in $sourceDir"
+      }
+
+      # Copy files
+      foreach ($file in $files) {
+          $destinationPath = Join-Path -Path $destDir -ChildPath $newFileName
+          Write-Host "Copying $($file.FullName) to $destinationPath"
+          Copy-Item -Path $file.FullName -Destination $destinationPath -Force
+      }
+
+
+- script: |
+    echo "##[group]Perform Device Test Core"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -script eng/devices/windows.cake --project="$(Agent.BuildDirectory)/s/src/Core/tests/DeviceTests/Core.DeviceTests.csproj" --device="unpackaged" --packageid=com.microsoft.maui.core.devicetests
+    echo "##[endgroup]"
+  displayName: 'Perform Device Test Core'
+  continueOnError: true  
+
+- task: CmdLine@2
+  displayName: 'HTML Conversion of Core'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/s/artifacts/bin/Core.DeviceTests/Debug/net8.0-windows10.0.19041.0/win10-x64/Microsoft.Maui.Core.DeviceTests.exe-results"'
+  continueOnError: true  
+
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = "$(Agent.BuildDirectory)\s\artifacts\bin\Core.DeviceTests\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Maui.Core.DeviceTests.exe-results\results"
+      $destDir = "$(Build.ArtifactStagingDirectory)\test-results\staging"
+      $newFileName = 'Core.html'
+
+      # Ensure the destination directory exists
+      if (-not (Test-Path -Path $destDir)) {
+          Write-Host "Creating directory: $destDir"
+          New-Item -ItemType Directory -Force -Path $destDir
+      }
+
+      # Get the test result files
+      $files = Get-ChildItem -Path $sourceDir -Filter *.html
+
+      if ($files.Count -eq 0) {
+          Write-Host "No files matching the filter found in $sourceDir"
+      }
+
+      # Copy files
+      foreach ($file in $files) {
+          $destinationPath = Join-Path -Path $destDir -ChildPath $newFileName
+          Write-Host "Copying $($file.FullName) to $destinationPath"
+          Copy-Item -Path $file.FullName -Destination $destinationPath -Force
+      }
+
+- script: |
+    echo "##[group]Perform Device Test Control"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -script eng/devices/windows.cake --project="$(Agent.BuildDirectory)/s/src/Controls/tests/DeviceTests/Controls.DeviceTests.csproj" --device="unpackaged" --packageid=com.microsoft.maui.controls.devicetests
+    echo "##[endgroup]"
+  displayName: 'Perform Device Test Control'
+  continueOnError: true  
+
+- task: CmdLine@2
+  displayName: 'HTML Conversion of Controls'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/s/artifacts/bin/Controls.DeviceTests/Debug/net8.0-windows10.0.19041.0/win10-x64/Microsoft.Maui.Controls.DeviceTests.exe-results"'
+  continueOnError: true
+
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = "$(Agent.BuildDirectory)\s\artifacts\bin\Controls.DeviceTests\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Maui.Controls.DeviceTests.exe-results\results"
+      $destDir = "$(Build.ArtifactStagingDirectory)\test-results\staging"
+      $newFileName = 'Controls.html'
+
+      # Ensure the destination directory exists
+      if (-not (Test-Path -Path $destDir)) {
+          Write-Host "Creating directory: $destDir"
+          New-Item -ItemType Directory -Force -Path $destDir
+      }
+
+      # Get the test result files
+      $files = Get-ChildItem -Path $sourceDir -Filter *.html
+
+      if ($files.Count -eq 0) {
+          Write-Host "No files matching the filter found in $sourceDir"
+      }
+
+      # Copy files
+      foreach ($file in $files) {
+          $destinationPath = Join-Path -Path $destDir -ChildPath $newFileName
+          Write-Host "Copying $($file.FullName) to $destinationPath"
+          Copy-Item -Path $file.FullName -Destination $destinationPath -Force
+      }
+
+- script: |
+    echo "##[group]Perform Device Test Graphics"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -script eng/devices/windows.cake --project="$(Agent.BuildDirectory)/s/src/Graphics/tests/DeviceTests/Graphics.DeviceTests.csproj" --device="unpackaged" --packageid=com.microsoft.maui.graphics.devicetests
+    echo "##[endgroup]"
+  displayName: 'Perform Device Test Graphics'
+  continueOnError: true  
+
+- task: CmdLine@2
+  displayName: 'HTML Conversion of Graphics'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/s/artifacts/bin/Graphics.DeviceTests/Debug/net8.0-windows10.0.19041.0/win10-x64/Microsoft.Maui.Graphics.DeviceTests.exe-results"'
+  continueOnError: true
+
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = "$(Agent.BuildDirectory)\s\artifacts\bin\Graphics.DeviceTests\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Maui.Graphics.DeviceTests.exe-results\results"
+      $destDir = "$(Build.ArtifactStagingDirectory)\test-results\staging"
+      $newFileName = 'Graphics.html'
+
+      # Ensure the destination directory exists
+      if (-not (Test-Path -Path $destDir)) {
+          Write-Host "Creating directory: $destDir"
+          New-Item -ItemType Directory -Force -Path $destDir
+      }
+
+      # Get the test result files
+      $files = Get-ChildItem -Path $sourceDir -Filter *.html
+
+      if ($files.Count -eq 0) {
+          Write-Host "No files matching the filter found in $sourceDir"
+      }
+
+      # Copy files
+      foreach ($file in $files) {
+          $destinationPath = Join-Path -Path $destDir -ChildPath $newFileName
+          Write-Host "Copying $($file.FullName) to $destinationPath"
+          Copy-Item -Path $file.FullName -Destination $destinationPath -Force
+      }
+
+- script: |
+    echo "##[group]Perform Device Test Essentials"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -script eng/devices/windows.cake --project="$(Agent.BuildDirectory)/s/src/Essentials/test/DeviceTests/Essentials.DeviceTests.csproj" --device="unpackaged" --packageid=com.microsoft.maui.essentials.devicetests
+    echo "##[endgroup]"
+  displayName: 'Perform Device Test Essentials'
+  continueOnError: true  
+
+- task: CmdLine@2
+  displayName: 'HTML Conversion of Essentials'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/s/artifacts/bin/Essentials.DeviceTests/Debug/net8.0-windows10.0.19041.0/win10-x64/Microsoft.Maui.Essentials.DeviceTests.exe-results"'
+  continueOnError: true  
+
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = "$(Agent.BuildDirectory)\s\artifacts\bin\Essentials.DeviceTests\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Maui.Essentials.DeviceTests.exe-results\results"
+      $destDir = "$(Build.ArtifactStagingDirectory)\test-results\staging"
+      $newFileName = 'Essentials.html'
+
+      # Ensure the destination directory exists
+      if (-not (Test-Path -Path $destDir)) {
+          Write-Host "Creating directory: $destDir"
+          New-Item -ItemType Directory -Force -Path $destDir
+      }
+
+      # Get the test result files
+      $files = Get-ChildItem -Path $sourceDir -Filter *.html
+
+      if ($files.Count -eq 0) {
+          Write-Host "No files matching the filter found in $sourceDir"
+      }
+
+      # Copy files
+      foreach ($file in $files) {
+          $destinationPath = Join-Path -Path $destDir -ChildPath $newFileName
+          Write-Host "Copying $($file.FullName) to $destinationPath"
+          Copy-Item -Path $file.FullName -Destination $destinationPath -Force
+      }
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Test Results Folder'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/test-results/staging'
+    ArtifactName: 'WindowsDeviceTestResult'
+  continueOnError: true 
+  
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+
+- script: |
+    pip install awscli
+  displayName: 'Install AWS CLI'
+
+
+- powershell: |
+    Write-Host "Setting AWS environment variables..."
+    $env:AWS_ACCESS_KEY_ID = "$(AWS_ACCESS_KEY_ID)"
+    $env:AWS_SECRET_ACCESS_KEY = "$(AWS_SECRET_ACCESS_KEY)"
+    $env:AWS_DEFAULT_REGION = "$(AWS_DEFAULT_REGION)"
+
+    Write-Host "Windows device test - Generating index.html for the list of HTML files..."
+
+    $result_dir = "$env:BUILD_ARTIFACTSTAGINGDIRECTORY\test-results\staging"
+    $base_url = "https://testresults.syncfusion.com/maui/$(Build.SourceBranchName)/devicetest/windows/"
+    $template_file = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\Indextemplates\index.html"
+    $overall_table_template_file = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\Indextemplates\taskid\index.html"
+    $devices_table_template_file = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\Indextemplates\taskid\devicetest\index.html"
+    $report_table_template_file = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\Indextemplates\taskid\devicetest\mac\index.html"
+
+    Write-Host "Result Directory: $result_dir"
+    Write-Host "Template File: $report_table_template_file"
+
+    Write-Host "Generating index.html for the list of HTML files..."
+    & pwsh -File "$env:AGENT_BUILDDIRECTORY\s\eng\scripts\generatetable.ps1" -resultDir $result_dir -baseUrl $base_url -templateFile $report_table_template_file
+
+    Write-Host "Uploading HTML files to S3..."
+    Get-ChildItem -Path $result_dir -Filter *.html | ForEach-Object {
+        $file = $_.FullName
+        Write-Host "Uploading $file to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/windows/"
+        & aws s3 cp $file s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/windows/
+    }
+
+    # Verify the upload by downloading and printing the content from S3
+    & aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/windows/index.html" - | Out-File -FilePath "index.html"; Get-Content -Path "index.html"
+
+    Write-Host "Generating overall windows counts from test reports for S3 for s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/index.html"
+    $s3_bucket_path = "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/"
+    $temp_dir = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\temporaryfiles\windows"
+    Write-Host "Process to select existing index file or default template file..."
+
+    # Ensure the temporary directory exists
+    if (-Not (Test-Path -Path $temp_dir)) {
+        Write-Host "Directory $temp_dir does not exist. Creating it..."
+        New-Item -Path $temp_dir -ItemType Directory
+    } else {
+        Write-Host "Directory $temp_dir already exists."
+    }
+
+    # Clear the directory of all HTML files
+    Write-Host "Clearing $temp_dir of any existing HTML files..."
+    Remove-Item -Path "$temp_dir\*.html" -Force -ErrorAction SilentlyContinue
+
+    # Define the path for the temporary index.html
+    $temp_index_path = Join-Path -Path $temp_dir -ChildPath "index.html"
+
+    # Attempt to download index.html from the S3 bucket with error handling
+    try {
+        Write-Host "Attempting to download index.html from S3 bucket..."
+        & aws s3 cp "${s3_bucket_path}index.html" $temp_index_path -ErrorAction Stop
+
+        if (Test-Path $temp_index_path) {
+            $devices_table_template_file = $temp_index_path
+            Write-Host "index.html found and downloaded from S3. Using it as the template."
+        } else {
+            throw "index.html not found in S3. Using devices_table_template_file as the template."
+        }
+    } catch {
+        Write-Host "Error encountered: $_"
+        Write-Host "index.html not found in S3. Exiting the script."
+        Exit 1
+    }
+    & pwsh -File "$env:AGENT_BUILDDIRECTORY\s\eng\scripts\generatetable.ps1" -resultDir $result_dir -baseUrl $base_url -templateFile $devices_table_template_file -totalCounts "istotal"
+
+    Write-Host "Uploading the generated index.html back to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/..."
+    & aws s3 cp "$result_dir\index.html" s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/
+
+    Write-Host "Downloading and printing the uploaded index.html from s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/"
+    & aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/index.html" - | Out-File -FilePath "index.html"; Get-Content -Path "index.html"
+
+    Write-Host "Generating overall device counts from test reports for S3 for s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/index.html"
+    $s3_bucket_path = "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/"
+    $temp_dir = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\temporaryfiles\windows"
+    Write-Host "Process to select existing index file or default template file..."
+
+    # Clear the directory of all HTML files
+    Write-Host "Clearing $temp_dir of any existing HTML files..."
+    Remove-Item -Path "$temp_dir\*.html" -Force -ErrorAction SilentlyContinue
+
+    # Define the path for the temporary index.html
+    $temp_index_path = Join-Path -Path $temp_dir -ChildPath "index.html"
+
+    # Attempt to download index.html from the S3 bucket with improved error handling
+    try {
+        Write-Host "Attempting to download index.html from S3 bucket..."
+        
+        # Attempt to download the file from S3
+        & aws s3 cp "${s3_bucket_path}index.html" $temp_index_path -ErrorAction Stop
+        
+        # Check if the file was downloaded successfully
+        if (Test-Path $temp_index_path) {
+            $overall_table_template_file = $temp_index_path
+            Write-Host "index.html found and downloaded from S3. Using it as the template."
+        } else {
+            throw "index.html not found in the expected location after download."
+        }
+    } catch {
+        # Log the error details and exit the script
+        Write-Host "Error encountered: $_"
+        Write-Host "index.html not found in S3. Exiting the script."
+        Exit 1
+    }
+    & pwsh -File "$env:AGENT_BUILDDIRECTORY\s\eng\scripts\generatetable.ps1" -resultDir "$env:BUILD_ARTIFACTSTAGINGDIRECTORY\test-results\staging" -baseUrl "https://testresults.syncfusion.com/maui/$(Build.SourceBranchName)/devicetest/" -templateFile $overall_table_template_file -totalCounts "istotal"
+
+    Write-Host "Uploading the generated index.html back to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/..."
+    & aws s3 cp "$env:BUILD_ARTIFACTSTAGINGDIRECTORY\test-results\staging\index.html" s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/
+
+    Write-Host "Downloading and printing the uploaded index.html from s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/"
+    & aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/index.html" - | Out-File -FilePath "index.html"; Get-Content -Path "index.html"
+
+    # Generating updated directory list from S3 for s3://syncfusion-testresults/maui/
+    Write-Host "Generating updated directory list HTML for s3://syncfusion-testresults/maui/..."
+
+    $base_url = "https://testresults.syncfusion.com/maui/"
+
+    Write-Host "Fetching list of directories in s3://syncfusion-testresults/maui/..."
+    $directories = & aws s3 ls s3://syncfusion-testresults/maui/ | Select-String "PRE" | ForEach-Object { $_.Line.Split()[1] }
+
+    # Create the list of directories for the main bucket
+    $dir_list = ""
+    foreach ($dir in $directories) {
+        $dir_name = [System.IO.Path]::GetFileNameWithoutExtension($dir)
+        $dir_url = "${base_url}${dir_name}/"
+        $dir_list += "<li><a href=`"$dir_url`">$dir_name</a></li>"
+        Write-Host "dir_list: $dir_list"
+    }
+
+    Write-Host "Generated directory list: $dir_list"
+
+    # Insert the list into the template
+    $template_content = Get-Content -Path $template_file -Raw
+    $modified_content = $template_content -replace "(?s)<ul>.*?</ul>", "<ul>$dir_list</ul>"
+
+    # Upload the modified content directly to S3 for the main bucket
+    $modified_content | Set-Content -Path "index.html"
+    & aws s3 cp "index.html" s3://syncfusion-testresults/maui/index.html --content-type "text/html"
+
+    Write-Host "index.html generated and uploaded for s3://syncfusion-testresults/maui/"
+  displayName: 'Windows device test - Generate and Upload Dir-HTML File'

@@ -1,0 +1,23 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'macos-14' 
+
+resources:
+  pipelines:
+    - pipeline: Pipeline1
+      source: 'MAUI Framework UI Test Mac - Part 1'
+    - pipeline: Pipeline2
+      source: 'MAUI Framework UI Test Mac - Part 2'
+    - pipeline: Pipeline3
+      source: 'MAUI Framework UI Test Mac - Part 3'
+
+
+steps:
+- script: |
+    echo "##[group]Dotnet Tool Restore"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet tool restore
+    echo "##[endgroup]"
+  displayName: 'Dotnet Tool Restore' 

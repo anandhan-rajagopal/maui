@@ -1,0 +1,20 @@
+steps:
+-template: common.yml
+
+- task: ScreenResolutionUtility@1
+    condition: eq('${{ parameters.platform }}' , 'windows')
+    inputs:
+      displaySettings: 'specific'
+      width: '1920'
+      height: '1080'
+    displayName: "Set screen resolution"
+
+- task: UseNode@1
+    inputs:
+      version: "20.3.1"
+    displayName: "Install node"
+
+    
+- pwsh: ./build.ps1 --target=uitests-apphost --configuration="Release" --android --verbosity=diagnostic --usenuget=false
+    displayName: 'Build the samples'
+

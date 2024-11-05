@@ -1,0 +1,22 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'macOS-14'
+
+variables:
+  - group: s3-credentials
+
+jobs:
+- job: InvalidateCloudFrontCache
+  displayName: 'Invalidate CloudFront Cache on AWS'
+  steps:
+    - script: |
+        echo "Invalidating CloudFront cache"
+        aws cloudfront create-invalidation --distribution-id <distribution-id> --paths "/*"
+      displayName: 'Invalidate CloudFront Cache'
+      env:
+        AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+        AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+        AWS_DEFAULT_REGION: $(AWS_DEFAULT_REGION)
+

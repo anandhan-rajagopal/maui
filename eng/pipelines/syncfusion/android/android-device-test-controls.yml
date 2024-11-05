@@ -1,0 +1,79 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'macOS-14'
+
+variables:
+  - group: s3-credentials  # This will import variables from the 's3-credentials' group
+  - name: ANDROID_HOME
+    value: '/Users/runner/Library/Android/sdk'
+  - name: ANDROID_SDK_ROOT
+    value: '/Users/runner/Library/Android/sdk'
+  - name: EMULATOR_NAME
+    value: 'xamarin_android_emulator'
+  - name: S3_BUCKET_PATH
+    value: 's3://syncfusion-testresults/maui/$(Build.SourceBranchName)/staging/android/'
+
+steps:
+- checkout: self
+- template: ../common/common.yml
+- script: |
+    echo "##[group]Install Android Command Line Tools"
+    mkdir -p $ANDROID_HOME/cmdline-tools
+    curl -Lo commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-mac-7583922_latest.zip
+    unzip commandlinetools.zip -d $ANDROID_HOME/cmdline-tools
+    mv $ANDROID_HOME/cmdline-tools/cmdline-tools $ANDROID_HOME/cmdline-tools/latest
+    echo "##[endgroup]"
+  displayName: 'Install Android Command Line Tools'
+
+- script: |
+    echo "##[group]Install Android SDK and Tools"
+    export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools:$PATH
+    yes | sdkmanager --sdk_root=$ANDROID_HOME "platform-tools" "platforms;android-30" "build-tools;30.0.3" "system-images;android-30;google_apis_playstore;x86_64"
+    yes | sdkmanager --licenses
+    echo "##[endgroup]"
+  displayName: 'Install Android SDK'
+
+- script: |
+    echo "##[group]Perform Device Test for Controls"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -script eng/devices/Android.cake --project="$(System.DefaultWorkingDirectory)/src/Controls/tests/DeviceTests/Controls.DeviceTests.csproj" --device=android-emulator-64 --workloads=global --verbosity=diagnostic 
+    echo "##[endgroup]"
+  displayName: 'Perform Device Test Controls'
+- task: CmdLine@2
+  displayName: 'HTML Conversion'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/a/test-results"'
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = '$(Build.ArtifactStagingDirectory)/test-results/results'
+      $destDir = '$(Build.ArtifactStagingDirectory)/test-results/staging'
+      $newFileName = 'Controls.html'
+      New-Item -ItemType Directory -Force -Path $destDir      
+      Get-ChildItem -Path $sourceDir -Filter *.html | ForEach-Object {
+          # Copy each HTML file to the destination directory with a new name
+          Copy-Item $_.FullName -Destination (Join-Path $destDir $newFileName)
+      }
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Test Results Controls'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/test-results/staging'
+    ArtifactName: 'Android Device Test Result - Controls'
+
+  # New step to upload the result HTML files to the specified S3 bucket
+- task: CmdLine@2
+  displayName: 'Upload HTML files to S3'
+  inputs:
+    script: |
+      echo "Setting AWS environment variables..."
+      export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
+      export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
+      export AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION)
+      echo "Uploading file to S3..."
+      
+      aws s3 cp "$(Build.ArtifactStagingDirectory)/test-results/staging" $(S3_BUCKET_PATH) --recursive --exclude "*" --include "*.html"
+      echo "Upload completed."

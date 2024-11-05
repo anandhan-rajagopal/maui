@@ -1,0 +1,75 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'macOS-14'
+
+variables:
+  - group: s3-credentials  # This will import variables from the 's3-credentials' group
+  - name: S3_BUCKET_PATH
+    value: 's3://syncfusion-testresults/maui/$(Build.SourceBranchName)/staging/uitest/mac/'
+
+steps:
+- template: ../common/common.yml
+
+- task: CmdLine@2
+  displayName: 'Install Node Workload'
+  inputs:
+    script: 'brew install node'
+
+- task: CmdLine@2
+  displayName: 'Install Appium Workload'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/appium-install.ps1'
+
+- script: |
+    echo "##[group]Build Mac UI Test Samples"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake --target=dotnet-samples --configuration="Release" --catalyst --verbosity=diagnostic --workloads=global --usenuget=false
+    echo "##[endgroup]"
+  displayName: 'Build Mac UI Test Samples'
+
+- script: |
+    echo "##[group]Run UI Test Mac"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -Script eng/devices/catalyst.cake --target=uitest --verbosity=diagnostic --apiversion="10.13" --workloads=global --configuration="Release" --device=mac --test-filter "TestCategory=Editor|TestCategory=Effects|TestCategory=Entry|TestCategory=FlyoutPage|TestCategory=Focus|TestCategory=Frame|TestCategory=Gestures"
+    echo "##[endgroup]"
+  displayName: 'Run UI Test Mac'
+
+- task: CmdLine@2
+  displayName: 'HTML Conversion'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/a/test-results"'
+
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = '$(Build.ArtifactStagingDirectory)/test-results/results'
+      $destDir = '$(Build.ArtifactStagingDirectory)/test-results/staging'
+      $newFileName = 'Part3.html'
+      New-Item -ItemType Directory -Force -Path $destDir      
+      Get-ChildItem -Path $sourceDir -Filter *.html | ForEach-Object {
+          # Copy each HTML file to the destination directory with a new name
+          Copy-Item $_.FullName -Destination (Join-Path $destDir $newFileName)
+      }
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Test Results Folder'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/test-results/staging'
+    ArtifactName: 'Mac UI Test Result - Part 3'
+
+# New step to upload the result HTML files to the specified S3 bucket
+- task: CmdLine@2
+  displayName: 'Upload HTML files to S3'
+  inputs:
+    script: |
+      echo "Setting AWS environment variables..."
+      export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
+      export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
+      export AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION)
+      echo "Uploading file to S3..."
+      aws s3 cp "$(Build.ArtifactStagingDirectory)/test-results/staging" $(S3_BUCKET_PATH) --recursive --exclude "*" --include "*.html"
+      echo "Upload completed."

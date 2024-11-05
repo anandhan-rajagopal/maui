@@ -1,0 +1,310 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'macos-14'
+
+variables:
+  - group: s3-credentials
+
+steps:
+
+- task: CmdLine@2
+  displayName: 'Set Latest XCode Version'
+  inputs:
+    script: 'sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer'
+
+# Facing issue in latest dotnet sdk versions Need to remove when it was resolved
+- task: CmdLine@2
+  inputs:
+    script: 'sudo rm -rf /Users/runner/.dotnet/sdk/8.0.401'
+
+- task: CmdLine@2
+  displayName: 'Install Latest .NET MAUI Workload'
+  inputs:
+    script: 'dotnet workload install maui maui-android maui-windows maui-ios maui-maccatalyst maui-tizen android ios maccatalyst macos mobile-librarybuilder tvos'
+
+- task: CmdLine@2
+  displayName: 'Install Tizen Workload'
+  inputs:
+    script: 'curl -sSL https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.sh | sudo bash'
+
+- script: |
+    echo "##[group]Dotnet Tool Restore"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet tool restore
+    echo "##[endgroup]"
+  displayName: 'Dotnet Tool Restore'
+
+- script: |
+    echo "##[group]Install local dotnet"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake --target=dotnet
+    echo "##[endgroup]"
+  displayName: 'Install local dotnet'
+
+- script: |
+    echo "##[group]Build MSBuild Tasks"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake --target=dotnet-buildtasks --configuration="Release" --workloads=global
+    echo "##[endgroup]"
+  displayName: 'Build MSBuild Tasks'
+
+- script: |
+    echo "##[group]Perform Device Test Core"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -script eng/devices/ios.cake --project="$(Agent.BuildDirectory)/s/src/Core/tests/DeviceTests/Core.DeviceTests.csproj" --device=ios-simulator-64 --workloads=global 
+    echo "##[endgroup]"
+  displayName: 'Perform Device Test Core'
+- task: CmdLine@2
+  displayName: 'HTML Conversion'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/a/test-results"'
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = '$(Build.ArtifactStagingDirectory)/test-results/results'
+      $destDir = '$(Build.ArtifactStagingDirectory)/test-results/staging'
+      $newFileName = 'Core.html'
+      New-Item -ItemType Directory -Force -Path $destDir      
+      Get-ChildItem -Path $sourceDir -Filter TestResults.html | ForEach-Object {
+          Copy-Item $_.FullName -Destination (Join-Path $destDir $newFileName)
+      }
+
+- script: |
+    echo "##[group]Perform Device Test for Controls"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -script eng/devices/ios.cake --project="$(Agent.BuildDirectory)/s/src/Controls/tests/DeviceTests/Controls.DeviceTests.csproj" --device=ios-simulator-64 --workloads=global
+    echo "##[endgroup]"
+  displayName: 'Perform Device Test Controls'
+- task: CmdLine@2
+  displayName: 'HTML Conversion'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/a/test-results"'
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = '$(Build.ArtifactStagingDirectory)/test-results/results'
+      $destDir = '$(Build.ArtifactStagingDirectory)/test-results/staging'
+      $newFileName = 'Controls.html'
+      New-Item -ItemType Directory -Force -Path $destDir      
+      Get-ChildItem -Path $sourceDir -Filter TestResults.html | ForEach-Object {
+          Copy-Item $_.FullName -Destination (Join-Path $destDir $newFileName)
+      }
+
+- script: |
+    echo "##[group]Perform Device Test for BlazorWebView"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -script eng/devices/ios.cake --project="$(Agent.BuildDirectory)/s/src/BlazorWebView/tests/MauiDeviceTests/MauiBlazorWebView.DeviceTests.csproj" --device=ios-simulator-64 --workloads=global
+    echo "##[endgroup]"
+  displayName: 'Perform Device Test BlazorWebView'
+- task: CmdLine@2
+  displayName: 'HTML Conversion'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/a/test-results"'
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = '$(Build.ArtifactStagingDirectory)/test-results/results'
+      $destDir = '$(Build.ArtifactStagingDirectory)/test-results/staging'
+      $newFileName = 'BlazorWebView.html'
+      New-Item -ItemType Directory -Force -Path $destDir      
+      Get-ChildItem -Path $sourceDir -Filter TestResults.html | ForEach-Object {
+          Copy-Item $_.FullName -Destination (Join-Path $destDir $newFileName)
+      }
+
+- script: |
+    echo "##[group]Perform Device Test Graphics"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -script eng/devices/ios.cake --project="$(Agent.BuildDirectory)/s/src/Graphics/tests/DeviceTests/Graphics.DeviceTests.csproj" --device=ios-simulator-64 --workloads=global
+    echo "##[endgroup]"
+  displayName: 'Perform Device Test Graphics'
+- task: CmdLine@2
+  displayName: 'HTML Conversion'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/a/test-results"'
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = '$(Build.ArtifactStagingDirectory)/test-results/results'
+      $destDir = '$(Build.ArtifactStagingDirectory)/test-results/staging'
+      $newFileName = 'Graphics.html'
+      New-Item -ItemType Directory -Force -Path $destDir      
+      Get-ChildItem -Path $sourceDir -Filter TestResults.html | ForEach-Object {
+          Copy-Item $_.FullName -Destination (Join-Path $destDir $newFileName)
+      }
+
+- script: |
+    echo "##[group]Perform Device Test Essentials"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -script eng/devices/ios.cake --project="$(Agent.BuildDirectory)/s/src/Essentials/test/DeviceTests/Essentials.DeviceTests.csproj" --device=ios-simulator-64 --workloads=global
+    echo "##[endgroup]"
+  displayName: 'Perform Device Test Essentials'
+- task: CmdLine@2
+  displayName: 'HTML Conversion'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/a/test-results"'
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = '$(Build.ArtifactStagingDirectory)/test-results/results'
+      $destDir = '$(Build.ArtifactStagingDirectory)/test-results/staging'
+      $newFileName = 'Essentials.html'
+      New-Item -ItemType Directory -Force -Path $destDir      
+      Get-ChildItem -Path $sourceDir -Filter TestResults.html | ForEach-Object {
+          Copy-Item $_.FullName -Destination (Join-Path $destDir $newFileName)
+      }
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Test Results HTML'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/test-results/staging'
+    ArtifactName: 'iOS Device Test Result'
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+
+- script: |
+    pip install awscli
+  displayName: 'Install AWS CLI'
+
+- script: |
+    echo "Setting AWS environment variables..."
+    export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
+    export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
+    export AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION)
+
+    echo "MAC device test - Generating index.html for the list of HTML files..."
+
+    result_dir=$(Build.ArtifactStagingDirectory)/test-results/staging
+    base_url="https://testresults.syncfusion.com/maui/$(Build.SourceBranchName)/devicetest/ios/"
+    template_file=$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/Indextemplates/index.html
+    overall_table_template_file=$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/Indextemplates/taskid/index.html
+    devices_table_template_file=$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/Indextemplates/taskid/devicetest/index.html
+    report_table_template_file=$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/Indextemplates/taskid/devicetest/mac/index.html
+
+    echo "Result Directory: $result_dir"
+    echo "Template File: report_table_template_file"
+
+    echo "Generating index.html for the list of HTML files..."
+    pwsh -File "$(Agent.BuildDirectory)/s/eng/scripts/generatetable.ps1" -resultDir "$result_dir" -baseUrl "$base_url" -templateFile "$report_table_template_file"
+
+    echo "Uploading HTML files to S3..."
+    for file in $result_dir/*.html; do
+      if [ -f "$file" ]; then
+        echo "Uploading $file to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/ios/"
+        aws s3 cp "$file" s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/ios/
+      else
+        echo "No HTML files found in $result_dir/"
+        exit 1
+      fi
+    done
+
+    # Verify the upload by downloading and printing the content from S3
+    aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/ios/index.html" - | cat
+
+    echo "Generating overall ios counts from test reports for S3 for s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/index.html"
+    s3_bucket_path="s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/"
+    temp_dir="$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/temporaryfiles/ios"
+    echo "process to select existing index file or default template file..."
+    # Clear the directory of all HTML files
+    echo "Clearing $temp_dir of any existing HTML files..."
+    rm -f $temp_dir/*.html
+
+    # Attempt to download index.html from the S3 bucket
+    aws s3 cp "${s3_bucket_path}index.html" "$temp_dir/index.html" 2>/dev/null
+
+    # Check if the aws s3 cp command was successful
+    if [ $? -eq 0 ]; then
+        devices_table_template_file="$temp_dir/index.html"
+        echo "Already available index.html found in S3. Using it as the template."
+    else
+        echo "index.html not found in S3. Using devices_table_template_file as the template."
+    fi
+    pwsh -File "$(Agent.BuildDirectory)/s/eng/scripts/generatetable.ps1" -resultDir "$result_dir" -baseUrl "$base_url" -templateFile "$devices_table_template_file" -totalCounts "istotal"
+
+    echo "Uploading the generated index.html back to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/..."
+    aws s3 cp "$result_dir/index.html" s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/
+
+    echo "Downloading and printing the uploaded index.html from s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/"
+    aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/index.html" - | cat
+
+    echo "Generating overall device counts from test reports for S3 for s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/index.html"
+    s3_bucket_path="s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/"
+    temp_dir="$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/temporaryfiles/ios"
+    echo "process to select existing index file or default template file..."
+    # Clear the directory of all HTML files
+    echo "Clearing $temp_dir of any existing HTML files..."
+    rm -f $temp_dir/*.html
+    # Attempt to download index.html from the S3 bucket
+    aws s3 cp "${s3_bucket_path}index.html" "$temp_dir/index.html" 2>/dev/null
+
+    # Check if the aws s3 cp command was successful
+    if [ $? -eq 0 ]; then
+        overall_table_template_file="$temp_dir/index.html"
+        echo "Already available index.html found in S3. Using it as the template."
+    else
+        echo "index.html not found in S3. Using devices_table_template_file as the template."
+    fi
+    # Downloading all the html reports for device test from S3
+    s3_bucket_path="s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/devicetest/"
+    temp_dir_total="$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/temporaryfiles/devicereports"
+
+    # Create the destination directory if it doesn't exist
+    mkdir -p "$temp_dir_total"
+
+    # Sync all HTML files except index.html from S3 to the temp_dir_total, flattening the directory structure
+    aws s3 sync "$s3_bucket_path" "$temp_dir_total" --exclude "index.html" --include "*.html"
+
+    echo "All HTML files have been downloaded and combined into $temp_dir_total."
+    pwsh -File "$(Agent.BuildDirectory)/s/eng/scripts/generatetable.ps1" -resultDir "$temp_dir_total" -baseUrl "https://testresults.syncfusion.com/maui/$(Build.SourceBranchName)/devicetest/" -templateFile "$overall_table_template_file" -totalCounts "istotal"
+
+    echo "Uploading the generated index.html back to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/..."
+    aws s3 cp "$temp_dir_total/index.html" s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/
+
+    echo "Downloading and printing the uploaded index.html from s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/"
+    aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/index.html" - | cat
+
+    # Generating updated directory from S3 for s3://syncfusion-testresults/maui/
+    echo "Generating updated directory list HTML for s3://syncfusion-testresults/maui/..."
+
+    base_url="https://testresults.syncfusion.com/maui/"
+
+    echo "Fetching list of directories in s3://syncfusion-testresults/maui/..."
+    directories=$(aws s3 ls s3://syncfusion-testresults/maui/ | grep PRE | awk '{print $2}')
+
+    # Create the list of directories for main bucket
+    dir_list=""
+    for dir in $directories; do
+      dir_name=$(basename "$dir" /)
+      dir_url="${base_url}${dir_name}/"
+      dir_list="${dir_list}<li><a href=\"$dir_url\">$dir_name</a></li>"
+      echo "dir_list: $dir_list"
+    done
+
+    echo "Generated directory list: $dir_list"
+
+    # Insert the list into the template using awk for main bucket
+    modified_content=$(awk -v file_list="$dir_list" '
+    BEGIN { found=0 }
+    /<ul>/ && !found { print; print "<ul>" file_list "</ul>"; found=1; next }
+    /<\/ul>/ && found { found=0; next }
+    { if (!found) print }
+    ' "$template_file")
+
+    # Upload the modified content directly to S3 for main bucket
+    echo "$modified_content" | aws s3 cp - "s3://syncfusion-testresults/maui/index.html" --content-type "text/html"
+
+    echo "index.html generated and uploaded for s3://syncfusion-testresults/maui/"
+  displayName: 'ios device test - Generate and Upload Dir-HTML File'

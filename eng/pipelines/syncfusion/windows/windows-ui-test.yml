@@ -1,0 +1,255 @@
+trigger: none
+pr: none
+
+jobs:
+  - job: Job1
+    timeoutInMinutes: 0
+    pool:
+      vmImage: 'windows-latest'
+
+    variables:
+    - group: s3-credentials
+
+    workspace:
+      clean: all
+
+    steps:
+      
+    - script: |
+        echo "##[group]Dotnet Tool Restore"
+        cd $(Agent.BuildDirectory)/s/
+        dotnet tool restore
+        echo "##[endgroup]"
+      displayName: 'Dotnet Tool Restore'
+  
+    - task: ScreenResolutionUtility@1
+      inputs:
+        displaySettings: 'specific'
+        width: '1920'
+        height: '1080'
+      displayName: "Set screen resolution"
+    
+    - task: UseNode@1
+      inputs:
+        version: "20.3.1"
+      displayName: "Install node"
+      
+    - task: PowerShell@2
+      name: installJDK
+      inputs:
+        targetType: 'inline'
+        script: |   
+          $jdkUrl = "https://aka.ms/download-jdk/microsoft-jdk-11.0.24-windows-x64.msi"
+          $jdkMsi = "$env:TEMP\microsoft-jdk-11.0.24-windows-x64.msi"
+          $installDir = "C:\Program Files\Java\jdk-11"
+
+          
+          Write-Host "Downloading JDK..."
+          Invoke-WebRequest -Uri $jdkUrl -OutFile $jdkMsi
+
+        
+          if (-Not (Test-Path $installDir)) {
+              Write-Host "Creating installation directory..."
+              New-Item -ItemType Directory -Path $installDir -Force
+          }
+
+        
+          Write-Host "Installing JDK..."
+          Start-Process msiexec.exe -ArgumentList "/i `"$jdkMsi`" /quiet INSTALLDIR=`"$installDir`"" -NoNewWindow -Wait
+
+          
+          if (-Not (Test-Path $installDir)) {
+              Write-Host "Installation failed. Directory not found."
+              exit 1
+          }
+
+        
+          Write-Host "Configuring environment variables..."
+          [System.Environment]::SetEnvironmentVariable('JAVA_HOME', $installDir, [System.EnvironmentVariableTarget]::Machine)
+          $path = [System.Environment]::GetEnvironmentVariable('Path', [System.EnvironmentVariableTarget]::Machine)
+          if (-Not ($path -like "*$installDir\bin*")) {
+              [System.Environment]::SetEnvironmentVariable('Path', "$path;$installDir\bin", [System.EnvironmentVariableTarget]::Machine)
+          }
+
+        
+          Write-Host "Verifying Java installation..."
+          java -version
+
+    - task: CmdLine@2
+      displayName: 'Install Appium Workload'
+      inputs:
+          script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/appium-install.ps1'
+    
+    - powershell: |
+        Invoke-WebRequest 'https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.ps1' -OutFile 'workload-install.ps1'
+        ./workload-install.ps1
+      displayName: 'Install Tizen Workload'
+      
+    - script: |
+        echo "##[group]Install Local Dotnet"
+        cd $(Agent.BuildDirectory)/s/
+        dotnet cake --target=dotnet --verbosity=diagnostic
+        echo "##[endgroup]"
+      displayName: 'Install Local Dotnet'
+      continueOnError: true
+
+    - script: |
+        echo "##[group]Build MSBuild Tasks"
+        cd $(Agent.BuildDirectory)/s/
+        dotnet cake --target=dotnet-buildtasks --verbosity=diagnostic
+        echo "##[endgroup]"
+      displayName: 'Build MSBuild Tasks'
+      continueOnError: true
+
+    - script: |
+        echo "##[group]Build samples"
+        cd $(Agent.BuildDirectory)/s/
+        dotnet cake --target=dotnet-samples --windows --verbosity=diagnostic --usenuget=false --configuration="Release"
+        echo "##[endgroup]"
+      displayName: 'Build samples'
+      continueOnError: true
+
+    - script: |
+        echo "##[group]Perform UI test"
+        cd $(Agent.BuildDirectory)/s/
+        dotnet cake -Script eng/devices/windows.cake --target=uitest --configuration="Release" --device="windows10" --apiversion="10.0.20348.0"
+        echo "##[endgroup]"
+      displayName: 'Perform UI test'
+      continueOnError: true
+
+    - task: CmdLine@2
+      displayName: 'HTML Conversion'
+      inputs:
+        script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/a/test-results"'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Test Results'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)/test-results/results'
+        ArtifactName: 'Windows UI Test Result'
+
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.x'
+
+    - script: |
+        pip install awscli
+      displayName: 'Install AWS CLI'
+    
+    - powershell: |
+        Write-Host "Setting AWS environment variables..."
+        $env:AWS_ACCESS_KEY_ID = "$(AWS_ACCESS_KEY_ID)"
+        $env:AWS_SECRET_ACCESS_KEY = "$(AWS_SECRET_ACCESS_KEY)"
+        $env:AWS_DEFAULT_REGION = "$(AWS_DEFAULT_REGION)"
+        Write-Host "windows UI test publish - Generating index.html for the list of HTML files..."
+        $result_dir = "$env:BUILD_ARTIFACTSTAGINGDIRECTORY\test-results\results"
+        $base_url = "https://testresults.syncfusion.com/maui/$(Build.SourceBranchName)/uitest/windows/"
+        $template_file = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\Indextemplates\index.html"
+        $overall_table_template_file = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\Indextemplates\taskid\index.html"
+        $devices_table_template_file = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\Indextemplates\taskid\devicetest\index.html"
+        $report_table_template_file = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\Indextemplates\taskid\devicetest\mac\index.html"
+        Write-Host "Result Directory: $result_dir"
+        Write-Host "Template File: $report_table_template_file"
+        Write-Host "Generating index.html for the list of HTML files..."
+        & pwsh -File "$env:AGENT_BUILDDIRECTORY\s\eng\scripts\generatetable.ps1" -resultDir $result_dir -baseUrl $base_url -templateFile $report_table_template_file
+        Write-Host "Uploading HTML files to S3..."
+        Get-ChildItem -Path $result_dir -Filter *.html | ForEach-Object {
+            $file = $_.FullName
+            Write-Host "Uploading $file to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/windows/"
+            & aws s3 cp $file s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/windows/
+        }
+        # Verify the upload by downloading and printing the content from S3
+        & aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/windows/index.html" - | Out-File -FilePath "index.html"; Get-Content -Path "index.html"
+        Write-Host "Generating overall windows counts from test reports for S3 for s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/index.html"
+        $s3_bucket_path = "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/ui/"
+        $temp_dir = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\temporaryfiles\uitest\windows"
+        Write-Host "Process to select existing index file or default template file..."
+        # Ensure the temporary directory exists
+        if (-Not (Test-Path -Path $temp_dir)) {
+            Write-Host "Directory $temp_dir does not exist. Creating it..."
+            New-Item -Path $temp_dir -ItemType Directory
+        } else {
+            Write-Host "Directory $temp_dir already exists."
+        }
+        # Clear the directory of all HTML files
+        Write-Host "Clearing $temp_dir of any existing HTML files..."
+        Remove-Item -Path "$temp_dir\*.html" -Force -ErrorAction SilentlyContinue
+        # Define the path for the temporary index.html
+        $temp_index_path = Join-Path -Path $temp_dir -ChildPath "index.html"
+        # Attempt to download index.html from the S3 bucket
+        Write-Host "Attempting to download index.html from S3 bucket..."
+        $awsCommand = aws s3 cp "${s3_bucket_path}index.html" $temp_index_path
+        # Check if the download was successful
+        if ($LASTEXITCODE -eq 0) {
+            if (Test-Path $temp_index_path) {
+                Write-Host "index.html found in S3 and downloaded successfully."
+                $devices_table_template_file = $temp_index_path
+            } else {
+                Write-Host "index.html download command executed, but file not found. Using default template."
+            }
+        } else {
+            Write-Host "index.html not found in S3. Using default template."
+        }
+        & pwsh -File "$env:AGENT_BUILDDIRECTORY\s\eng\scripts\generatetable.ps1" -resultDir $result_dir -baseUrl $base_url -templateFile $devices_table_template_file -totalCounts "istotal"
+        Write-Host "Uploading the generated index.html back to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/..."
+        & aws s3 cp "$result_dir\index.html" s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/
+        Write-Host "Downloading and printing the uploaded index.html from s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/"
+        & aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/index.html" - | Out-File -FilePath "index.html"; Get-Content -Path "index.html"
+        Write-Host "Generating overall device counts from test reports for S3 for s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/index.html"
+        $s3_bucket_path = "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/"
+        $temp_dir = "$env:AGENT_BUILDDIRECTORY\s\eng\pipelines\syncfusion\temporaryfiles\uitest\windows"
+        Write-Host "Process to select existing index file or default template file..."
+        # Clear the directory of all HTML files
+        Write-Host "Clearing $temp_dir of any existing HTML files..."
+        Remove-Item -Path "$temp_dir\*.html" -Force -ErrorAction SilentlyContinue
+        # Define the path for the temporary index.html
+        $temp_index_path = Join-Path -Path $temp_dir -ChildPath "index.html"
+        # Attempt to download index.html from the S3 bucket
+        Write-Host "Attempting to download index.html from S3 bucket..."
+        $awsCommand = aws s3 cp "${s3_bucket_path}index.html" $temp_index_path
+        # Check if the download was successful
+        if ($LASTEXITCODE -eq 0) {
+            if (Test-Path $temp_index_path) {
+                Write-Host "index.html found in S3 and downloaded successfully."
+                $overall_table_template_file = $temp_index_path
+            } else {
+                Write-Host "index.html download command executed, but file not found. Using default template."
+            }
+        } else {
+            Write-Host "index.html not found in S3. Using default template."
+        }
+        # Downloading all the html reports for device test from S3
+        $s3_bucket_path="s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/"
+        $temp_dir_total="$(Agent.BuildDirectory)\s\eng\pipelines\syncfusion\temporaryfiles\uireports"
+        # Create the destination directory if it doesn't exist
+        mkdir -p "$temp_dir_total"
+        # Sync all HTML files except index.html from S3 to the temp_dir_total, flattening the directory structure
+        aws s3 sync "$s3_bucket_path" "$temp_dir_total" --exclude "index.html" --include "*.html"
+        echo "All HTML files have been downloaded and combined into $temp_dir_total."
+        & pwsh -File "$env:AGENT_BUILDDIRECTORY\s\eng\scripts\generatetable.ps1" -resultDir $temp_dir_total -baseUrl "https://testresults.syncfusion.com/maui/$(Build.SourceBranchName)/uitest/" -templateFile $overall_table_template_file -totalCounts "istotal"
+        Write-Host "Uploading the generated index.html back to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/..."
+        & aws s3 cp "$temp_dir_total\index.html" s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/
+        Write-Host "Downloading and printing the uploaded index.html from s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/"
+        & aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/index.html" - | Out-File -FilePath "index.html"; Get-Content -Path "index.html"
+        # Generating updated directory from S3 for s3://syncfusion-testresults/maui/
+        Write-Host "Generating updated directory list HTML for s3://syncfusion-testresults/maui/..."
+        $base_url = "https://testresults.syncfusion.com/maui/"
+        Write-Host "Fetching list of directories in s3://syncfusion-testresults/maui/..."
+        $directories = & aws s3 ls s3://syncfusion-testresults/maui/ | Select-String "PRE" | ForEach-Object { $_.ToString().Split()[1] }
+        # Create the list of directories for main bucket
+        $dir_list = ""
+        foreach ($dir in $directories) {
+            $dir_name = [System.IO.Path]::GetFileNameWithoutExtension($dir)
+            $dir_url = "${base_url}${dir_name}/"
+            $dir_list += "<li><a href=`"$dir_url`">$dir_name</a></li>"
+            Write-Host "dir_list: $dir_list"
+        }
+        Write-Host "Generated directory list: $dir_list"
+        # Insert the list into the template
+        $template_content = Get-Content -Path $template_file -Raw
+        $modified_content = $template_content -replace "(?s)<ul>.*?</ul>", "<ul>$dir_list</ul>"
+        # Upload the modified content directly to S3 for the main bucket
+        $modified_content | Set-Content -Path "index.html"
+        & aws s3 cp "index.html" s3://syncfusion-testresults/maui/index.html --content-type "text/html"
+        Write-Host "index.html generated and uploaded for s3://syncfusion-testresults/maui/"
+      displayName: 'windows UI test - Generate and Upload Dir-HTML File'

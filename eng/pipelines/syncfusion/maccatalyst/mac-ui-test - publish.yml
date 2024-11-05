@@ -1,0 +1,163 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'macos-14'
+
+variables:
+  - group: s3-credentials
+
+workspace:
+  clean: all
+
+resources:
+  pipelines:
+    - pipeline: sourcePipeline
+      source: 'MAUI Framework UI Test Mac - Part 8'
+      trigger: true
+
+steps:
+
+- script: |
+    echo "Setting AWS environment variables..."
+    export AWS_ACCESS_KEY_ID=$(AWS_ACCESS_KEY_ID)
+    export AWS_SECRET_ACCESS_KEY=$(AWS_SECRET_ACCESS_KEY)
+    export AWS_DEFAULT_REGION=$(AWS_DEFAULT_REGION)
+
+    echo "Download HTML files from S3..."
+    temp_dir="$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/temporaryfiles/staging/uitest/mac"
+      
+    echo "Clearing $temp_dir of any existing HTML files..."
+    rm -f $temp_dir/*.html
+    
+    s3_bucket_path="s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/staging/uitest/mac/"
+    
+    echo "Downloading HTML files from $s3_bucket_path..."
+    aws s3 cp $s3_bucket_path $temp_dir --recursive --exclude "*" --include "*.html"
+    
+    echo "Download completed. Files saved to $temp_dir."
+
+    echo "mac UI test publish - Generating index.html for the list of HTML files..."
+
+    result_dir="$temp_dir"
+    base_url="https://testresults.syncfusion.com/maui/$(Build.SourceBranchName)/uitest/mac/"
+    template_file=$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/Indextemplates/index.html
+    overall_table_template_file=$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/Indextemplates/taskid/index.html
+    devices_table_template_file=$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/Indextemplates/taskid/devicetest/index.html
+    report_table_template_file=$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/Indextemplates/taskid/devicetest/mac/index.html
+
+    echo "Result Directory: $result_dir"
+    echo "Template File: report_table_template_file"
+
+    echo "Generating index.html for the list of HTML files..."
+    pwsh -File "$(Agent.BuildDirectory)/s/eng/scripts/generatetable.ps1" -resultDir "$result_dir" -baseUrl "$base_url" -templateFile "$report_table_template_file"
+
+    echo "Uploading HTML files to S3..."
+    for file in $result_dir/*.html; do
+      if [ -f "$file" ]; then
+        echo "Uploading $file to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/mac/"
+        aws s3 cp "$file" s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/mac/
+      else
+        echo "No HTML files found in $result_dir/"
+        exit 1
+      fi
+    done
+
+    # Verify the upload by downloading and printing the content from S3
+    aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/mac/index.html" - | cat
+
+    echo "Generating overall mac counts from test reports for S3 for s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/index.html"
+    s3_bucket_path="s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/"
+    temp_dir="$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/temporaryfiles/uitest/mac"
+    echo "process to select existing index file or default template file..."
+    # Clear the directory of all HTML files
+    echo "Clearing $temp_dir of any existing HTML files..."
+    rm -f $temp_dir/*.html
+
+    # Attempt to download index.html from the S3 bucket
+    aws s3 cp "${s3_bucket_path}index.html" "$temp_dir/index.html" 2>/dev/null
+
+    # Check if the aws s3 cp command was successful
+    if [ $? -eq 0 ]; then
+        devices_table_template_file="$temp_dir/index.html"
+        echo "Already available index.html found in S3. Using it as the template."
+    else
+        echo "index.html not found in S3. Using devices_table_template_file as the template."
+    fi
+    pwsh -File "$(Agent.BuildDirectory)/s/eng/scripts/generatetable.ps1" -resultDir "$result_dir" -baseUrl "$base_url" -templateFile "$devices_table_template_file" -totalCounts "istotal"
+
+    echo "Uploading the generated index.html back to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/..."
+    aws s3 cp "$result_dir/index.html" s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/
+
+    echo "Downloading and printing the uploaded index.html from s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/"
+    aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/index.html" - | cat
+
+    echo "Generating overall UI counts from test reports for S3 for s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/index.html"
+    s3_bucket_path="s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/"
+    temp_dir="$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/temporaryfiles/uitest/mac"
+    echo "process to select existing index file or default template file..."
+    # Clear the directory of all HTML files
+    echo "Clearing $temp_dir of any existing HTML files..."
+    rm -f $temp_dir/*.html
+
+    # Attempt to download index.html from the S3 bucket
+    aws s3 cp "${s3_bucket_path}index.html" "$temp_dir/index.html" 2>/dev/null
+
+    # Check if the aws s3 cp command was successful
+    if [ $? -eq 0 ]; then
+        overall_table_template_file="$temp_dir/index.html"
+        echo "Already available index.html found in S3. Using it as the template."
+    else
+        echo "index.html not found in S3. Using devices_table_template_file as the template."
+    fi
+    # Downloading all the html reports for device test from S3
+    s3_bucket_path="s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/uitest/"
+    temp_dir_total="$(Agent.BuildDirectory)/s/eng/pipelines/syncfusion/temporaryfiles/uireports"
+
+    # Create the destination directory if it doesn't exist
+    mkdir -p "$temp_dir_total"
+
+    # Sync all HTML files except index.html from S3 to the temp_dir_total, flattening the directory structure
+    aws s3 sync "$s3_bucket_path" "$temp_dir_total" --exclude "index.html" --include "*.html"
+
+    echo "All HTML files have been downloaded and combined into $temp_dir_total."
+    pwsh -File "$(Agent.BuildDirectory)/s/eng/scripts/generatetable.ps1" -resultDir "$temp_dir_total" -baseUrl "https://testresults.syncfusion.com/maui/$(Build.SourceBranchName)/uitest/" -templateFile "$overall_table_template_file" -totalCounts "istotal"
+
+    echo "Uploading the generated index.html back to s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/..."
+    aws s3 cp "$temp_dir_total/index.html" s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/
+
+    echo "Downloading and printing the uploaded index.html from s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/"
+    aws s3 cp "s3://syncfusion-testresults/maui/$(Build.SourceBranchName)/index.html" - | cat
+
+    # Generating updated directory from S3 for s3://syncfusion-testresults/maui/
+    echo "Generating updated directory list HTML for s3://syncfusion-testresults/maui/..."
+
+    base_url="https://testresults.syncfusion.com/maui/"
+
+    echo "Fetching list of directories in s3://syncfusion-testresults/maui/..."
+    directories=$(aws s3 ls s3://syncfusion-testresults/maui/ | grep PRE | awk '{print $2}')
+
+    # Create the list of directories for main bucket
+    dir_list=""
+    for dir in $directories; do
+      dir_name=$(basename "$dir" /)
+      dir_url="${base_url}${dir_name}/"
+      dir_list="${dir_list}<li><a href=\"$dir_url\">$dir_name</a></li>"
+      echo "dir_list: $dir_list"
+    done
+
+    echo "Generated directory list: $dir_list"
+
+    # Insert the list into the template using awk for main bucket
+    modified_content=$(awk -v file_list="$dir_list" '
+    BEGIN { found=0 }
+    /<ul>/ && !found { print; print "<ul>" file_list "</ul>"; found=1; next }
+    /<\/ul>/ && found { found=0; next }
+    { if (!found) print }
+    ' "$template_file")
+
+    # Upload the modified content directly to S3 for main bucket
+    echo "$modified_content" | aws s3 cp - "s3://syncfusion-testresults/maui/index.html" --content-type "text/html"
+
+    echo "index.html generated and uploaded for s3://syncfusion-testresults/maui/"
+  displayName: 'mac UI test - Generate and Upload Dir-HTML File'

@@ -1,0 +1,89 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'macos-14'
+
+variables:
+  - group: s3-credentials  # This will import variables from the 's3-credentials' group
+  - name: S3_BUCKET_PATH
+    value: 's3://syncfusion-testresults/maui/$(Build.SourceBranchName)/staging/uitest/ios/'
+  - name: APPIUM_HOME
+    value: $(System.DefaultWorkingDirectory)/.appium/
+steps:
+- template: ../common/common.yml
+
+- task: UseNode@1
+  inputs:
+    version: "20.3.1"
+  displayName: "Install node"
+
+- task: CmdLine@2
+  displayName: 'Install Appium Workload'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/appium-install.ps1'
+
+- task: CmdLine@2
+  displayName: 'Set Environment Variable'
+  inputs:
+    script: 'export APPIUM_HOME="$(System.DefaultWorkingDirectory)/.appium/"'
+
+- script: |
+    echo "##[group]Build iOS UI Test Samples"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -Script eng/devices/ios.cake --target=uitest-build
+    echo "##[endgroup]"
+  displayName: 'Build iOS UI Test Samples'
+
+- script: |
+    echo "##[group]Prepare Simulator"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -Script eng/devices/ios.cake --target=uitest-prepare
+    echo "##[endgroup]"
+  displayName: 'Prepare Simulator'
+
+- script: |
+    echo "##[group]Run iOS UI Test Samples"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -Script eng/devices/ios.cake --target=uitest --test-filter="TestCategory=Border"
+    echo "##[endgroup]"
+  displayName: 'Run iOS UI Test Samples'
+
+- task: CmdLine@2
+  displayName: 'HTML Conversion'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/ParseTrx.ps1 -inputDirectory "$(Agent.BuildDirectory)/a/test-results"'
+
+- task: PowerShell@2
+  displayName: 'Copy Test Result Files'
+  inputs:
+    targetType: 'inline'
+    script: |
+      $sourceDir = '$(Build.ArtifactStagingDirectory)/test-results/results'
+      $destDir = '$(Build.ArtifactStagingDirectory)/test-results/staging'
+      $newFileName = 'Part1.html'
+      New-Item -ItemType Directory -Force -Path $destDir      
+      Get-ChildItem -Path $sourceDir -Filter *.html | ForEach-Object {
+          # Copy each HTML file to the destination directory with a new name
+          Copy-Item $_.FullName -Destination (Join-Path $destDir $newFileName)
+      }
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Test Results'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/test-results/staging'
+    ArtifactName: 'iOS UI Test Result Part 1'
+
+# New step to upload the result HTML files to the specified S3 bucket
+- task: CmdLine@2
+  displayName: 'Upload HTML files to S3'
+  inputs:
+    script: |
+      echo "Uploading HTML files to S3..."
+      aws s3 cp "$(Build.ArtifactStagingDirectory)/test-results/staging" $(S3_BUCKET_PATH) --recursive --exclude "*" --include "*.html"
+      echo "Upload completed."
+
+- bash: |
+    pwsh ./build.ps1 --target=Cleanup -Script eng/devices/ios.cake ---results="$(Build.ArtifactStagingDirectory)"
+  displayName: Cleanup and Create Simulator Logs if Test Run Failed To
+  continueOnError: true

@@ -1,0 +1,116 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'macos-14'
+
+variables:
+  ANDROID_HOME: /Users/runner/Library/Android/sdk
+  ANDROID_SKD_ROOT: /Users/runner/Library/Android/sdk
+  EMULATOR_NAME: xamarin_android_emulator
+  APPIUM_HOME: $(System.DefaultWorkingDirectory)/.appium/
+
+steps:
+  
+- pwsh: |
+    dotnet --version
+    dotnet --list-sdks
+  displayName: 'Show .NET SDK info'
+
+- task: CmdLine@2
+  displayName: 'Set Latest XCode Version'
+  inputs:
+    script: 'sudo xcode-select -s /Applications/Xcode_16.app/Contents/Developer'
+
+- bash: |
+    echo "##vso[task.setvariable variable=JI_JAVA_HOME]$(JAVA_HOME_11_X64)"
+    echo "##vso[task.setvariable variable=JAVA_HOME]$(JAVA_HOME_11_X64)"
+  displayName: 'Setup JDK Paths'
+  condition: and(succeeded(), eq(variables['Agent.OS'], 'Darwin'))
+
+- script: |
+    echo "##[group]Dotnet Tool Restore"
+    cd /Users/runner//work/1/s/
+    dotnet tool restore
+  displayName: 'Dotnet Tool Restore'
+
+- task: CmdLine@2
+  displayName: 'Install Latest .NET MAUI Workload'
+  inputs:
+    script: 'dotnet workload install maui maui-android maui-windows maui-ios maui-maccatalyst maui-tizen android ios maccatalyst macos mobile-librarybuilder'
+
+- task: CmdLine@2
+  displayName: 'Install Tizen Workload'
+  inputs:
+    script: 'curl -sSL https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.sh | sudo bash'
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+
+- script: |
+    brew install node
+  displayName: 'Install node'
+
+- script: |
+    pip install awscli
+  displayName: 'Install AWS CLI'
+
+- script: |
+    echo "##[group]Install local dotnet"
+    cd /Users/runner//work/1/s/
+    dotnet cake --target=dotnet --verbosity=diagnostic
+    echo "##[endgroup]"
+  displayName: 'Install local dotnet'
+
+- script: |
+    echo "##[group]Build MSBuild Tasks"
+    cd /Users/runner//work/1/s/
+    dotnet build ./Microsoft.Maui.BuildTasks.slnf
+    echo "##[endgroup]"
+  displayName: 'Build MSBuild Tasks'
+
+- script: |
+    echo Setting up environment variables...
+    echo "##vso[task.setvariable variable=ANDROID_HOME]$(ANDROID_HOME)"
+    echo "##vso[task.setvariable variable=PATH]$(ANDROID_HOME)/platform-tools:$(ANDROID_HOME)/cmdline-tools/latest/bin:$(PATH)"
+  displayName: 'Set Environment Variables'
+
+- task: CmdLine@2
+  displayName: 'Set Environment Variable'
+  inputs:
+    script: 'export APPIUM_HOME="$(System.DefaultWorkingDirectory)/.appium/"'
+
+- script: |
+    echo "##[group]Build Android UI Test Samples"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -Script eng/devices/android.cake --target=uitest-build --workloads=global
+    echo "##[endgroup]"
+  displayName: 'Build Android UI Test Samples'
+
+- script: |
+    echo "##[group]Prepare Emulator"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -Script eng/devices/android.cake --target=uitest-prepare
+    echo "##[endgroup]"
+  displayName: 'Prepare Emulator'
+
+- script: |
+    echo "##[group]Run Android UI Test Samples"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -Script eng/devices/android.cake --target=uitest --test-filter="TestCategory=Border"
+    echo "##[endgroup]"
+  displayName: 'Run Android UI Test Samples'
+- script: |
+    echo "##[group]Dotnet Tool Restore"
+    cd /Users/runner//work/1/s/
+    dotnet tool install --global AndroidSDK.Tool
+    android sdk install --package "system-images;android-30;google_apis;x86_64"
+    android avd create --name DEVICE_TESTS_EMULATOR --sdk "system-images;android-30;google_apis;x86_64" --device "Nexus 5X"
+    android avd start --name DEVICE_TESTS_EMULATOR --no-window --no-audio --no-boot-anim --memory 2048 --cores 2 --verbose --wait-boot 
+  displayName: 'Dotnet Tool Restore'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Test Results Folder'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'Test Results for UI Test Android'

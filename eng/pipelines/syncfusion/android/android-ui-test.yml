@@ -1,0 +1,85 @@
+trigger: none
+pr: none
+
+pool:
+  vmImage: 'macOS-14'
+
+variables:
+  ANDROID_HOME: /Users/runner/Library/Android/sdk
+  ANDROID_SKD_ROOT: /Users/runner/Library/Android/sdk
+  EMULATOR_NAME: xamarin_android_emulator
+  APPIUM_HOME: $(System.DefaultWorkingDirectory)/.appium/
+
+steps:
+- checkout: self
+- template: ../common/common.yml
+
+- script: |
+    echo Installing Android SDK tools...
+    mkdir -p $(ANDROID_HOME)
+    curl -o commandlinetools.zip https://dl.google.com/android/repository/commandlinetools-mac-8512546_latest.zip
+    unzip -d $(ANDROID_HOME) commandlinetools.zip
+    mv $(ANDROID_HOME)/cmdline-tools $(ANDROID_HOME)/cmdline-tools-temp
+    mkdir $(ANDROID_HOME)/cmdline-tools
+    mv $(ANDROID_HOME)/cmdline-tools-temp $(ANDROID_HOME)/cmdline-tools/latest
+  displayName: 'Install Android SDK Command-line Tools'
+
+- script: |
+    echo Accepting licenses...
+    yes | $(ANDROID_HOME)/cmdline-tools/latest/bin/sdkmanager --licenses
+
+    echo Installing Android SDK components...
+    $(ANDROID_HOME)/cmdline-tools/latest/bin/sdkmanager "platform-tools" "build-tools;30.0.3" "platforms;android-30" "emulator" "system-images;android-30;google_apis_playstore;x86_64" "extras;google;google_play_services"
+  displayName: 'Install Android SDK Components'
+
+- script: |
+    echo Setting up environment variables...
+    echo "##vso[task.setvariable variable=ANDROID_HOME]$(ANDROID_HOME)"
+    echo "##vso[task.setvariable variable=PATH]$(ANDROID_HOME)/platform-tools:$(ANDROID_HOME)/cmdline-tools/latest/bin:$(PATH)"
+  displayName: 'Set Environment Variables'
+- task: CmdLine@2
+  displayName: 'Update SDK Manager'
+  inputs:
+    script: '$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --update'
+
+- task: CmdLine@2
+  displayName: 'Install Manager'
+  inputs:
+    script: '$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "emulator"'
+
+- task: CmdLine@2
+  displayName: 'Install Appium Workload'
+  inputs:
+    script: 'dotnet pwsh $(Agent.BuildDirectory)/s/eng/scripts/appium-install.ps1'
+
+- task: CmdLine@2
+  displayName: 'Set Environment Variable'
+  inputs:
+    script: 'export APPIUM_HOME="$(System.DefaultWorkingDirectory)/.appium/"'
+
+- script: |
+    echo "##[group]Build Android UI Test Samples"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake --target=uitests-apphost --usenuget=false --verbosity=diagnostic
+    echo "##[endgroup]"
+  displayName: 'Build Android UI Test Samples'
+
+- script: |
+    echo "##[group]Prepare Emulator"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -Script eng/devices/android.cake --target=uitest-prepare
+    echo "##[endgroup]"
+  displayName: 'Prepare Emulator'
+
+- script: |
+    echo "##[group]Run Android UI Test Samples"
+    cd $(Agent.BuildDirectory)/s/
+    dotnet cake -Script eng/devices/android.cake --target=uitest --test-filter="TestCategory=Border"
+    echo "##[endgroup]"
+  displayName: 'Run Android UI Test Samples'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Test Results Folder'
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'Test Results for UI Test Android'

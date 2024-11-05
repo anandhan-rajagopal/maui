@@ -1,0 +1,64 @@
+steps:
+
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '9.0.100-rc.2.24474.11'
+    includePreviewVersions: true  # Enables the download of preview versions
+  displayName: 'Install .NET 9 Preview SDK'
+
+- script: |
+    dotnet --version
+  displayName: 'Check .NET SDK Version'
+- task: CmdLine@2
+  displayName: 'Set Latest XCode Version'
+  inputs:
+    script: 'sudo xcode-select -s /Applications/Xcode_16.app/Contents/Developer'
+
+- bash: |
+    echo "##vso[task.setvariable variable=JI_JAVA_HOME]$(JAVA_HOME_11_X64)"
+    echo "##vso[task.setvariable variable=JAVA_HOME]$(JAVA_HOME_11_X64)"
+  displayName: 'Setup JDK Paths'
+  condition: and(succeeded(), eq(variables['Agent.OS'], 'Darwin'))
+
+- script: |
+    echo "##[group]Dotnet Tool Restore"
+    cd $(Build.SourcesDirectory)/
+    dotnet tool restore
+  displayName: 'Dotnet Tool Restore'
+- task: CmdLine@2
+  displayName: 'Install Latest .NET MAUI Workload'
+  inputs:
+    script: 'dotnet workload install maui'
+
+//- task: CmdLine@2
+//  displayName: 'Install Latest .NET MAUI Workload'
+//  inputs:
+//    script: 'dotnet workload install maui maui-android maui-windows maui-ios maui-maccatalyst maui-tizen android ios maccatalyst macos mobile-librarybuilder'
+
+- task: CmdLine@2
+  displayName: 'Install Tizen Workload'
+  inputs:
+    script: 'curl -sSL https://raw.githubusercontent.com/Samsung/Tizen.NET/main/workload/scripts/workload-install.sh | sudo bash'
+
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+
+- script: |
+    pip install awscli
+  displayName: 'Install AWS CLI'
+
+- script: |
+    echo "##[group]Install local dotnet"
+    cd $(Build.SourcesDirectory)/
+    dotnet cake --target=dotnet --verbosity=diagnostic
+    echo "##[endgroup]"
+  displayName: 'Install local dotnet'
+
+- script: |
+    echo "##[group]Build MSBuild Tasks"
+    cd $(Build.SourcesDirectory)/
+    dotnet build ./Microsoft.Maui.BuildTasks.slnf
+    echo "##[endgroup]"
+  displayName: 'Build MSBuild Tasks'
