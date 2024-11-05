@@ -20,7 +20,11 @@ steps:
     version: '9.0.100-rc.2.24474.11'
     includePreviewVersions: true  # Enables the download of preview versions
   displayName: 'Install .NET 9 Preview SDK'
-
+- task: CmdLine@2
+  displayName: 'Install Latest .NET MAUI Workload'
+  inputs:
+    script: 'dotnet workload install maui --source https://api.nuget.org/v3/index.json'
+  continueOnError: True
 
 - script: |
     echo "##[group]Launch Emulator"
@@ -35,12 +39,6 @@ steps:
   displayName: 'Set Latest XCode Version'
   inputs:
     script: 'sudo xcode-select -s /Applications/Xcode_16.app/Contents/Developer'
-
-- task: CmdLine@2
-  displayName: 'Install Latest .NET MAUI Workload'
-  inputs:
-    script: 'dotnet workload install maui --source https://api.nuget.org/v3/index.json'
-  continueOnError: True
 
 - task: CmdLine@2
   displayName: 'Install Tizen Workload'
