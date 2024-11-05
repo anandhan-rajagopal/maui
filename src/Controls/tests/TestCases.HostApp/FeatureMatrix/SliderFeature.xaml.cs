@@ -11,12 +11,14 @@ namespace Maui.Controls.Sample
 		private Slider SliderControl = new Slider();
 		public ICommand DragStartedCommand { get; }
 		public ICommand DragCompletedCommand { get; }
+		public ICommand ValueChangedCommand { get; }
 
 		public SliderFeature()
 		{
 			InitializeComponent();
 			DragStartedCommand = new Command(OnDragStarted);
 			DragCompletedCommand = new Command(OnDragCompleted);
+			ValueChangedCommand = new Command(OnValueChanged);
 		}
 
 		private void OnIsEnabledCheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -34,7 +36,7 @@ namespace Maui.Controls.Sample
 		{
 			if (double.TryParse(MinimumEntry.Text, out double min))
 			{
-				viewModel.Minimum = min; 
+				viewModel.Minimum = min;
 			}
 		}
 
@@ -42,7 +44,7 @@ namespace Maui.Controls.Sample
 		{
 			if (double.TryParse(MaximumEntry.Text, out double max))
 			{
-				viewModel.Maximum = max; 
+				viewModel.Maximum = max;
 			}
 		}
 
@@ -57,29 +59,44 @@ namespace Maui.Controls.Sample
 
 		private void OnThumbColorButtonClicked(object sender, EventArgs e)
 		{
-			SliderControl.ThumbColor = Colors.Green;
+			if (SliderControl.ThumbColor == Colors.Green)
+				SliderControl.ThumbColor = Colors.Blue;
+			else
+				SliderControl.ThumbColor = Colors.Green;
 		}
 
 
 		private void OnMinTrackColorButtonClicked(object sender, EventArgs e)
 		{
-			SliderControl.MinimumTrackColor = Colors.Fuchsia;
+			if (SliderControl.MinimumTrackColor == Colors.Fuchsia)
+				SliderControl.MinimumTrackColor = Colors.DarkBlue;
+			else
+				SliderControl.MinimumTrackColor = Colors.Fuchsia;
 		}
 
 		private void OnMaxTrackColorButtonClicked(object sender, EventArgs e)
 		{
-			SliderControl.MaximumTrackColor = Colors.Red;
+			if (SliderControl.MaximumTrackColor == Colors.Red)
+				SliderControl.MaximumTrackColor = Colors.Purple;
+			else
+				SliderControl.MaximumTrackColor = Colors.Red;
 		}
 
 		private void OnBackgroundColorButtonClicked(object sender, EventArgs e)
 		{
-			SliderControl.BackgroundColor = Colors.Yellow;
+			if (SliderControl.BackgroundColor == Colors.Yellow)
+				SliderControl.BackgroundColor = Colors.Pink;
+			else
+				SliderControl.BackgroundColor = Colors.Yellow;
 		}
 
 
 		private void OnThumbImageSourceButtonClicked(object sender, EventArgs e)
 		{
-			SliderControl.ThumbImageSource = "image1.png";
+			if (SliderControl.ThumbImageSource != null)
+				SliderControl.ThumbImageSource = null;
+			else
+				SliderControl.ThumbImageSource = "coffee.png";
 		}
 
 		private void OnFlowDirectionChanged(object sender, CheckedChangedEventArgs e)
@@ -96,12 +113,18 @@ namespace Maui.Controls.Sample
 		{
 			DragCompletedStatusLabel.Text = "Drag Completed";
 		}
+
+		private void OnValueChanged()
+		{
+			ValueChangedStatusLabel.Text = "Value Changed";
+		}
+
 		private void OnResetButtonClicked(object sender, EventArgs e)
 		{
-			
+
 			sliderContainer.Children.Clear();
 
-			SliderControl = new Slider() { WidthRequest = 300, HeightRequest = 50 };
+			SliderControl = new Slider() { WidthRequest = 300, HeightRequest = 50, AutomationId = "SliderControl" };
 			SliderControl.SetBinding(Slider.MaximumProperty, nameof(SliderViewModel.Maximum));
 			SliderControl.SetBinding(Slider.MinimumProperty, nameof(SliderViewModel.Minimum));
 			SliderControl.SetBinding(Slider.ValueProperty, nameof(SliderViewModel.Value));
@@ -113,10 +136,9 @@ namespace Maui.Controls.Sample
 			SliderControl.SetBinding(Slider.ThumbColorProperty, nameof(SliderViewModel.ThumbColor));
 			SliderControl.SetBinding(Slider.BackgroundColorProperty, nameof(SliderViewModel.BackgroundColor));
 			SliderControl.SetBinding(Slider.FlowDirectionProperty, nameof(SliderViewModel.FlowDirection));
-			DragStartStatusLabel.SetBinding(Label.TextProperty, nameof(viewModel.DragStartStatus));
-			DragCompletedStatusLabel.SetBinding(Label.TextProperty, nameof(viewModel.DragCompletedStatus));
-			SliderControl.DragStarted += (s, e) => DragStartedCommand.Execute(null);
-			SliderControl.DragCompleted += (s, e) => DragCompletedCommand.Execute(null);
+			SliderControl.DragStarted += (s, e) => viewModel.DragStartedCommand.Execute(null);
+			SliderControl.DragCompleted += (s, e) => viewModel.DragCompletedCommand.Execute(null);
+			SliderControl.ValueChanged += (s, e) => viewModel.ValueChangedCommand.Execute(null);
 			sliderContainer.Children.Add(SliderControl);
 			viewModel.Minimum = 0;
 			viewModel.Maximum = 1;
@@ -127,8 +149,9 @@ namespace Maui.Controls.Sample
 			FlowDirectionLTR.IsChecked = true;
 			IsEnabledTrueRadio.IsChecked = true;
 			IsVisibleTrueRadio.IsChecked = true;
-			DragStartStatusLabel.Text = String.Empty ;
-			DragCompletedStatusLabel.Text = String.Empty;
+			viewModel.DragStartStatus = String.Empty;
+			viewModel.DragCompletedStatus = String.Empty;
+			viewModel.ValueChangedStatus = String.Empty;
 
 		}
 	}
@@ -148,6 +171,7 @@ namespace Maui.Controls.Sample
 		private FlowDirection _flowDirection = FlowDirection.LeftToRight;
 		private string _dragStartStatus;
 		private string _dragCompletedStatus;
+		private string _valueChangedStatus;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -294,7 +318,6 @@ namespace Maui.Controls.Sample
 			}
 		}
 
-		// Properties for data binding
 		public string DragStartStatus
 		{
 			get => _dragStartStatus;
@@ -303,7 +326,8 @@ namespace Maui.Controls.Sample
 				if (_dragStartStatus != value)
 				{
 					_dragStartStatus = value;
-					OnPropertyChanged(nameof(DragStartStatus));
+					OnPropertyChanged();
+					OnPropertyChanged(nameof(IsTriggeredEventVisible));
 				}
 			}
 		}
@@ -315,11 +339,34 @@ namespace Maui.Controls.Sample
 			{
 				if (_dragCompletedStatus != value)
 				{
-					_dragCompletedStatus = value;
-					OnPropertyChanged(nameof(DragCompletedStatus));
+					_dragCompletedStatus = value; 
+					OnPropertyChanged();
+					OnPropertyChanged(nameof(IsTriggeredEventVisible));
+
 				}
 			}
 		}
+
+		public string ValueChangedStatus
+		{
+			get => _valueChangedStatus;
+			set
+			{
+				if (_valueChangedStatus != value)
+				{
+					_valueChangedStatus = value;
+					OnPropertyChanged();
+					OnPropertyChanged(nameof(IsTriggeredEventVisible));
+
+				}
+			}
+
+		}
+
+		public bool IsTriggeredEventVisible => !string.IsNullOrWhiteSpace(DragStartStatus) ||
+										   !string.IsNullOrWhiteSpace(DragCompletedStatus) ||
+										   !string.IsNullOrWhiteSpace(ValueChangedStatus);
+
 		protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -327,23 +374,33 @@ namespace Maui.Controls.Sample
 		private void OnDragStarted()
 		{
 			DragStartStatus = "Drag Started";
-			DragCompletedStatus = string.Empty;  
+			DragCompletedStatus = string.Empty;
 		}
 
 		private void OnDragCompleted()
 		{
 			DragCompletedStatus = "Drag Completed";
 		}
-		 
+
+		private void OnValueChanged()
+		{
+			ValueChangedStatus = "Value Changed";
+		}
+
 		private Command _dragStartedCommand;
 		private Command _dragCompletedCommand;
- 
+
+		private Command _valueChangedCommand;
+
 		public Command DragStartedCommand =>
 			_dragStartedCommand ??= new Command(OnDragStarted);
 
 		public Command DragCompletedCommand =>
 			_dragCompletedCommand ??= new Command(OnDragCompleted);
-	 
+
+		public Command ValueChangedCommand =>
+			_valueChangedCommand ??= new Command(OnValueChanged);
+
 	}
 
 
