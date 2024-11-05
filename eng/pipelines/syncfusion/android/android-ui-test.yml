@@ -39,7 +39,7 @@ steps:
 - task: CmdLine@2
   displayName: 'Install Latest .NET MAUI Workload'
   inputs:
-    script: 'dotnet workload install maui'
+    script: 'dotnet workload install maui --source https://api.nuget.org/v3/index.json'
   continueOnError: True
 
 - task: CmdLine@2
