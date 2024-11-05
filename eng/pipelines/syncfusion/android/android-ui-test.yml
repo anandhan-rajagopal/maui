@@ -40,6 +40,7 @@ steps:
   displayName: 'Install Latest .NET MAUI Workload'
   inputs:
     script: 'dotnet workload install maui'
+  continueOnError: True
 
 - task: CmdLine@2
   displayName: 'Install Tizen Workload'
