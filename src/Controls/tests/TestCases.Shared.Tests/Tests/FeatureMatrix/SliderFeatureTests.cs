@@ -25,9 +25,10 @@ namespace Microsoft.Maui.TestCases.Tests
 		{
 			App.WaitForElement("ResetButton");
 			App.Tap("ResetButton");
-			Assert.That(App.WaitForTextToBePresentInElement("MinimumValueLabel", "Minimum: 0"), Is.True, "Default Value for Minimum should be 0.");
-			Assert.That(App.WaitForTextToBePresentInElement("MaximumValueLabel", "Maximum: 1"), Is.True, "Default Value for Maximum should be 1.");
-			Assert.That(App.WaitForTextToBePresentInElement("ValueLabel", "Value: 0"), Is.True, "Default value for Value should be 0.");
+
+			Assert.That(App.FindElement("MinimumValueLabel").GetText(), Is.EqualTo("Minimum: 0"));
+			Assert.That(App.FindElement("MaximumValueLabel").GetText(), Is.EqualTo("Maximum: 1"));
+			Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("Value: 0"));
 		}
 		[Test]
 		[Category(UITestCategories.Slider)]
@@ -37,7 +38,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("ResetButton");
 			App.EnterText("MinimumEntry", "3");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("MinimumValueLabel", "Minimum: 3"), Is.True, "Minimum value should be updated to 3.");
+			Assert.That(App.FindElement("MinimumValueLabel").GetText(), Is.EqualTo("Minimum: 3"));
 		}
 		[Test]
 		[Category(UITestCategories.Slider)]
@@ -47,7 +48,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("ResetButton");
 			App.EnterText("MaximumEntry", "20");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("MaximumValueLabel", "Maximum: 20"), Is.True, "Maximum value should be updated to 20.");
+			Assert.That(App.FindElement("MaximumValueLabel").GetText(), Is.EqualTo("Maximum: 20"));
 		}
 		[Test]
 		[Category(UITestCategories.Slider)]
@@ -57,7 +58,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("ResetButton");
 			App.EnterText("ValueEntry", "1");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("ValueLabel", "Value: 1"), Is.True, "Current value should be updated to 1.");
+			Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("Value: 1"));
 		}
 		[Test]
 		[Category(UITestCategories.Slider)]
@@ -70,7 +71,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.PressEnter();
 			App.EnterText("ValueEntry", "150");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("ValueLabel", "Value: 100"), Is.True, "The value should not exceed the maximum and should be capped at 100.");
+			Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("Value: 100"));
 		}
 		[Test]
 		[Category(UITestCategories.Slider)]
@@ -82,7 +83,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.PressEnter();
 			App.EnterText("ValueEntry", "50");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("ValueLabel", "Value: 50"), Is.True, "The current value should be set to 50.");
+			Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("Value: 50"));
 		}
 
 		[Test]
@@ -96,8 +97,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.PressEnter();
 			App.EnterText("ValueEntry", "-2");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("ValueLabel", "Value: -2"),
-						Is.True, "The value label should display the correct value of 30.");
+			Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("Value: -2"));
 		}
 		[Test]
 		[Category(UITestCategories.Slider)]
@@ -109,7 +109,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.PressEnter();
 			App.EnterText("MaximumEntry", "25");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("MaximumValueLabel", "Maximum: 25"), Is.True, "Updated maximum value should match new minimum, 20.");
+			Assert.That(App.FindElement("MaximumValueLabel").GetText(), Is.EqualTo("Maximum: 25"));
 		}
 		[Test]
 		[Category(UITestCategories.Slider)]
@@ -121,7 +121,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.PressEnter();
 			App.EnterText("ValueEntry", "70");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("MaximumValueLabel", "Maximum: 50"), Is.True, "The maximum label should display the correct maximum value of 50.");
+			Assert.That(App.FindElement("MaximumValueLabel").GetText(), Is.EqualTo("Maximum: 50"));
 		}
 
 		[Test]
@@ -132,7 +132,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("ResetButton");
 			App.EnterText("MinimumEntry", "-1");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("MaximumValueLabel", "Maximum: 1"), Is.True, " maximum value should not change from Default Value, 1.");
+			Assert.That(App.FindElement("MaximumValueLabel").GetText(), Is.EqualTo("Maximum: 1"));
 		}
 		[Test]
 		[Category(UITestCategories.Slider)]
@@ -146,7 +146,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.PressEnter();
 			App.EnterText("ValueEntry", "60");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("ValueLabel", "Value: 50"), Is.True, "Current value should be updated to 60.");
+			Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("Value: 50"));
 		}
 		[Test]
 		[Category(UITestCategories.Slider)]
@@ -160,7 +160,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.PressEnter();
 			App.EnterText("ValueEntry", "10");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("ValueLabel", "Value: 20"), Is.True, "Current value should be updated to 60.");
+			Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("Value: 20"));
 		}
 
 		[Test]
@@ -178,7 +178,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.ClearText("MinimumEntry");
 			App.EnterText("MinimumEntry", "20");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("ValueLabel", "Value: 20"), Is.True, "Updated value should match  minimum, 20.");
+			Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("Value: 20"));
 		}
 
 		[Test]
@@ -191,7 +191,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.PressEnter();
 			App.EnterText("MinimumEntry", "60");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("MinimumValueLabel", "Minimum: 60"), Is.True, "The updated minimum value should be set to 60.");
+			Assert.That(App.FindElement("MinimumValueLabel").GetText(), Is.EqualTo("Minimum: 60"));
 		}
 		[Test]
 		[Category(UITestCategories.Slider)]
@@ -203,7 +203,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.PressEnter();
 			App.EnterText("ValueEntry", "10");
 			App.PressEnter();
-			Assert.That(App.WaitForTextToBePresentInElement("MinimumValueLabel", "Minimum: 20"), Is.True, "The minimum label should display the correct minimum value of 20.");
+			Assert.That(App.FindElement("MinimumValueLabel").GetText(), Is.EqualTo("Minimum: 20"));
 		}
 
 #if !MACCATALYST
@@ -214,16 +214,15 @@ namespace Microsoft.Maui.TestCases.Tests
 		{
 			App.WaitForElement("ResetButton");
 			App.Tap("ResetButton");
-#if WINDOWS 
+#if WINDOWS
 			App.DragCoordinates(550,240,580,240);
 #elif IOS
             App.DragCoordinates(50,65,130,200);
 #elif ANDROID
-        App.TouchAndHold("SliderControl");     
+            App.TouchAndHold("SliderControl");     
 #endif
 			Task.Delay(TimeSpan.FromSeconds(15)).Wait();
-			Assert.That(App.WaitForTextToBePresentInElement("DragStartStatusLabel", "Drag Started"),
-			Is.True, "DragStartStatusLabel should display 'Drag Started' when dragging.");
+			Assert.That(App.FindElement("DragStartStatusLabel").GetText(), Is.EqualTo("Drag Started"));
 		}
 
 		[Test]
@@ -241,8 +240,7 @@ namespace Microsoft.Maui.TestCases.Tests
         App.TouchAndHold("SliderControl");  
 #endif
 			App.Tap("DragCompletedStatusLabel");
-			Assert.That(App.WaitForTextToBePresentInElement("DragCompletedStatusLabel", "Drag Completed"),
-						Is.True, "DragCompletedStatusLabel should display 'Drag Completed' after dragging.");
+			Assert.That(App.FindElement("DragCompletedStatusLabel").GetText(), Is.EqualTo("Drag Completed"));
 		}
 
 		[Test]
@@ -793,8 +791,8 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 #endif
 
-		}
 	}
+}
 
 
 
