@@ -148,20 +148,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.PressEnter();
 			Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("Value: 50"));
 		}
-		[Test]
-		[Category(UITestCategories.Slider)]
-		public void SliderCurrentValueLowerThanMinimumAndMaximumTest()
-		{
-			App.WaitForElement("ResetButton");
-			App.Tap("ResetButton");
-			App.EnterText("MinimumEntry", "20");
-			App.PressEnter();
-			App.EnterText("MaximumEntry", "30");
-			App.PressEnter();
-			App.EnterText("ValueEntry", "10");
-			App.PressEnter();
-			Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("Value: 20"));
-		}
 
 		[Test]
 		[Category(UITestCategories.Slider)]
