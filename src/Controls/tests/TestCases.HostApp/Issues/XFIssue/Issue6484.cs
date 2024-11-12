@@ -1,3 +1,5 @@
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID // text not shown timed out exception
+
 namespace Maui.Controls.Sample.Issues;
 
 [Issue(IssueTracker.Github, 6484, "[iOS] Shell - Go back two pages crashes the app with a NullReferenceException",
@@ -35,7 +37,7 @@ public class Issue6484 : TestShell
 
 
 		await Task.Delay(1);
-		layout.AddLogicalChild(
+		layout.Children.Add(
 			new Label()
 			{
 				Text = "If app hasn't crashed test has succeeded",
@@ -44,3 +46,4 @@ public class Issue6484 : TestShell
 
 	}
 }
+#endif

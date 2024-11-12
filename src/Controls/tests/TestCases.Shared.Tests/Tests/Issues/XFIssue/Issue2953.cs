@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID // TIMED OUT EXCEPTION FOR ELEMENTT HEADER 3
+
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,16 +14,18 @@ public class Issue2953 : _IssuesUITest
 
 	public override string Issue => "GroupHeaderCells disappear when item is removed from a group in ListView (iOS only) ";
 
-	// [Test]
-	// [Category(UITestCategories.ListView)]
-	// [FailsOnIOS]
-	// public void Issue2953Test()
-	// {
-	// 	App.Screenshot("I am at Issue 2953");
-	// 	App.WaitForElement(q => q.Marked("Header 3"));
-	// 	App.Screenshot("I see the Header 3");
-	// 	App.Tap(q => q.Marked("btnRemove"));
-	// 	App.WaitForElement(q => q.Marked("Header 3"));
-	// 	App.Screenshot("I still see the Header 3");
-	// }
+	[Test]
+	[Category(UITestCategories.ListView)]
+
+	public void Issue2953Test()
+	{
+		App.Screenshot("I am at Issue 2953");
+		App.WaitForElement("Header 3");
+		App.Screenshot("I see the Header 3");
+		App.Tap("btnRemove");
+		App.WaitForElement("Header 3");
+		App.Screenshot("I still see the Header 3");
+	}
+
 }
+#endif
