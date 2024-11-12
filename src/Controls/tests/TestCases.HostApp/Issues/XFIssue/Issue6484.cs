@@ -1,4 +1,3 @@
-#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID // text not shown timed out exception
 
 namespace Maui.Controls.Sample.Issues;
 
@@ -46,4 +45,4 @@ public class Issue6484 : TestShell
 
 	}
 }
-#endif
+ 
