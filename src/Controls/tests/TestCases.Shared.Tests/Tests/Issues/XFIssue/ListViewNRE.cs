@@ -14,7 +14,6 @@ public class ListViewNRE : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.ListView)]
-	//ilsOnIOS]
 	public void ListViewNRETest()
 	{
 		App.WaitForElement("1");

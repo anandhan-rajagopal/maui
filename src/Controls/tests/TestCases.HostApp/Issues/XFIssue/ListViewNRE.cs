@@ -1,5 +1,3 @@
-using static Maui.Controls.Sample.Issues.Bugzilla26233;
-
 namespace Maui.Controls.Sample.Issues;
 
 [Issue(IssueTracker.None, 0, "ListView crashes when disposed on ItemSelected", PlatformAffected.iOS)]
