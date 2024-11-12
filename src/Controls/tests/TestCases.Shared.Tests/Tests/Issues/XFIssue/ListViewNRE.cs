@@ -12,13 +12,13 @@ public class ListViewNRE : _IssuesUITest
 
 	public override string Issue => "ListView crashes when disposed on ItemSelected";
 
-	//[Test]
-	//[Category(UITestCategories.ListView)]
-	//[FailsOnIOS]
-	//public void ListViewNRETest()
-	//{
-	//	App.WaitForElement(q => q.Marked("1"));
-	//	App.Tap(q => q.Marked("1"));
-	//	App.WaitForElement(q => q.Marked(Success));
-	//}
+	[Test]
+	[Category(UITestCategories.ListView)]
+	//ilsOnIOS]
+	public void ListViewNRETest()
+	{
+		App.WaitForElement("1");
+		App.Tap("1");
+		App.WaitForElement("Success");
+	}
 }

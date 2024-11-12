@@ -1,3 +1,5 @@
+using static Maui.Controls.Sample.Issues.Bugzilla26233;
+
 namespace Maui.Controls.Sample.Issues;
 
 [Issue(IssueTracker.None, 0, "ListView crashes when disposed on ItemSelected", PlatformAffected.iOS)]
@@ -12,13 +14,27 @@ public class ListViewNRE : TestContentPage
 			ItemsSource = Enumerable.Range(0, 10)
 		};
 
-		listView.ItemSelected += ListView_ItemSelected;
+		listView.ItemTemplate = new DataTemplate(() =>
+		{
+			var label = new Label();
+			label.SetBinding(Label.TextProperty, ".");
+			label.SetBinding(Label.AutomationIdProperty, new Binding("."));
 
+			var viewCell = new ViewCell
+			{
+				View = label
+			};
+
+			return viewCell;
+		});
+
+		listView.ItemSelected += ListView_ItemSelected;
+		
 		Content = listView;
 	}
 
 	void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
 	{
-		Content = new Label { Text = Success };
+		Content = new Label { AutomationId = Success , Text = Success };
 	}
 }
