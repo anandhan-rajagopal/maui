@@ -12,6 +12,7 @@ public class Issue3292 : TestContentPage
 		BindingContext = vm;
 
 		var tableview = new TableView();
+		tableview.AutomationId = "HelloWorldChanged";
 		var section = new TableSection();
 		section.SetBinding(TableSectionBase.TitleProperty, new Binding("SectionTitle"));
 		var root = new TableRoot();

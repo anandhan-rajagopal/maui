@@ -12,6 +12,7 @@ public class Issue3276 : TestTabbedPage
 		listview.ItemTemplate = new DataTemplate(typeof(CaCell));
 
 		listview.SetBinding(ListView.ItemsSourceProperty, new Binding("SearchResults"));
+		listview.SetBinding(ListView.AutomationIdProperty, new Binding("SearchResults"));
 
 		var page = new ContentPage { Title = "First", Content = listview, BindingContext = new VM() };
 

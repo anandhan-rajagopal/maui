@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS // Time out Exception -element List view 
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,12 +13,13 @@ public class Issue3319 : _IssuesUITest
 
 	public override string Issue => "[iOS] Clear and adding rows exception";
 
-	//[Test]
-	//[Category(UITestCategories.ListView)]
-	//[FailsOnMauiIOS]
-	//public void Issue3319Test()
-	//{
-	//	App.WaitForElement(q => q.Marked("Will this repo work?"));
+	[Test]
+	[Category(UITestCategories.ListView)]
 
-	//}
+	public void Issue3319Test()
+	{
+		App.WaitForElement("Will this repo work?");
+
+	}
 }
+#endif

@@ -23,7 +23,7 @@ public class Issue3139 : TestContentPage
 
 		var alertTask = DisplayAlert("AlertDialog", "Close me", "Close");
 		await Task.Delay(200);
-		var result1 = await DisplayActionSheet("ActionSheet", "Also Yes", "Click Yes", "Yes", "Yes Yes") ?? string.Empty;
+		var result1 = await DisplayActionSheet("ActionSheet", "Also Yes", "Click Yes", "Yes", "Yes Yes") ?? string.Empty;	
 		var result2 = await Application.Current.MainPage.DisplayActionSheet("Main page ActionSheet", "Again Yes", "Click Yes", "Yes", "Yes Yes") ?? string.Empty;
 		var testPassed = result1.Contains("Yes", StringComparison.OrdinalIgnoreCase) && result2.Contains("Yes", StringComparison.OrdinalIgnoreCase) && !alertTask.IsCompleted;
 		statusLabel.Text = "Test " + (testPassed ? "passed" : "failed");

@@ -29,6 +29,7 @@ public class Issue3788 : TestContentPage
 			ViewCell cell = new ViewCell();
 			Label label = new Label();
 			label.SetBinding(Label.TextProperty, "Text");
+			label.SetBinding(Label.AutomationIdProperty, "Text");
 			cell.View = label;
 			return cell;
 		});
@@ -47,9 +48,10 @@ public class Issue3788 : TestContentPage
 				Command = new Command(() =>
 				{
 					data.Test();
-				})
+				}),AutomationId = "_buttonText"
 			}
 		};
+
 	}
 	public class ChangingList : List<TestModel>, INotifyCollectionChanged
 	{

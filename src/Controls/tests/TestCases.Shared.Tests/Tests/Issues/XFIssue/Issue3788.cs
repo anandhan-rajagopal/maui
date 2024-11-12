@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS //Time out exception in element - label
+sing NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,12 +13,13 @@ public class Issue3788 : _IssuesUITest
 	public override string Issue => "[UWP] ListView with observable collection always seems to refresh the entire list";
 
 	// TODO: these _ variables are variabled in the UI and need to be AutomationId values
-	//[Test]
-	//[FailsOnIOSWhenRunningOnXamarinUITest]
-	//public void ReplaceItemScrollsListToTop()
-	//{
-	//	App.WaitForElement(_replaceMe);
-	//	App.Tap(_buttonText);
-	//	App.WaitForElement(_last);
-	//}
+	[Test]
+	[Category(UITestCategories.ListView)]
+	public void ReplaceItemScrollsListToTop()
+	{
+		App.WaitForElement("_replaceMe");
+		App.Tap("_buttonText");
+		App.WaitForElement("_last");
+	}
 }
+#endif

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS //Time out Exception - Element Table View
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,11 +13,13 @@ public class Issue3292 : _IssuesUITest
 
 	public override string Issue => "TableSection.Title property binding fails in XAML";
 
-	// [Test]
-	// [Category(UITestCategories.TableView)]
-	// [FailsOnIOS]
-	// public void Issue3292Test()
-	// {
-	// 	App.WaitForElement(q => q.Marked("Hello World Changed"));
-	// }
+	[Test]
+	[Category(UITestCategories.TableView)]
+
+	public void Issue3292Test()
+	{
+		App.WaitForElement("HelloWorldChanged");
+		App.WaitForElement("Hello World Changed");
+	}
 }
+#endif
