@@ -1,27 +1,26 @@
 using System.Collections.ObjectModel;
-
+using static System.Net.Mime.MediaTypeNames;
 namespace Maui.Controls.Sample.Issues;
-
-
 
 [Issue(IssueTracker.Bugzilla, 56710, "ContextActionsCell.OnMenuItemPropertyChanged throws NullReferenceException", PlatformAffected.iOS)]
 public class Bugzilla56710 : TestNavigationPage
 {
 	protected override void Init()
 	{
+		
 		var root = new ContentPage
 		{
 			Content = new Button
 			{
 				Text = "Go to Test Page",
-				Command = new Command(() => PushAsync(new TestPage()))
+				Command = new Command(() => PushAsync(new TestPage())),
 			}
+
 		};
 
 		PushAsync(root);
 	}
 }
-
 
 public class TestPage : ContentPage
 {
@@ -37,7 +36,8 @@ public class TestPage : ContentPage
 		var testListView = new ListView
 		{
 			ItemsSource = Items,
-			ItemTemplate = new DataTemplate(typeof(TestCell))
+			ItemTemplate = new DataTemplate(typeof(TestCell)),
+			AutomationId = "TestListView" 
 		};
 
 		Content = testListView;
@@ -51,24 +51,27 @@ public class TestPage : ContentPage
 	}
 }
 
-
 public class Bugzilla56710TestItem
 {
 	public string Text { get; set; }
 	public string ItemText { get; set; }
 }
 
-
 public class TestCell : ViewCell
 {
 	public TestCell()
 	{
-		var menuItem = new MenuItem();
+		var menuItem = new MenuItem
+		{
+			AutomationId = "ContextMenuItem" 
+		};
 		menuItem.SetBinding(MenuItem.TextProperty, "ItemText");
 		ContextActions.Add(menuItem);
 
-
-		var textLabel = new Label();
+		var textLabel = new Label
+		{
+			AutomationId = "CellTextLabel"
+		};
 		textLabel.SetBinding(Label.TextProperty, "Text");
 		View = textLabel;
 	}

@@ -10,7 +10,7 @@
 			{
 				AutomationId = "TestButton",
 				Text = "Click me",
-				WidthRequest = 50,
+				WidthRequest = 200,
 				HeightRequest = 50,
 				CornerRadius = 25,
 				//BackgroundColor = Colors.Accent
