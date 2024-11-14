@@ -12,15 +12,16 @@ public class Issue6127 : _IssuesUITest
 
 	public override string Issue => "[Bug] ToolbarItem Order property ignored";
 
-	//[Test]
-	//[Category(UITestCategories.ToolbarItem)]
-	//public void Issue6127Test() 
-	//{
-	//	App.WaitForElement(PrimaryToolbarIcon);
+	[Test]
+	[Category(UITestCategories.ToolbarItem)]
+	public void Issue6127Test()
+	{
+		App.WaitForElement("PrimaryToolbarIcon");
+#if Widnows
+		App.Tap("MoreButton");
+#endif
+		App.WaitForElement("SecondaryToolbarIcon");
 
-	//	App.Tap("More options");
-	//	App.WaitForElement(SecondaryToolbarIcon);
-
-	//	App.Screenshot("There is a secondary toolbar menu and item");
-	//}
+		App.Screenshot("There is a secondary toolbar menu and item");
+	}
 }
