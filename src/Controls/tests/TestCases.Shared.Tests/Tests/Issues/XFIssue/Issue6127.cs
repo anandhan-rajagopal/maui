@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS
+//The secondary toolbar icon does not work correctly on both MacCatalyst and iOS.
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,15 +14,16 @@ public class Issue6127 : _IssuesUITest
 
 	public override string Issue => "[Bug] ToolbarItem Order property ignored";
 
-	//[Test]
-	//[Category(UITestCategories.ToolbarItem)]
-	//public void Issue6127Test() 
-	//{
-	//	App.WaitForElement(PrimaryToolbarIcon);
+	[Test]
+	[Category(UITestCategories.ToolbarItem)]
+	public void Issue6127Test()
+	{
+		App.WaitForElement("PrimaryToolbarIcon");
 
-	//	App.Tap("More options");
-	//	App.WaitForElement(SecondaryToolbarIcon);
+		App.TapMoreButton();
+		App.WaitForElement("SecondaryToolbarIcon");
 
-	//	App.Screenshot("There is a secondary toolbar menu and item");
-	//}
+		App.Screenshot("There is a secondary toolbar menu and item");
+	}
 }
+#endif
