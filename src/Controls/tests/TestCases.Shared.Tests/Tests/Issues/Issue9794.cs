@@ -1,4 +1,4 @@
-﻿/*
+﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST //while click back button, button is not wroking
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -15,12 +15,12 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		
 		[Test]
 		[Category(UITestCategories.Shell)]
-		[Category(UITestCategories.Compatibility)]
 		public void EnsureTabBarStaysVisibleAfterPoppingPage()
 		{
-			this.IgnoreIfPlatforms([TestDevice.Android, TestDevice.Mac, TestDevice.Windows]);
-
 			App.Tap("GoForward");
+#if WINDOWS
+			App.TapBackArrow();
+#endif
 			App.Back();
 			App.Tap("tab2");
 			App.Tap("tab1");
@@ -31,4 +31,4 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		}
 	}
 }
-*/
+#endif
