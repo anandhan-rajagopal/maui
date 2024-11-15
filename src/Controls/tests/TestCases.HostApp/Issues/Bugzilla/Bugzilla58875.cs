@@ -8,7 +8,6 @@ public class Bugzilla58875 : TestNavigationPage
 {
 	const string Button1Id = "Button1Id";
 	const string ContextAction = "More";
-	const string Target = "Swipe me";
 
 	protected override void Init()
 	{
@@ -43,7 +42,7 @@ public class Bugzilla58875 : TestNavigationPage
 
 			Items = new ObservableCollection<string> {
 					"Item 1",
-					Target,
+					"Swipe me",
 					"Item 3",
 					"Swipe me too, leave me open",
 					"Swipe left -> right (trigger back navigation)"

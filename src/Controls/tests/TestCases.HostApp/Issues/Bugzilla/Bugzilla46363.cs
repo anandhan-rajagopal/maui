@@ -4,7 +4,6 @@ namespace Maui.Controls.Sample.Issues;
 [Issue(IssueTracker.Bugzilla, 46363, "TapGestureRecognizer blocks List View Context Actions", PlatformAffected.Android)]
 public class Bugzilla46363 : TestContentPage
 {
-	const string Target = "Two";
 	const string ContextAction = "Context Action";
 	const string TapSuccess = "Tap Success";
 	const string TapFailure = "Tap command executed more than once";
@@ -16,7 +15,7 @@ public class Bugzilla46363 : TestContentPage
 
 	protected override void Init()
 	{
-		var list = new List<string> { "One", Target, "Three", "Four" };
+		var list = new List<string> { "One", "Two", "Three", "Four" };
 
 		var lv = new ListView
 		{
@@ -25,7 +24,7 @@ public class Bugzilla46363 : TestContentPage
 		};
 
 		var instructions = new Label();
-		var result = new Label { Text = Testing };
+		var result = new Label { AutomationId = "TestingLabel", Text = Testing };
 
 		s_tapCommand = new Command(() =>
 		{
@@ -61,6 +60,7 @@ public class Bugzilla46363 : TestContentPage
 		{
 			var label = new Label();
 			label.SetBinding(Label.TextProperty, ".");
+	
 			View = new StackLayout { Children = { label } };
 
 			ContextActions.Add(new MenuItem
