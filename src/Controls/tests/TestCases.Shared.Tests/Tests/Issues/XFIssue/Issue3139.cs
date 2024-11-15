@@ -1,4 +1,4 @@
-﻿#if WINDOWS
+﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS //Timeout Exception - Displat Alert
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -13,15 +13,15 @@ public class Issue3139 : _IssuesUITest
 
 	public override string Issue => "DisplayActionSheet is hiding behind Dialogs";
 
-	// [Test]
-	// [Category(UITestCategories.ActionSheet)]
-	// public void Issue3139Test ()
-	// {
-	// 	App.WaitForElement (q => q.Marked ("Click Yes"));
-	// 	App.Tap (c => c.Marked ("Yes"));
-	// 	App.WaitForElement (q => q.Marked ("Again Yes"));
-	// 	App.Tap (c => c.Marked ("Yes"));
-	// 	App.WaitForElement(q => q.Marked("Test passed"));
-	// }
+	 [Test]
+	[Category(UITestCategories.ActionSheet)]
+	public void Issue3139Test()
+	{
+		App.WaitForElement("Click Yes");
+		App.Tap("Yes");
+		App.WaitForElement("Again Yes");
+		App.Tap("Yes");
+		App.WaitForElement("Test passed");
+	}
 }
 #endif
