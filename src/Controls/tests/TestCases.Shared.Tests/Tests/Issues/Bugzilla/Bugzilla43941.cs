@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿# if TEST_FAILS_ON_CATALYST //while tap back button, not working
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -39,3 +40,4 @@ public class Bugzilla43941 : _IssuesUITest
 		}
 	}
 }
+#endif

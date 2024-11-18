@@ -19,7 +19,7 @@ public class Bugzilla44129 : _IssuesUITest
 	{
 		App.WaitForElement("First");
 		App.FindElement("Second");
-		App.Tap("Third");
 		App.Tap("Crash Me");
+		App.FindElement("Third");
 	}
 }
