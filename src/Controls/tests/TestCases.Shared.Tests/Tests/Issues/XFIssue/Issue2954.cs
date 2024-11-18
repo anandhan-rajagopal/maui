@@ -12,16 +12,12 @@ public class Issue2954 : _IssuesUITest
 
 	public override string Issue => "Cell becomes empty after adding a new one with context actions (TableView) ";
 
-	// [Test]
-	// [Category(UITestCategories.TableView)]
-	// [FailsOnIOS]
-	// public void Issue2954Test()
-	// {
-	// 	App.Screenshot("I am at Issue 2954");
-	// 	App.WaitForElement(q => q.Marked("Cell2"));
-	// 	App.Screenshot("I see the Cell2");
-	// 	App.Tap(c => c.Marked("Add new"));
-	// 	App.WaitForElement(q => q.Marked("Cell2"));
-	// 	App.Screenshot("I still see the Cell2");
-	// }
+	[Test]
+	[Category(UITestCategories.TableView)]
+	public void Issue2954Test()
+	{
+		App.WaitForElement("Cell2");
+		App.Tap("Add new");
+		App.FindElement("Cell2");
+	}
 }
