@@ -12,31 +12,31 @@ public class Issue8291 : _IssuesUITest
 
 	public override string Issue => "[Android] Editor - Text selection menu does not appear when selecting text on an editor placed within a ScrollView";
 
-	//[Test]
-	//[Category(UITestCategories.Editor)]
-	//[FailsOnAndroidWhenRunningOnXamarinUITest]
-	//public void ContextMenuShowsUpWhenPressAndHoldTextOnEditorAndEntryField()
-	//{
-	//	App.TouchAndHold("PressEditor");
-	//	TestForPopup();
-	//	App.Tap("PressEntry");
-	//	App.TouchAndHold("PressEntry");
-	//	TestForPopup();
-	//}
+	[Test]
+	[Category(UITestCategories.Editor)]
+	[FailsOnAndroidWhenRunningOnXamarinUITest]
+	public void ContextMenuShowsUpWhenPressAndHoldTextOnEditorAndEntryField()
+	{
+		App.TouchAndHold("PressEditor");
+		TestForPopup();
+		App.Tap("PressEntry");
+		App.TouchAndHold("PressEntry");
+		TestForPopup();
+	}
 
-	//void TestForPopup()
-	//{
-	//	var result = App.QueryUntilPresent(() =>
-	//	{
-	//		return App.Query("Paste")
-	//				.Union(App.Query("Share"))
-	//				.Union(App.Query("Copy"))
-	//				.Union(App.Query("Cut"))
-	//				.Union(App.Query("Select All"))
-	//				.ToArray();
-	//	});
+	void TestForPopup()
+	{
+		var result = App.QueryUntilPresent(() =>
+		{
+			return "Paste"
+					.Union("Share")
+					.Union("Copy")
+					.Union("Cut")
+					.Union("Select All")
+					.ToArray();
+		});
 
-	//	Assert.IsNotNull(result);
-	//	Assert.IsTrue(result.Length > 0);
-	//}
+		Assert.That(result, Is.Not.Null);
+		Assert.That(result.Length, Is.GreaterThan(0));
+	}
 }
