@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿//Failed in Android TapFlyoutIcon not working
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,12 +13,13 @@ public class Issue9440 : _IssuesUITest
 
 	public override string Issue => "Flyout closes with two or more taps";
 
-	//[Test]
-	//[Category(UITestCategories.Shell)]
-	//public void GitHubIssue9440()
-	//{
-	//	DoubleTapInFlyout(Test1);
-	//	App.WaitForElement(q => q.Marked(Test1));
-	//	Assert.AreEqual(false, FlyoutIsPresented);
-	//}
+	[Test]
+	[Category(UITestCategories.Shell)]
+	public void GitHubIssue9440()
+	{
+		App.TapFlyoutIcon();
+		App.WaitForElement("Test 1");
+		App.DoubleTap("Test 1");
+		App.WaitForElement("False");
+	}
 }

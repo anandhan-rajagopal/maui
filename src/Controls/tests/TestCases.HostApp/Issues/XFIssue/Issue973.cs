@@ -45,7 +45,7 @@ public class Issue973 : TestFlyoutPage
 
 			if (cellName == "Close Flyout")
 			{
-				IsPresented = false;
+				MainThread.BeginInvokeOnMainThread(() => IsPresented = false);
 			}
 			else
 			{
@@ -56,7 +56,7 @@ public class Issue973 : TestFlyoutPage
 
 				d.PresentMaster += (s, args) =>
 				{
-					IsPresented = true;
+					MainThread.BeginInvokeOnMainThread(() => IsPresented = true);
 				};
 
 				Detail = d;
@@ -79,7 +79,7 @@ public class Issue973 : TestFlyoutPage
 
 		detail.PresentMaster += (sender, e) =>
 		{
-			IsPresented = true;
+			MainThread.BeginInvokeOnMainThread(() => IsPresented = true);
 		};
 
 		Detail = detail;

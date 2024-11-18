@@ -118,8 +118,12 @@ public class FlyoutPageNavigation : FlyoutPage
 			var page = e.SelectedItem as NavigationPage;
 			if (page != null)
 			{
-				Detail = page;
-				IsPresented = false;
+				MainThread.InvokeOnMainThreadAsync(async () =>
+				{
+					Detail = page;
+					await Task.Delay(100);
+					IsPresented = false;
+				});
 			}
 		};
 	}
