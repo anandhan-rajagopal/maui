@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS //TimeoutException - testO element
+﻿#if TEST_FAILS_ON_CATALYST //Getting 'OpenQA.Selenium.InvalidSelectorException' on line no 29 unable to find the picker items in catalyst.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -23,7 +23,11 @@ public class Issue1777 : _IssuesUITest
 		App.WaitForElement(_btnText);
 		App.Tap(_btnText);
 		App.Tap(_pickerTableId);
+#if IOS
+		App.WaitForElement(AppiumQuery.ByXPath("//XCUIElementTypePickerWheel[@value='test 0']")); 
+#else
 		App.WaitForElement("test 0");
+#endif
 	}
 }
 #endif
