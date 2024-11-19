@@ -1,5 +1,4 @@
-﻿/*
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -18,14 +17,12 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		[Category(UITestCategories.Compatibility)]
 		public void ClickingOnTabToPopToRootDoesntBreakNavigation()
 		{
-			this.IgnoreIfPlatforms([TestDevice.Android, TestDevice.Mac, TestDevice.Windows]);
-
 			App.Tap("Click Me");
 			App.WaitForElement("FinalLabel");
-			App.Tap("Tab1AutomationId");
+			App.TapBackArrow();
+			App.TapBackArrow();
 			App.Tap("Click Me");
-			App.WaitForNoElement("Success");
+			App.WaitForElement("Success");
 		}
 	}
 }
-*/
