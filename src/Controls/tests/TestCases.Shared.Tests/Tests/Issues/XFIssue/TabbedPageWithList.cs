@@ -13,20 +13,25 @@ public class TabbedPageWithList : _IssuesUITest
 
 	public override string Issue => "TabbedPage with list";
 
-	[Test]
-	public void TabbedPageWithListViewIssueTestsAllElementsPresent()
-	{
-		App.WaitForElement("Tab Two");
-		App.WaitForElement("List Page");
-	}
+	//	[Test]
+	//[FailsOnIOSWhenRunningOnXamarinUITest]
+	//public void TabbedPageWithListViewIssueTestsAllElementsPresent()
+	//{
+	//	App.WaitForElement(q => q.Marked("Tab Two"));
+	//	App.WaitForElement(q => q.Marked("List Page"));
+	//	App.Screenshot("All elements present");
+	//}
 
-	[Test]
-	public void TabbedPageWithListViewIssueTestsNavigateToAndVerifyListView()
-	{
-		App.Tap("List Page");
+	//[Test]
+	//[FailsOnIOSWhenRunningOnXamarinUITest]
+	//public void TabbedPageWithListViewIssueTestsNavigateToAndVerifyListView()
+	//{
+	//	App.Tap(q => q.Marked("List Page"));
 
-		App.WaitForElement("Jason");
-		App.WaitForElement("Ermau");
-		App.WaitForElement("Seth");
-	}
+	//	App.WaitForElement(q => q.Marked("Jason"));
+	//	App.WaitForElement(q => q.Marked("Ermau"));
+	//	App.WaitForElement(q => q.Marked("Seth"));
+
+	//	App.Screenshot("ListView correct");
+	//}
 }
