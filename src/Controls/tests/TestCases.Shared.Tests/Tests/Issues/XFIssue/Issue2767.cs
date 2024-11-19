@@ -12,12 +12,13 @@ public class Issue2767 : _IssuesUITest
 
 	public override string Issue => "ArgumentException: NaN not valid for height";
 
-	// [Test]
-	// [Category(UITestCategories.Grid)]
-	// [FailsOnIOS]
-	// public void Issue2767Test()
-	// {
-	// 	App.WaitForElement("Label 1:1");
-	// 	Assert.IsEmpty(App.Query("Collapsed"));
-	// }
+	[Test]
+	[Category(UITestCategories.ListView)]
+
+	public void Issue2767Test()
+	{
+		App.WaitForElement("Label 1:1");
+		//Assert.IsEmpty(App.Query("Collapsed"));
+		App.WaitForNoElement("Collapsed");// passing on WaitForElement and WaitForNoElement
+	}
 }
