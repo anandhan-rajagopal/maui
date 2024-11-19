@@ -12,12 +12,13 @@ public class Issue12126 : _IssuesUITest
 
 	public override string Issue => "[iOS] TabBarIsVisible = True/False breaking for multiple nested pages";
 
-	[Test]
-	[Category(UITestCategories.Shell)]
-	public void NavigatingBackFromMultiplePushPagesChangesTabVisibilityCorrectly()
-	{
-		App.WaitForElement("TestReady");
-		App.TapBackArrow();
-		App.WaitForElement("Tab 1");
-	}
+	// Where does TapBackArrow() come from?
+	// [Test]
+	// [Category(UITestCategories.Shell)]
+	// public void NavigatingBackFromMultiplePushPagesChangesTabVisibilityCorrectly()
+	// {
+	// 	App.WaitForElement("TestReady");
+	// 	TapBackArrow();
+	// 	App.WaitForElement("Tab 1");
+	// }
 }
