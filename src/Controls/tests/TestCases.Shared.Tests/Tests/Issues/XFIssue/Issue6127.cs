@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS
-//The secondary toolbar icon does not work correctly on both MacCatalyst and iOS.
+﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Secondary ToolBar still not supported of iOS and Catalyst https://github.com/dotnet/maui/issues/815
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -8,6 +7,9 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 
 public class Issue6127 : _IssuesUITest
 {
+	const string PrimaryToolbarIcon = "PrimaryToolbarIcon";
+	const string SecondaryToolbarIcon = "SecondaryToolbarIcon";
+
 	public Issue6127(TestDevice testDevice) : base(testDevice)
 	{
 	}
@@ -18,12 +20,14 @@ public class Issue6127 : _IssuesUITest
 	[Category(UITestCategories.ToolbarItem)]
 	public void Issue6127Test()
 	{
+		//AutomationId for ToolBarIcon is not works in android
+#if ANDROID 
+		App.WaitForElement(AppiumQuery.ByXPath("//android.widget.Button[@content-desc='PrimaryToolbarIcon']"));
+#else
 		App.WaitForElement("PrimaryToolbarIcon");
-
+#endif
 		App.TapMoreButton();
-		App.WaitForElement("SecondaryToolbarIcon");
-
-		App.Screenshot("There is a secondary toolbar menu and item");
+		App.WaitForElement("Coffee");
 	}
 }
 #endif

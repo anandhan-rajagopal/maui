@@ -17,7 +17,6 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		[Category(UITestCategories.ListView)]
 		[Category(UITestCategories.Picker)]
 		[Category(UITestCategories.Compatibility)]
-		[FailsOnIOSWhenRunningOnXamarinUITest]
 		public void Bugzilla1023Test()
 		{
 			for (var n = 0; n < 10; n++)
@@ -26,7 +25,7 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 				App.Tap("Push");
 
 				App.WaitForElement("ListView");
-				App.Back();
+				App.TapBackArrow();
 			}
 
 			// At this point, the counter can be any value, but it's most likely not zero.
