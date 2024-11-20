@@ -18,8 +18,7 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		[Category(UITestCategories.CollectionView)]
 		public void CollectionViewInShellShouldBeVisible()
 		{
-
-			App.WaitForNoElement(Success);
+			App.WaitForElement(Success);
 		}
 	}
 }

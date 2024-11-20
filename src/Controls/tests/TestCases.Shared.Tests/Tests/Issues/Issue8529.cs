@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS //while click back button, button is not wroking
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -23,12 +22,8 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 			App.WaitForElement(ButtonId, "Timed out waiting for first page.");
 			App.Tap(ButtonId);
 			App.WaitForElement("LabelId", "Timed out waiting for the destination page.");
-#if WINDOWS
-			App.TapBackArrow();
-#endif
-			App.Back();
+			App.TapBackArrow("BackButtonImage");			
 			App.WaitForElement(ButtonId, "Timed out waiting to navigate back to the first page.");
 		}
 	}
 }
-#endif

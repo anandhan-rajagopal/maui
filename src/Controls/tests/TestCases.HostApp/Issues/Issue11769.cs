@@ -37,7 +37,7 @@ namespace Maui.Controls.Sample.Issues
 	{
 		protected override void Init()
 		{
-			Items.Add(new FlyoutItem())
+			Items.Add(new FlyoutItem());
 			MainThread.InvokeOnMainThreadAsync(() =>
 			{
 				var tab = new Tab()
