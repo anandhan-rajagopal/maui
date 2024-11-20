@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_CATALYST // Getting an OpenQA.Selenium.InvalidSelectorException : XQueryError:6 - "invalid type" in Line: 23. Using timeout also not works.
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -6,6 +7,15 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 {
 	public class Issue9006 : _IssuesUITest
 	{
+#if ANDROID
+		const string Back = "Navigate up";
+		const string Tab1 = "Navigate up";
+#else
+		const string Back = "Back";
+		const string Tab1 = "Tab 1";
+#endif
+		const string ClickMe = "ClickMe";
+		const string FinalLabel = "FinalLabel";
 		public Issue9006(TestDevice testDevice) : base(testDevice)
 		{
 		}
@@ -17,12 +27,15 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		[Category(UITestCategories.Compatibility)]
 		public void ClickingOnTabToPopToRootDoesntBreakNavigation()
 		{
-			App.Tap("Click Me");
-			App.WaitForElement("FinalLabel");
-			App.TapBackArrow();
-			App.TapBackArrow();
-			App.Tap("Click Me");
-			App.WaitForElement("Success");
+			App.WaitForElement(ClickMe);
+			App.Tap(ClickMe);
+			App.WaitForElement(FinalLabel);	
+			App.TapBackArrow(Back);
+			App.TapBackArrow(Tab1);
+			App.WaitForElement(ClickMe);
+			App.Tap(ClickMe);
+			Assert.That(App.WaitForElement(FinalLabel)?.GetText(), Is.EqualTo("Success"));
 		}
 	}
 }
+#endif

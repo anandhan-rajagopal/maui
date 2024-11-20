@@ -1697,20 +1697,52 @@ namespace UITest.Appium
 		/// <summary>
 		/// Navigates back in the application by simulating a tap on the platform-specific back navigation button.
 		/// </summary>
+		/// <param name="app">The IApp instance representing the main gateway to interact with the application.</param>
+		/// <param name="customBackButtonIdentifier">Optional. The custom identifier for the back button. If not provided, default platform-specific identifiers will be used.</param>
+		public static void TapBackArrow(this IApp app, string customBackButtonIdentifier = "")
+		{
+			switch (app)
+			{
+				case AppiumAndroidApp _:
+					app.Tap(AppiumQuery.ByXPath(string.IsNullOrEmpty(customBackButtonIdentifier)
+						? "//android.widget.ImageButton[@content-desc='Navigate up']"
+						: $"//android.widget.ImageButton[@content-desc='{customBackButtonIdentifier}']"));
+					break;
+
+				case AppiumIOSApp _:
+				case AppiumCatalystApp _:
+					if (string.IsNullOrEmpty(customBackButtonIdentifier))
+					{
+						app.Tap(AppiumQuery.ByAccessibilityId("Back"));
+					}
+					else
+					{
+						app.Tap(app is AppiumIOSApp
+							? AppiumQuery.ByXPath($"//XCUIElementTypeButton[@name='{customBackButtonIdentifier}']")
+							: AppiumQuery.ByName(customBackButtonIdentifier));
+					}
+					break;
+
+				case AppiumWindowsApp _:
+					app.Tap(AppiumQuery.ByAccessibilityId("NavigationViewBackButton"));
+					break;
+			}
+		}
+
+		/// <summary>
+		/// Taps the "More" button in the app, with platform-specific logic for Android and Windows.
+		/// This method does not currently support iOS and macOS platforms.
+		/// </summary>
 		/// <param name="app">Represents the main gateway to interact with an app.</param>
-		public static void TapBackArrow(this IApp app)
+		public static void TapMoreButton(this IApp app)
 		{
 			if (app is AppiumAndroidApp)
 			{
-				app.Tap(AppiumQuery.ByXPath("//android.widget.ImageButton[@content-desc='Navigate up']"));
-			}
-			else if (app is AppiumIOSApp || app is AppiumCatalystApp)
-			{
-				app.Tap(AppiumQuery.ByAccessibilityId("Back"));
+				app.Tap(AppiumQuery.ByXPath("//android.widget.ImageView[@content-desc='More options']"));
 			}
 			else if (app is AppiumWindowsApp)
 			{
-				app.Tap(AppiumQuery.ByAccessibilityId("NavigationViewBackButton"));
+				app.Tap(AppiumQuery.ByAccessibilityId("MoreButton"));
 			}
 		}
 
