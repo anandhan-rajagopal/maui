@@ -1,5 +1,5 @@
-/*
-#if ANDROID
+
+
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -16,11 +16,10 @@ public class Bugzilla30317 : _IssuesUITest
 	public override string Issue => "https://bugzilla.xamarin.com/show_bug.cgi?id=30137";
 
 	[Test]
-	public void Bugzilla30317ItemSourceOnAppearingContentPage()
+	public void Bugzilla30317ItemSourceAppearingContentPage()
 	{
-		App.Screenshot("I am at Bugzilla30317");
+
 		App.WaitForElement("GoToPageTwoButton");
-		App.Screenshot("I see Page 1");
 
 		App.WaitForElement("PageOneItem1");
 		App.TouchAndHold("PageOneItem1");
@@ -28,7 +27,6 @@ public class Bugzilla30317 : _IssuesUITest
 		App.WaitForElement("PageOneItem5");
 		App.TouchAndHold("PageOneItem5");
 
-		App.Screenshot("I did not crash");
 	}
 
 	[Test]
@@ -37,8 +35,6 @@ public class Bugzilla30317 : _IssuesUITest
 		App.WaitForElement("GoToPageTwoButton");
 		App.Tap("GoToPageTwoButton");
 
-		App.WaitForElement("PageTwo");
-		App.Screenshot("I see Page 2");
 
 		App.WaitForElement("PageTwoItem1");
 		App.TouchAndHold("PageTwoItem1");
@@ -46,33 +42,14 @@ public class Bugzilla30317 : _IssuesUITest
 		App.WaitForElement("PageTwoItem5");
 		App.TouchAndHold("PageTwoItem5");
 
-		App.Screenshot("I did not crash");
 	}
 
 	[Test]
 	public void Bugzilla30317ItemSourceTabbedPage()
 	{
-		App.WaitForElement("GoToPageTwoButton");
-		App.Tap("GoToPageTwoButton");
-
-		App.Screenshot("I see Page 2");
-		App.WaitForElement("PageTwo");
-
 		App.WaitForElement("GoToPageThreeButton");
 		App.Tap("GoToPageThreeButton");
 
-		App.Screenshot("I see TabbedPage One");
-		App.WaitForElement("TabOneCtor");
-
-		App.WaitForElement("PageThreeTabOneItem1");
-		App.TouchAndHold("PageThreeTabOneItem1");
-		App.WaitForElement("PageThreeTabOneItem1");
-
-		App.WaitForElement("PageThreeTabOneItem5");
-		App.TouchAndHold("PageThreeTabOneItem5");
-		App.WaitForElement("PageThreeTabOneItem5");
-
-		App.Screenshot("I see TabbedPage Two");
 		App.WaitForElement("TabTwoOnAppearing");
 		App.Tap("TabTwoOnAppearing");
 
@@ -83,7 +60,19 @@ public class Bugzilla30317 : _IssuesUITest
 		App.WaitForElement("PageThreeTabTwoItem5");
 		App.TouchAndHold("PageThreeTabTwoItem5");
 		App.WaitForElement("PageThreeTabTwoItem5");
+
+		App.WaitForElement("TabOneCtor");
+		App.Tap("TabOneCtor");
+		App.WaitForElement("PageThreeTabOneItem1");
+		App.TouchAndHold("PageThreeTabOneItem1");
+		App.WaitForElement("PageThreeTabOneItem1");
+
+		App.WaitForElement("PageThreeTabOneItem5");
+		App.TouchAndHold("PageThreeTabOneItem5");
+		App.WaitForElement("PageThreeTabOneItem5");
+
+		
 	}
 }
-#endif
-*/
+
+
