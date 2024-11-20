@@ -1736,7 +1736,7 @@ namespace UITest.Appium
 		/// <param name="app">Represents the main gateway to interact with an app.</param>
 		public static void TapMoreButton(this IApp app)
 		{
-			if (app is AppiumAndroidApp)
+			switch (app)
 			{
 				app.Tap(AppiumQuery.ByXPath("//android.widget.ImageView[@content-desc='More options']"));
 			}
