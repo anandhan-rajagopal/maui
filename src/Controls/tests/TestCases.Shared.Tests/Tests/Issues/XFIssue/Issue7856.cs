@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST // text doesnot override in windows and null reference excepion
-using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST // null reference exception in Mac and text does not override in windows, More Information:https://github.com/dotnet/maui/issues/1625
 using UITest.Appium;
 using UITest.Core;
 

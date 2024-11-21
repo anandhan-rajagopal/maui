@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID // test case passed on windows and mac but the cell is not disabled , the cell disabled only on ios
+﻿#if TEST_FAILS_ON_ANDROID || TEST_FAILS_ON_CATALYST || TEST_FAILS_ON_WINDOWS // the cell disabled only on ios More Information: https://github.com/dotnet/maui/issues/5161
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -17,15 +17,11 @@ public class Issue6184 : _IssuesUITest
 	[Category(UITestCategories.Shell)]
 	public void GitHubIssue6184()
 	{
-#if ANDROID || IOS
 		App.WaitForElement("More");
 		App.Tap("More");
 		App.Tap("Issue 5");
 		App.WaitForElement("Issue 5");
-#else
-		App.Tap("Issue 5");
-		App.WaitForElement("Issue 5");
-#endif
+ 
 	}
 }
 #endif

@@ -1676,6 +1676,21 @@ namespace UITest.Appium
 				app.Tap(AppiumQuery.ByAccessibilityId("NavigationViewBackButton"));
 			}
 		}
+		/// <summary>
+		///  Flyout icon opens flyout page in the application by simulating a tap on the platform-specific Flyout Icon button.
+		/// </summary>
+		/// <param name="app">Represents the main gateway to interact with an app.</param>
+		public static void TapFlyoutIcon(this IApp app)
+		{
+			if (app is AppiumAndroidApp)
+			{
+				app.Tap(AppiumQuery.ByXPath("//android.widget.ImageButton[@content-desc=\"Open navigation drawer\"]"));
+			}
+			else if (app is AppiumIOSApp || app is AppiumCatalystApp || app is AppiumWindowsApp)
+			{
+				app.Tap(AppiumQuery.ByAccessibilityId("OK"));
+			}
+		}
 
 		static IUIElement Wait(Func<IUIElement?> query,
 			Func<IUIElement?, bool> satisfactory,
