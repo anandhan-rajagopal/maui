@@ -12,12 +12,12 @@ public class Issue3276 : _IssuesUITest
 
 	public override string Issue => "Crashing Unknown cell parent type on ContextAction Bindings";
 
-	// [Test]
-	// [Category(UITestCategories.ContextActions)]
-	// public void Issue3276Test()
-	// {
-	// 	App.Tap(q => q.Marked("Second"));
-	// 	App.Tap(q => q.Marked("First"));
-	// 	App.WaitForElement(q => q.Marked("second 1"));
-	// }
+	[Test]
+	[Category(UITestCategories.ContextActions)]
+	public void Issue3276Test()
+	{
+		App.Tap("Second");
+		App.Tap("First");
+		App.WaitForElement("second 1");
+	}
 }

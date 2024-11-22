@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS && TEST_FAILS_ON_ANDROID //TimeoutException
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,21 +13,23 @@ public class Issue11381 : _IssuesUITest
 
 	public override string Issue => "[Bug] [iOS] NRE on grouped ListView when removing cells with gesture recognizers";
 
-	//[Test]
-	//[Category(UITestCategories.ListView)]
-	//[FailsOnMauiIOS]
-	//public void Issue11381RemoveListViewGroups()
-	//{
-	//	App.WaitForElement("ListViewId", "Timed out waiting for the ListView.");
+	[Test]
+	[Category(UITestCategories.ListView)]
 
-	//	App.Tap(x => x.Marked("G1I1"));
-	//	App.Tap(x => x.Marked("G1I2"));
-	//	App.Tap(x => x.Marked("G1I3"));
-	//	App.Tap(x => x.Marked("G1I4"));
-	//	App.Tap(x => x.Marked("G2I1"));
-	//	App.Tap(x => x.Marked("G2I2"));
+	public void Issue11381RemoveListViewGroups()
+	{
+		App.WaitForElement("ListViewId", "Timed out waiting for the ListView.");
 
-	//	App.WaitForElement("ResultId");
-	//	Assert.AreEqual("0 groups", App.WaitForElement("ResultId")[0].ReadText());
-	//}
+		App.Tap("G1I1");
+		App.Tap("G1I2");
+		App.Tap("G1I3");
+		App.Tap("G1I4");
+		App.Tap("G2I1");
+		App.Tap("G2I2");
+
+		App.WaitForElement("ResultId");
+		Assert.That(App.WaitForElement("ResultId").ReadText(), Is.EqualTo("0 groups"));
+
+	}
 }
+#endif
