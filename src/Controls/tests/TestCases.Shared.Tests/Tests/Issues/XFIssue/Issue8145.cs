@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST // null reference exception
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -11,27 +10,16 @@ public class Issue8145 : _IssuesUITest
 	{
 	}
 
-	public override string Issue => "Shell System.ObjectDisposedException: 'Cannot access a disposed object. Object name: 'Android.Support.Design.Widget.BottomSheetDialog'.'";
+	public override string Issue => "Shell System.ObjectDisposedException: Cannot access a disposed object. Object name: Android.Support.Design.Widget.BottomSheetDialog";
 
 	[Test]
 	[Category(UITestCategories.Shell)]
 	public void Issue8145ShellToolbarDisposedException()
 	{
-
-#if WINDOWS
-        App.WaitForElement("target");
-		App.Tap("target");
-		App.WaitForElement("Success");
-
-#else
 		App.WaitForElement("More");
 		App.Tap("More");
 		App.WaitForElement("target");
 		App.Tap("target");
 		App.WaitForElement("Success");
-#endif
-
 	}
-
 }
-#endif

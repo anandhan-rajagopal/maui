@@ -1,6 +1,6 @@
 namespace Maui.Controls.Sample.Issues;
 
-[Issue(IssueTracker.Github, 8145, "Shell System.ObjectDisposedException: 'Cannot access a disposed object. Object name: 'Android.Support.Design.Widget.BottomSheetDialog'.'", PlatformAffected.Android)]
+[Issue(IssueTracker.Github, 8145, "Shell System.ObjectDisposedException: Cannot access a disposed object. Object name: Android.Support.Design.Widget.BottomSheetDialog", PlatformAffected.Android)]
 public class Issue8145 : TestShell
 {
 	string _titleElement = "Connect";

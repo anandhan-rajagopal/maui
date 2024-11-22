@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST // TapFlyoutIcon not working in Android and timed out exception in mac
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -18,15 +17,15 @@ public class Issue7339 : _IssuesUITest
 	[Category(UITestCategories.Shell)]
 	public void MaterialFrameDisposesCorrectly()
 	{
-		App.TapFlyoutIcon();
-		App.Tap("Item1");
-		App.TapFlyoutIcon();
-		App.Tap("Item2");
-		App.TapFlyoutIcon();
-		App.Tap("Item1");
-		App.TapFlyoutIcon();
-		App.Tap("Item2");
+		App.WaitForElement("InstructionLabel");
+		App.TapInFlyout("Item1");
+		App.WaitForElementTillPageNavigationSettled("InstructionLabel");
+		App.TapInFlyout("Item2");
+		App.WaitForElementTillPageNavigationSettled("FrameContent");
+		App.TapInFlyout("Item1");
+		App.WaitForElementTillPageNavigationSettled("InstructionLabel");
+		App.TapInFlyout("Item2");
+		App.WaitForElementTillPageNavigationSettled("FrameContent");
 
 	}
 }
-#endif

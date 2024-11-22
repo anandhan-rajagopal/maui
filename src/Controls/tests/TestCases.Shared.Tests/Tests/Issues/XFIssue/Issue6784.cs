@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST // null reference exception 
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -17,23 +16,16 @@ public class Issue6784 : _IssuesUITest
 	[Test]
 	public void CurrentItemIsSetWhenSelectingShellSectionAggregatedInMoreTab()
 	{
-#if ANDROID || IOS
 		App.WaitForElement("More");
 		App.Tap("More");
 		App.WaitForElement("Tab 5");
 		App.Tap("Tab 5");
-		App.WaitForElement("Success");
-#else
-		App.WaitForElement("Tab 5");
-		App.Tap("Tab 5");
-		App.WaitForElement("Success");
-#endif
+		App.WaitForElementTillPageNavigationSettled("Success");
 	}
 
 	[Test]
-	public void MoreControllerOpensOnFirstClick()
+	public void OneMoreControllerOpensOnFirstClick()
 	{
-#if ANDROID || IOS
 		App.WaitForElement("More");
 		App.Tap("More");
 		App.WaitForElement("Tab 5");
@@ -42,29 +34,15 @@ public class Issue6784 : _IssuesUITest
 		App.WaitForElement("Tab 4");
 		App.Tap("More");
 		App.WaitForElement("Tab 6");
-#else
-		App.WaitForElement("Tab 5");
-		App.Tap("Tab 5");
-		App.Tap("Tab 4");
-		App.WaitForElement("Tab 4");
-		App.WaitForElement("Tab 6");
-#endif
-
+		App.Tap("Tab 6");
 	}
 
 	[Test]
-	public void MoreControllerDoesNotShowEditButton()
+	public void TwoMoreControllerDoesNotShowEditButton()
 	{
-#if ANDROID || IOS
 		App.WaitForElement("More");
 		App.Tap("More");
 		App.WaitForElement("Tab 5");
-		Assert.That(App.FindElement("Edit"), Is.Null);
-#else
-		App.WaitForElement("Tab 5");
-		Assert.That(App.FindElement("Edit"), Is.Null);
-#endif
-
+		Assert.That(App.FindElements("Edit").Count(), Is.EqualTo(0));
 	}
 }
-#endif

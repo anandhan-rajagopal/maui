@@ -15,8 +15,14 @@ public class Issue6784 : TestShell
 
 		AddBottomTab("Tab 1");
 		AddBottomTab("Tab 2");
-		AddBottomTab("Tab 3");
+		AddBottomTab("Tab 3");	
 		AddBottomTab("Tab 4").AutomationId = "Tab 4 Content";
+		AddBottomTab("Dummy");
+		AddBottomTab("Dummy");
+		AddBottomTab("Dummy");
+		AddBottomTab("Dummy");
+		AddBottomTab("Dummy");
+		AddBottomTab("Dummy");
 		var contentPage5 = AddBottomTab("Tab 5");
 		AddBottomTab("Tab 6");
 
