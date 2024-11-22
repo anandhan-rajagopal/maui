@@ -56,6 +56,7 @@ public class Issue8145 : TestShell
 						Items = {
 									new ContentPage { Title = "notme",  Content = new Label  { Text = "Click More, then choose the target. If it does not crash, this test has passed." } }
 								}
+#if WINDOWS || MACCATALYST // Add more tab for desktop platforms to make the more button visible
 					},new Tab {
 						Title = "notme",
 						Items = {
@@ -71,6 +72,18 @@ public class Issue8145 : TestShell
 						Items = {
 									new ContentPage { Title = "notme",  Content = new Label  { Text = "Click More, then choose the target. If it does not crash, this test has passed." } }
 								}
+
+					},new Tab {
+						Title = "notme",
+						Items = {
+									new ContentPage { Title = "notme",  Content = new Label  { Text = "Click More, then choose the target. If it does not crash, this test has passed." } }
+								}
+					},new Tab {
+						Title = "notme",
+						Items = {
+									new ContentPage { Title = "notme",  Content = new Label  { Text = "Click More, then choose the target. If it does not crash, this test has passed." } }
+								}
+#endif
 					},new Tab {
 						Title = "target",
 						Items = {

@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS // When using App.Tap to interact with tab items, the action targets the corner of the tabs,
+// which doesn't trigger navigation on Windows. Windows requires tapping directly on the tab title text.
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -30,8 +32,9 @@ public class Issue6784 : _IssuesUITest
 		App.Tap("More");
 		App.WaitForElement("Tab 11");
 		App.Tap("Tab 11");
-		App.Tap("Tab 4");
 		App.WaitForElement("Tab 4");
+		App.Tap("Tab 4");
+		App.WaitForElement("More");
 		App.Tap("More");
 		App.WaitForElement("Tab 12");
 		App.Tap("Tab 12");
@@ -46,3 +49,4 @@ public class Issue6784 : _IssuesUITest
 		Assert.That(App.FindElements("Edit").Count(), Is.EqualTo(0));
 	}
 }
+#endif

@@ -20,7 +20,7 @@ public class Issue7856 : _IssuesUITest
 		App.Tap("Tap to Navigate To the Page With BackButtonBehavior");
 		App.WaitForElement("Navigate again");
 		App.Tap("Navigate again");
-		App.WaitForElement("Hello");
+		App.WaitForElementTillPageNavigationSettled("Hello");
 		App.TapBackArrow("Test");
 	}
 }
