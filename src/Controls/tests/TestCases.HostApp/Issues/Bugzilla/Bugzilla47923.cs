@@ -1,7 +1,7 @@
 namespace Maui.Controls.Sample.Issues;
 
 
-[Issue(IssueTracker.Bugzilla, 47923, "Vectors don\'t work in Images, and work badly in Buttons", PlatformAffected.Android)]
+[Issue(IssueTracker.Bugzilla, 47923, "Vectors don't work in Images, and work badly in Buttons", PlatformAffected.Android)]
 public class Bugzilla47923 : TestNavigationPage
 {
 	protected override void Init()
