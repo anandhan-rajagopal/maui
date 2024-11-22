@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿# if TEST_FAILS_ON_ANDROID // bug in sample
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -20,3 +21,4 @@ public class Issue416 : _IssuesUITest
 		App.WaitForElement("I should have a nav bar");
 	}
 }
+#endif

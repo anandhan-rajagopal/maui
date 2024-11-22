@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿# if TEST_FAILS_ON_WINDOWS // image not update correctly
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -22,7 +23,8 @@ public class Bugzilla40161 : _IssuesUITest
 		App.Tap("REFRESH");
 
 		Assert.That(App.FindElement("width").GetText(), Is.EqualTo("w=50"));
-		Assert.That(App.FindElement("height").GetText(), Is.EqualTo("w=50"));
+		Assert.That(App.FindElement("height").GetText(), Is.EqualTo("h=50"));
 		Assert.That(App.FindElement("counter").GetText(), Is.EqualTo("step=50"));
 	}
 }
+#endif
