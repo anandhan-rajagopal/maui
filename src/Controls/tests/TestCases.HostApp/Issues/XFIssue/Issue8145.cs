@@ -51,8 +51,22 @@ public class Issue8145 : TestShell
 						Items = {
 									new ContentPage { Title = "notme",  Content = new Label  { Text = "Click More, then choose the target. If it does not crash, this test has passed." } }
 								}
-					},
-				new Tab {
+					},new Tab {
+						Title = "notme",
+						Items = {
+									new ContentPage { Title = "notme",  Content = new Label  { Text = "Click More, then choose the target. If it does not crash, this test has passed." } }
+								}
+					},new Tab {
+						Title = "notme",
+						Items = {
+									new ContentPage { Title = "notme",  Content = new Label  { Text = "Click More, then choose the target. If it does not crash, this test has passed." } }
+								}
+					},new Tab {
+						Title = "notme",
+						Items = {
+									new ContentPage { Title = "notme",  Content = new Label  { Text = "Click More, then choose the target. If it does not crash, this test has passed." } }
+								}
+					},new Tab {
 						Title = "target",
 						Items = {
 									new ContentPage { Title = "Target",  Content = new Label  { Text = "Success" } }

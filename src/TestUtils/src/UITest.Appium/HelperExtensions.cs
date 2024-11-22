@@ -1692,7 +1692,7 @@ namespace UITest.Appium
 		/// <param name="app">The IApp instance representing the application.</param>
 		/// <returns>An IQuery for the default back arrow button.</returns>
 		/// <exception cref="ArgumentException">Thrown when an unsupported app type is provided.</exception>
-		private static IQuery GetDefaultBackArrowQuery(IApp app)
+		static IQuery GetDefaultBackArrowQuery(IApp app)
 		{
 			return app switch
 			{
@@ -1712,7 +1712,7 @@ namespace UITest.Appium
 		/// <param name="customBackButtonIdentifier">The custom identifier for the back button.</param>
 		/// <returns>An IQuery for the custom back arrow button.</returns>
 		/// <exception cref="ArgumentException">Thrown when an unsupported app type is provided.</exception>
-		private static IQuery GetCustomBackArrowQuery(IApp app, string customBackButtonIdentifier)
+		static IQuery GetCustomBackArrowQuery(IApp app, string customBackButtonIdentifier)
 		{
 			return app switch
 			{

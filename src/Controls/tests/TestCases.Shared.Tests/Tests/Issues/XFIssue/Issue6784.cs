@@ -18,8 +18,8 @@ public class Issue6784 : _IssuesUITest
 	{
 		App.WaitForElement("More");
 		App.Tap("More");
-		App.WaitForElement("Tab 5");
-		App.Tap("Tab 5");
+		App.WaitForElement("Tab 11");
+		App.Tap("Tab 11");
 		App.WaitForElementTillPageNavigationSettled("Success");
 	}
 
@@ -28,13 +28,13 @@ public class Issue6784 : _IssuesUITest
 	{
 		App.WaitForElement("More");
 		App.Tap("More");
-		App.WaitForElement("Tab 5");
-		App.Tap("Tab 5");
+		App.WaitForElement("Tab 11");
+		App.Tap("Tab 11");
 		App.Tap("Tab 4");
 		App.WaitForElement("Tab 4");
 		App.Tap("More");
-		App.WaitForElement("Tab 6");
-		App.Tap("Tab 6");
+		App.WaitForElement("Tab 12");
+		App.Tap("Tab 12");
 	}
 
 	[Test]
@@ -42,7 +42,7 @@ public class Issue6784 : _IssuesUITest
 	{
 		App.WaitForElement("More");
 		App.Tap("More");
-		App.WaitForElement("Tab 5");
+		App.WaitForElement("Tab 11");
 		Assert.That(App.FindElements("Edit").Count(), Is.EqualTo(0));
 	}
 }
