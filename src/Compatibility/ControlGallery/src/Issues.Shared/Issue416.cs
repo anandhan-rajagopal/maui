@@ -18,7 +18,7 @@ namespace Microsoft.Maui.Controls.ControlGallery.Issues
 	[NUnit.Framework.Category(UITestCategories.Navigation)]
 #endif
 	[Preserve(AllMembers = true)]
-	[Issue(IssueTracker.Github, 416, "NavigationPage in PushModal does not show NavigationBar", PlatformAffected.Android)]
+	[Issue(IssueTracker.Github, 416, "NavigationPage in PushModal does not show NavigationBar", PlatformAffected.Android, NavigationBehavior.PushModalAsync)]
 	public class Issue416 : TestNavigationPage
 	{
 		protected override void Init()

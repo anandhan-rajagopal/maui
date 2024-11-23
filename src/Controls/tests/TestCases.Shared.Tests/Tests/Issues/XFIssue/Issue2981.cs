@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_CATALYST // TouchAndHold not supported in catalyst
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -16,7 +17,9 @@ public class Issue2981 : _IssuesUITest
 	[Category(UITestCategories.ListView)]
 	public void Issue2981Test()
 	{
+		App.WaitForElement("Cell1");
 		App.TouchAndHold("Cell1");
 		App.TouchAndHold("Cell2");
 	}
 }
+#endif

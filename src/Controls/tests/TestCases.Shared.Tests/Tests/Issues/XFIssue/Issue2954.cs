@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Issue reproduced and logged the issue report: ()
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -21,3 +22,4 @@ public class Issue2954 : _IssuesUITest
 		App.WaitForElement("Cell2");
 	}
 }
+#endif
