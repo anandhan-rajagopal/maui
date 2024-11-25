@@ -23,7 +23,6 @@ public class Issue1323 : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.TabbedPage)]
-
 	public void Issue1323Test()
 	{
 		App.WaitForElement(Tab1);
