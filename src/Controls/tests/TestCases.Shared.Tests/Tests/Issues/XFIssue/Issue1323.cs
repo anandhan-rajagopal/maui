@@ -6,7 +6,14 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 
 public class Issue1323 : _IssuesUITest
 {
-	const string Success = "Success";
+
+#if ANDROID
+	const string Tab1 = "PAGE 1";
+	const string Tab2 = "PAGE5";
+#else
+	const string Tab1 = "Page 1";
+	const string Tab2 = "Page5";
+#endif
 
 	public Issue1323(TestDevice testDevice) : base(testDevice)
 	{
@@ -19,8 +26,8 @@ public class Issue1323 : _IssuesUITest
 
 	public void Issue1323Test()
 	{
-		App.WaitForElement("Page 1");
-		App.WaitForElement("Page5");
+		App.WaitForElement(Tab1);
+		App.WaitForElement(Tab2);
 		VerifyScreenshot();
 	}
 }

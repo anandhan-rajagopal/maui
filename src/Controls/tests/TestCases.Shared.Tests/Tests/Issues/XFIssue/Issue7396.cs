@@ -16,7 +16,6 @@ public class Issue7396 : _IssuesUITest
 
 	public override string Issue => "Setting Shell.BackgroundColor overrides all colors of TabBar";
 
-	// TODO: Marked as ManualReview in original test, can we somehow automate this?
 	[Test]
 	[Category(UITestCategories.Shell)]
 	public void BottomTabColorTest()

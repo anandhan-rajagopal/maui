@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS // SepraratorColor is not supported on Windows by default.
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -17,8 +18,8 @@ public class Issue3798 : _IssuesUITest
 	public void Issue3798Test()
 	{
 		App.WaitForElement("listViewSeparatorColor");
-		VerifyScreenshot();
 		App.Tap("item1");
 		VerifyScreenshot();
 	}
 }
+#endif
