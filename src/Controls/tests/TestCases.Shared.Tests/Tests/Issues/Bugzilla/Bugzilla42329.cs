@@ -1,4 +1,4 @@
-﻿#if ANDROID
+﻿#if TEST_FAILS_ON_ANDROID // Destructor Called was not shown in Android
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -19,20 +19,19 @@ public class Bugzilla42329 : _IssuesUITest
 
 	public override string Issue => "ListView in Frame and FormsAppCompatActivity Memory Leak";
 
-	// TODO From Xamarin.UITest migration: test fails, so disabled for now
-	// [Test]
-	// [Category(UITestCategories.ListView)]
-	// public void MemoryLeakB42329()
-	// {
-	// 	App.WaitForElement(Page1Title);
-	// 	App.Tap(LabelPage1);
-	// 	App.WaitForElement(Page1Title);
-	// 	App.Tap(Page2Title);
-	// 	App.WaitForElement(LabelPage2);
-	// 	App.Tap(LabelPage2);
-	// 	App.WaitForElement(Page2Title);
-	// 	App.Tap(Page3Title);
-	// 	App.WaitForElement("Destructor called");
-	// }
+	[Test]
+	[Category(UITestCategories.ListView)]
+	public void MemoryLeakB42329()
+	{
+		App.WaitForElement(Page1Title);
+		App.Tap(LabelPage1);
+		App.WaitForElement(Page1Title);
+		App.Tap(Page2Title);
+		App.WaitForElement(LabelPage2);
+		App.Tap(LabelPage2);
+		App.WaitForElement(Page2Title);
+		App.Tap(Page3Title);
+		App.WaitForElement("Destructor called");
+	}
 }
 #endif

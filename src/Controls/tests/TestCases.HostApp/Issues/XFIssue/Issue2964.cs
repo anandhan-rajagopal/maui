@@ -68,13 +68,21 @@ public class Issue2964 : TestFlyoutPage
 				Command = new Command(() =>
 				{
 					Detail = new Page1();
-					IsPresented = false;
+					if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+					{
+						IsPresented = false; 
+					}
+
 				})
 			}
 		};
 
 		Detail = new Page1();
 
-		IsPresented = true;
+
+		if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+		{
+			IsPresented = true; 
+		}
 	}
 }

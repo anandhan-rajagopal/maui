@@ -46,7 +46,10 @@ public class Bugzilla41038 : TestFlyoutPage
 
 		await _navPage.Navigation.PushAsync(newRoot);
 		_navPage.Navigation.RemovePage(root);
-		IsPresented = false;
+		if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+		{
+			IsPresented = false; 
+		}
 	}
 
 	public class ViewA : ContentPage

@@ -25,7 +25,12 @@ public class Bugzilla42329 : TestFlyoutPage
 			{
 				Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
 				rootPage.ListView.SelectedItem = null;
-				IsPresented = false;
+				if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+				{
+
+					IsPresented = false;  
+				}
+
 			}
 		};
 
@@ -175,7 +180,6 @@ public class Bugzilla42329 : TestFlyoutPage
 			{
 				HorizontalOptions = LayoutOptions.Center,
 				FontAttributes = FontAttributes.Bold,
-				AutomationId = Success
 
 			};
 			Content = new StackLayout
