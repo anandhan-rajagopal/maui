@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS // SepraratorColor is not supported on Windows by default.
+﻿#if TEST_FAILS_ON_WINDOWS // SepraratorColor is not supported on Windows by default. https://github.com/dotnet/maui/issues/8112
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
