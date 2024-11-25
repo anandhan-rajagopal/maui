@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Issue reproduced and logged the issue report: ()
+﻿#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Issue reproduced and logged the issue report: https://github.com/dotnet/maui/issues/26091.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
