@@ -11,14 +11,14 @@ public class Issue3798 : _IssuesUITest
 
 	public override string Issue => "[Android] SeparatorColor of ListView is NOT updated dynamically";
 
-	//[Test]
-	//[Category(UITestCategories.ListView)]
-	//[FailsOnMauiIOS]
-	//public void Issue3798Test()
-	//{
-	//	App.WaitForElement("listViewSeparatorColor");
-	//	App.Screenshot("Green ListView Separator");
-	//	App.Tap(q => q.Marked("item1"));
-	//	App.Screenshot("Red ListView Separator");
-	//}
+	[Test]
+	[Category(UITestCategories.ListView)]
+
+	public void Issue3798Test()
+	{
+		App.WaitForElement("listViewSeparatorColor");
+		VerifyScreenshot();
+		App.Tap("item1");
+		VerifyScreenshot();
+	}
 }

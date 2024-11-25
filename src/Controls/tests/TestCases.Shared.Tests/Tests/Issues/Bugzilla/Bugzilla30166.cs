@@ -15,16 +15,15 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		[Test]
 		[Category(UITestCategories.Navigation)]
 		[Category(UITestCategories.Compatibility)]
-		[FailsOnMacWhenRunningOnXamarinUITest]
 		public void Issue10222Test()
 		{
 			try
 			{
-				App.WaitForElement("PushModal");
+				App.WaitForElement("PushModal");	
 				App.Tap("PushModal");
 				App.WaitForElement("Back");
 				App.Tap("Back");
-				App.Screenshot("Navigation bar should be red");
+				VerifyScreenshot();
 			}
 			finally
 			{
