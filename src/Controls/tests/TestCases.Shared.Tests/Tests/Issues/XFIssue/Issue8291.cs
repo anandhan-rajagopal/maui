@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_CATALYST // TouchAndHold is not working on catalyst
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -14,13 +15,13 @@ public class Issue8291 : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.Editor)]
-	[FailsOnAndroidWhenRunningOnXamarinUITest]
 	public void ContextMenuShowsUpWhenPressAndHoldTextOnEditorAndEntryField()
 	{
-		App.TouchAndHold("PressEditor");
+		App.WaitForElement("PressEditor");
+		App.LongPress("PressEditor");
 		TestForPopup();
 		App.Tap("PressEntry");
-		App.TouchAndHold("PressEntry");
+		App.LongPress("PressEntry");
 		TestForPopup();
 	}
 
@@ -40,3 +41,4 @@ public class Issue8291 : _IssuesUITest
 		Assert.That(result.Length, Is.GreaterThan(0));
 	}
 }
+#endif

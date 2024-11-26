@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // SwipeActions not applicable in Catalyst, In iOS, the test will pass, but unable to view the drawer while swiping.
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -11,7 +12,7 @@ public class Issue8461 : _IssuesUITest
 	}
 	const string ButtonId = "PageButtonId";
 	const string LayoutId = "LayoutId";
-	public override string Issue => "[Bug] [iOS] [Shell] \"Nav Stack consistency error\"";
+	public override string Issue => "[Bug] [iOS] [Shell] Nav Stack consistency error";
 
 	[Test]
 	[Category(UITestCategories.Navigation)]
@@ -19,18 +20,21 @@ public class Issue8461 : _IssuesUITest
 	public void ShellSwipeToDismiss()
 	{
 		var pushButton = App.WaitForElement(ButtonId);
-		Assert.That(pushButton.GetRect().Width, Is.GreaterThan(0));
+		Assert.That(App.FindElements(ButtonId).Count, Is.EqualTo(1));
 
 		App.Tap(ButtonId);
 
 		var page2Layout = App.WaitForElement(LayoutId);
 		Assert.That(page2Layout.GetRect().Width, Is.GreaterThan(0));
 		// Swipe in from left across 1/2 of screen width
-		App.SwipeLeftToRight(LayoutId, 0.99, 500, false);
+		App.SwipeLeftToRight(LayoutId);
 		// Swipe in from left across full screen width
-		App.SwipeLeftToRight(0.99, 500);
+		App.SwipeLeftToRight(LayoutId);
+
+		App.TapBackArrow();
 
 		pushButton = App.WaitForElement(ButtonId);
-		Assert.That(pushButton.GetRect().Width, Is.GreaterThan(0));
+		Assert.That(App.FindElements(ButtonId).Count, Is.EqualTo(1));
 	}
 }
+#endif

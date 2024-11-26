@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS //Sample works but in test not rendering 
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -20,7 +19,7 @@ public class Issue8279 : _IssuesUITest
 	public override string Issue => "[Feature requested] ListView do not ScrollTo a group when there is no child of this group";
 
 	[Test]
-	public void ScrollWithNoItemButGroupTest()
+	public void AScrollWithNoItemButGroupTest()
 	{
 		App.WaitForElement(Reset1);
 		App.Tap(Reset1);
@@ -31,7 +30,7 @@ public class Issue8279 : _IssuesUITest
 	}
 
 	[Test]
-	public void ScrollWithItemButNoGroupTest()
+	public void BScrollWithItemButNoGroupTest()
 	{
 		App.WaitForElement(Reset1);
 		App.Tap(Reset1);
@@ -42,7 +41,7 @@ public class Issue8279 : _IssuesUITest
 	}
 
 	[Test]
-	public void ScrollWithItemWithGroupTest()
+	public void CScrollWithItemWithGroupTest()
 	{
 		App.WaitForElement(Reset1);
 		App.Tap(Reset1);
@@ -53,7 +52,7 @@ public class Issue8279 : _IssuesUITest
 	}
 
 	[Test]
-	public void ScrollWithNoItemNoGroupTest()
+	public void DScrollWithNoItemNoGroupTest()
 	{
 		App.WaitForElement(Reset1);
 		App.Tap(Reset1);
@@ -64,7 +63,7 @@ public class Issue8279 : _IssuesUITest
 	}
 
 	[Test]
-	public void ScrollWithNoItemEmptyGroupTest()
+	public void EScrollWithNoItemEmptyGroupTest()
 	{
 		App.WaitForElement(Reset1);
 		App.Tap(Reset1);
@@ -74,4 +73,3 @@ public class Issue8279 : _IssuesUITest
 		App.WaitForElement("Header 2");
 	}
 }
-#endif
