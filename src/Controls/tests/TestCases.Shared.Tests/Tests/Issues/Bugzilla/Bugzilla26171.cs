@@ -1,4 +1,4 @@
-#if TEST_FAILS_ON_WINDOWS //Maps control is not supported on Windows platform also not enabled on hostapp for catalyst platform
+#if TEST_FAILS_ON_WINDOWS //Maps control is not supported on Windows platform.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
