@@ -28,6 +28,7 @@ public class Issue8461 : TestShell
 		{
 			new Label()
 			{
+				AutomationId = "InstructionsLabel",
 				Text = "1. Swipe left to dismiss this page, but cancel the gesture before it completes"
 			},
 			new Label()

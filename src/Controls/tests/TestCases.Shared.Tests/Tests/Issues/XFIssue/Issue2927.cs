@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS // Text is not rendered on windows. Issue -  https://github.com/dotnet/maui/issues/22731
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -31,3 +32,4 @@ public class Issue2927 : _IssuesUITest
 		App.WaitForElement("Cell1 3");
 	}
 }
+#endif

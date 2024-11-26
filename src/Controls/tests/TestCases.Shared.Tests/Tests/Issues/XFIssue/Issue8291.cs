@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST // TouchAndHold is not working on catalyst
+﻿#if TEST_FAILS_ON_CATALYST // TouchAndHold not supported on Mac, Also using LongPress is not applicable on this case, while LongPress does not open the context menu for Entry/Editor control.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -17,11 +17,13 @@ public class Issue8291 : _IssuesUITest
 	[Category(UITestCategories.Editor)]
 	public void ContextMenuShowsUpWhenPressAndHoldTextOnEditorAndEntryField()
 	{
-		App.WaitForElement("PressEditor");
-		App.LongPress("PressEditor");
+		App.WaitForElement("PressEditor");	
+		App.TouchAndHold("PressEditor");
+
 		TestForPopup();
 		App.Tap("PressEntry");
-		App.LongPress("PressEntry");
+
+		App.TouchAndHold("PressEditor");
 		TestForPopup();
 	}
 
