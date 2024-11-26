@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Maui.Controls.Sample.Issues;
 
-[Issue(IssueTracker.Github, 8279, "[Feature requested] ListView do not ScrollTo a group when there is no child of this group")]
+[Issue(IssueTracker.Github, 8279, "[Feature requested] ListView do not ScrollTo a group when there is no child of this group", PlatformAffected.Android)]
 public class Issue8279 : TestContentPage
 {
 	public static ListView List { get; set; }
