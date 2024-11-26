@@ -57,7 +57,7 @@ public class Issue2964 : TestFlyoutPage
 	protected override void Init()
 	{
 		Title = "Test";
-
+		IsPresented = true;
 		Flyout = new ContentPage
 		{
 			Title = "Flyout",
@@ -68,10 +68,8 @@ public class Issue2964 : TestFlyoutPage
 				Command = new Command(() =>
 				{
 					Detail = new Page1();
-					if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.MacCatalyst)
-					{
-						IsPresented = false; 
-					}
+					FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
+					IsPresented = false;
 
 				})
 			}
@@ -79,10 +77,5 @@ public class Issue2964 : TestFlyoutPage
 
 		Detail = new Page1();
 
-
-		if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.MacCatalyst)
-		{
-			IsPresented = true; 
-		}
 	}
 }

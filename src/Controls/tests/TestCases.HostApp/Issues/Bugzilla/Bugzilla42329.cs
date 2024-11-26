@@ -25,11 +25,8 @@ public class Bugzilla42329 : TestFlyoutPage
 			{
 				Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
 				rootPage.ListView.SelectedItem = null;
-				if (DeviceInfo.Platform == DevicePlatform.Android || DeviceInfo.Platform == DevicePlatform.iOS || DeviceInfo.Platform == DevicePlatform.MacCatalyst)
-				{
-
-					IsPresented = false;  
-				}
+				FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
+				IsPresented = false;
 
 			}
 		};
