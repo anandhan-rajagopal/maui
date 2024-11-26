@@ -13,7 +13,7 @@ public class Issue8279 : TestContentPage
 	const string ScrollWithItemWithGroup = "ScrollWithItemWithGroup";
 	const string ScrollWithNoItemNoGroup = "ScrollWithNoItemNoGroup";
 	const string ScrollWithNoItemEmptyGroup = "ScrollWithNoItemEmptyGroup";
-	const string Reset1 = "Reset";
+	const string ResetButton = "Reset";
 
 	protected override void Init()
 	{
@@ -97,7 +97,7 @@ public class Issue8279 : TestContentPage
 		var resetButton = new Button()
 		{
 			Text = "Reset",
-			AutomationId = Reset1,
+			AutomationId = ResetButton,
 			Command = new Command(() => List.ScrollTo(null, firstGroup, ScrollToPosition.Center, true))
 		};
 
