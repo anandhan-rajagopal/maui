@@ -175,8 +175,7 @@ public class Bugzilla42329 : TestFlyoutPage
 			otherLabel = new Label
 			{
 				HorizontalOptions = LayoutOptions.Center,
-				FontAttributes = FontAttributes.Bold,
-				AutomationId = Success
+				FontAttributes = FontAttributes.Bold
 			};
 			Content = new StackLayout
 			{
