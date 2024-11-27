@@ -13,8 +13,7 @@ public class Issue264 : _IssuesUITest
 	public override string Issue => "PopModal NRE";
 
 	[Test]
-	[Category(UITestCategories.TabbedPage)]
-
+	[Category(UITestCategories.Navigation)]
 	public void Issue264TestsPushAndPopModal()
 	{
 		App.WaitForElement("Home");
