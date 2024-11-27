@@ -10,10 +10,7 @@ public class Issue2794 : TestContentPage
 	{
 		var tableView = new TableView();
 		_dataSection = new TableSection();
-		var cell1 = new ViewCell { 
-				View = new Label { Text = "Cell1", AutomationId = "TableCell1" }
-				};
-		
+		var cell1 = new TextCell { Text = "Cell1" };
 		cell1.ContextActions.Add(new MenuItem
 		{
 			Text = "Delete me after",
@@ -22,10 +19,7 @@ public class Issue2794 : TestContentPage
 			CommandParameter = 0
 		});
 
-		var cell2 = new ViewCell { 
-				View = new Label { Text = "Cell2", AutomationId = "TableCell2" }
-				};
-		
+		var cell2 = new TextCell { Text = "Cell2" };
 		cell2.ContextActions.Add(new MenuItem
 		{
 			Text = "Delete me first",

@@ -55,7 +55,7 @@ public class Issue8461 : TestShell
 		};
 
 		// Use this BoxView to anchor our swipe to left of the screen
-		grid.Children.Add(new BoxView()
+		grid.AddLogicalChild(new BoxView()
 		{
 			AutomationId = LayoutId,
 			HorizontalOptions = LayoutOptions.FillAndExpand,
@@ -66,7 +66,7 @@ public class Issue8461 : TestShell
 #pragma warning restore CS0618 // Type or member is obsolete
 #pragma warning restore CS0618 // Type or member is obsolete
 #pragma warning restore CS0618 // Type or member is obsolete
-		grid.Children.Add(instructions);
+		grid.AddLogicalChild(instructions);
 
 		page2.Content = grid;
 	}
