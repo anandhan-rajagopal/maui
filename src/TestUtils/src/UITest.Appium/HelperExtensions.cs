@@ -1873,8 +1873,8 @@ namespace UITest.Appium
 				{
 					if(app is AppiumWindowsApp)
 					{
-						app.WaitForElement(AppiumQuery.ByAccessibilityId("TogglePanelButton"));
-						app.Tap(AppiumQuery.ByAccessibilityId("TogglePanelButton"));
+						app.WaitForElement(AppiumQuery.ByAccessibilityId("TogglePaneButton"));
+						app.Tap(AppiumQuery.ByAccessibilityId("TogglePaneButton"));
 					}
 					else
 					{
