@@ -23,6 +23,10 @@ public class Bugzilla41038 : _IssuesUITest
 		App.WaitForElement("ViewB");
 		App.Tap("ViewB");
 
+#if ANDROID || WINDOWS // On Android and Windows, the hamburger icon was displayed, while on iOS and Catalyst, the title text was shown.
 		App.TapFlyoutPageIcon("Flyout");
+#else
+		App.WaitForElementTillPageNavigationSettled("Flyout");
+#endif
 	}
 }
