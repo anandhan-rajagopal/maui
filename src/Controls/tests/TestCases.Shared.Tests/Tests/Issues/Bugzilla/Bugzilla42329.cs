@@ -31,6 +31,9 @@ public class Bugzilla42329 : _IssuesUITest
 		App.Tap(LabelPage2);
 		App.WaitForElement(Page2Title);
 		App.Tap(Page3Title);
+#if ANDROID
+        App.TapInFlyout(Page3Title);
+#endif
 		App.WaitForElement("Destructor called");
 	}
 }
