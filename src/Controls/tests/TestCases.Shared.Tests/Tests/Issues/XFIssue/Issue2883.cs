@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS //Timeout Exception
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -17,7 +16,7 @@ public class Issue2883 : _IssuesUITest
 	[Test]
 	public void Issue2883TestDisabled()
 	{
-
+		App.WaitForElement("btnCustomCellTable");
 		App.Tap("btnCustomCellTable");
 		App.WaitForNoElement("Clicked");
 
@@ -30,14 +29,21 @@ public class Issue2883 : _IssuesUITest
 	[Test]
 	public void Issue2883TestEnabled()
 	{
-
+		App.WaitForElement("btnCustomCellTableEnabled");
 		App.Tap("btnCustomCellTableEnabled");
-
 		App.WaitForElement("Clicked");
+#if MACCATALYST // Unable to tap the ok button on the display alert using text. so here using the identifier for Mac.
+		App.Tap(AppiumQuery.ById("action-button--999"));
+#else
 		App.Tap("ok");
+#endif
+		App.WaitForElement("btnCustomCellListViewEnabled");
 		App.Tap("btnCustomCellListViewEnabled");
 		App.WaitForElement("Clicked");
+#if MACCATALYST
+		App.Tap(AppiumQuery.ById("action-button--999"));
+#else
 		App.Tap("ok");
+#endif
 	}
 }
-#endif

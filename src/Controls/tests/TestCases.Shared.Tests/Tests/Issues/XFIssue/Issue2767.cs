@@ -18,7 +18,6 @@ public class Issue2767 : _IssuesUITest
 	public void Issue2767Test()
 	{
 		App.WaitForElement("Label 1:1");
-		//Assert.IsEmpty(App.Query("Collapsed"));
-		App.WaitForNoElement("Collapsed");// passing on WaitForElement and WaitForNoElement
+		Assert.That(App.FindElements("Collapsed").Count, Is.EqualTo(0));
 	}
 }

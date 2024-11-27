@@ -16,11 +16,10 @@ public class Bugzilla44338 : _IssuesUITest
 
 
 	 	[Test]
-	 	[FailsOnIOSWhenRunningOnXamarinUITest]
 	 	public void Bugzilla44338Test()
 	 	{
 #if ANDROID
-		App.SwipeRightToLeft("A");
+			App.SwipeRightToLeft("A");
 	 		App.Tap("C");
 			App.TouchAndHold("A");
 	 		App.Tap("C");

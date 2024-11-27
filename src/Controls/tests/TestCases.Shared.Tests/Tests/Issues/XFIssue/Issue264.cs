@@ -26,7 +26,8 @@ public class Issue264 : _IssuesUITest
 		App.Tap("CloseMe");
 		App.WaitForElement("About");
 
-		App.Tap("Pop me");
-		App.WaitForElement("About");
+		// Due to the current architecture of the HostApp, we cannot navigate back to the Bug Repro's page.
+		// App.Tap("Pop me");
+		// App.WaitForElement("Bug Repro's");
 	}
 }
