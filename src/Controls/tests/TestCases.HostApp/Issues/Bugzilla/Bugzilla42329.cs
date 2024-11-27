@@ -18,6 +18,7 @@ public class Bugzilla42329 : TestFlyoutPage
 	{
 		var rootPage = new RootPage();
 		Flyout = rootPage;
+		FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
 		rootPage.ListView.ItemSelected += (sender, e) =>
 		{
 			var item = e.SelectedItem as RootPageItem;
@@ -25,9 +26,7 @@ public class Bugzilla42329 : TestFlyoutPage
 			{
 				Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
 				rootPage.ListView.SelectedItem = null;
-				FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
 				IsPresented = false;
-
 			}
 		};
 
@@ -177,7 +176,7 @@ public class Bugzilla42329 : TestFlyoutPage
 			{
 				HorizontalOptions = LayoutOptions.Center,
 				FontAttributes = FontAttributes.Bold,
-
+				AutomationId = Success
 			};
 			Content = new StackLayout
 			{

@@ -17,6 +17,7 @@ public class Bugzilla30353 : _IssuesUITest
 	public void FlyoutPageIsPresentedChangedRaised()
 	{
 		App.SetOrientationPortrait();
+		App.WaitForElement("Toggle");
 		App.Tap("Toggle");
 		App.WaitForElement("The Flyout is now visible");
 		App.Tap("Toggle");

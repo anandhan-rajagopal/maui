@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID // Destructor Called was not shown in Android
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,6 +11,7 @@ public class Bugzilla42329 : _IssuesUITest
 	const string Page3Title = "Page3";
 	const string LabelPage1 = "Open the drawer menu and select Page2";
 	const string LabelPage2 = "Open the drawer menu and select Page3";
+	const string Success = "Destructor called";
 
 	public Bugzilla42329(TestDevice testDevice) : base(testDevice)
 	{
@@ -23,18 +23,21 @@ public class Bugzilla42329 : _IssuesUITest
 	[Category(UITestCategories.ListView)]
 	public void MemoryLeakB42329()
 	{
-		App.WaitForElement(Page1Title);
+		App.WaitForElement(LabelPage1);
 		App.Tap(LabelPage1);
-		App.WaitForElement(Page1Title);
+
+		App.WaitForElement(Page2Title);
 		App.Tap(Page2Title);
+
 		App.WaitForElement(LabelPage2);
 		App.Tap(LabelPage2);
-		App.WaitForElement(Page2Title);
+
+		App.WaitForElement(Page3Title);
 		App.Tap(Page3Title);
-#if ANDROID
-        App.TapInFlyout(Page3Title);
+#if ANDROID || WINDOWS //In random scenario, the destructor called upon the fourth navigation. So added one more navigation for Android and Windows to make this test work.
+		App.TapInFlyoutPageFlyout(Page2Title);
+		App.TapInFlyoutPageFlyout(Page3Title);
 #endif
-		App.WaitForElement("Destructor called");
+		App.WaitForElement(Success);
 	}
 }
-#endif

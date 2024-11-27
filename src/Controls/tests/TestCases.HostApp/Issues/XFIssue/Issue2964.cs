@@ -57,7 +57,6 @@ public class Issue2964 : TestFlyoutPage
 	protected override void Init()
 	{
 		Title = "Test";
-		IsPresented = true;
 		Flyout = new ContentPage
 		{
 			Title = "Flyout",
@@ -70,12 +69,12 @@ public class Issue2964 : TestFlyoutPage
 					Detail = new Page1();
 					FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
 					IsPresented = false;
-
 				})
 			}
 		};
 
 		Detail = new Page1();
 
+		IsPresented = true;
 	}
 }

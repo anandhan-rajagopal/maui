@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID // Title Flyout was not shown in android and widnows
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -18,10 +17,12 @@ public class Bugzilla41038 : _IssuesUITest
 	public void Bugzilla41038Test()
 	{
 		App.WaitForElement("ViewA");
-		App.Tap("Flyout");
+
+		App.TapFlyoutPageIcon("Flyout");
+
 		App.WaitForElement("ViewB");
 		App.Tap("ViewB");
-		App.WaitForElement("Flyout");
+
+		App.TapFlyoutPageIcon("Flyout");
 	}
 }
-#endif

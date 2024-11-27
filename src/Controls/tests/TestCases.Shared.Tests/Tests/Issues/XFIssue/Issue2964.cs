@@ -16,8 +16,11 @@ public class Issue2964 : _IssuesUITest
 	[Category(UITestCategories.ToolbarItem)]
 	public void Issue2964Test()
 	{
+		App.WaitForElement("FlyoutButton");
 		App.Tap("FlyoutButton");
+		App.WaitForElement("Page1PushModalButton");
 		App.Tap("Page1PushModalButton");
+		App.WaitForElement("ModalPagePopButton");
 		App.Tap("ModalPagePopButton");
 		App.WaitForElement("Page1Label");
 	 

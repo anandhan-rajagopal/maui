@@ -9,7 +9,7 @@ public class Bugzilla41038 : TestFlyoutPage
 	protected override void Init()
 	{
 		Title = "Main";
-
+		FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
 		var btnViewA = new Button() { Text = "ViewA", AutomationId = "ViewA" };
 		btnViewA.Clicked += Button_Clicked;
 
@@ -46,7 +46,6 @@ public class Bugzilla41038 : TestFlyoutPage
 
 		await _navPage.Navigation.PushAsync(newRoot);
 		_navPage.Navigation.RemovePage(root);
-		FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
 		IsPresented = false; 
 	}
 
