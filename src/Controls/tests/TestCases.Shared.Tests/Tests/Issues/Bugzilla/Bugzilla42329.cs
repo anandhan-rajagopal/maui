@@ -11,7 +11,6 @@ public class Bugzilla42329 : _IssuesUITest
 	const string Page3Title = "Page3";
 	const string LabelPage1 = "Open the drawer menu and select Page2";
 	const string LabelPage2 = "Open the drawer menu and select Page3";
-	const string Success = "Destructor called";
 
 	public Bugzilla42329(TestDevice testDevice) : base(testDevice)
 	{
@@ -38,6 +37,6 @@ public class Bugzilla42329 : _IssuesUITest
 		App.TapInFlyoutPageFlyout(Page2Title);
 		App.TapInFlyoutPageFlyout(Page3Title);
 #endif
-		App.WaitForElement(Success);
+		App.WaitForElement("Destructor called");
 	}
 }

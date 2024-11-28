@@ -1866,7 +1866,6 @@ namespace UITest.Appium
 			{
 				if (isShell)
 				{
-					app.WaitForElement(AppiumQuery.ByAccessibilityId("Ok"));
 					app.Tap(AppiumQuery.ByAccessibilityId("OK"));
 				}
 				else
