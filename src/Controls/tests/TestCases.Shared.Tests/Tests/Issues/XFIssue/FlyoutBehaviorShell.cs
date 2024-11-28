@@ -26,7 +26,7 @@ public class FlyoutBehaviorShell : _IssuesUITest
 	{
 		// Flyout is visible
 		App.WaitForElement(EnableFlyoutBehavior);
-#if !MACCATALYST && !WINDOWS //Drag Options not applicable for Desktop Platforms.
+#if !MACCATALYST && !WINDOWS //Swipe Options for Shell are not applicable for Desktop Platforms.
 		// Starting shell out as disabled correctly disables flyout
 		App.WaitForNoElement(FlyoutIconAutomationId, "Flyout Icon Visible on Startup");
 		App.ShowFlyout(usingSwipe: true, waitForFlyoutIcon: false);
@@ -60,8 +60,9 @@ public class FlyoutBehaviorShell : _IssuesUITest
 		App.WaitForElement(FlyoutItem, "Flyout not opening via code");
 		App.Tap(FlyoutItem);
 
-#if !IOS && !MACCATALYST //When DisableFlyoutBehavior, the flyout items are not able to accessible via inspect tools which leads to timeout exception on both iOS and Catalyst.
-	    // make sure you can still open flyout via code if flyout behavior is disabled
+#if !IOS && !MACCATALYST // When DisableFlyoutBehavior is set, flyout items become inaccessible via inspection tools, leading to timeout exceptions on both iOS and Catalyst.
+	    
+		// make sure you can still open flyout via code if flyout behavior is disabled
 		App.Tap(DisableFlyoutBehavior);
 		App.Tap(EnableBackButtonBehavior);
 		App.Tap(OpenFlyout);
