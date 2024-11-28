@@ -22,10 +22,6 @@ public class Issue2809 : _IssuesUITest
 
 	void ShouldShowMenu()
 	{
-#if ANDROID
-		App.Tap(AppiumQuery.ByXPath("//android.widget.ImageView[@content-desc=\"More options\"]"));
-#elif WINDOWS
-		App.Tap("MoreButton");
-#endif
+		App.TapMoreButton();
 	}
 }

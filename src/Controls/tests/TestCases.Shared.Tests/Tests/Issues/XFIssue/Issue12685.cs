@@ -23,14 +23,17 @@ public class Issue12685 : _IssuesUITest
 	{
 		var testLabel = App.WaitForFirstElement(StatusLabelId);
 		Assert.That(testLabel.ReadText(), Is.EqualTo(ResetStatus));
-		var testPath = App.WaitForFirstElement(PathId);
-		var pathRect = testPath.GetRect();
-#if MACCATALYST
-		App.ClickCoordinates(pathRect.X + 3, pathRect.Y + 3);
-#else
-		App.TapCoordinates(pathRect.X + 1, pathRect.Y + 1);
-#endif
+		PerformGestureOnPath();
 		Assert.That(testLabel.ReadText(), Is.EqualTo(ClickedStatus));
+	}
+	void PerformGestureOnPath()
+	{
+		var pathRect = App.WaitForFirstElement(PathId).GetRect();
+#if MACCATALYST
+        App.ClickCoordinates(pathRect.X + 3, pathRect.Y + 3);
+#else
+		App.TapCoordinates(pathRect.X + 3, pathRect.Y + 3);
+#endif
 	}
 }
 #endif
