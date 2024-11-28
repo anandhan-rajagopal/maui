@@ -13,40 +13,70 @@ public class Issue15565 : _IssuesUITest
 
 	public override string Issue => "[Bug] Shell TitleView and ToolBarItems rendering strange display on iOS 16";
 
-	// [Test]
-	// public void TitleViewHeightIsNotZero()
-	// {
-	// 	var titleView = App.WaitForElement("TitleViewId")[0].Rect;
-	// 	var topTab = App.WaitForElement("page 1")[0].Rect;
+	[Test]
+	public void TitleViewHeightIsNotZero()
+	{
 
-	// 	var titleViewBottom = titleView.Y + titleView.Height;
-	// 	var topTabTop = topTab.Y;
+#if WINDOWS
+		App.Tap("navViewItem");
+#elif ANDROID
+        var topTab = App.WaitForElement("PAGE 1").GetRect();
+#else
+        App.Tap("page 1");
+        var titleView = App.WaitForElement("title 1").GetRect();
+        var topTab = App.WaitForElement("page 1").GetRect();
+ 
+        var titleViewBottom = titleView.Y + titleView.Height;
+        var topTabTop = topTab.Y;
+ 
+        Assert.That(topTabTop, Is.GreaterThanOrEqualTo(titleViewBottom), "Title View is incorrectly positioned in iOS 16");
+#endif
+	}
 
-	// 	Assert.GreaterOrEqual(topTabTop, titleViewBottom, "Title View is incorrectly positioned in iOS 16");
-	// }
 
-	// [FailsOnAndroid]
-	// [FailsOnIOS]
-	// [Test]
-	// public void ToolbarItemsWithTitleViewAreRendering()
-	// {
-	// 	App.WaitForElement("Item 1");
-	// 	App.WaitForElement("Item 3");
-	// }
+	[Test]
+	public void ToolbarItemsWithTitleViewAreRendering()
+	{
+		App.WaitForElement("Item 1");
+		App.WaitForElement("Item 2");
+	}
 
-	// [Test]
-	// public void NoDuplicateTitleViews()
-	// {
-	// 	var titleView = App.WaitForElement("TitleViewId");
+	[Test]
+	public void NoDuplicateTitleViews()
+	{
+		var titleView = App.WaitForElement("title 1");
+#if WINDOWS || ANDROID
+        Assert.That(App.FindElementsByText("title 1").Count, Is.EqualTo(1));
+#else
+		Assert.That(App.FindElements("title 1").Count, Is.EqualTo(1));
+#endif
 
-	// 	Assert.AreEqual(1, titleView.Length);
 
-	// 	App.Tap("page 1");
-	// 	App.Tap("page 2");
-	// 	App.Tap("page 3");
+#if WINDOWS
+		App.Tap("navViewItem");
+		App.Tap("page 1");
+		App.Tap("navViewItem");
+		App.Tap("page 2");
+		App.Tap("navViewItem");
+		App.Tap("page 3");
 
-	// 	titleView = App.WaitForElement("TitleViewId");
+		titleView = App.WaitForElement("title 3");
+		Assert.That(App.FindElementsByText("title 3").Count, Is.EqualTo(1));
 
-	// 	Assert.AreEqual(1, titleView.Length);
-	// }
+#elif ANDROID
+        App.Tap("PAGE 1");
+        App.Tap("PAGE 2");
+        App.Tap("PAGE 3");
+ 
+        titleView = App.WaitForElement("title 3");
+        Assert.That(App.FindElementsByText("title 3").Count, Is.EqualTo(1));
+ 
+#else
+        App.Tap("page 1");
+        App.Tap("page 2");
+        App.Tap("page 3");
+        titleView = App.WaitForElement("title 3");
+        Assert.That(App.FindElements("title 3").Count, Is.EqualTo(1));
+#endif
+	}
 }

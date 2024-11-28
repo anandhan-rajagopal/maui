@@ -12,16 +12,22 @@ public class Issue15542 : _IssuesUITest
 
 	public override string Issue => "[Bug] Shell.TitleView does not render on iOS 16";
 
-	// [Test]
-	// [Category(UITestCategories.TitleView)]
-	// public void TitleViewHeightDoesntOverflow()
-	// {
-	// 	var titleView = App.WaitForElement("TitleViewId")[0].Rect;
-	// 	var topTab = App.WaitForElement("page 1")[0].Rect;
+	[Test]
+	[Category(UITestCategories.TitleView)]
+	public void TitleViewHeightDoesntOverflow()
+	{
+		var titleView = App.WaitForElement("title 1").GetRect();
+#if WINDOWS
+		App.Tap("navViewItem");
+#elif ANDROID
+		var topTab = App.WaitForElement("PAGE 1").GetRect();
+#else
+		var topTab = App.WaitForElement("page 1").GetRect();
 
-	// 	var titleViewBottom = titleView.Y + titleView.Height;
-	// 	var topTabTop = topTab.Y;
+		var titleViewBottom = titleView.Y + titleView.Height;
+		var topTabTop = topTab.Y;
 
-	// 	Assert.GreaterOrEqual(topTabTop, titleViewBottom, "Title View is incorrectly positioned in iOS 16");
-	// }
+		Assert.That(topTabTop, Is.GreaterThanOrEqualTo(titleViewBottom), "Title View is incorrectly positioned in iOS 16");
+#endif
+	}
 }
