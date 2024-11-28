@@ -26,53 +26,55 @@ public class FlyoutBehaviorShell : _IssuesUITest
 	{
 		// Flyout is visible
 		App.WaitForElement(EnableFlyoutBehavior);
-
+#if !MACCATALYST && !WINDOWS //Drag Options not applicable for Desktop Platforms.
 		// Starting shell out as disabled correctly disables flyout
 		App.WaitForNoElement(FlyoutIconAutomationId, "Flyout Icon Visible on Startup");
-		App.DragCoordinates(5, 500, 800, 500);
-		App.WaitForNoElement("Flyout Item", "Flyout Visible on Startup");
+		App.ShowFlyout(usingSwipe: true, waitForFlyoutIcon: false);
+		App.WaitForNoElement(FlyoutItem, "Flyout Visible on Startup");
 
 		// Enable Flyout Test
 		App.Tap(EnableFlyoutBehavior);
-		App.DragCoordinates(5, 500, 800, 500);
-		App.WaitForElement("Flyout Item", "Flyout Not Visible after Enabled");
-		App.Tap("Flyout Item");
+		App.ShowFlyout(usingSwipe: true);
+		App.WaitForElement(FlyoutItem, "Flyout Not Visible after Enabled");
+		App.Tap(FlyoutItem);
 
 		// Flyout Icon is not visible but you can still swipe open
 		App.Tap(DisableFlyoutBehavior);
 		App.WaitForNoElement(FlyoutIconAutomationId, "Flyout Icon Visible after being Disabled");
-		App.DragCoordinates(5, 500, 800, 500);
-		App.WaitForNoElement("Flyout Item", "Flyout Visible after being Disabled");
+		App.ShowFlyout(usingSwipe: true, waitForFlyoutIcon: false);
+		App.WaitForNoElement(FlyoutItem, "Flyout Visible after being Disabled");
 
 
 		// enable flyout and make sure disabling back button behavior doesn't hide icon
 		App.Tap(EnableFlyoutBehavior);
-		App.WaitForElement(FlyoutIconAutomationId);
+		App.WaitForFlyoutIcon();
 		App.Tap(DisableBackButtonBehavior);
-		App.DragCoordinates(5, 500, 800, 500);
-		App.WaitForElement("Flyout Item", "Flyout swipe not working after Disabling Back Button Behavior");
-		App.Tap("Flyout Item");
-
-		// make sure you can still open flyout via code
+		App.ShowFlyout(usingSwipe: true);
+		App.WaitForElement(FlyoutItem, "Flyout swipe not working after Disabling Back Button Behavior");
+		App.Tap(FlyoutItem);
+#endif
+		// // make sure you can still open flyout via code
 		App.Tap(EnableFlyoutBehavior);
 		App.Tap(EnableBackButtonBehavior);
 		App.Tap(OpenFlyout);
-		App.WaitForElement("Flyout Item", "Flyout not opening via code");
-		App.Tap("Flyout Item");
+		App.WaitForElement(FlyoutItem, "Flyout not opening via code");
+		App.Tap(FlyoutItem);
 
-		// make sure you can still open flyout via code if flyout behavior is disabled
+#if !IOS && !MACCATALYST //When DisableFlyoutBehavior, the flyout items are not able to accessible via inspect tools which leads to timeout exception on both iOS and Catalyst.
+	    // make sure you can still open flyout via code if flyout behavior is disabled
 		App.Tap(DisableFlyoutBehavior);
 		App.Tap(EnableBackButtonBehavior);
 		App.Tap(OpenFlyout);
-		App.WaitForElement("Flyout Item", "Flyout not opening via code when flyout behavior disabled");
-		App.Tap("Flyout Item");
+		App.WaitForElement(FlyoutItem, "Flyout not opening via code when flyout behavior disabled");
+		App.Tap(FlyoutItem);
+#endif
 
 		// make sure you can still open flyout via code if back button behavior is disabled
 		App.Tap(EnableFlyoutBehavior);
 		App.Tap(DisableBackButtonBehavior);
 		App.Tap(OpenFlyout);
-		App.WaitForElement("Flyout Item", "Flyout not opening via code when back button behavior is disabled");
-		App.Tap("Flyout Item");
+		App.WaitForElement(FlyoutItem, "Flyout not opening via code when back button behavior is disabled");
+		App.Tap(FlyoutItem);
 
 	}
 
@@ -81,10 +83,11 @@ public class FlyoutBehaviorShell : _IssuesUITest
 	public void WhenFlyoutIsLockedButtonsAreStillVisible()
 	{
 		// FlyoutLocked ensure that the flyout and buttons are still visible
+		App.WaitForElement(EnableBackButtonBehavior);
 		App.Tap(EnableBackButtonBehavior);
 		App.Tap(LockFlyoutBehavior);
-		App.WaitForElement("Basic Test","Flyout Locked hiding content");
+		App.WaitForElement(title,"Flyout Locked hiding content");
 		App.Tap(EnableFlyoutBehavior);
-		App.WaitForNoElement("Flyout Item");
+		App.WaitForNoElement(FlyoutItem);
 	}
 }
