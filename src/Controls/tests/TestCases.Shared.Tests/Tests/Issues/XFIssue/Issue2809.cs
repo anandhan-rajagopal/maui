@@ -12,23 +12,20 @@ public class Issue2809 : _IssuesUITest
 
 	public override string Issue => "Secondary ToolbarItems cause app to hang during PushAsync";
 
-	// [Test]
-	// [Category(UITestCategories.DisplayAlert)]
-	// [FailsOnIOS]
-	// 	public void TestPageDoesntCrash()
-	// 	{
-	// 		ShouldShowMenu();
-	// 		App.Tap(c => c.Marked("Item 1"));
-	// 		App.Screenshot("Didn't crash");
-	// 	}
+	[Test]
+	[Category(UITestCategories.DisplayAlert)]
+	public void TestPageDoesntCrash()
+	{
+		ShouldShowMenu();
+		App.Tap("Item 1");
+	}
 
-	// 	void ShouldShowMenu()
-	// 	{
-	// #if ANDROID
-	// 		//show secondary menu
-	// 		App.TapOverflowMenuButton();
-	// #elif WINDOWS
-	// 		App.Tap ("MoreButton");
-	// #endif
-	// 	}
+	void ShouldShowMenu()
+	{
+#if ANDROID
+		App.Tap(AppiumQuery.ByXPath("//android.widget.ImageView[@content-desc=\"More options\"]"));
+#elif WINDOWS
+		App.Tap("MoreButton");
+#endif
+	}
 }
