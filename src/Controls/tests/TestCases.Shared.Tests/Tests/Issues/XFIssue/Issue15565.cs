@@ -26,7 +26,10 @@ public class Issue15565 : _IssuesUITest
 	[Test]
 	public void TitleViewHeightIsNotZero()
 	{
-		TapTab(Page1);
+		TapTopTab(Page1);
+#if WINDOWS // In Windows the Page 1 items are inside the root navViewItem which shows in popup, so we need to tap it once to make them visible..
+		App.Tap("navViewItem");
+#endif
         var titleView = App.WaitForElement("title 1").GetRect();
         var topTab = App.WaitForElement(Page1).GetRect();
  
@@ -49,24 +52,23 @@ public class Issue15565 : _IssuesUITest
 	{
 		App.WaitForElement("title 1");
 		ValidateElementsCount("title 1");     
-		TapTab(Page1);
-		TapTab(Page2);
-		TapTab(Page3);
+		TapTopTab(Page1);
+		TapTopTab(Page2);
+		TapTopTab(Page3);
 		ValidateElementsCount("title 3");
 	}
 
-	void TapTab(string tab)
+	void TapTopTab(string tab)
 	{
 #if WINDOWS
 		App.Tap("navViewItem");
 #endif
 		App.Tap(tab);		
 	}
-
 	void ValidateElementsCount(string element)
 	{
-#if ANDROID || WINDOWS //FindElements and FindElementsByText different results on each platforms, so here we are using different methods to validate the count for specified platforms.
-        Assert.That(App.FindElementsByText(element).Count, Is.EqualTo(1));
+#if WINDOWS 
+        Assert.That(App.FindElements(element).Count, Is.EqualTo(1));
 #else
 		Assert.That(App.FindElements(AppiumQuery.ById(element)).Count, Is.EqualTo(1));
 #endif
