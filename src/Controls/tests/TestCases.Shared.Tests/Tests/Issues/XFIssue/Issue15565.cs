@@ -67,7 +67,7 @@ public class Issue15565 : _IssuesUITest
 	}
 	void ValidateElementsCount(string element)
 	{
-#if WINDOWS 
+#if WINDOWS // FindElements without query fails on Mac, with query fails on Windows; below condition ensures cross-platform compatibility
         Assert.That(App.FindElements(element).Count, Is.EqualTo(1));
 #else
 		Assert.That(App.FindElements(AppiumQuery.ById(element)).Count, Is.EqualTo(1));
