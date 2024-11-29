@@ -29,6 +29,7 @@ public class Issue2894 : _IssuesUITest
 		for (int i = 1; i < 5; i++)
 		{
 			App.Tap($"TestSpan{i}");
+			App.WaitForElement($"{kGesture1}{i-1}");
 			App.WaitForElement(kLabelAutomationId);
 			PerformGestureActionForFirstSpan(target);
 			PerformGestureActionForSecondSpan(target);
