@@ -6,6 +6,13 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 
 public class Issue15542 : _IssuesUITest
 {
+
+#if ANDROID
+	const string Page1 = "PAGE 1";
+#else
+	const string Page1 = "page 1";
+#endif
+
 	public Issue15542(TestDevice testDevice) : base(testDevice)
 	{
 	}
@@ -17,17 +24,14 @@ public class Issue15542 : _IssuesUITest
 	public void TitleViewHeightDoesntOverflow()
 	{
 		var titleView = App.WaitForElement("title 1").GetRect();
-#if WINDOWS
+#if WINDOWS // In Windows the Page 1 items are inside the root navViewItem which in popup we neet top it once.
 		App.Tap("navViewItem");
-#elif ANDROID
-		var topTab = App.WaitForElement("PAGE 1").GetRect();
-#else
-		var topTab = App.WaitForElement("page 1").GetRect();
+#endif
+		var topTab = App.WaitForElement(Page1).GetRect();
 
 		var titleViewBottom = titleView.Y + titleView.Height;
 		var topTabTop = topTab.Y;
 
 		Assert.That(topTabTop, Is.GreaterThanOrEqualTo(titleViewBottom), "Title View is incorrectly positioned in iOS 16");
-#endif
 	}
 }
