@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS// WHEN TAP CLOSED FLYOUT IT SHOWS CLOSED FLYOUTT LEFTT ALIGNED
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -10,7 +9,13 @@ public class Issue973 : _IssuesUITest
 	public Issue973(TestDevice testDevice) : base(testDevice)
 	{
 	}
-
+#if ANDROID
+	const string Tab1 = "TAB 1";
+	const string Tab2 = "TAB 2";
+#else
+	const string Tab1 = "Tab 1";
+	const string Tab2 = "Tab 2";
+#endif
 	public override string Issue => "ActionBar doesn't immediately update when nested TabbedPage is changed";
 
 	[Test]
@@ -19,28 +24,20 @@ public class Issue973 : _IssuesUITest
 	public void Issue973TestsTabResetAfterDetailSwap()
 	{
 		App.WaitForElement("Initial Page Left aligned");
-#if ANDROID
-		App.WaitForElement("TAB 1");
-		App.Tap("TAB 2");
-#else
-		App.WaitForElement("Tab 1");
-		App.Tap("Tab 2");
-#endif
+		App.WaitForElement(Tab1);
+		App.Tap(Tab2);
 		App.WaitForElement("Initial Page Right aligned");
 		App.Tap("Present Flyout");
 		App.Tap("Page 4");
 #if ANDROID
           App.DragCoordinates(15,500,800,300);
 #endif
-		App.Tap("Closed Flyout");
+		App.WaitForElement("Close Flyout");
+		App.Tap("Close Flyout");
 		App.WaitForElement("Page 4 Left aligned");
-#if ANDROID
-		App.Tap("TAB 2");
-#else
-		App.Tap("Tab 2");
-#endif
+		App.Tap(Tab2);
 		App.WaitForElement("Page 4 Right aligned");
 
 	}
 }
-#endif
+

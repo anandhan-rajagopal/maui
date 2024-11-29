@@ -17,9 +17,10 @@ public class Issue9440 : _IssuesUITest
 	[Category(UITestCategories.Shell)]
 	public void GitHubIssue9440()
 	{
-		App.TapFlyoutIcon();
+		App.TapInShellFlyout("Test 1");
 		App.WaitForElement("Test 1");
 		App.DoubleTap("Test 1");
+		App.WaitForElement("Test 1");
 		App.WaitForElement("False");
 	}
 }

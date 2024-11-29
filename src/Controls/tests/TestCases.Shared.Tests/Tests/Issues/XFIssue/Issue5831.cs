@@ -1,6 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST//TAPfLYOUTiCON NOT WORK IN ANDROID AND SHOW NULL REFERENCE EXCEPION IN FLYOUTMAINTITLE
-
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -20,10 +18,15 @@ public class Issue5831 : _IssuesUITest
 	[Category(UITestCategories.Shell)]
 	public void CollectionViewRenderingWhenLeavingAndReturningViaFlyout()
 	{
-		App.TapFlyoutIcon();
-		App.Tap(flyoutOtherTitle);
-		App.TapFlyoutIcon();
-		App.Tap(flyoutMainTitle);
+		App.TapInShellFlyout(flyoutOtherTitle);
+		App.WaitForElementTillPageNavigationSettled("Label");
+		App.TapInShellFlyout(flyoutMainTitle);
+		App.WaitForElement("Baboon");
+		App.WaitForElement("Capuchin Monkey");
+		App.WaitForElement("Blue Monkey");
+		App.WaitForElement("Squirrel Monkey");
+		App.WaitForElement("Golden Lion Tamarin");
+		App.WaitForElement("Howler Monkey");
+		App.WaitForElement("Japanese Macaque");
 	}
 }
-#endif

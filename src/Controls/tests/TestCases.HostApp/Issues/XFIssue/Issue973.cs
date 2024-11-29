@@ -15,6 +15,7 @@ public class Issue973 : TestFlyoutPage
 {
 	protected override void Init()
 	{
+		FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
 		var cells = new[] {
 			new PageNameObject ("Close Flyout"),
 			new PageNameObject ("Page 1"),
@@ -45,7 +46,7 @@ public class Issue973 : TestFlyoutPage
 
 			if (cellName == "Close Flyout")
 			{
-				MainThread.BeginInvokeOnMainThread(() => IsPresented = false);
+		       IsPresented = false;
 			}
 			else
 			{
@@ -56,7 +57,7 @@ public class Issue973 : TestFlyoutPage
 
 				d.PresentMaster += (s, args) =>
 				{
-					MainThread.BeginInvokeOnMainThread(() => IsPresented = true);
+				    IsPresented = true;
 				};
 
 				Detail = d;
@@ -79,7 +80,7 @@ public class Issue973 : TestFlyoutPage
 
 		detail.PresentMaster += (sender, e) =>
 		{
-			MainThread.BeginInvokeOnMainThread(() => IsPresented = true);
+			IsPresented = true;
 		};
 
 		Detail = detail;

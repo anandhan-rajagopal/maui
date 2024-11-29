@@ -1,5 +1,4 @@
-﻿//failed on Mac show null reference exception
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -26,14 +25,14 @@ public class Issue6738 : _IssuesUITest
 		App.Tap(pushAutomationId);
 		App.WaitForElement(insertAutomationId);
 		App.Tap(insertAutomationId);
-		App.TapFlyoutIcon();
-		App.Tap(flyoutOtherTitle);
-		App.TapFlyoutIcon();
-		App.Tap(flyoutMainTitle);
+		App.TapInShellFlyout(flyoutOtherTitle);
+		App.TapInShellFlyout(flyoutMainTitle);
 		App.WaitForElement(returnAutomationId);
 		App.Tap(returnAutomationId);
 		App.TapBackArrow();
+		App.WaitForElementTillPageNavigationSettled("This is an extra page");
 		App.TapBackArrow();
+
 
 	}
 }
