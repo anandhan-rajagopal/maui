@@ -13,15 +13,10 @@ public class Issue2809 : _IssuesUITest
 	public override string Issue => "Secondary ToolbarItems cause app to hang during PushAsync";
 
 	[Test]
-	[Category(UITestCategories.DisplayAlert)]
+	[Category(UITestCategories.ToolbarItem)]
 	public void TestPageDoesntCrash()
 	{
-		ShouldShowMenu();
-		App.Tap("Item 1");
-	}
-
-	void ShouldShowMenu()
-	{
 		App.TapMoreButton();
+		App.Tap("Item 1");
 	}
 }

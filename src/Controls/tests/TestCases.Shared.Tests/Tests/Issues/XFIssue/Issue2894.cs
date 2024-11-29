@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Drawing;
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -29,36 +30,38 @@ public class Issue2894 : _IssuesUITest
 		{
 			App.Tap($"TestSpan{i}");
 			App.WaitForElement(kLabelAutomationId);
-#if MACCATALYST
-            App.ClickCoordinates(target.X + 5, target.Y + 5);
-#else
-			App.TapCoordinates(target.X + 5, target.Y + 5);
-#endif
-
-#if ANDROID
-            App.TapCoordinates(target.X + target.Width / 2, target.Y + 2);
-#elif MACCATALYST
-            App.ClickCoordinates(target.X + target.Width - 10, target.Y + 2);
-#else
-			App.TapCoordinates(target.X + target.Width - 10, target.Y + 2);
-#endif
+			PerformGestureActionForFirstSpan(target);
+			PerformGestureActionForSecondSpan(target);
 		}
 
 		App.Tap($"TestSpan5");
-#if MACCATALYST
-        App.ClickCoordinates(target.X + 5, target.Y + 5);
-#else
-		App.TapCoordinates(target.X + 5, target.Y + 5);
-#endif
-
-#if ANDROID
-            App.TapCoordinates(target.X + target.Width /2, target.Y + 2);
-#elif MACCATALYST
-            App.ClickCoordinates(target.X + target.Width - 10, target.Y + 2);
-#else
-		App.TapCoordinates(target.X + target.Width - 10, target.Y + 2);
-#endif
+		PerformGestureActionForFirstSpan(target);
+		PerformGestureActionForSecondSpan(target);
 		App.WaitForElement($"{kGesture1}4");
 		App.WaitForElement($"{kGesture2}4");
+	}
+
+	void PerformGestureAction(float x, float y)
+	{
+#if MACCATALYST // TapCoordinates is not working on MacCatalyst Issue: https://github.com/dotnet/maui/issues/19754
+		App.ClickCoordinates(x, y);
+#else
+		App.TapCoordinates(x, y);
+#endif
+	}
+
+	void PerformGestureActionForFirstSpan(Rectangle target)
+	{
+		PerformGestureAction(target.X + 5, target.Y + 5);
+	}
+
+	void PerformGestureActionForSecondSpan(Rectangle target)
+	{
+#if ANDROID // Calculate points vary on Android and other platforms.
+ 		App.TapCoordinates(target.X + target.Width /2, target.Y + 2);
+#else 
+		PerformGestureAction(target.X + target.Width - 10, target.Y + 2);
+#endif
+
 	}
 }
