@@ -7,7 +7,6 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 public class Issue12685 : _IssuesUITest
 {
 	const string StatusLabelId = "StatusLabelId";
-	const string PathId = "PathId";
 	const string ResetStatus = "Path touch event not fired, touch path above.";
 	const string ClickedStatus = "Path was clicked, click reset button to start over.";
 	public Issue12685(TestDevice testDevice) : base(testDevice)
