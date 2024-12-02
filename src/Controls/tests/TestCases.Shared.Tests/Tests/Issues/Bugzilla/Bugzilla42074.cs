@@ -1,4 +1,4 @@
-﻿
+﻿#if TEST_FAILS_ON_CATALYST // TimePicker not opens the dialog, issue: https://github.com/dotnet/maui/issues/10827 
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -20,19 +20,23 @@ public class Bugzilla42074 : _IssuesUITest
 		App.WaitForElement("TimePicker");
 		App.Tap("TimePicker");
 
-		Back("Cancel");
+		CloseDialog();
 		App.WaitForElement("Click to focus TimePicker");
-
+#if !ANDROID //Programmatic focus does not open the dialog for picker controls, issue: https://github.com/dotnet/maui/issues/8946 
 		App.Tap("focusbtn");
-
+		CloseDialog();
+#endif
 	}
 
-	void Back(string cancel)
+	void CloseDialog()
 	{
 #if ANDROID
-        App.WaitForElement(cancel);
-        App.Tap(cancel);
+		App.WaitForElement("Cancel");
+		App.Tap("Cancel");
+#elif IOS
+		App.WaitForElement("Done");
+		App.Tap("Done");
 #endif
 	}
 }
-
+#endif
