@@ -1850,7 +1850,7 @@ namespace UITest.Appium
 		/// <param name="timeout">Optional timeout for the wait operation. Default is null, which uses the default timeout.</param>
 		public static void WaitForElementTillPageNavigationSettled(this IApp app, string elementId, TimeSpan? timeout = null)
 		{
-			if (app is AppiumCatalystApp)
+			if(app is AppiumCatalystApp)
 				app.WaitForElement(AppiumQuery.ById(elementId), timeout: timeout);
 
 			app.WaitForElement(elementId, timeout: timeout);
@@ -1865,7 +1865,7 @@ namespace UITest.Appium
 		/// <param name="timeout">Optional timeout for the wait operation. Default is null, which uses the default timeout.</param>
 		public static void WaitForElementTillPageNavigationSettled(this IApp app, IQuery query, TimeSpan? timeout = null)
 		{
-			if (app is AppiumCatalystApp)
+			if(app is AppiumCatalystApp)
 				app.WaitForElement(query, timeout: timeout);
 
 			app.WaitForElement(query, timeout: timeout);
