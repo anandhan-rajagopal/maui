@@ -15,6 +15,7 @@ public class Issue892 : TestFlyoutPage
 {
 	protected override void Init()
 	{
+		FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
 		var cells = new[] {
 			new NavPageNameObject ("Close Flyout"),
 			new NavPageNameObject ("Page 1"),

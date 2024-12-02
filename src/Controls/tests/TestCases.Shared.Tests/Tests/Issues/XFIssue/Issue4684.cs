@@ -8,22 +8,39 @@ public class Issue4684 : _IssuesUITest
 	public Issue4684(TestDevice testDevice) : base(testDevice)
 	{
 	}
-
+#if ANDROID
+    const string connect="CONNECT";
+    const string control="CONTROL";
+#else
+	const string connect = "Connect";
+	const string control = "Control";
+#endif
 	public override string Issue => "[Android] don't clear shell content because native page isn't visible";
 
-	//[Test]
-	//[Category(UITestCategories.Shell)]
-	//public void NavigatingBackAndForthDoesNotCrash()
-	//{
-	//	TapInFlyout("Connect");
-	//	App.Tap("Control");
+	[Test]
+	[Category(UITestCategories.Shell)]
+	public void NavigatingBackAndForthDoesNotCrash()
+	{
+		App.TapInShellFlyout("Connect");
+#if WINDOWS
+        App.Tap("navViewItem");
+#endif
+		App.WaitForElementTillPageNavigationSettled("Connect");
+		App.Tap(control);
 
-	//	TapInFlyout("Home");
-	//	TapInFlyout("Connect");
+		App.TapInShellFlyout("Home");
+		App.WaitForElementTillPageNavigationSettled("Control");
+		App.TapInShellFlyout("Connect");
+#if WINDOWS
+        App.Tap("navViewItem");
+#endif
+		App.Tap(connect);
+		App.WaitForElement("Connect");
+#if WINDOWS
+     App.Tap("navViewItem");
+#endif
+		App.Tap(control);
 
-	//	App.Tap("Connect");
-	//	App.Tap("Control");
-
-	//	App.WaitForElement("Success");
-	//}
+		App.WaitForElement("Success");
+	}
 }
