@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID // IsPresented value is not reflected when change this on list view item tapped in flyout.
+﻿#if TEST_FAILS_ON_ANDROID // IsPresented value is not reflected when change this on list view item tapped in flyout. Issue: https://github.com/dotnet/maui/issues/26324
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;

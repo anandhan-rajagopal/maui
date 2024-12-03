@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID // ToolBarItem not shown on navigations Issue: 
-
+﻿#if TEST_FAILS_ON_ANDROID // ToolBarItem not shown on FlyoutPage, issue: https://github.com/dotnet/maui/issues/26330
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS //DoubleTap not performing by appium, using DoubleClick also not working for windows getting "OpenQA.Selenium.WebDriverException : Currently only pen and touch pointer input source types are supported" exception. But in manual testing more tap closes the flyout. 
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -28,3 +29,4 @@ public class Issue9440 : _IssuesUITest
 		App.WaitForElement("False");
 	}
 }
+#endif

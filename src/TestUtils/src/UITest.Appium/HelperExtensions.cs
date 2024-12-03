@@ -1840,7 +1840,6 @@ namespace UITest.Appium
 			};
 		}
 
-
 		/// <summary>
 		/// Waits for an element to be ready until page navigation has settled, with additional waiting for MacCatalyst.
 		/// This method helps prevent null reference exceptions during page transitions, especially in MacCatalyst.
