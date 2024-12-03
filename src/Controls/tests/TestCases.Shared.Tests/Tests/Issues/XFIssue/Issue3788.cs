@@ -1,5 +1,5 @@
-﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST
-//In MacCatalyst, Timeout Exception in the label. And in Windows platform, it throws the NullReferenceException.
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST // In Windows, getting object null reference exception while running the sample, Issue:  
+//In MacCatalyst, Timeout Exception in the label line no 20. tried by using App.QueryUntilPresent, and adding delay also won't work. 
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;

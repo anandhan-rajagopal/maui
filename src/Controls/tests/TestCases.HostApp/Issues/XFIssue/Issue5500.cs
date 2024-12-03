@@ -36,10 +36,6 @@ public class Issue5500 : TestContentPage
 	protected override void OnAppearing()
 	{
 		base.OnAppearing();
-#pragma warning disable CS0618 // Type or member is obsolete
-#pragma warning disable CS0612 // Type or member is obsolete
-		Device.BeginInvokeOnMainThread(GarbageCollectionHelper.Collect);
-#pragma warning restore CS0612 // Type or member is obsolete
-#pragma warning restore CS0618 // Type or member is obsolete
+		MainThread.BeginInvokeOnMainThread(GarbageCollectionHelper.Collect);
 	}
 }

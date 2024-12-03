@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_IOS
-//In iOS platform tests may fail due to editor issue.
+﻿#if TEST_FAILS_ON_IOS // App get freez when press return key after entering text in Editor on iOS, issue: https://github.com/dotnet/maui/issues/26341 
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -18,17 +17,17 @@ public class Issue5500 : _IssuesUITest
 	[Category(UITestCategories.Editor)]
 	public void VerifyEditorTextChangeEventsAreFiring()
 	{
-	App.WaitForElement("EditorAutomationId");
-	App.EnterText("EditorAutomationId", "Test 1");
+		App.WaitForElement("EditorAutomationId");
+		App.EnterText("EditorAutomationId", "Test 1");
 
-	Assert.That(App.WaitForElement("EditorAutomationId").ReadText(), Is.EqualTo("Test 1"));
-	Assert.That(App.WaitForElement("EntryAutomationId").ReadText(), Is.EqualTo("Test 1"));
- 
-	App.ClearText("EntryAutomationId");
-	App.EnterText("EntryAutomationId", "Test 2");
+		Assert.That(App.WaitForElement("EditorAutomationId").ReadText(), Is.EqualTo("Test 1"));
+		Assert.That(App.WaitForElement("EntryAutomationId").ReadText(), Is.EqualTo("Test 1"));
+	
+		App.ClearText("EntryAutomationId");
+		App.EnterText("EntryAutomationId", "Test 2");
 
-	Assert.That(App.WaitForElement("EditorAutomationId").ReadText(), Is.EqualTo("Test 2"));
-	Assert.That(App.WaitForElement("EntryAutomationId").ReadText(), Is.EqualTo("Test 2"));
+		Assert.That(App.WaitForElement("EditorAutomationId").ReadText(), Is.EqualTo("Test 2"));
+		Assert.That(App.WaitForElement("EntryAutomationId").ReadText(), Is.EqualTo("Test 2"));
 	}
 }
 #endif

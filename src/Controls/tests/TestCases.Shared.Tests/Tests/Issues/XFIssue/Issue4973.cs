@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID
-//In windows and Android, Sample doesn't working properly.
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID // Test ignored on Windows and Android due to rendering issues. The documentation specifies that TabbedPage should contain NavigationPage or ContentPage, but this sample uses nested TabbedPages.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -18,12 +17,10 @@ public class Issue4973 : _IssuesUITest
 	[Category(UITestCategories.Navigation)]
 	public void Issue4973Test()
 	{
+		App.WaitForElement("Tab5");
 		App.Tap("Tab5");
-
 		App.WaitForElement("Test");
-
 		App.Tap("Tab1");
-
 		App.Tap("Tab2");
 	}
 }

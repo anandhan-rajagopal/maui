@@ -4,7 +4,7 @@ namespace Maui.Controls.Sample.Issues;
 
 
 [Issue(IssueTracker.Github, 3475, "[iOS] LayoutCompression Performance Issues", PlatformAffected.iOS)]
-public class Issue3475 : TestContentPage
+public class Issue3475 : TestNavigationPage
 {
 	string _withoutCompressionBtnId = "button1";
 	string _withCompressionBtnId = "button2";
@@ -20,7 +20,7 @@ public class Issue3475 : TestContentPage
 		var withoutCompressionBtn = new Button
 		{
 			Text = "Without Layout Compression",
-			Command = new Command(async () => await Navigation.PushModalAsync(new CompressionPage())),
+			Command = new Command(async () => await Navigation.PushAsync(new CompressionPage())),
 			AutomationId = _withoutCompressionBtnId
 
 		};
@@ -28,11 +28,11 @@ public class Issue3475 : TestContentPage
 		var withCompressionBtn = new Button
 		{
 			Text = "With Layout Compression",
-			Command = new Command(async () => await Navigation.PushModalAsync(new CompressionPage(true))),
+			Command = new Command(async () => await Navigation.PushAsync(new CompressionPage(true))),
 			AutomationId = _withCompressionBtnId
 		};
 
-		Content = new StackLayout
+		var content = new StackLayout
 		{
 			Padding = 10,
 			Children =
@@ -46,6 +46,8 @@ public class Issue3475 : TestContentPage
 				withCompressionBtn
 			}
 		};
+
+		Navigation.PushAsync(new ContentPage { Content = content });
 	}
 
 	public int GetMs(string text)
@@ -64,7 +66,7 @@ public class CompressionPage : ContentPage
 	public CompressionPage(bool shouldUseLayoutCompression = false)
 	{
 		_summaryLabel = new Label { HorizontalOptions = LayoutOptions.Center, BackgroundColor = Colors.Silver, AutomationId = Issue3475.ElapsedLabelId };
-		var backButton = new Button { AutomationId = Issue3475.BackButtonId, Text = "Back", Command = new Command(() => Navigation.PopModalAsync()) };
+		var backButton = new Button { AutomationId = Issue3475.BackButtonId, Text = "Back", Command = new Command(() => Navigation.PopAsync()) };
 		_scrollStack = new StackLayout();
 
 		var scrollView = new ScrollView
