@@ -50,10 +50,10 @@ public class Bugzilla41424 : _IssuesUITest
 #elif IOS
 		App.WaitForElement("Done");
 		App.Tap("Done");
-#elif WINDOWS // No Actions botton for Windows DatePicker, so picking any date will close the dialog on windows.
+#elif WINDOWS // No Action button for Windows DatePicker, so picking any date will close the dialog on windows.
 		App.WaitForElement("1");
 		App.Tap("1");
-#else  // unable to locate the elements in the dialog box, so tapping outside the dialog caused it to close on a Mac.
+#else  // Unable to locate the elements in the dialog box, so tapping outside the dialog caused it to close on a Mac.
 		App.Tap(GetFocusState);
 #endif
 	}
