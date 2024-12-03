@@ -16,8 +16,10 @@ public class ShellWithCustomRendererDisabledAnimation : _IssuesUITest
 	[Category(UITestCategories.Shell)]
 	public void NavigationWithACustomRendererThatDoesntSetAnAnimationStillWorks()
 	{
-		App.Tap("Click Me");
-		App.Tap("Go Back");
-		App.WaitForElement("Click Me");
+		App.WaitForElement("PageLoaded");
+		App.Tap("PageLoaded");
+		App.WaitForElement("GoBack");
+		App.Tap("GoBack");
+		App.WaitForElement("PageLoaded");
 	}
 }

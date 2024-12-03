@@ -1,6 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS // Post Clear top Tab was not shown in sample itself
-
- using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -32,7 +30,13 @@ public class Issue6878 : _IssuesUITest
 
 		var label = App.WaitForElement(StatusLabel);
 		Assert.That(label.ReadText(), Is.EqualTo(StatusLabelText));
-		App.Tap(PostClearTopTab);
+		TapTobTab(PostClearTopTab);
+	}
+	void TapTobTab(string tab)
+	{
+#if WINDOWS
+        App.Tap("navViewItem");
+#endif
+		App.Tap(tab);
 	}
 }
-#endif

@@ -22,25 +22,23 @@ public class Issue4684 : _IssuesUITest
 	public void NavigatingBackAndForthDoesNotCrash()
 	{
 		App.TapInShellFlyout("Connect");
-#if WINDOWS
-        App.Tap("navViewItem");
-#endif
 		App.WaitForElementTillPageNavigationSettled("Connect");
-		App.Tap(control);
-
+		TapTobTab(control);
+		App.WaitForElementTillPageNavigationSettled("Control");
 		App.TapInShellFlyout("Home");
 		App.WaitForElementTillPageNavigationSettled("Control");
 		App.TapInShellFlyout("Connect");
+		TapTobTab(connect);
+		App.WaitForElement("Connect");
+		TapTobTab(control);
+		App.WaitForElement("Success");
+	}
+
+	void TapTobTab(string tab)
+	{
 #if WINDOWS
         App.Tap("navViewItem");
 #endif
-		App.Tap(connect);
-		App.WaitForElement("Connect");
-#if WINDOWS
-     App.Tap("navViewItem");
-#endif
-		App.Tap(control);
-
-		App.WaitForElement("Success");
+		App.Tap(tab);
 	}
 }

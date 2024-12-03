@@ -16,7 +16,7 @@ public class Issue8207 : _IssuesUITest
 	[Category(UITestCategories.Shell)]
 	public void FlyoutItemShouldShowTitle()
 	{
-		App.TapShellFlyoutIcon();
-		App.WaitForElement("Dashboard");
+		App.TapInShellFlyout("Dashboard");
+		App.WaitForElement("Control");
 	}
 }
