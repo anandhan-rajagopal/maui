@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID  //App crashes
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -9,19 +10,20 @@ public class Issue9686 : _IssuesUITest
 	public Issue9686(TestDevice testDevice) : base(testDevice)
 	{
 	}
-
+	const string Success = "Success";
+	const string Run = "Run";
 	public override string Issue => "[Bug, CollectionView,iOS] Foundation.Monotouch Exception in Grouped CollectionView";
 
-	//[Test]
-	//[Category(UITestCategories.CollectionView)]
-	//[FailsOnAndroid]
-	//[FailsOnIOS]
-	//public void AddRemoveEmptyGroupsShouldNotCrashOnInsert()
-	//{
-	//	App.WaitForElement(Run);
-	//	App.Tap(Run);
-	//	App.WaitForElement("Item 1");
-	//	App.Tap(Run);
-	//	App.WaitForElement(Success);
-	//}
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+
+	public void AddRemoveEmptyGroupsShouldNotCrashOnInsert()
+	{
+		App.WaitForElement(Run);
+		App.Tap(Run);
+		App.WaitForElement("Item 1");
+		App.Tap(Run);
+		App.WaitForElement(Success);
+	}
 }
+#endif
