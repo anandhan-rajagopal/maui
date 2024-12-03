@@ -20,7 +20,7 @@ public class Issue3475 : TestContentPage
 		var withoutCompressionBtn = new Button
 		{
 			Text = "Without Layout Compression",
-			Command = new Command(async () => await Navigation.PushAsync(new CompressionPage())),
+			Command = new Command(async () => await Navigation.PushModalAsync(new CompressionPage())),
 			AutomationId = _withoutCompressionBtnId
 
 		};
@@ -28,7 +28,7 @@ public class Issue3475 : TestContentPage
 		var withCompressionBtn = new Button
 		{
 			Text = "With Layout Compression",
-			Command = new Command(async () => await Navigation.PushAsync(new CompressionPage(true))),
+			Command = new Command(async () => await Navigation.PushModalAsync(new CompressionPage(true))),
 			AutomationId = _withCompressionBtnId
 		};
 
@@ -64,12 +64,13 @@ public class CompressionPage : ContentPage
 	public CompressionPage(bool shouldUseLayoutCompression = false)
 	{
 		_summaryLabel = new Label { HorizontalOptions = LayoutOptions.Center, BackgroundColor = Colors.Silver, AutomationId = Issue3475.ElapsedLabelId };
-		var backButton = new Button { AutomationId = Issue3475.BackButtonId, Text = "Back", Command = new Command(() => Navigation.PopAsync()) };
+		var backButton = new Button { AutomationId = Issue3475.BackButtonId, Text = "Back", Command = new Command(() => Navigation.PopModalAsync()) };
 		_scrollStack = new StackLayout();
 
 		var scrollView = new ScrollView
 		{
-			Content = _scrollStack
+			Content = _scrollStack,
+			VerticalScrollBarVisibility = ScrollBarVisibility.Always
 		};
 
 		var mainStack = new StackLayout
@@ -95,7 +96,6 @@ public class CompressionPage : ContentPage
 			childLayout.Children.Add(label);
 			_scrollStack.Children.Add(childLayout);
 		}
-
 		_sw.Start();
 		Content = mainStack;
 	}

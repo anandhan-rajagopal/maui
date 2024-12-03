@@ -20,8 +20,8 @@ public class Issue4303 : TestTabbedPage
 		childTab = new TabbedPage { Title = "Tab4" };
 		childTab.Appearing += ChildTabAppearing;
 
-		lbl = new Label { Text = "Default", AutomationId = lblAutomationID };
-		childLbl = new Label { Text = "Default", AutomationId = lblChildAutomationID };
+		lbl = new Label { Text = "Default", AutomationId = "lblAssert"};
+		childLbl = new Label { Text = "Default", AutomationId = "lblChildAssert" };
 		var btn = new Button { Text = "Go to Tab4", AutomationId = btnAutomationID, Command = new Command(() => CurrentPage = childTab) };
 		var page1 = new ContentPage { Title = "Page 1", Content = new StackLayout { lbl, btn } };
 		var page2 = new ContentPage { Title = "Page 2" };

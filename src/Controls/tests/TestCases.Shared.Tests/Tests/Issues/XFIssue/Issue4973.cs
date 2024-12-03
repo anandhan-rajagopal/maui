@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID
+//In windows and Android, Sample doesn't working properly.
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,19 +14,17 @@ public class Issue4973 : _IssuesUITest
 
 	public override string Issue => "TabbedPage nav tests";
 
-	//[Test]
-	//[Category(UITestCategories.Navigation)]
-	//[FailsOnAndroidWhenRunningOnXamarinUITest]
-	//public void Issue4973Test()
-	//{
-	//	App.Tap(q => q.Text("Tab5"));
+	[Test]
+	[Category(UITestCategories.Navigation)]
+	public void Issue4973Test()
+	{
+		App.Tap("Tab5");
 
-	//	App.WaitForElement(q => q.Text("Test"));
+		App.WaitForElement("Test");
 
-	//	GarbageCollectionHelper.Collect();
+		App.Tap("Tab1");
 
-	//	App.Tap(q => q.Text("Tab1"));
-
-	//	App.Tap(q => q.Text("Tab2"));
-	//}
+		App.Tap("Tab2");
+	}
 }
+#endif
