@@ -27,16 +27,14 @@ public class SwipeBackNavCrash : _IssuesUITest
 		App.Tap("Go to second page");
 	}
 
-#if IOS
-		[Test]
-		public void SwipeBackNavCrashTestsSwipeBackDoesNotCrash ()
-		{
-			App.WaitForElement("Page One");
-			App.Tap("Go to second page");
-			App.WaitForElement("Swipe lightly left and right to crash this page");
-		    App.DragCoordinates(15,500,800,500);
-			App.WaitForElement("Swipe lightly left and right to crash this page");
-		}
+#if !MACCATALYST //SwipeActions not working in Catalyst
+	[Test]
+	public void SwipeBackNavCrashTestsSwipeBackDoesNotCrash ()
+	{
+		App.WaitForElement("Swipe lightly left and right to crash this page");
+		App.SwipeLeftToRight();
+		App.WaitForElement("Swipe lightly left and right to crash this page");
+	}
 #endif
 
 }

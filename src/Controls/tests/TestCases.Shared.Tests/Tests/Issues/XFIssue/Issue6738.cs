@@ -26,13 +26,12 @@ public class Issue6738 : _IssuesUITest
 		App.WaitForElement(insertAutomationId);
 		App.Tap(insertAutomationId);
 		App.TapInShellFlyout(flyoutOtherTitle);
+		App.WaitForElement("Go back to main page via the flyout");
 		App.TapInShellFlyout(flyoutMainTitle);
 		App.WaitForElement(returnAutomationId);
 		App.Tap(returnAutomationId);
 		App.TapBackArrow();
 		App.WaitForElementTillPageNavigationSettled("This is an extra page");
 		App.TapBackArrow();
-
-
 	}
 }

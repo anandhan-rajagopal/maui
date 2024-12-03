@@ -1,5 +1,4 @@
-﻿//Failed in Android TapFlyoutIcon not working
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -17,9 +16,14 @@ public class Issue9440 : _IssuesUITest
 	[Category(UITestCategories.Shell)]
 	public void GitHubIssue9440()
 	{
-		App.TapInShellFlyout("Test 1");
+		App.TapShellFlyoutIcon();
 		App.WaitForElement("Test 1");
+#if ANDROID // In Android Double Tap does not performs in Appium, which does not closes the flyout, but in manual testing it closes. So, we are using DoubleClick instead of DoubleTap as make this test run.
+		App.DoubleClick("Test 1");
+#else
 		App.DoubleTap("Test 1");
+#endif
+
 		App.WaitForElement("Test 1");
 		App.WaitForElement("False");
 	}

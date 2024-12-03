@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID // START NOT SHOWING AFTER NAVIGATING PAGE 1
+﻿#if TEST_FAILS_ON_ANDROID // ToolBarItem not shown on navigations Issue: 
 
 using NUnit.Framework;
 using UITest.Appium;

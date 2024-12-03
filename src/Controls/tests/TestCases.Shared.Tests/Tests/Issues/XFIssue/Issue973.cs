@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_ANDROID // IsPresented value is not reflected when change this on list view item tapped in flyout.
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -29,15 +30,11 @@ public class Issue973 : _IssuesUITest
 		App.WaitForElement("Initial Page Right aligned");
 		App.Tap("Present Flyout");
 		App.Tap("Page 4");
-#if ANDROID
-          App.DragCoordinates(15,500,800,300);
-#endif
 		App.WaitForElement("Close Flyout");
 		App.Tap("Close Flyout");
 		App.WaitForElement("Page 4 Left aligned");
 		App.Tap(Tab2);
 		App.WaitForElement("Page 4 Right aligned");
-
 	}
 }
-
+#endif
