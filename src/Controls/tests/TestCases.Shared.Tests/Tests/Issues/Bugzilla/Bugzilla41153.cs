@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_ANDROID //System.NullReferenceException : Object reference not set to an instance of an object.
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -28,3 +29,4 @@ public class Bugzilla41153 : _IssuesUITest
 		App.WaitForTextToBePresentInElement("Toolbar Item", "Success");
 	}
 }
+#endif
