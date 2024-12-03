@@ -22,7 +22,7 @@ public class Bugzilla42074 : _IssuesUITest
 
 		CloseDialog();
 		App.WaitForElement("Click to focus TimePicker");
-#if !ANDROID //Programmatic focus does not open the dialog for picker controls, issue: https://github.com/dotnet/maui/issues/8946 
+#if !ANDROID && !WINDOWS //Programmatic focus does not open the dialog for picker controls, issue: https://github.com/dotnet/maui/issues/8946 
 		App.Tap("focusbtn");
 		CloseDialog();
 #endif
@@ -36,6 +36,9 @@ public class Bugzilla42074 : _IssuesUITest
 #elif IOS
 		App.WaitForElement("Done");
 		App.Tap("Done");
+#elif WINDOWS
+		App.WaitForElement("Accept");
+		App.Tap("Accept");
 #endif
 	}
 }

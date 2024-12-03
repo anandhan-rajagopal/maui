@@ -31,7 +31,7 @@ public class Bugzilla41424 : _IssuesUITest
 		App.Tap(GetFocusState);
 
 		Assert.That(App.WaitForElement(FocusStateLabel)?.GetText(), Is.EqualTo("unfocused"));
-#if !ANDROID && !MACCATALYST //Programmatic focus does not open the dialog for picker controls, issue: https://github.com/dotnet/maui/issues/8946 
+#if !ANDROID && !MACCATALYST && !WINDOWS //Programmatic focus does not open the dialog for picker controls, issue: https://github.com/dotnet/maui/issues/8946 
 		App.Tap(ProgrammaticFocus);
 
 		CloseDialog();
@@ -50,7 +50,10 @@ public class Bugzilla41424 : _IssuesUITest
 #elif IOS
 		App.WaitForElement("Done");
 		App.Tap("Done");
-#elif MACCATALYST // unable to locate the elements in the dialog box, so tapping outside the dialog caused it to close on a Mac.
+#elif WINDOWS // No Actions botton for Windows DatePicker, so picking any date will close the dialog on windows.
+		App.WaitForElement("1");
+		App.Tap("1");
+#else  // unable to locate the elements in the dialog box, so tapping outside the dialog caused it to close on a Mac.
 		App.Tap(GetFocusState);
 #endif
 	}
