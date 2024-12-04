@@ -71,8 +71,7 @@ public class CompressionPage : ContentPage
 
 		var scrollView = new ScrollView
 		{
-			Content = _scrollStack,
-			VerticalScrollBarVisibility = ScrollBarVisibility.Always
+			Content = _scrollStack
 		};
 
 		var mainStack = new StackLayout
@@ -98,6 +97,7 @@ public class CompressionPage : ContentPage
 			childLayout.Children.Add(label);
 			_scrollStack.Children.Add(childLayout);
 		}
+		
 		_sw.Start();
 		Content = mainStack;
 	}
