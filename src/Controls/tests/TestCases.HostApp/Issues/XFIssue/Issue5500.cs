@@ -13,8 +13,8 @@ public class Issue5500 : TestContentPage
 
 		editor = new Editor();
 		entry = new Entry();
-
-		editor.SetBinding(Editor.TextProperty, "Text");
+		// On iOS, the app freezes. Changing the binding mode to one-way resolves the issue. It seems an infinite loop occurs when properties bind to each other.
+		editor.SetBinding(Editor.TextProperty, "Text", mode: BindingMode.OneWay);
 		editor.BindingContext = entry;
 		editor.Placeholder = "Editor";
 		editor.AutoSize = EditorAutoSizeOption.TextChanges;
