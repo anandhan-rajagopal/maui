@@ -1777,7 +1777,7 @@ namespace UITest.Appium
 
 			throw new InvalidOperationException($"Could not get the Android System Bars");
 	 }
-
+    
 		/// <summary>
 		/// Navigates back in the application by simulating a tap on the platform-specific back navigation button or using a custom identifier.
 		/// </summary>
@@ -1800,8 +1800,8 @@ namespace UITest.Appium
 		public static void TapBackArrow(this IApp app, IQuery query)
 		{
 			app.Tap(query);
-		}   
-
+		}
+        
 		/// <summary>
 		/// Gets the default query for the back arrow button based on the app type.
 		/// </summary>
@@ -1869,6 +1869,7 @@ namespace UITest.Appium
 
 			app.WaitForElement(query, timeout: timeout);
 		}
+
 		/// <summary>
 		/// Waits for the flyout icon to appear in the app.
 		/// </summary>
@@ -1877,19 +1878,17 @@ namespace UITest.Appium
 		/// <param name="isShell">Indicates whether the app is using Shell navigation (default is true).</param>
 		public static void WaitForFlyoutIcon(this IApp app, string automationId = "", bool isShell = true)
 		{
-			if (app is AppiumAndroidApp)
+			if(app is AppiumAndroidApp)
 			{
 				app.WaitForElement(AppiumQuery.ByXPath("//android.widget.ImageButton[@content-desc=\"Open navigation drawer\"]"));
 			}
 			else if (app is AppiumIOSApp || app is AppiumCatalystApp || app is AppiumWindowsApp)
 			{
-				if (isShell)
-				{
+				if(isShell){
 					app.WaitForElement("OK");
 				}
-				if (!isShell)
-				{
-					if (app is AppiumWindowsApp)
+				if (!isShell){		
+					if(app is AppiumWindowsApp)
 					{
 						app.WaitForElement(AppiumQuery.ByAccessibilityId("TogglePaneButton"));
 					}
@@ -1897,7 +1896,6 @@ namespace UITest.Appium
 					{
 						app.WaitForElement(automationId);
 					}
-
 				}
 			}
 		}
@@ -1928,7 +1926,7 @@ namespace UITest.Appium
 		}
 
 		/// <summary>
-    /// Taps the Flyout icon for Shell or FlyoutPage.
+		/// Taps the Flyout icon for Shell or FlyoutPage.
 		/// </summary>
 		/// <param name="app">Represents the main gateway to interact with an app.</param>
 		/// <param name="title">Optional title for FlyoutPage (default is empty string).</param>
@@ -1951,7 +1949,7 @@ namespace UITest.Appium
 				}
 				else
 				{
-					if (app is AppiumWindowsApp)
+					if(app is AppiumWindowsApp)
 					{
 						app.Tap(AppiumQuery.ByAccessibilityId("TogglePaneButton"));
 					}
