@@ -19,13 +19,14 @@ public class Bugzilla37841 : _IssuesUITest
 		App.WaitForElement("Generate");
 		App.Tap("Generate");
 
-
-		App.WaitForTextToBePresentInElement("entrycell", "12345");
-		App.WaitForTextToBePresentInElement("textcell", "6789");
+		// App.WaitForTextToBePresentInElement always succeeds even when the text is absent.
+		// So use WaitForElement to checks if the specific text is present in UI.
+        App.WaitForElement("12345");
+		App.WaitForElement("6789");
+		
 		App.Tap("Generate");
 
-
-		App.WaitForTextToBePresentInElement("entrycell", "112358");
-		App.WaitForTextToBePresentInElement("textcell", "48151623");
+        App.WaitForElement("112358");
+		App.WaitForElement("48151623");
 	}
 }
