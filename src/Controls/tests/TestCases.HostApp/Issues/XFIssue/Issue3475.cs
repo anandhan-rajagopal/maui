@@ -97,7 +97,7 @@ public class CompressionPage : ContentPage
 			childLayout.Children.Add(label);
 			_scrollStack.Children.Add(childLayout);
 		}
-		
+
 		_sw.Start();
 		Content = mainStack;
 	}
