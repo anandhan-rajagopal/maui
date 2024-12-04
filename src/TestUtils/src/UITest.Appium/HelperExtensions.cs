@@ -1800,7 +1800,7 @@ namespace UITest.Appium
 		public static void TapBackArrow(this IApp app, IQuery query)
 		{
 			app.Tap(query);
-		}
+		}   
 
 		/// <summary>
 		/// Gets the default query for the back arrow button based on the app type.
@@ -1839,7 +1839,6 @@ namespace UITest.Appium
 				_ => throw new ArgumentException("Unsupported app type", nameof(app))
 			};
 		}
-
 
 		/// <summary>
 		/// Waits for an element to be ready until page navigation has settled, with additional waiting for MacCatalyst.
@@ -1929,7 +1928,7 @@ namespace UITest.Appium
 		}
 
 		/// <summary>
-		/// Taps the Flyout icon for Shell or FlyoutPage.
+    /// Taps the Flyout icon for Shell or FlyoutPage.
 		/// </summary>
 		/// <param name="app">Represents the main gateway to interact with an app.</param>
 		/// <param name="title">Optional title for FlyoutPage (default is empty string).</param>
@@ -2023,7 +2022,7 @@ namespace UITest.Appium
 		{
 			app.TapInFlyout(flyoutItem, false);
 		}
-		 
+
 		/// <summary>
 		/// Taps the "More" button in the app, with platform-specific logic for Android and Windows.
 		/// This method does not currently support iOS and macOS platforms, where the "More" button is not shown.
