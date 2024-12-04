@@ -6,6 +6,15 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 
 public class Issue892 : _IssuesUITest
 {
+#if ANDROID
+	const string OnePushed = "";
+	const string InitialPage = "";
+	const string Page5 = "";
+#else
+	const string OnePushed = "One pushed";
+	const string InitialPage = "Initial Page";
+	const string Page5 = "Page 5";
+#endif
 	public Issue892(TestDevice testDevice) : base(testDevice)
 	{
 	}
@@ -18,20 +27,17 @@ public class Issue892 : _IssuesUITest
 	[Description("Change pages in the Flyout ListView, and navigate to the end and back")]
 	public void Issue892TestsNavigateChangePagesNavigate()
 	{
-		NavigateToEndAndBack("Initial Page");
+		NavigateToEndAndBack(InitialPage);
 		App.Tap("Present Flyout");
-		App.Tap("Page 5");
+		App.Tap(Page5);
 
-#if ANDROID || WINDOWS // IsPresented value not reflected when changing on ItemTapped in FlyoutPage More Information: https://github.com/dotnet/maui/issues/26324
- 
-App.WaitForElementTillPageNavigationSettled("Page 5");
-App.TapInFlyoutPageFlyout("Close Flyout");
- 
+#if ANDROID || WINDOWS // IsPresented value not reflected when changing on ItemTapped in FlyoutPage More Information: https://github.com/dotnet/maui/issues/26324.
+		App.WaitForElementTillPageNavigationSettled(Page5);
+		App.TapInFlyoutPageFlyout("Close Flyout");
 #else
 		App.Tap("Close Flyout");
-
 #endif
-		NavigateToEndAndBack("Page 5");
+		NavigateToEndAndBack(Page5);
 	}
 
 	void NavigateToEndAndBack(string BackButtonId)
@@ -43,27 +49,13 @@ App.TapInFlyoutPageFlyout("Close Flyout");
 		App.WaitForElement("You are at the end of the line");
 		App.Tap("Check back one");
 		App.WaitForElement("Pop one");
-
-#if ANDROID
-         App.TapBackArrow();
-#else
-		App.TapBackArrow("One pushed");
-#endif
-
+		App.TapBackArrow(OnePushed);
 		App.WaitForElementTillPageNavigationSettled("Check back two");
 		App.Tap("Check back two");
 		App.WaitForElement("Pop two");
 		App.WaitForElementTillPageNavigationSettled("Check back two");
-
-#if ANDROID
-         App.TapBackArrow();
-#else
 		App.TapBackArrow(BackButtonId);
-#endif
 		App.Tap("Check back three");
 		App.WaitForElement("At root");
-
 	}
-
-
 }

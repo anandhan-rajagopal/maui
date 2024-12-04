@@ -34,6 +34,7 @@ public class Issue6878 : _IssuesUITest
 	}
 	void TapTobTab(string tab)
 	{
+		//In Windows the TopTab items are inside the root TabItem which shows in popup, so we need to tap it once to make them visible.
 #if WINDOWS
         App.Tap("navViewItem");
 #endif
