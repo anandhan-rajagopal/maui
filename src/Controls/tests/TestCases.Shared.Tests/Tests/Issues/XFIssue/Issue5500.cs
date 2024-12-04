@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_IOS // App get freez when press return key after entering text in Editor on iOS, issue: https://github.com/dotnet/maui/issues/26341 
+﻿#if TEST_FAILS_ON_IOS // App get freeze when press return key after entering text in Editor on iOS, issue: https://github.com/dotnet/maui/issues/26341 
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;

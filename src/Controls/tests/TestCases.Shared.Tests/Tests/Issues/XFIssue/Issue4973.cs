@@ -20,6 +20,7 @@ public class Issue4973 : _IssuesUITest
 		App.WaitForElement("Tab5");
 		App.Tap("Tab5");
 		App.WaitForElement("Test");
+		GC.Collect();
 		App.Tap("Tab1");
 		App.Tap("Tab2");
 	}

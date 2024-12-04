@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS // Test ignored on Windows and Android due to rendering issues. The documentation specifies that TabbedPage should contain NavigationPage or ContentPage, but this sample uses nested TabbedPages. Getting System.InvalidOperationException: 'Collection was modified; enumeration operation may not execute.' exception.
+﻿#if TEST_FAILS_ON_WINDOWS // Test ignored on Windows due to rendering issues. The documentation specifies that TabbedPage should contain NavigationPage or ContentPage, but this sample uses nested TabbedPages. Getting System.InvalidOperationException: 'Collection was modified; enumeration operation may not execute.' exception.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
