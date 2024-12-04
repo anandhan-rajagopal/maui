@@ -34,6 +34,6 @@ public class Bugzilla41153 : _IssuesUITest
 		App.Tap(Tab1);
 		App.WaitForElement("On Tab 1");
 		App.Tap("Toolbar Item");
-		App.WaitForElement("Success");
+		App.WaitForTextToBePresentInElement("Toolbar Item", "Success");
 	}
 }
