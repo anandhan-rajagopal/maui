@@ -25,7 +25,7 @@ public class Issue7803 : _IssuesUITest
 
 		App.WaitForNoElement("Count: 30");
 
-		// Radomly, a single drag action does not scroll to the end of the list, so two drag actions have been added to enhance test stability.
+		// Randomly, a single drag action does not scroll to the end of the list, so two drag actions have been added to enhance test stability.
 		App.DragCoordinates(collectionView.GetRect().Width - 10, collectionView.GetRect().Y + collectionView.GetRect().Height - 50, collectionView.GetRect().Width - 10, collectionView.GetRect().Y + 5);
 		App.DragCoordinates(collectionView.GetRect().Width - 10, collectionView.GetRect().Y + collectionView.GetRect().Height - 50, collectionView.GetRect().Width - 10, collectionView.GetRect().Y + 5);
 
