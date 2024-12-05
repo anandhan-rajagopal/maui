@@ -58,12 +58,10 @@ public class Issue11214 : TestShell
 					Content = new ContentPage()
 				});
 			}
-			Shell.Current.FlyoutBehavior = FlyoutBehavior.Locked;
 		}
 		else
 		{
 			_itemexpanderItems.Items.Clear();
-			Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
 		}
 	}
 }

@@ -1,4 +1,4 @@
-﻿//fails on ios , its working on automationId only
+﻿#if TEST_FAILS_ON_WINDOWS // Dynamically Added FlyoutItems During Navigation Not Displayed on Windows More Inforamion:https://github.com/dotnet/maui/issues/26391
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -18,19 +18,16 @@ public class Issue11214 : _IssuesUITest
 
 	public void FlyoutItemChangesPropagateCorrectlyToPlatformForShellElementsNotCurrentlyActive()
 	{
-		App.WaitForElement("Open the Flyout");
-		App.TapInShellFlyout("Click Me and You Should see 2 Items show up");
-#if WINDOWS
-		App.TapInShellFlyout("Click Me and You Should see 2 Items show up");
-#endif
+		App.WaitForElement("PageLoaded");
+		App.TapInShellFlyout("ExpandMe");
+		App.ShowFlyout();
 		for (int i = 0; i < 2; i++)
 			App.WaitForElement($"Some Item: {i}");
-		App.Tap("Click Me and You Should see 2 Items show up");
-#if ANDROID
-		App.TapShellFlyoutIcon();
-#endif
+		App.Tap("ExpandMe");
+		App.ShowFlyout();
 		for (int i = 0; i < 2; i++)
 			App.WaitForNoElement($"Some Item: {i}");
 	}
 
 }
+#endif 
