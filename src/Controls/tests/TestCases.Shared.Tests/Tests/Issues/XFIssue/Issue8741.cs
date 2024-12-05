@@ -12,43 +12,23 @@ public class Issue8741 : _IssuesUITest
 
 	public override string Issue => "[Bug] [Shell] [Android] ToolbarItem Enabled/Disabled behavior does not work for Shell apps";
 
-	//[Test]
-	//[Category(UITestCategories.Shell)]
-	//[FailsOnAndroidWhenRunningOnXamarinUITest]
-	//public void Issue8741Test()
-	//{
-	//	App.WaitForElement("Add");
-	//	App.Tap("Add");
+	[Test]
+	[Category(UITestCategories.Shell)]
+	public void Issue8741Test()
+	{
+		App.WaitForElement("Add");
+		App.Tap("Add");
 
-	//	var toolbarItemColorValue = GetToolbarItemColorValue();
-	//	int disabledAlpha = GetAlphaValue(toolbarItemColorValue);
+		Assert.That(App.WaitForElement("ClickCount").ReadText(), Is.EqualTo("0"));
 
-	//	Assert.AreEqual("0", App.WaitForElement("ClickCount")[0].ReadText());
+		App.Tap("ToggleEnabled");
+		App.Tap("Add");
 
-	//	App.Tap("ToggleEnabled");
-	//	App.Tap("Add");
+		Assert.That(App.WaitForElement("ClickCount").ReadText(), Is.EqualTo("1"));
 
-	//	toolbarItemColorValue = GetToolbarItemColorValue();
-	//	int enabledAlpha = GetAlphaValue(toolbarItemColorValue);
-	//	Assert.Less(disabledAlpha, enabledAlpha);
+		App.Tap("ToggleEnabled");
+		App.Tap("Add");
 
-	//	Assert.AreEqual("1", App.WaitForElement("ClickCount")[0].ReadText());
-
-	//	App.Tap("ToggleEnabled");
-	//	App.Tap("Add");
-
-	//	Assert.AreEqual("1", App.WaitForElement("ClickCount")[0].ReadText());
-	//}
-
-	//private object GetToolbarItemColorValue()
-	//{
-	//	return App.Query(x => x.Text("Add").Invoke("getCurrentTextColor"))[0];
-	//}
-
-	//private int GetAlphaValue(object toolbarItemColorValue)
-	//{
-	//	int color = Convert.ToInt32(toolbarItemColorValue);
-	//	int a = (color >> 24) & 0xff;
-	//	return a;
-	//}
+		Assert.That(App.WaitForElement("ClickCount").ReadText(), Is.EqualTo("1"));
+	}
 }
