@@ -19,6 +19,7 @@ public class Issue8741 : _IssuesUITest
 		App.WaitForElement("Add");
 		App.Tap("Add");
 
+		//Note: these methods were commented because Appium doesn't provide a reliable way to access the exact color values of UI elements across different platforms and devices.
 		//var toolbarItemColorValue = GetToolbarItemColorValue();
 		//int disabledAlpha = GetAlphaValue(toolbarItemColorValue);
  
@@ -38,17 +39,4 @@ public class Issue8741 : _IssuesUITest
  
 		Assert.That(App.WaitForElement("ClickCount").ReadText(), Is.EqualTo("1"));
 	}
-
-	//Note: these methods were commented because Appium doesn't provide a reliable way to access the exact color values of UI elements across different platforms and devices.
-	/*private object GetToolbarItemColorValue()
-	{
-		return App.Query(x => x.Text("Add").Invoke("getCurrentTextColor"))[0];
-	}
- 
-	private int GetAlphaValue(object toolbarItemColorValue)
-	{
-		int color = Convert.ToInt32(toolbarItemColorValue);
-		int a = (color >> 24) & 0xff;
-		return a;
-	}*/
 }
