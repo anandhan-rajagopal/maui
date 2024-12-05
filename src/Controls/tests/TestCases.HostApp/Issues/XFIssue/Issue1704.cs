@@ -372,6 +372,8 @@ class MiscPage : ContentPage
 		_noAnimationFallbackImage = new Image
 		{
 			Source = "coffee.png",
+			HeightRequest = 60,
+			WidthRequest = 60,
 			HorizontalOptions = LayoutOptions.Start
 		};
 

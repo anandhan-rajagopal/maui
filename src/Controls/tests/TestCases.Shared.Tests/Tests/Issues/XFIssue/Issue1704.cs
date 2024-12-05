@@ -1,5 +1,4 @@
-﻿# if TEST_FAILS_ON_WINDOWS // images and gif are not updated
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -26,6 +25,7 @@ public class Issue1704 : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.TabbedPage)]
+	[Category(UITestCategories.ManualReview)]
 	public void Issue1704Test()
 	{
 		App.WaitForElement(OnLoad);
@@ -45,4 +45,3 @@ public class Issue1704 : _IssuesUITest
 		App.Tap("Stop Animation");
 	}
 }
-#endif
