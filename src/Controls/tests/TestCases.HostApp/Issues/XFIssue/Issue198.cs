@@ -12,33 +12,24 @@ public class Issue198 : TestTabbedPage
 		{
 			Text = "Leave"
 		};
-		var backBtn=new Button()
-		{
-			Text="Bug Repro's",
-		};
-		backBtn.Clicked += (sender,e)=>  Navigation.PopModalAsync();
-		var secondPage=new NavigationPage(new ContentPage()
-		{
-			Content=backBtn,
-		});
+
 		// Should work as expected, however, causes NRE
-		leavePageBtn.Clicked += async(sender, e) => await Navigation.PushModalAsync(secondPage);
+		leavePageBtn.Clicked += (s, e) => Navigation.PopModalAsync();
 
 		var navigationPageOne = new NavigationPage(new ContentPage
 		{
+			IconImageSource = "calculator.png",
 			Content = leavePageBtn
 		})
 		{
 			Title = "Page One",
-			IconImageSource = "calculator.png",
 		};
 		var navigationPageTwo = new NavigationPage(new ContentPage
 		{
-			Title = "Page Two",
+			IconImageSource = "calculator.png",
 		})
 		{
 			Title = "Page Two",
-			IconImageSource = "calculator.png",
 		};
 		var navigationPageThree = new NavigationPage(new ContentPage
 		{

@@ -1,5 +1,4 @@
-﻿# if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS // the application crash while tap the back button.
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -21,9 +20,12 @@ public class Issue198 : _IssuesUITest
 		App.WaitForElement("Leave");
 	
 		App.Tap("Leave");
-	
-		App.WaitForElement("Bug Repro's");
-		App.Tap("Bug Repro's");
+
+		// Due to the current architecture of the HostApp, we cannot navigate back to the Bug Repro's page.
+		// Also it's not recommended to place a TabbedPage into a NavigationPage.
+	    // App.WaitForElement("Bug Repro's");
+		// App.EnterText("SearchBarGo", "G198");
+		// App.Tap("SearchButton");
 	
 		App.WaitForElement("Page Three");
 		App.Tap("Page Three");
@@ -31,4 +33,3 @@ public class Issue198 : _IssuesUITest
 		App.WaitForElement("No Crash");
 	}
 }
-#endif
