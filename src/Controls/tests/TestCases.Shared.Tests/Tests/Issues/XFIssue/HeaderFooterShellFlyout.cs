@@ -7,64 +7,72 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 [Category(UITestCategories.Shell)]
 public class HeaderFooterShellFlyout : _IssuesUITest
 {
-	public HeaderFooterShellFlyout(TestDevice testDevice) : base(testDevice)
-	{
-	}
 
-	public override string Issue => "Shell Flyout Header Footer";
+#if WINDOWS
+	const string ToggleHeaderFooter = "Toggle Header/Footer View";
+	const string ToggleHeaderFooterTemplate = "Toggle Header/Footer Template";
+	const string ResizeHeaderFooter = "Resize Header/Footer";
+#else
+	const string ToggleHeaderFooter = "ToggleHeaderFooter";
+	const string ToggleHeaderFooterTemplate = "ToggleHeaderFooterTemplate";
+	const string ResizeHeaderFooter = "ResizeHeaderFooter";
+#endif
+    public HeaderFooterShellFlyout(TestDevice testDevice) : base(testDevice)
+    {
+    }
+
+    public override string Issue => "Shell Flyout Header Footer";
 
 #if IOS
     [Test]
     public void FlyoutHeaderWithZeroMarginShouldHaveNoY()
     {
-        App.WaitForElement("PageLoaded");
-        App.TapInShellFlyout("ZeroMarginHeader");
+        App.Tap("ZeroMarginHeader");
         var layout = App.WaitForElement("ZeroMarginLayout").GetRect().Y;
         Assert.That(layout, Is.EqualTo(0));
     }
 #endif
 
-	[Test]
-	public void FlyoutTests()
-	{
-		App.WaitForElement("PageLoaded");
+    [Test]
+    public void AFlyoutTests()
+    {
+        App.WaitForElement("PageLoaded");
+        App.Tap(ToggleHeaderFooter);
+        App.WaitForElement("Header");
+        App.WaitForElement("Footer");
 
-		// Verify Header an Footer show up at all
-		App.TapInShellFlyout("ToggleHeaderFooter");
-		App.WaitForElement("Header");
-		App.WaitForElement("Footer");
+        // Verify Template takes priority over header footer
+        App.Tap(ToggleHeaderFooterTemplate);
+        App.WaitForElement("Header Template");
+        App.WaitForElement("Footer Template");
+        App.WaitForNoElement("Header");
+        App.WaitForNoElement("Footer");
 
-		// Verify Template takes priority over header footer
-		App.Tap("ToggleHeaderFooterTemplate");
-		App.WaitForElement("Header Template");
-		App.WaitForElement("Footer Template");
-		App.WaitForNoElement("Header");
-		App.WaitForNoElement("Footer");
+        // Verify turning off Template shows Views again
+        App.Tap(ToggleHeaderFooterTemplate);
+        App.WaitForElement("Header");
+        App.WaitForElement("Footer");
+        App.WaitForNoElement("Header Template");
+        App.WaitForNoElement("Footer Template");
 
-		// Verify turning off Template shows Views again
-		App.Tap("ToggleHeaderFooterTemplate");
-		App.WaitForElement("Header");
-		App.WaitForElement("Footer");
-		App.WaitForNoElement("Header Template");
-		App.WaitForNoElement("Footer Template");
+        // Verify turning off header/footer clear out views correctly
+        App.Tap(ToggleHeaderFooter);
+        App.WaitForNoElement("Header Template");
+        App.WaitForNoElement("Footer Template");
+        App.WaitForNoElement("Header");
+        App.WaitForNoElement("Footer");
 
-		// Verify turning off header/footer clear out views correctly
-		App.Tap("ToggleHeaderFooter");
-		App.WaitForNoElement("Header Template");
-		App.WaitForNoElement("Footer Template");
-		App.WaitForNoElement("Header");
-		App.WaitForNoElement("Footer");
-
+#if ANDROID
 		// verify header and footer react to size changes
-		App.Tap("ResizeHeaderFooter");	
+		App.Tap(ResizeHeaderFooter);	
 		var headerSizeSmall = App.WaitForElement("HeaderView").GetRect();
 		var footerSizeSmall = App.WaitForElement("FooterView").GetRect();
 
-		App.Tap("ResizeHeaderFooter");
+		App.Tap(ResizeHeaderFooter);
 	 	var headerSizeLarge = App.WaitForElement("HeaderView").GetRect();
 		var footerSizeLarge = App.WaitForElement("FooterView").GetRect();
 
-		App.Tap("ResizeHeaderFooter");
+		App.Tap(ResizeHeaderFooter);
 		var headerSizeSmall2 = App.WaitForElement("HeaderView").GetRect();
 		var footerSizeSmall2 = App.WaitForElement("FooterView").GetRect();
 
@@ -72,5 +80,26 @@ public class HeaderFooterShellFlyout : _IssuesUITest
 		Assert.That(footerSizeLarge.Height, Is.GreaterThan(footerSizeSmall.Height));
 		Assert.That(headerSizeSmall2.Height, Is.EqualTo(headerSizeSmall.Height));
 		Assert.That(footerSizeSmall2.Height, Is.EqualTo(footerSizeSmall.Height));
-	}
+
+#elif WINDOWS
+        // verify header and footer react to size changes
+        App.Tap(ResizeHeaderFooter);
+        App.WaitForElement("Header");
+        var headerSizeSmall = App.WaitForElement("Flyout Item").GetRect();
+        var footerSizeSmall = App.WaitForElement("Footer").GetRect();
+
+        App.Tap(ResizeHeaderFooter);
+        var headerSizeLarge = App.WaitForElement("Flyout Item").GetRect();
+        var footerSizeLarge = App.WaitForElement("Footer").GetRect();
+
+        App.Tap(ResizeHeaderFooter);
+        var headerSizeSmall2 = App.WaitForElement("Flyout Item").GetRect();
+        var footerSizeSmall2 = App.WaitForElement("Footer").GetRect();
+
+        Assert.That(headerSizeLarge.Y, Is.GreaterThan(headerSizeSmall.Y));
+        Assert.That(footerSizeLarge.Y, Is.LessThan(footerSizeSmall.Y));
+        Assert.That(headerSizeSmall2.Y, Is.EqualTo(headerSizeSmall.Y));
+        Assert.That(footerSizeSmall2.Y, Is.EqualTo(footerSizeSmall.Y));
+#endif
+    }
 }

@@ -10,6 +10,7 @@ public class HeaderFooterShellFlyout : TestShell
 {
 	protected override void Init()
 	{
+		Shell.SetFlyoutBehavior(this, FlyoutBehavior.Locked);
 		var page = new ContentPage();
 
 		AddFlyoutItem(page, "Flyout Item");
@@ -30,7 +31,6 @@ public class HeaderFooterShellFlyout : TestShell
 			Text = "Toggle Header/Footer Template",
 			Command = new Command(() =>
 			{
-				FlyoutBehavior = FlyoutBehavior.Locked;
 				if (FlyoutHeaderTemplate == null)
 				{
 					FlyoutHeaderTemplate = new DataTemplate(() =>
@@ -57,7 +57,6 @@ public class HeaderFooterShellFlyout : TestShell
 			Text = "Toggle Header/Footer View",
 			Command = new Command(() =>
 			{
-				FlyoutBehavior = FlyoutBehavior.Locked;
 				if (FlyoutHeader != null)
 				{
 					FlyoutHeader = null;
@@ -75,6 +74,8 @@ public class HeaderFooterShellFlyout : TestShell
 
 					FlyoutFooter = new StackLayout()
 					{
+						// Issue with rendering if orientation is set in iOS, Issue: https://github.com/dotnet/maui/issues/26395 
+						// Orientation = StackOrientation.Horizontal,
 						Children = {
 							new Label() { Text = "Footer" }
 						},
@@ -90,7 +91,6 @@ public class HeaderFooterShellFlyout : TestShell
 			Text = "Resize Header/Footer",
 			Command = new Command(async () =>
 			{
-				FlyoutBehavior = FlyoutBehavior.Locked;
 				FlyoutHeaderTemplate = null;
 				FlyoutFooterTemplate = null;
 				if (FlyoutHeader == null)
