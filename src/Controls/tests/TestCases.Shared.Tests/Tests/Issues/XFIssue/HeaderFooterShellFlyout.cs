@@ -8,6 +8,8 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 public class HeaderFooterShellFlyout : _IssuesUITest
 {
 
+    //MenuItems AutomationId fails on Windows due to navViewItem replacements with native controls,
+    //and, text-based IDs are ineffective on iOS. Conditional compilation is used to ensure tests run on all platforms.
 #if WINDOWS
 	const string ToggleHeaderFooter = "Toggle Header/Footer View";
 	const string ToggleHeaderFooterTemplate = "Toggle Header/Footer Template";
@@ -17,6 +19,7 @@ public class HeaderFooterShellFlyout : _IssuesUITest
 	const string ToggleHeaderFooterTemplate = "ToggleHeaderFooterTemplate";
 	const string ResizeHeaderFooter = "ResizeHeaderFooter";
 #endif
+
     public HeaderFooterShellFlyout(TestDevice testDevice) : base(testDevice)
     {
     }
@@ -61,28 +64,31 @@ public class HeaderFooterShellFlyout : _IssuesUITest
         App.WaitForNoElement("Footer Template");
         App.WaitForNoElement("Header");
         App.WaitForNoElement("Footer");
-
+        
+        // verify header and footer react to size changes
+        // These tests are ignored on iOS and Catalyst because the header height doesn't update correctly. Refer to issue: https://github.com/dotnet/maui/issues/26397
+        // On Windows, the stack layout's AutomationId isn't behaving as expected, so the Y position of the first flyout item is used to verify header and footer sizes.
 #if ANDROID
-		// verify header and footer react to size changes
-		App.Tap(ResizeHeaderFooter);	
-		var headerSizeSmall = App.WaitForElement("HeaderView").GetRect();
-		var footerSizeSmall = App.WaitForElement("FooterView").GetRect();
 
-		App.Tap(ResizeHeaderFooter);
-	 	var headerSizeLarge = App.WaitForElement("HeaderView").GetRect();
-		var footerSizeLarge = App.WaitForElement("FooterView").GetRect();
+        App.Tap(ResizeHeaderFooter);	
+        var headerSizeSmall = App.WaitForElement("HeaderView").GetRect();
+        var footerSizeSmall = App.WaitForElement("FooterView").GetRect();
 
-		App.Tap(ResizeHeaderFooter);
-		var headerSizeSmall2 = App.WaitForElement("HeaderView").GetRect();
-		var footerSizeSmall2 = App.WaitForElement("FooterView").GetRect();
+        App.Tap(ResizeHeaderFooter);
+        var headerSizeLarge = App.WaitForElement("HeaderView").GetRect();
+        var footerSizeLarge = App.WaitForElement("FooterView").GetRect();
 
-		Assert.That(headerSizeLarge.Height, Is.GreaterThan(headerSizeSmall.Height));
-		Assert.That(footerSizeLarge.Height, Is.GreaterThan(footerSizeSmall.Height));
-		Assert.That(headerSizeSmall2.Height, Is.EqualTo(headerSizeSmall.Height));
-		Assert.That(footerSizeSmall2.Height, Is.EqualTo(footerSizeSmall.Height));
+        App.Tap(ResizeHeaderFooter);
+        var headerSizeSmall2 = App.WaitForElement("HeaderView").GetRect();
+        var footerSizeSmall2 = App.WaitForElement("FooterView").GetRect();
+
+        Assert.That(headerSizeLarge.Height, Is.GreaterThan(headerSizeSmall.Height));
+        Assert.That(footerSizeLarge.Height, Is.GreaterThan(footerSizeSmall.Height));
+        Assert.That(headerSizeSmall2.Height, Is.EqualTo(headerSizeSmall.Height));
+        Assert.That(footerSizeSmall2.Height, Is.EqualTo(footerSizeSmall.Height));
 
 #elif WINDOWS
-        // verify header and footer react to size changes
+
         App.Tap(ResizeHeaderFooter);
         App.WaitForElement("Header");
         var headerSizeSmall = App.WaitForElement("Flyout Item").GetRect();
