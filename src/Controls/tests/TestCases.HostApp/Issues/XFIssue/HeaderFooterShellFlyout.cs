@@ -30,6 +30,7 @@ public class HeaderFooterShellFlyout : TestShell
 			Text = "Toggle Header/Footer Template",
 			Command = new Command(() =>
 			{
+				FlyoutBehavior = FlyoutBehavior.Locked;
 				if (FlyoutHeaderTemplate == null)
 				{
 					FlyoutHeaderTemplate = new DataTemplate(() =>
@@ -56,6 +57,7 @@ public class HeaderFooterShellFlyout : TestShell
 			Text = "Toggle Header/Footer View",
 			Command = new Command(() =>
 			{
+				FlyoutBehavior = FlyoutBehavior.Locked;
 				if (FlyoutHeader != null)
 				{
 					FlyoutHeader = null;
@@ -73,7 +75,6 @@ public class HeaderFooterShellFlyout : TestShell
 
 					FlyoutFooter = new StackLayout()
 					{
-						Orientation = StackOrientation.Horizontal,
 						Children = {
 							new Label() { Text = "Footer" }
 						},
@@ -89,6 +90,7 @@ public class HeaderFooterShellFlyout : TestShell
 			Text = "Resize Header/Footer",
 			Command = new Command(async () =>
 			{
+				FlyoutBehavior = FlyoutBehavior.Locked;
 				FlyoutHeaderTemplate = null;
 				FlyoutFooterTemplate = null;
 				if (FlyoutHeader == null)
@@ -98,7 +100,7 @@ public class HeaderFooterShellFlyout : TestShell
 						Children = {
 							new Label() { Text = "Header" }
 						},
-						AutomationId = "Header View"
+						AutomationId = "HeaderView"
 					};
 
 					FlyoutFooter = new StackLayout()
@@ -106,7 +108,7 @@ public class HeaderFooterShellFlyout : TestShell
 						Children = {
 							new Label() { Text = "Footer" }
 						},
-						AutomationId = "Footer View"
+						AutomationId = "FooterView"
 					};
 
 					await Task.Delay(10);
