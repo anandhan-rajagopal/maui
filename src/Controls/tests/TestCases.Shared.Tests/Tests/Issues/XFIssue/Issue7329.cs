@@ -12,34 +12,32 @@ public class Issue7329 : _IssuesUITest
 
 	public override string Issue => "[Android] ListView scroll not working when inside a ScrollView";
 
-	//[Test]
-	//[Category(UITestCategories.ScrollView)]
+	[Test]
+	[Category(UITestCategories.ScrollView)]
 
-	//[FailsOnAndroid]
-	//[FailsOnIOS]
-	//public void ScrollListViewInsideScrollView()
-	//{
-	//	if (!OperatingSystem.IsAndroidVersionAtLeast(21))
-	//	{
-	//		return;
-	//	}
+	public void ScrollListViewInsideScrollView()
+	{
+		if (!OperatingSystem.IsAndroidVersionAtLeast(21))
+		{
+			return;
+		}
 
-	//	App.WaitForElement("1");
+		App.WaitForElement("1");
 
-	//	App.QueryUntilPresent(() =>
-	//	{
-	//		try
-	//		{
-	//			App.ScrollDownTo("30", strategy: ScrollStrategy.Gesture, swipeSpeed: 100);
-	//		}
-	//		catch
-	//		{
-	//			// just ignore if it fails so it can keep trying to scroll
-	//		}
+		App.QueryUntilPresent(() =>
+		{
+			try
+			{
+				App.ScrollDown("30", strategy: ScrollStrategy.Gesture, swipeSpeed: 100);
+			}
+			catch
+			{
+				// just ignore if it fails so it can keep trying to scroll
+			}
 
-	//		return App.Query("30");
-	//	});
+			return App.WaitForElement("30");
+		});
 
-	//	App.Query("30");
-	//}
+		App.WaitForElement("30");
+	}
 }
