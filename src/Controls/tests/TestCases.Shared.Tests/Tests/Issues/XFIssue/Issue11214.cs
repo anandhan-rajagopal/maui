@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS // Dynamically Added FlyoutItems During Navigation Not Displayed on Windows More Inforamion:https://github.com/dotnet/maui/issues/26391
+﻿#if TEST_FAILS_ON_WINDOWS // FlyoutItems added dynamically during navigation are not displayed on Windows. More information: https://github.com/dotnet/maui/issues/26391.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
