@@ -1,15 +1,15 @@
 ﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
- 
+
 namespace Microsoft.Maui.TestCases.Tests.Issues;
- 
+
 public class Issue8741 : _IssuesUITest
 {
 	public Issue8741(TestDevice testDevice) : base(testDevice)
 	{
 	}
- 
+
 	public override string Issue => "[Bug] [Shell] [Android] ToolbarItem Enabled/Disabled behavior does not work for Shell apps";
  
 	[Test]
@@ -19,7 +19,8 @@ public class Issue8741 : _IssuesUITest
 		App.WaitForElement("Add");
 		App.Tap("Add");
 
-		//Note: these methods were commented because Appium doesn't provide a reliable way to access the exact color values of UI elements across different platforms and devices.
+		// Note: These methods were commented out because Appium does not offer a consistent way to retrieve precise color values of UI elements across various platforms and devices.
+		// Additionally, the test scenario has already been validated through tap actions, so the color comparison was deemed unnecessary.
 		//var toolbarItemColorValue = GetToolbarItemColorValue();
 		//int disabledAlpha = GetAlphaValue(toolbarItemColorValue);
  
