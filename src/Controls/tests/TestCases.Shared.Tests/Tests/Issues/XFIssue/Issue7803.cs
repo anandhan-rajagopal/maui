@@ -18,13 +18,14 @@ public class Issue7803 : _IssuesUITest
 	public void DelayedIsRefreshingAndCommandTest_SwipeDown()
 	{
 		var collectionView = App.WaitForElement("CollectionView7803");
+		// The drag command doesn't invoke the refresh command, so ScrollUp is used here to trigger the refresh instead.
 		App.ScrollUp("CollectionView7803");
 
 		App.WaitForElement("Count: 20");
 
 		App.WaitForNoElement("Count: 30");
 
-		// Radomly the single drag actions not fully scroll to end of list so added two drag actions to make this test more stable.
+		// Radomly, a single drag action does not scroll to the end of the list, so two drag actions have been added to enhance test stability.
 		App.DragCoordinates(collectionView.GetRect().Width - 10, collectionView.GetRect().Y + collectionView.GetRect().Height - 50, collectionView.GetRect().Width - 10, collectionView.GetRect().Y + 5);
 		App.DragCoordinates(collectionView.GetRect().Width - 10, collectionView.GetRect().Y + collectionView.GetRect().Height - 50, collectionView.GetRect().Width - 10, collectionView.GetRect().Y + 5);
 
