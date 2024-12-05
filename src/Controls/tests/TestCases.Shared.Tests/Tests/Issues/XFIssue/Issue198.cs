@@ -6,6 +6,13 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 
 public class Issue198 : _IssuesUITest
 {
+#if ANDROID
+	const string PageOne = "PAGE ONE";
+	const string PageThree = "PAGE THREE";
+#else
+	const string PageOne = "Page One";
+	const string PageThree = "Page Three";
+#endif
 	public Issue198(TestDevice testDevice) : base(testDevice)
 	{
 	}
@@ -16,7 +23,7 @@ public class Issue198 : _IssuesUITest
 	[Category(UITestCategories.TabbedPage)]
 	public void Issue198TestsNREWithPopModal()
 	{
-		App.WaitForElement("Page One");
+		App.WaitForElement(PageOne);
 		App.WaitForElement("Leave");
 	
 		App.Tap("Leave");
@@ -27,8 +34,8 @@ public class Issue198 : _IssuesUITest
 		// App.EnterText("SearchBarGo", "G198");
 		// App.Tap("SearchButton");
 	
-		App.WaitForElement("Page Three");
-		App.Tap("Page Three");
+		App.WaitForElement(PageThree);
+		App.Tap(PageThree);
 	
 		App.WaitForElement("No Crash");
 	}
