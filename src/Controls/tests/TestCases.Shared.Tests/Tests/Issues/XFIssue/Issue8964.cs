@@ -15,7 +15,6 @@ public class Issue8964 : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.CarouselView)]
- 
 	public void Issue8964Test()
 	{
 		App.WaitForElement($"Item Position - 4");
@@ -31,7 +30,6 @@ public class Issue8964 : _IssuesUITest
 		SwipePreviousItem(rect);
 		App.WaitForElement(	$"Item Position - 4");
 		App.WaitForElement($"Counter 6");
- 
 	}
  
 	void SwipePreviousItem(System.Drawing.Rectangle rect)

@@ -21,7 +21,6 @@ public class Issue6932_emptyviewstring : _IssuesUITest
 	public override string Issue => "EmptyView for BindableLayout (string)";
  
 	[Test]
- 
 	public void BEmptyViewStringBecomesVisibleWhenItemsSourceIsCleared()
 	{
 		App.WaitForElement(AddAutomationId);
@@ -32,7 +31,6 @@ public class Issue6932_emptyviewstring : _IssuesUITest
 	}
  
 	[Test]
- 
 	public void AEmptyViewStringBecomesVisibleWhenItemsSourceIsEmptiedOneByOne()
 	{
 		App.WaitForElement(LayoutAutomationId);
@@ -44,7 +42,6 @@ public class Issue6932_emptyviewstring : _IssuesUITest
 	}
  
 	[Test]
- 
 	public void CEmptyViewStringHidesWhenItemsSourceIsFilled()
 	{
 		App.WaitForElement(EmptyViewStringDescription);
