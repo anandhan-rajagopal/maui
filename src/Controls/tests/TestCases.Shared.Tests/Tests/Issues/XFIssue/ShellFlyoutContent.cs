@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS // click to reset was not shwon after tap toggleFlyoutContentTemplate
+﻿#if TEST_FAILS_ON_WINDOWS // On Windows, the Shell Flyout Content Template does not update dynamically. Issue: https://github.com/dotnet/maui/issues/26435. 
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
