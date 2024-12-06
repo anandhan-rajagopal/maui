@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // On iOS, `WaitForNoElement` consistently throws an exception, even when the element is not visible. On Catalyst, `ScrollDown` isn't functioning correctly with Appium.
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -14,30 +15,15 @@ public class Issue7329 : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.ScrollView)]
-
 	public void ScrollListViewInsideScrollView()
 	{
-		if (!OperatingSystem.IsAndroidVersionAtLeast(21))
-		{
-			return;
-		}
-
 		App.WaitForElement("1");
 
-		App.QueryUntilPresent(() =>
-		{
-			try
-			{
-				App.ScrollDown("30", strategy: ScrollStrategy.Gesture, swipeSpeed: 100);
-			}
-			catch
-			{
-				// just ignore if it fails so it can keep trying to scroll
-			}
-
-			return App.WaitForElement("30");
-		});
-
-		App.WaitForElement("30");
+		App.ScrollDown("NestedListView");
+		
+		// App.QueryUntilPresent isn't functioning correctly; it throws a timeout exception immediately after the first try.
+		// Verifying that InstructionLabel is not visible also confirms that the ListView has scrolled.
+		App.WaitForNoElement("InstructionLabel");
 	}
 }
+#endif

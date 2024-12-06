@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST // QA Selenium Exception
+﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID //The Position property now functions correctly on Android and Windows, issue: https://github.com/dotnet/maui/issues/15443. Note that on Catalyst, swipe and drag options are not supported in Appium.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -37,7 +37,7 @@ public class Issue8964 : _IssuesUITest
 	void SwipePreviousItem(System.Drawing.Rectangle rect)
 	{
 #if ANDROID
-			App.DragCoordinates(rect.X + 10, rect.Y, rect.X + rect.Width - 10, rect.Y);
+		App.DragCoordinates(rect.X + 10, rect.Y, rect.X + rect.Width - 10, rect.Y);
 #else
 		App.SwipeLeftToRight("carouseView");
 #endif

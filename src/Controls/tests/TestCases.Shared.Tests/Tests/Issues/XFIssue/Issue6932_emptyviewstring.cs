@@ -12,67 +12,44 @@ public class Issue6932_emptyviewstring : _IssuesUITest
 	public Issue6932_emptyviewstring(TestDevice testDevice) : base(testDevice)
 	{
 	}
-	public string LayoutAutomationId { get => "StackLayoutThing"; }
-	public string AddAutomationId { get => "Add"; }
-	public string RemoveAutomationId { get => "Remove"; }
-	public string ClearAutomationId { get => "Clear"; }
-	public string EmptyViewAutomationId { get => "EmptyViewId"; }
-	public string EmptyTemplateAutomationId { get => "EmptyTemplateId"; }
-	public string EmptyViewStringDescription { get => "Nothing to see here"; }
+	const string LayoutAutomationId = "1";
+	const string AddAutomationId = "Add";
+	const string RemoveAutomationId = "Remove";
+	const string ClearAutomationId = "Clear";
+	const string EmptyViewStringDescription = "Nothing to see here";
  
 	
 	public override string Issue => "EmptyView for BindableLayout (string)";
  
 	[Test]
  
-	public void EmptyViewStringBecomesVisibleWhenItemsSourceIsCleared()
+	public void BEmptyViewStringBecomesVisibleWhenItemsSourceIsCleared()
 	{
-		App.Screenshot("Screen opens, items are shown");
- 
-#if !WINDOWS
-		App.WaitForElement(LayoutAutomationId);
-#endif
+		App.WaitForElement(AddAutomationId);
+		for (var i = 0; i < Count/2; i++)
+			App.Tap(AddAutomationId);
 		App.Tap(ClearAutomationId);
 		App.WaitForElement(EmptyViewStringDescription);
- 
-		App.Screenshot("Empty view is visible");
 	}
  
 	[Test]
  
-	public void EmptyViewStringBecomesVisibleWhenItemsSourceIsEmptiedOneByOne()
+	public void AEmptyViewStringBecomesVisibleWhenItemsSourceIsEmptiedOneByOne()
 	{
-		App.Screenshot("Screen opens, items are shown");
- 
-#if !WINDOWS
 		App.WaitForElement(LayoutAutomationId);
-#endif
- 
+
 		for (var i = 0; i < Count; i++)
 			App.Tap(RemoveAutomationId);
  
 		App.WaitForElement(EmptyViewStringDescription);
- 
-		App.Screenshot("Empty view is visible");
 	}
  
 	[Test]
  
-	public void EmptyViewStringHidesWhenItemsSourceIsFilled()
+	public void CEmptyViewStringHidesWhenItemsSourceIsFilled()
 	{
-		App.Screenshot("Screen opens, items are shown");
- 
-#if !WINDOWS
-		App.WaitForElement(LayoutAutomationId);
-#endif
-		App.Tap(ClearAutomationId);
 		App.WaitForElement(EmptyViewStringDescription);
- 
-		App.Screenshot("Items are cleared, empty view visible");
- 
 		App.Tap(AddAutomationId);
 		App.WaitForNoElement(EmptyViewStringDescription);
- 
-		App.Screenshot("Item is added, empty view is not visible");
 	}
 }

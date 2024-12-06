@@ -9,66 +9,46 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 [Category(UITestCategories.Layout)]
 public class Issue6932_emptyviewtemplate : _IssuesUITest
 {
-	public Issue6932_emptyviewtemplate(TestDevice testDevice) : base(testDevice)
-	{
-	}
-	public int Count = 10;
-	public override string Issue => "EmptyView for BindableLayout (template)";
-	const string LayoutAutomationId = "StackLayoutThing"; 
+	const int Count = 10;
+	const string LayoutAutomationId = "1"; 
 	const string AddAutomationId = "Add";
 	const string RemoveAutomationId = "Remove";
 	const string ClearAutomationId = "Clear";
 	const string EmptyTemplateAutomationId = "No items here";
-	[Test]
- 
-	public void EmptyViewTemplateBecomesVisibleWhenItemsSourceIsCleared()
+	public Issue6932_emptyviewtemplate(TestDevice testDevice) : base(testDevice)
 	{
-		App.Screenshot("Screen opens, items are shown");
- 
-#if !WINDOWS
-		App.WaitForElement(LayoutAutomationId);
-#endif
+	}
+	
+	public override string Issue => "EmptyView for BindableLayout (template)";
+
+	[Test]
+	public void BEmptyViewTemplateBecomesVisibleWhenItemsSourceIsCleared()
+	{
+		App.WaitForElement(AddAutomationId);
+
+		for (var i = 0; i < Count; i++)
+			App.Tap(AddAutomationId);
+
 		App.Tap(ClearAutomationId);
 		App.WaitForElement(EmptyTemplateAutomationId);
- 
-		App.Screenshot("Empty view is visible");
 	}
  
 	[Test]
- 
-	public void EmptyViewTemplateBecomesVisibleWhenItemsSourceIsEmptiedOneByOne()
+	public void AEmptyViewTemplateBecomesVisibleWhenItemsSourceIsEmptiedOneByOne()
 	{
-		App.Screenshot("Screen opens, items are shown");
- 
-#if !WINDOWS
 		App.WaitForElement(LayoutAutomationId);
-#endif
  
 		for (var i = 0; i < Count; i++)
-		App.Tap(RemoveAutomationId);
+			App.Tap(RemoveAutomationId);
  
 		App.WaitForElement(EmptyTemplateAutomationId);
- 
-		App.Screenshot("Empty view is visible");
 	}
  
 	[Test]
- 
-	public void EmptyViewTemplateHidesWhenItemsSourceIsFilled()
+	public void CEmptyViewTemplateHidesWhenItemsSourceIsFilled()
 	{
-		App.Screenshot("Screen opens, items are shown");
- 
-#if !WINDOWS
-		App.WaitForElement(LayoutAutomationId);
-#endif
-		App.Tap(ClearAutomationId);
 		App.WaitForElement(EmptyTemplateAutomationId);
- 
-		App.Screenshot("Items are cleared, empty view visible");
- 
 		App.Tap(AddAutomationId);
 		App.WaitForNoElement(EmptyTemplateAutomationId);
- 
-		App.Screenshot("Item is added, empty view is not visible");
 	}
 }

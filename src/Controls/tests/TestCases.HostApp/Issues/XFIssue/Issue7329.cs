@@ -16,7 +16,7 @@ public class Issue7329 : TestContentPage
 			Content = new StackLayout()
 			{
 				new Label() { AutomationId = "ApiLabel" },
-				new Label() { Text = "If the List View can scroll the test has passed"},
+				new Label() { Text = "If the List View can scroll the test has passed" , AutomationId = "InstructionLabel"},
 				listView
 			}
 		};
