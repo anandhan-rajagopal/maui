@@ -55,7 +55,7 @@ public class ShellFlyoutContent : TestShell
 								var button = new Button()
 								{
 									Text = "Click to Reset",
-									AutomationId = "ContentView",
+									AutomationId = "Reset",
 									Command = new Command(() =>
 									{
 										FlyoutContentTemplate = null;
