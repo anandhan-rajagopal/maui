@@ -14,7 +14,7 @@ public class ShellFlyoutContent : TestShell
 		for (int i = 0; i < 50; i++)
 		{
 			AddFlyoutItem($"Flyout Item :{i}");
-			Items[i].AutomationId = "Flyout Item";
+			Items[i].AutomationId = "FlyoutItem";
 		}
 
 		Items.Add(new MenuItem() { Text = "Menu Item" });
