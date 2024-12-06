@@ -7,18 +7,17 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 [Category(UITestCategories.Layout)]
 public class Issue6932_emptyviewstring : _IssuesUITest
 {
-	public int Count = 10;
- 
-	public Issue6932_emptyviewstring(TestDevice testDevice) : base(testDevice)
-	{
-	}
+	const int Count = 10;
 	const string LayoutAutomationId = "1";
 	const string AddAutomationId = "Add";
 	const string RemoveAutomationId = "Remove";
 	const string ClearAutomationId = "Clear";
 	const string EmptyViewStringDescription = "Nothing to see here";
  
-	
+	public Issue6932_emptyviewstring(TestDevice testDevice) : base(testDevice)
+	{
+	}
+
 	public override string Issue => "EmptyView for BindableLayout (string)";
  
 	[Test]
