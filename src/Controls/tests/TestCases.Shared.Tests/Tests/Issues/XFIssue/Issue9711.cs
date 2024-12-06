@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST
+﻿#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // In the sample, frequent changes to cell height and visibility cause rendering issues for the Group0 element in the UI, resulting in test failures on iOS and Catalyst. However, this does not thrown the reported exception.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -22,7 +22,7 @@ public class Issue9711 : _IssuesUITest
         // However, sometimes it takes two taps, and rarely, three.  If the app
         // crashes, one of the RunningApp queries will throw, failing the test.
  
-        Assert.DoesNotThrowAsync(async () =>
+        Assert.DoesNotThrowAsync(async () => 
         {
             App.Tap("Group2");
             await Task.Delay(3000);

@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID  //App crashes
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID  //App crashes on Android and Windows, Issue:  
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -7,11 +7,12 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 
 public class Issue9686 : _IssuesUITest
 {
+	const string Success = "Success";
+	const string Run = "Run";
 	public Issue9686(TestDevice testDevice) : base(testDevice)
 	{
 	}
-	const string Success = "Success";
-	const string Run = "Run";
+
 	public override string Issue => "[Bug, CollectionView,iOS] Foundation.Monotouch Exception in Grouped CollectionView";
 
 	[Test]

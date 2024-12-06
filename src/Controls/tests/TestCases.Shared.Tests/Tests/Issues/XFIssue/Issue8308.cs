@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_IOS //Timeout exception - After Tapping the flyout Icon not clicks the Title -Page 2
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -25,4 +24,3 @@ public class Issue8308 : _IssuesUITest
 		App.WaitForElement("Instructions");
 	}
 }
-#endif
