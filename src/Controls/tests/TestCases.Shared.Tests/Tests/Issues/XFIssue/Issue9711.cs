@@ -2,20 +2,19 @@
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
- 
+
 namespace Microsoft.Maui.TestCases.Tests.Issues;
- 
+
 public class Issue9711 : _IssuesUITest
 {
     public Issue9711(TestDevice testDevice) : base(testDevice)
     {
     }
- 
+
     public override string Issue => "[Bug] iOS Failed to marshal the Objective-C object HeaderWrapperView";
  
     [Test]
     [Category(UITestCategories.ListView)]
- 
     public void TestTappingHeaderDoesNotCrash()
     {
         // Usually, tapping one header is sufficient to produce the exception.
