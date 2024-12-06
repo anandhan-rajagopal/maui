@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
- 
+
 namespace Microsoft.Maui.TestCases.Tests.Issues;
- 
+
 [Category(UITestCategories.Layout)]
 public class Issue6932_emptyviewstring : _IssuesUITest
 {

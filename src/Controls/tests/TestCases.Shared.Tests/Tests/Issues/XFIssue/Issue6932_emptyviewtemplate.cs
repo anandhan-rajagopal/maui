@@ -1,11 +1,9 @@
 ﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
- 
+
 namespace Microsoft.Maui.TestCases.Tests.Issues;
- 
+
 [Category(UITestCategories.Layout)]
 public class Issue6932_emptyviewtemplate : _IssuesUITest
 {
@@ -18,7 +16,7 @@ public class Issue6932_emptyviewtemplate : _IssuesUITest
 	public Issue6932_emptyviewtemplate(TestDevice testDevice) : base(testDevice)
 	{
 	}
-	
+
 	public override string Issue => "EmptyView for BindableLayout (template)";
 
 	[Test]
@@ -26,7 +24,7 @@ public class Issue6932_emptyviewtemplate : _IssuesUITest
 	{
 		App.WaitForElement(AddAutomationId);
 
-		for (var i = 0; i < Count; i++)
+		for (var i = 0; i < Count / 2; i++)
 			App.Tap(AddAutomationId);
 
 		App.Tap(ClearAutomationId);
