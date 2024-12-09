@@ -10,16 +10,16 @@ public class Issue1763 : _IssuesUITest
 	{
 	}
 
-	public override string Issue => "First item of grouped ListView not firing .ItemTapped";
+	public override string Issue => "First item of grouped ListView not firing ItemTapped";
 
 	[Test]
 	[Category(UITestCategories.ListView)]
 	public void TestIssue1763ItemTappedFiring()
 	{
-		App.WaitForElement("Contacts");
+		App.WaitForElement("Egor1");
 		App.Tap("Egor1");
 		App.WaitForElement("Tapped a List item");
 		App.Tap("Destruction");
-		App.WaitForElement("Contacts");
+		App.WaitForElement("Egor1");
 	}
 }

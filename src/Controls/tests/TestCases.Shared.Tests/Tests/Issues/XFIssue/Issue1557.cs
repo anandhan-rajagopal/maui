@@ -22,6 +22,6 @@ public class Issue1557 : _IssuesUITest
 		App.Tap("Bug Repro");
 		App.WaitForElement("foo");
 		App.WaitForElement("bar");
-		App.WaitForElement("Bug Repro", timeout: TimeSpan.FromSeconds(2));
+		App.WaitForElementTillPageNavigationSettled("Bug Repro");
 	}
 }
