@@ -6,6 +6,7 @@ public class ShellFlyoutSizing : TestShell
 {
 	protected override void Init()
 	{
+		FlyoutBehavior = FlyoutBehavior.Locked;
 		AddContentPage(new ContentPage()
 		{
 			Title = "Main Page",
