@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Microsoft.VisualBasic;
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -9,6 +10,9 @@ public class ShellFlyoutSizing : _IssuesUITest
 	public ShellFlyoutSizing(TestDevice testDevice) : base(testDevice)
 	{
 	}
+
+	public override string Issue => "Shell Flyout Width and Height";
+
 #if WINDOWS
     const string ChangeFlyoutSizes="Change Height and Width";
     const string ResetFlyoutSizes="Reset Height and Width";
@@ -18,7 +22,17 @@ public class ShellFlyoutSizing : _IssuesUITest
 	const string ResetFlyoutSizes = "ResetFlyoutSizes";
 	const string DecreaseFlyoutSizes = "DecreaseFlyoutSizes";
 #endif
-	public override string Issue => "Shell Flyout Width and Height";
+
+#if ANDROID
+    int difference = 26;
+#elif IOS
+	int difference = 10;
+#elif MACCATALYST
+    int difference = 8;
+#elif WINDOWS
+    int difference= 15;
+#endif
+
 	[Test, Order(1)]
 	[Category(UITestCategories.Shell)]
 	public void FlyoutHeightAndWidthResetsBackToOriginalSize()
@@ -34,7 +48,7 @@ public class ShellFlyoutSizing : _IssuesUITest
 		Assert.That(App.WaitForElement("FlyoutHeader").GetRect().Width, Is.EqualTo(initialWidth));
 		Assert.That(App.WaitForElement("FlyoutFooter").GetRect().Y, Is.EqualTo(initialHeight));
 	}
-#if IOS //test fails on (Android, Mac, Windows) Width and height is greater or smaller than expected value 
+
 	[Test, Order(2)]
 	[Category(UITestCategories.Shell)]
 	public void FlyoutHeightAndWidthIncreaseAndDecreaseCorrectly()
@@ -46,9 +60,8 @@ public class ShellFlyoutSizing : _IssuesUITest
 		App.Tap(DecreaseFlyoutSizes);
 		var newWidth = App.WaitForElement("FlyoutHeader").GetRect().Width;
 		var newHeight = App.WaitForElement("FlyoutFooter").GetRect().Y;
+		Assert.That(initialWidth - newWidth, Is.EqualTo(difference).Within(1));
+		Assert.That(initialHeight - newHeight, Is.EqualTo(difference).Within(1));
 
-		Assert.That(initialWidth - newWidth, Is.EqualTo(10).Within(1));
-		Assert.That(initialHeight - newHeight, Is.EqualTo(10).Within(1));
 	}
-#endif
 }
