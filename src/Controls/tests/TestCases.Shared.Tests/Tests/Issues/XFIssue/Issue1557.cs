@@ -21,7 +21,6 @@ public class Issue1557 : _IssuesUITest
 	{
 		App.WaitForElement("Next Page");
 		App.Tap("Next Page");
-		// Task.Delay(Delay + 1000).Wait();
 		App.WaitForElement("foo");
 		App.WaitForElement("bar");
 		App.WaitForElement("Next Page");
