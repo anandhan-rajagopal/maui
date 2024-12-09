@@ -14,15 +14,14 @@ public class Issue1557 : _IssuesUITest
 
 	public override string Issue => "Setting source crashes if view was detached from visual tree";
 
-	// Maybe this one just works? Not sure where "Bug Repro's" should come from
 	[Test]
 	[Category(UITestCategories.ListView)]
 	public void SettingSourceWhenDetachedDoesNotCrash()
 	{
-		App.WaitForElement("Next Page");
-		App.Tap("Next Page");
+		App.WaitForElement("Bug Repro");
+		App.Tap("Bug Repro");
 		App.WaitForElement("foo");
 		App.WaitForElement("bar");
-		App.WaitForElement("Next Page");
+		App.WaitForElement("Bug Repro", timeout: TimeSpan.FromSeconds(2));
 	}
 }

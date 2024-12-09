@@ -12,16 +12,14 @@ public class Issue1763 : _IssuesUITest
 
 	public override string Issue => "First item of grouped ListView not firing .ItemTapped";
 
-	// [Test]
-	// [Category(UITestCategories.ListView)]
-	// [FailsOnIOSWhenRunningOnXamarinUITest]
-	// [FailsOnAndroid]
-	// public void TestIssue1763ItemTappedFiring()
-	// {
-	// 	App.WaitForElement(q => q.Marked("Contacts"));
-	// 	App.Tap(q => q.Marked("Egor1"));
-	// 	App.WaitForElement(q => q.Marked("Tapped a List item"));
-	// 	App.Tap(q => q.Marked("Destruction"));
-	// 	App.WaitForElement(q => q.Marked("Contacts"));
-	// }
+	[Test]
+	[Category(UITestCategories.ListView)]
+	public void TestIssue1763ItemTappedFiring()
+	{
+		App.WaitForElement("Contacts");
+		App.Tap("Egor1");
+		App.WaitForElement("Tapped a List item");
+		App.Tap("Destruction");
+		App.WaitForElement("Contacts");
+	}
 }

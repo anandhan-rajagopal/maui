@@ -1,5 +1,7 @@
-﻿# if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST 
-//In Android, windows and mac platform, are show Label proberly but  In IOS platform That AppLinkEntry doesn't working, more information: https://github.com/dotnet/maui/issues/12295
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST
+// This test case is specifically for iOS. There's a known framework-level issue with AppLinkEntry on iOS.
+// The test is currently disabled on all platforms due to this limitation.
+// For more details, see: https://github.com/dotnet/maui/issues/12295
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -18,8 +20,7 @@ public class Issue5470 : _IssuesUITest
 	[Category(UITestCategories.AppLinks)]
 	public void Issue5470Test()
 	{
-		Thread.Sleep(500); // give it time to crash
 		App.WaitForElement("IssuePageLabel");
 	}
 }
-# endif
+#endif

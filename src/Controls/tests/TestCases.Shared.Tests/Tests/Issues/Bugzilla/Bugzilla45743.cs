@@ -1,5 +1,5 @@
-﻿# if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID &&TEST_FAILS_ON_CATALYST
-//In windows platform, the DisplayActionSheet not working and In mac, android platform, the DisplayActionSheet and DisplayAlert are not working 
+﻿# if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID &&TEST_FAILS_ON_CATALYST 
+// DisplayActionSheet and DisplayAlert are popped up in the constructor using BeginInvokeOnMainThread which is not working on Windows, Android, and Catalyst. Issue : 
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -14,7 +14,6 @@ public class Bugzilla45743 : _IssuesUITest
 
 	public override string Issue => "[iOS] Calling DisplayAlert via BeginInvokeOnMainThread blocking other calls on iOS";
 
-	// TODO From Xamarin.UITest Migration: needs better way to detect actionsheet
 	[Test]
 	[Category(UITestCategories.DisplayAlert)]
 	public void Bugzilla45743Test()
