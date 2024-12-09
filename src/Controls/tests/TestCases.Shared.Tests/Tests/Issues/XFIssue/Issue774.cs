@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,37 +13,26 @@ public class Issue774 : _IssuesUITest
 
 	public override string Issue => "ActionSheet won't dismiss after rotation to landscape";
 
-	//[Test]
-	//[Category(UITestCategories.ActionSheet)]
-	//[FailsOnAndroidWhenRunningOnXamarinUITest]
-	//public void Issue774TestsDismissActionSheetAfterRotation()
-	//{
-	//	App.Tap(q => q.Button("Show ActionSheet"));
-	//	App.Screenshot("Show ActionSheet");
+	[Test]
+	[Category(UITestCategories.ActionSheet)]
 
-	//	App.SetOrientationLandscape();
-	//	App.Screenshot("Rotate Device");
+	public void Issue774TestsDismissActionSheetAfterRotation()
+	{
+		App.WaitForElement("Show ActionSheet");
+		App.Tap("Show ActionSheet");
+		App.Screenshot("Show ActionSheet");
 
-	//	// Wait for the action sheet element to show up
-	//	App.WaitForElement(q => q.Marked("What's up"));
+		App.SetOrientationLandscape();
+		App.Screenshot("Rotate Device");
 
-	//	var dismiss = App.Query("Dismiss");
+		App.Tap("Dismiss");
+		App.Screenshot("Dismiss ActionSheet");
+	}
 
-	//	var target = dismiss.Length > 0 ? "Dismiss" : "Destroy";
-
-
-	//	App.Tap(q => q.Marked(target));
-	//	App.WaitForNoElement(q => q.Marked(target));
-
-	//	App.Screenshot("Dismiss ActionSheet");
-
-	//}
-
-	//[TearDown]
-	//public override void TearDown()
-	//{
-	//	App.SetOrientationPortrait();
-
-	//	base.TearDown();
-	//}
+	[TearDown]
+	public  void TearDown()
+	{
+		App.SetOrientationPortrait();
+	}
 }
+#endif
