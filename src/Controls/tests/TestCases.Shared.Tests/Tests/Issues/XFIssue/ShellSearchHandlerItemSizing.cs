@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST // In Android and Catalyst AutomationId was not working, in Windows searchresults was not shown More Information: https://github.com/dotnet/maui/issues/26477
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST // In Android and Catalyst AutomationId is not working for SearchHandler, in Windows searchresults was not shown More Information: https://github.com/dotnet/maui/issues/26477
 using UITest.Appium;
 using NUnit.Framework; 
 using UITest.Core;
@@ -17,13 +17,8 @@ public class ShellSearchHandlerItemSizing : _IssuesUITest
 	[Category(UITestCategories.Shell)]
 	public void SearchHandlerSizesCorrectly()
 	{
-
 		App.WaitForElement("Instructions");
-#if WINDOWS
-		App.EnterText("TextBox", "Hello");
-#elif IOS
 		App.EnterText(AppiumQuery.ByXPath("//XCUIElementTypeSearchField"),"Hello");
-#endif
 		var contentSize = App.WaitForElement("searchresult").GetRect();
 		Assert.That(contentSize.Height, Is.LessThan(100));
 
