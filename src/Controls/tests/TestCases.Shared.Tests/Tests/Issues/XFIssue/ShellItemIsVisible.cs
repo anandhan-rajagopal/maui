@@ -76,7 +76,7 @@ public class ShellItemIsVisible : _IssuesUITest
 		App.Tap("ClearAndRecreate");
 	}
 
-#if !WINDOWS // test fails because it shows exception "navigation still processing" 
+#if !WINDOWS // The test fails on Windows and throws an exception: "Navigation still processing" when tapping ClearAndRecreate after tapping ToggleItem1. MoreInformation:https://github.com/dotnet/maui/issues/17608
 	[Test, Order(4)]
 	public void ClearAndRecreateFromSecondaryPage()
 	{
