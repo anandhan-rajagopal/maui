@@ -97,7 +97,7 @@ public class ShellItemIsVisible : _IssuesUITest
 	[Test, Order(3)]
 	public void ClearAndRecreateShellContent()
 	{
-		App.WaitForElement("ClearAndRecreateShellContent");
+		App.WaitForElementTillPageNavigationSettled("ClearAndRecreateShellContent");
 		App.Tap("ClearAndRecreateShellContent");
 		App.WaitForElement("ClearAndRecreate");
 		App.Tap("ClearAndRecreate");

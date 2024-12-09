@@ -23,7 +23,7 @@ public class ShellFlyoutSizing : _IssuesUITest
 	const string DecreaseFlyoutSizes = "DecreaseFlyoutSizes";
 #endif
 
-#if ANDROID
+#if ANDROID // Appium's GetRect method returns different sizes across platforms.
     int difference = 26;
 #elif IOS
 	int difference = 10;
