@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST //The test fails on iOS and macOS with a TimeoutException in WaitForElement("cat").
+﻿#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST //The test fails on iOS and macOS because Appium is unable to locate the Picker control elements (such as "cat"), resulting in a TimeoutException.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -22,15 +22,6 @@ public class Issue2499 : _IssuesUITest
 		App.WaitForElement("cat");
 		App.WaitForElement("mouse");
 		App.Tap("mouse");
-
-	// #if __IOS__
-	// 		System.Threading.Tasks.Task.Delay(500).Wait();
-	// 		var cancelButtonText = "Done";
-	// 		App.WaitForElement(cancelButtonText);
-	// 		App.Tap(cancelButtonText);
-	// 		System.Threading.Tasks.Task.Delay(1000).Wait();
-	// #endif
-
 		App.WaitForNoElement("cat");
 	}
 }
