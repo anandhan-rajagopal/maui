@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS
+﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Orientation mode not supported on Catalyst and Windows.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -15,18 +15,15 @@ public class Issue774 : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.ActionSheet)]
-
 	public void Issue774TestsDismissActionSheetAfterRotation()
 	{
 		App.WaitForElement("Show ActionSheet");
 		App.Tap("Show ActionSheet");
-		App.Screenshot("Show ActionSheet");
 
 		App.SetOrientationLandscape();
-		App.Screenshot("Rotate Device");
 
 		App.Tap("Dismiss");
-		App.Screenshot("Dismiss ActionSheet");
+		App.WaitForNoElement("Dismiss");
 	}
 
 	[TearDown]
