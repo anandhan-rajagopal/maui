@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_ANDROID // Flyout content with zero margin does not get offset by the safe area, and this is enabled only for iOS.
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_ANDROID //The flyout content with zero margin is offset by ignoring the safe area, and this behavior is specific to iOS. This test is expected to fail on Windows, Catalyst, and Android platforms.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -19,8 +19,8 @@ public class ShellFlyoutContentWithZeroMargin : _IssuesUITest
 	{
 		App.WaitForElement("PageLoaded");
 		App.ShowFlyout();
-		var flyoutLoc = App.WaitForElement("FlyoutLabel").GetRect().Y;
-		Assert.That(flyoutLoc, Is.EqualTo(0));
+		var flyoutLocation = App.WaitForElement("FlyoutLabel").GetRect().Y;
+		Assert.That(flyoutLocation, Is.EqualTo(0));
 	}
 }
 #endif

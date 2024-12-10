@@ -42,6 +42,8 @@ public class Issue11244 : TestShell
 		var page2 = AddContentPage<TabBar, Tab>(page);
 		page2.Route = "MainPage";
 		await Task.Delay(1000);
-		await Shell.Current.Navigation.PushAsync(page);//Shell Navigation (GoToAsync): Shell navigation is designed to work with routes and doesn't automatically create a navigation stack in the same way that traditional navigation does. When you use GoToAsync, it navigates to the specified route without adding it to the navigation stack of the current page.
+		// Shell's GoToAsync uses URI-based routing instead of the traditional navigation stack, which can result in an invisible navigation bar in the UI.
+		// await GoToAsync("//MainPage");
+		await Shell.Current.Navigation.PushAsync(page);
 	}
 }

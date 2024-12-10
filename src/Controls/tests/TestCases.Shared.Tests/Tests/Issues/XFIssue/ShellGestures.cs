@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST // Swipe, ScrollDown not working on MacCatalyst
+﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Swipe, ScrollDown not working on Catalyst, In iOS, WaitForNoElement throws a timeout exception eventhough the text is not visible on the UI. 
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -27,9 +27,6 @@ public class ShellGestures : _IssuesUITest
 		App.TapInShellFlyout(SwipeTitle);
 		App.WaitForElement(SwipeGestureSuccessId);
 		App.SwipeLeftToRight(SwipeGestureSuccessId);
-#if IOS // On iOS, SwipeLeftToRight over the elements leads opens the flyout.
-        App.Tap(SwipeTitle);
-#endif
 		Assert.That(App.WaitForElement(SwipeGestureSuccessId).GetText(), Is.EqualTo(SwipeGestureSuccess));
 	}
 
@@ -40,7 +37,9 @@ public class ShellGestures : _IssuesUITest
 		App.TapInShellFlyout(TableViewTitle);
 		App.WaitForElement(TableViewId);
 		App.ScrollDown(TableViewId, ScrollStrategy.Gesture, 0.20, 200);
-		App.WaitForElement("entry10");
+		
+		// Verifying that first item in TableView is not visible also confirms that the TableView has scrolled.
+		App.WaitForNoElement("entry2");
 	}
 
 	[Test]
@@ -50,7 +49,9 @@ public class ShellGestures : _IssuesUITest
 		App.TapInShellFlyout(ListViewTitle);
 		App.WaitForElement(ListViewId);
 		App.ScrollDown(ListViewId, ScrollStrategy.Gesture, 0.20, 200);
-		App.WaitForElement("10 Entry");
+        
+		// Verifying that first item in ListView is not visible also confirms that the ListView has scrolled.
+		App.WaitForNoElement("0 Entry");
 	}
 }
 #endif

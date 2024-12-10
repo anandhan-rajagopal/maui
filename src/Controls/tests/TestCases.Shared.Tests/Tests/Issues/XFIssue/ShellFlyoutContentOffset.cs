@@ -11,7 +11,7 @@ public class ShellFlyoutContentOffset : _IssuesUITest
 	}
 
 	public override string Issue => "Shell Flyout Content Offsets Correctly";
-#if !ANDROID && !WINDOWS // The bounds value in the accessibility information appears the same, but the test fails due to differing Rect values. 
+#if !ANDROID && !WINDOWS // The test fails on Android and Windows due to differing Rect values between flyout item and label content, despite correct offset in Appium inspector.
 	[Test]
 	[Category(UITestCategories.Shell)]
 	public void FlyoutContentOffsetsCorrectly()

@@ -22,6 +22,9 @@ public class ShellFlyoutContentOffset : TestShell
 
 	ContentPage CreateContentPage()
 	{
+		
+		// Placing a Label directly within the flyout content centers it on Windows, complicating offset testing.
+		// Wrapping the Label in a StackLayout within the flyout content enables testing offset values on Windows.
 		var stackLayout = new VerticalStackLayout();
 		stackLayout.Children.Add(new Label()
 		{
