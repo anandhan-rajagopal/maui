@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST #if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // The sample needs redefining due to a Handler not found exception, as it involves a custom class requiring handlers.
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // The sample needs redefining due to a Handler not found exception, as it involves a custom class requiring handlers.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
