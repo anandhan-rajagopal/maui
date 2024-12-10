@@ -36,10 +36,10 @@ public class ShellGestures : _IssuesUITest
 	{
 		App.TapInShellFlyout(TableViewTitle);
 		App.WaitForElement(TableViewId);
-		App.ScrollDown(TableViewId, ScrollStrategy.Gesture, 0.20, 200);
+		App.ScrollDown(TableViewId, ScrollStrategy.Gesture, 0.30, 400);
 		
 		// Verifying that first item in TableView is not visible also confirms that the TableView has scrolled.
-		App.WaitForNoElement("entry2");
+		App.WaitForNoElement("section1");
 	}
 
 	[Test]
