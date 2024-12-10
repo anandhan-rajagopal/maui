@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS // The test fails on Windows because the ListView text is not visible, Issue: https://github.com/dotnet/maui/issues/26488
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -23,3 +24,4 @@ public class Issue1763 : _IssuesUITest
 		App.WaitForElement("Egor1");
 	}
 }
+#endif
