@@ -22,8 +22,8 @@ public class Issue2948 : _IssuesUITest
 			{
 				var btnRect = App.WaitForElement("btnOnDetail").GetRect();
 				App.Tap("ShowFlyoutBtn");
-				App.DragCoordinates(btnRect.X + btnRect.Width-10, btnRect.Y + btnRect.Height / 2,
-				btnRect.X + btnRect.Width-10,btnRect.Y + btnRect.Height / 2);
+				//Unable to find the detail page elements when flyout is open because the layer is inaccessibile via Appium. So here we use click coordinates to click on the button on the detail page.
+				App.ClickCoordinates(btnRect.X + btnRect.Width-10, btnRect.Y + btnRect.Height / 2);
 				App.WaitForNoElement("Clicked", "Time out", new TimeSpan(0, 0, 1));
 			}
 		}
