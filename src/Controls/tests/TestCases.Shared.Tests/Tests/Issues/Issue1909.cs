@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST //There is no visual difference for more information: https://github.com/dotnet/maui/issues/26505
+﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // This test uses a platform-specific API relevant only to Android but also fails there due to no noticeable UI changes. For more details, see: https://github.com/dotnet/maui/issues/26505
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;

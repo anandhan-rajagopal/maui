@@ -1,4 +1,4 @@
-﻿# if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // the application crash while tap the view 
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST #if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // The sample needs redefining due to a Handler not found exception, as it involves a custom class requiring handlers.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -17,7 +17,6 @@ public class Issue2976 : _IssuesUITest
 	[Category(UITestCategories.ListView)]
 	public void Issue1Test()
 	{
-		// App.Screenshot("I am at Issue 2976");
 		App.Tap("DEMOA");
 		App.Tap("DEMOB");
 		App.Tap("DEMOC");
