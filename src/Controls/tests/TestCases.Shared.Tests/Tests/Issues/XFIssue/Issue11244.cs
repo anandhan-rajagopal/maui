@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID // The text in Android is partially visible, and the text is not overridden in windows More information:https://github.com/dotnet/maui/issues/1625
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID // The text in Android is partially visible More Information:https://github.com/dotnet/maui/issues/19747 and the text is not overridden in windows More information:https://github.com/dotnet/maui/issues/1625
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;

@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_ANDROID //The RectValue differs across platforms; only iOS has a zero-margin offset.
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_ANDROID // Flyout content with zero margin does not get offset by the safe area, and this is enabled only for iOS.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;

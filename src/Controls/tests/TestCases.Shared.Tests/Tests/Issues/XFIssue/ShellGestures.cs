@@ -13,20 +13,13 @@ public class ShellGestures : _IssuesUITest
 	const string SwipeTitle = "Swipe";
 	const string SwipeGestureSuccess = "SwipeGesture Success";
 	const string SwipeGestureSuccessId = "SwipeGestureSuccessId";
-
-	const string TouchListenerTitle = "IOnTouchListener";
-	public const string TouchListenerSuccess = "TouchListener Success";
-	const string TouchListenerSuccessId = "TouchListenerSuccessId";
-
 	const string TableViewTitle = "Table View";
 	const string TableViewId = "TableViewId";
-
 	const string ListViewTitle = "List View";
 	const string ListViewId = "ListViewId";
 
 
 	public override string Issue => "Shell Gestures Test";
-#if !ANDROID // Test fails on Android while swipe it closes the app
 	[Test]
 	[Category(UITestCategories.Gestures)]
 	public void SwipeGesture()
@@ -39,7 +32,6 @@ public class ShellGestures : _IssuesUITest
 #endif
 		Assert.That(App.WaitForElement(SwipeGestureSuccessId).GetText(), Is.EqualTo(SwipeGestureSuccess));
 	}
-#endif
 
 	[Test]
 	[Category(UITestCategories.TableView)]
@@ -60,17 +52,5 @@ public class ShellGestures : _IssuesUITest
 		App.ScrollDown(ListViewId, ScrollStrategy.Gesture, 0.20, 200);
 		App.WaitForElement("10 Entry");
 	}
-
-#if !ANDROID && !WINDOWS && !MACCATALYST && !IOS // This test case is only enabled for Android, but in the sample code, there is no logic to update the status to "Success" when a swipe action occurs.
-	[Test]
-	[Category(UITestCategories.CustomRenderers)]
-	public void TouchListener()
-	{
-		App.TapInShellFlyout(TouchListenerTitle);
-		App.WaitForElement(TouchListenerSuccessId);
-		App.SwipeLeftToRight(TouchListenerSuccessId);
-		App.WaitForElement(TouchListenerSuccess);
-	}
-#endif
 }
 #endif
