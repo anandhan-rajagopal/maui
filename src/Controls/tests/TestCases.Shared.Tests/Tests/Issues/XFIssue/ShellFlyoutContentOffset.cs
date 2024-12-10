@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS //  Rect Value differs on Windows platform
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -11,41 +12,40 @@ public class ShellFlyoutContentOffset : _IssuesUITest
 	}
 
 	public override string Issue => "Shell Flyout Content Offsets Correctly";
+#if !ANDROID // The bounds value in the accessibility information appears the same, but the test fails due to differing Rect values. 
+	[Test]
+	[Category(UITestCategories.Shell)]
+	public void FlyoutContentOffsetsCorrectly()
+	{
+		App.WaitForElement("PageLoaded");
+		var flyoutLoc = GetLocationAndRotateToNextContent("Item 1");
+		var labelLoc = GetLocationAndRotateToNextContent("LabelContent");
+		var scrollViewLoc = GetLocationAndRotateToNextContent("ScrollViewContent");
 
-	//[Test]
-	//[Category(UITestCategories.Shell)]
-	//[FailsOnAndroid]
-	//[FailsOnIOSWhenRunningOnXamarinUITest]
-	//public void FlyoutContentOffsetsCorrectly()
-	//{
-	//	App.WaitForElement("PageLoaded");
-	//	var flyoutLoc = GetLocationAndRotateToNextContent("Item 1");
-	//	var labelLoc = GetLocationAndRotateToNextContent("LabelContent");
-	//	var scrollViewLoc = GetLocationAndRotateToNextContent("ScrollViewContent");
+		Assert.That(flyoutLoc, Is.EqualTo(labelLoc), "Label Offset Incorrect");
+		Assert.That(flyoutLoc, Is.EqualTo(scrollViewLoc), "ScrollView Offset Incorrect");
+	}
+#endif
+	[Test]
+	[Category(UITestCategories.Shell)]
+	public void FlyoutContentOffsetsCorrectlyWithHeader()
+	{
+	    App.WaitForElement("ToggleHeader");
+		App.Tap("ToggleHeader");
+		GetLocationAndRotateToNextContent("Item 1");
+		var labelLoc = GetLocationAndRotateToNextContent("LabelContent");
+		var scrollViewLoc = GetLocationAndRotateToNextContent("ScrollViewContent");
 
-	//	Assert.AreEqual(flyoutLoc, labelLoc, "Label Offset Incorrect");
-	//	Assert.AreEqual(flyoutLoc, scrollViewLoc, "ScrollView Offset Incorrect");
-	//}
+		Assert.That(labelLoc, Is.EqualTo(scrollViewLoc), "ScrollView Offset Incorrect");
+	}
 
-	//[Test]
-	//[Category(UITestCategories.Shell)]
-	//public void FlyoutContentOffsetsCorrectlyWithHeader()
-	//{
-	//	App.Tap("ToggleHeader");
-	//	GetLocationAndRotateToNextContent("Item 1");
-	//	var labelLoc = GetLocationAndRotateToNextContent("LabelContent");
-	//	var scrollViewLoc = GetLocationAndRotateToNextContent("ScrollViewContent");
-
-	//	Assert.AreEqual(labelLoc, scrollViewLoc, "ScrollView Offset Incorrect");
-	//}
-
-	//float GetLocationAndRotateToNextContent(string automationId)
-	//{
-	//	ShowFlyout();
-	//	var y = App.WaitForElement(automationId)[0].Rect.Y;
-	//	App.Tap("CloseFlyout");
-	//	App.Tap("ToggleFlyoutContent");
-
-	//	return y;
-	//}
+	float GetLocationAndRotateToNextContent(string automationId)
+	{
+		App.ShowFlyout();
+		var y = App.WaitForElement(automationId).GetRect().Y;
+		App.Tap("CloseFlyout");
+		App.Tap("ToggleFlyoutContent");
+		return y;
+	}
 }
+#endif

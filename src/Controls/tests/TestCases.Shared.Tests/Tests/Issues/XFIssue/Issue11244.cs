@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID // The text in Android is partially visible, and the text is not overridden in windows More information:https://github.com/dotnet/maui/issues/1625
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,14 +13,13 @@ public class Issue11244 : _IssuesUITest
 
 	public override string Issue => "[Bug] BackButtonBehavior no longer displays on the first routed page in 4.7";
 
-	/*
+	 
 	[Test]
 	[Category(UITestCategories.Shell)]
-	[FailsOnAndroid]
-	[FailsOnIOS]
 	public void LeftToolbarItemTextDisplaysWhenFlyoutIsDisabled()
 	{
 		App.WaitForElement("Logout");
 	}
-	*/
+	
 }
+#endif

@@ -42,6 +42,6 @@ public class Issue11244 : TestShell
 		var page2 = AddContentPage<TabBar, Tab>(page);
 		page2.Route = "MainPage";
 		await Task.Delay(1000);
-		await GoToAsync("//MainPage");
+		await Shell.Current.Navigation.PushAsync(page);
 	}
 }
