@@ -22,6 +22,12 @@ public class ShellFlyoutContentOffset : TestShell
 
 	ContentPage CreateContentPage()
 	{
+		var stackLayout = new VerticalStackLayout();
+		stackLayout.Children.Add(new Label()
+		{
+			AutomationId = "LabelContent",
+			Text = "Only Label"
+		});
 		var layout = new StackLayout()
 		{
 			new Label()
@@ -37,11 +43,7 @@ public class ShellFlyoutContentOffset : TestShell
 					if (FlyoutContent is ScrollView)
 						FlyoutContent = null;
 					else if (FlyoutContent == null)
-						FlyoutContent = new Label()
-						{
-							AutomationId = "LabelContent",
-							Text = "Only Label"
-						};
+						FlyoutContent = stackLayout;
 					else
 						FlyoutContent = new ScrollView()
 						{
