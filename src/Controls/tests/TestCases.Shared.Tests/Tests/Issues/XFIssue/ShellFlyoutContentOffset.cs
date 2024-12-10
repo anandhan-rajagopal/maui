@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS //  Rect Value differs on Windows platform
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -12,7 +11,7 @@ public class ShellFlyoutContentOffset : _IssuesUITest
 	}
 
 	public override string Issue => "Shell Flyout Content Offsets Correctly";
-#if !ANDROID // The bounds value in the accessibility information appears the same, but the test fails due to differing Rect values. 
+#if !ANDROID && !WINDOWS // The bounds value in the accessibility information appears the same, but the test fails due to differing Rect values. 
 	[Test]
 	[Category(UITestCategories.Shell)]
 	public void FlyoutContentOffsetsCorrectly()
@@ -48,4 +47,3 @@ public class ShellFlyoutContentOffset : _IssuesUITest
 		return y;
 	}
 }
-#endif
