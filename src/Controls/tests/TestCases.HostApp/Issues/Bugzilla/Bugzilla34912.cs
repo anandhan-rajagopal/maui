@@ -23,7 +23,8 @@ public class Bugzilla34912 : TestContentPage
 			},
 
 			GroupDisplayBinding = new Binding("LongTitle"),
-			GroupShortNameBinding = new Binding("Title"),
+			//while using this GroupShortNameBinding property it throws an exception for more information:https://github.com/dotnet/maui/issues/26534, this issue we check ListView.IsEnale property
+			// GroupShortNameBinding = new Binding("Title"),
 			Header = "HEADER",
 			Footer = "FOOTER",
 			IsGroupingEnabled = true,
