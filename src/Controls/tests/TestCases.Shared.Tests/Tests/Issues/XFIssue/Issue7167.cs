@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST //ScrollDown are not working on MacCatalyst
+﻿#if TEST_FAILS_ON_CATALYST //ScrollDown is not working on MacCatalyst
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;

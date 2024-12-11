@@ -30,7 +30,7 @@ public class Issue11523 : _IssuesUITest
 		App.TapBackArrow();
 #endif
 	}
-	
+
 	void FlyoutIcon()
 	{
 #if Android

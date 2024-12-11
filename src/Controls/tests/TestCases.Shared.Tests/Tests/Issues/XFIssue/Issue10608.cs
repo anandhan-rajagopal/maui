@@ -38,7 +38,6 @@ public class Issue10608 : _IssuesUITest
 			App.Tap("FlyoutItem0");
 			App.WaitForElement("LearnMoreButton");
 		}
-
 		App.WaitForElement(Tab1);
 		App.WaitForElement("LearnMoreButton");
 		App.Tap("FlyoutItem1");

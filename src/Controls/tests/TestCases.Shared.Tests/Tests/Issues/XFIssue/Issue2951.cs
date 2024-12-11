@@ -38,5 +38,6 @@ public class Issue2951 : _IssuesUITest
 		// This screenshot is captured to visually confirm that the background color has changed as expected
 		// Note: VerifyScreenshot doesn't work on the MacCatalyst platform, so this is excluded for that platform
 		VerifyScreenshot(); 
+		
 	}
 }
