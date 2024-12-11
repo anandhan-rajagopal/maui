@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS // Getting exception while running the sample on windows, Issue: https://github.com/dotnet/maui/issues/26534
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -20,4 +19,3 @@ public class Issue55555 : _IssuesUITest
 		App.WaitForElement("vegetables");
 	}
 }
-#endif

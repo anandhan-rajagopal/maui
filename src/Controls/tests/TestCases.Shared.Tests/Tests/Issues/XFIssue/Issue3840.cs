@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // In iOS and Catalyst, WaitForNoElement throws a timeout exception eventhough the text is not visible on the screen by scrolling.
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -26,3 +27,4 @@ public class Issue3840 : _IssuesUITest
 		App.WaitForNoElement(FailedText);
 	}
 }
+#endif

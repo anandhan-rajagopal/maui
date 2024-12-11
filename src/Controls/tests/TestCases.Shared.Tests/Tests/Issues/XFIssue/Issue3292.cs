@@ -7,12 +7,6 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 public class Issue3292 : _IssuesUITest
 {
 
-#if WINDOWS
-	const string TitleText = "hello world changed";
-#else
-	const string TitleText = "Hello World Changed";
-#endif
-
 	public Issue3292(TestDevice testDevice) : base(testDevice)
 	{
 	}
@@ -23,6 +17,6 @@ public class Issue3292 : _IssuesUITest
 	[Category(UITestCategories.TableView)]
 	public void Issue3292Test()
 	{
-		App.WaitForElement(TitleText);
+		App.WaitForElementTillPageNavigationSettled("Hello World Changed");
 	}
 }
