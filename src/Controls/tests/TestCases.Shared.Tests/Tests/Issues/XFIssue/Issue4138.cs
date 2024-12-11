@@ -10,6 +10,7 @@ public class Issue4138 : _IssuesUITest
 	public Issue4138(TestDevice testDevice) : base(testDevice)
 	{
 	}
+
 	public override string Issue => "[iOS] NavigationPage.TitleIcon no longer centered";
 
 	[Test]

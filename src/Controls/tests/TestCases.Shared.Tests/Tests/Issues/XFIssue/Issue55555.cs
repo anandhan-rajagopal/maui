@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS // Sample not rendering
+﻿#if TEST_FAILS_ON_WINDOWS // Getting exception while running the sample on windows, Issue: https://github.com/dotnet/maui/issues/26534
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -15,7 +15,6 @@ public class Issue55555 : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.ListView)]
-
 	public void TGroupDisplayBindingPresentRecycleElementTest()
 	{
 		App.WaitForElement("vegetables");
