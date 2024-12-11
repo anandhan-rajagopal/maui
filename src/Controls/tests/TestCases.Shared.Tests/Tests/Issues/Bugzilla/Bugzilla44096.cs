@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS
+//The test is currently failing on all platforms.The reason for the failure compatibility controls not being supported in currect host app.
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -105,3 +107,4 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		*/
 	}
 }
+#endif
