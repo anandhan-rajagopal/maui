@@ -1,6 +1,4 @@
-﻿# if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS 
-//In windows when using GroupShortNameBinding property it throw excetion for more information: https://github.com/dotnet/maui/issues/26534 
-//In iOS failed when using images listview didnit render
+﻿#if TEST_FAILS_ON_IOS // On iOS the app get freez while using the images from website, Issue:
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;

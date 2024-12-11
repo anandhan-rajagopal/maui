@@ -1,4 +1,4 @@
-﻿# if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST //IsEnable property is deos not apper to work for more information:https://github.com/dotnet/maui/issues/19768
+﻿#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST //ListView IsEnabled property is not working on iOS and Catalyst, Issue: https://github.com/dotnet/maui/issues/19768.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -20,9 +20,9 @@ public class Bugzilla34912 : _IssuesUITest
 		App.Tap("Allen");
 		App.WaitForElement("You tapped Allen");
 		App.Tap("OK");
-		App.Tap("btnDisable");
+		App.Tap("Disable ListView");
 		App.Tap("Allen");
 		App.WaitForNoElement("You tapped Allen");
 	}
 }
-# endif
+#endif
