@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS //User clicks "Between" to view Tab 2. Rapid clicking occurs between this and the "Click" item.
-//The app freezes and becomes unresponsive, requiring a force close. The issue only manifests during automated testing scenarios and cannot be reproduced through normal manual user interaction.
+﻿#if TEST_FAILS_ON_WINDOWS //Pending Navigations still processing exception when navigating to the page on windows. Issue Link: https://github.com/dotnet/maui/issues/17608
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
