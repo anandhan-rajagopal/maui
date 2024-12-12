@@ -28,12 +28,13 @@ public class Issue2951 : _IssuesUITest
 
 		buttonToClick.Click();
 		var updatedButtonCount = App.FindElements("btnChangeStatus").Count();
-
 		Assert.That(updatedButtonCount, Is.EqualTo(2));
+
+		buttonToClick = App.FindElements("btnChangeStatus").ElementAt(1);
+		buttonToClick.Click();
 
 		// Use VerifyScreenshot to ensure the button background color has been updated properly
 		// This screenshot is captured to visually confirm that the background color has changed as expected
-		// Note: VerifyScreenshot doesn't work on the MacCatalyst platform, so this is excluded for that platform
 		VerifyScreenshot(); 
 		
 	}
