@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              x:Class="Maui.Controls.Sample.CollectionViewGalleries.ScrollToGalleries.ScrollToGroup">
     <ContentPage.Content>
+        <ScrollView>
         <StackLayout>
             <Grid>
                 <Grid.RowDefinitions>
@@ -74,5 +75,6 @@
 
             </CollectionView>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
