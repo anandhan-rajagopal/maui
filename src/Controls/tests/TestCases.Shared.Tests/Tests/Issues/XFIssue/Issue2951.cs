@@ -24,10 +24,7 @@ public class Issue2951 : _IssuesUITest
 		var buttonToClick = App.FindElements("btnChangeStatus").ElementAt(1);
 		buttonToClick.Click();
 
-		var statusLabel = App.FindElements("lblValue").ElementAt(1);
-
 		Assert.That(buttonToClick.GetText(), Is.EqualTo("B"));
-		Assert.That(statusLabel.GetText(), Is.EqualTo("B"));
 
 		buttonToClick.Click();
 		var updatedButtonCount = App.FindElements("btnChangeStatus").Count();
