@@ -19,12 +19,8 @@ public class Bugzilla32902 : _IssuesUITest
 		App.Tap("btnNext");
 		App.WaitForElementTillPageNavigationSettled("btnPushModal");
 		App.Tap("btnPushModal");
-#if ANDROID || WINDOWS
-		App.TapFlyoutPageIcon();
-#else
-		App.WaitForElementTillPageNavigationSettled("Flyout");
-		App.Tap("Flyout");
-#endif
+		App.WaitForElementTillPageNavigationSettled("PopModal");
+		App.TapFlyoutPageIcon("Flyout");
 		App.WaitForElementTillPageNavigationSettled("btnPop");
 		App.Tap("btnPop");
 

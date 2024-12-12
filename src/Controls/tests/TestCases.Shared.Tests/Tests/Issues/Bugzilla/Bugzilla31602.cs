@@ -22,14 +22,20 @@ public class Bugzilla31602 : _IssuesUITest
 		App.Tap("Sidemenu Opener");
 		App.WaitForElement("SideMenu");
 		App.SetOrientationLandscape();
+		OpenFlyout();
+		App.SetOrientationPortrait();
+		OpenFlyout();
+
+	}
+
+	void OpenFlyout()
+	{
+		// Condition to ensure consistent behavior across platforms, for the flyout remains open on Android but closes on iOS during device orientation changes.
+#if IOS
 		App.WaitForElement("Sidemenu Opener");
 		App.Tap("Sidemenu Opener");
+#endif
 		App.WaitForElement("SideMenu");
-		App.SetOrientationPortrait();
-		App.WaitForNoElement("SideMenu");
-		App.Tap("Sidemenu Opener");
-		App.WaitForElement("SideMenu");
-
 	}
 
 	[TearDown]
