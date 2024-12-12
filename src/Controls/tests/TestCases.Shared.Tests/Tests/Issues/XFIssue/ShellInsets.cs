@@ -15,7 +15,7 @@ public class ShellInsets : _IssuesUITest
 
 	const string EntrySuccess = "EntrySuccess";
 	const string ResetKeyboard = "Hide Keyboard";
-	const string ResetKeyboard2 = "Hide Keyboard 2";
+	const string ResetKeyboard2 = "HideKeyboard2";
 	const string ResetButton = "Reset";
 
 	const string ToggleSafeArea = "ToggleSafeArea";
@@ -35,7 +35,8 @@ public class ShellInsets : _IssuesUITest
 	}
 
 	public override string Issue => "Shell Inset Test";
-#if !ANDROID // WaitForElement for ResetKeyboard2
+
+#if ANDROID || IOS // Keyboard test is only applicable for mobile platforms.
 	[Test, Order(1)]
 	public void EntryScrollTest()
 	{
@@ -75,8 +76,10 @@ public class ShellInsets : _IssuesUITest
 		App.WaitForElement("Item0");
 
 	}
-#if !ANDROID && !WINDOWS && !MACCATALYST && !IOS // SafeArea is only enabled for iOS, but it fails on iOS.
-	[Test, Order(2)]
+
+#if IOS // SafeArea is only enabled for iOS.
+	// SafeArea is not working as expected on iOS Issue: https://github.com/dotnet/maui/issues/19720
+	//[Test, Order(2)]
 	public void SafeAreaOnBlankPage()
 	{
 		App.WaitForElement(ResetButton);
@@ -87,11 +90,10 @@ public class ShellInsets : _IssuesUITest
 		Assert.That(noSafeAreaLocation.GetRect().Y, Is.EqualTo(0));
 
 	}
-	[Test, Order(3)]
-	public void SafeArea() // SafeArea only enabled for IOS still it fails on IOS
+
+	//[Test, Order(3)]
+	public void SafeArea()
 	{
-
-
 		App.WaitForElement(ResetButton);
 		App.Tap(ResetButton);
 		App.WaitForElement(SafeAreaTest);
@@ -112,7 +114,7 @@ public class ShellInsets : _IssuesUITest
 	[Test, Order(4)]
 	public void PaddingWithoutSafeArea()
 	{
-#if !ANDROID
+#if !MACCATALYST
 		App.WaitForElement(ResetButton);
 		App.Tap(ResetButton);
 #endif
@@ -120,6 +122,7 @@ public class ShellInsets : _IssuesUITest
 		App.EnterText(PaddingEntry, "0");
 		App.WaitForElement(PaddingTest);
 		App.Tap(PaddingTest);
+		App.WaitForElement(PaddingLabel);
 		var zeroPadding = App.FindElements(PaddingLabel).Count();
 		var zeroPaddingValue = App.WaitForElement(PaddingLabel).GetRect().Y;
 		Assert.That(zeroPadding, Is.EqualTo(1));
