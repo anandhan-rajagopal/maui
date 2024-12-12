@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST //ScrollDown is not working on MacCatalyst
+﻿#if TEST_FAILS_ON_CATALYST //ScrollDown is not working on Catalyst
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -25,14 +25,18 @@ public class Issue7167 : _IssuesUITest
 		App.WaitForElement(AddRangeCommandId);
 		App.Tap(AddRangeCommandId);
 		App.Tap(AddRangeCommandId);
-		App.ScrollDown(ListViewId, ScrollStrategy.Auto, 0.6, 200);
+		
+		// No equivalent method found in Appium. Also this method is not necessary to validate the test case.
+		// App.Print.Tree();
+		
+		App.ScrollDown(ListViewId, ScrollStrategy.Auto, 0.65, 200);
 		App.WaitForElement("25");
 	
 		// when adding additional items via a addrange and a CollectionChangedEventArgs.Action.Reset is sent
 		// then the listview shouldnt reset or it should not scroll to the top
 		App.Tap(AddRangeCommandId);
 
-		//That item "25" is still visible
+		// Verify that item "25" is still visible
 		App.WaitForElement("25");
 	}
 }
