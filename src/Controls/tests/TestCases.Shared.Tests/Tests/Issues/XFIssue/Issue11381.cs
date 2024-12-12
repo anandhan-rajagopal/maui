@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_IOS // On iOS the app get freez while using the images from website, Issue:
+﻿#if TEST_FAILS_ON_IOS // On iOS the app get freez and getting an exception 'System.IO.FileNotFoundException' in System.Private.CoreLib.dll while using the images from url in HostApp. But in simple sample it works fine.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
