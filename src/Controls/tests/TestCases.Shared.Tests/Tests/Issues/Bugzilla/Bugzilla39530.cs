@@ -28,6 +28,7 @@ public class Bugzilla39530 : _IssuesUITest
 	[Test]
 	public void Bugzilla39530PinchTest()
 	{
+//The PinchToZoomIn gesture doesn't work on the Frame for other platforms, so it should be applied to the children of the Frame instead.
 #if ANDROID
 		App.PinchToZoomIn("frame");
 #else
