@@ -42,7 +42,7 @@ public class Issue12429 : _IssuesUITest
 		var height = App.WaitForElement(SmallFlyoutItem).GetRect();
 		Assert.That(height.Height, Is.EqualTo(SmallFlyoutItemValue).Within(1));
 	}
-#if !ANDROID
+#if !ANDROID // The test failed on Android due to platform-specific variations in how the layout is resized or rendered, causing the height difference to not match the expected value (SizeToModifyBy).
     [Test, Order(2)]
     [Category(UITestCategories.Shell)]
     public void FlyoutItemHeightAndWidthIncreaseAndDecreaseCorrectly()
