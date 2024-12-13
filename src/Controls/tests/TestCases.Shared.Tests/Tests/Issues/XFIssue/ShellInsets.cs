@@ -37,7 +37,7 @@ public class ShellInsets : _IssuesUITest
 	public override string Issue => "Shell Inset Test";
 
 #if ANDROID || IOS // Keyboard test is only applicable for mobile platforms.
-	[Test, Order(1)]
+	[Test, Order(4)]
 	public void EntryScrollTest()
 	{
 		App.WaitForElement(EntryTest);
@@ -111,13 +111,10 @@ public class ShellInsets : _IssuesUITest
 	}
 #endif
 
-	[Test, Order(4)]
+	[Test, Order(1)]
 	public void PaddingWithoutSafeArea()
 	{
-#if !MACCATALYST
-		App.WaitForElement(ResetButton);
-		App.Tap(ResetButton);
-#endif
+ 
 		App.WaitForElement(PaddingEntry);
 		App.EnterText(PaddingEntry, "0");
 		App.WaitForElement(PaddingTest);
