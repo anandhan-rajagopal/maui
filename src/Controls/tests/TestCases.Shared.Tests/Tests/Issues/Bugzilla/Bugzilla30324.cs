@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // It throws Exception System.InvalidCastException: 'Unable to cast object of type 'Microsoft.Maui.Controls.Page' to type 'Microsoft.Maui.IContentView
+﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // It throws Exception System.InvalidCastException: 'Unable to cast object of type 'Microsoft.Maui.Controls.Page' to type 'Microsoft.Maui.IContentView, Issue: https://github.com/dotnet/maui/issues/21205 
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
