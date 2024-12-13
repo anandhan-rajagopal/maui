@@ -1,4 +1,4 @@
-﻿# if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // This test uses a platform-specific API relevant only to Android. 
+﻿# if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // This test uses a vector image resources which applicable only for Android.
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
