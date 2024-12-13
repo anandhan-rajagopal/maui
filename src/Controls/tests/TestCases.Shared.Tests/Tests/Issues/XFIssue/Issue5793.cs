@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿# if TEST_FAILS_ON_WINDOWS //UI not render on my windows
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -13,19 +14,20 @@ public class Issue5793 : _IssuesUITest
 	public override string Issue => "[CollectionView/ListView] Not listening for Reset command";
 
 	// TODO: There is some old ControlGallery specific thing going on in the HostApp UI for this test. See how we should change that.
-	//[Test]
-	//[Category(UITestCategories.CollectionView)]
-	//public void Reset()
-	//{
-	//	App.WaitForElement("Reset");
+	[Test]
+	[Category(UITestCategories.CollectionView)]
+	public void ResetTest()
+	{
+		App.WaitForElement("Reset");
 
-	//	// Verify the item is there
-	//	App.WaitForElement("cover1.jpg, 0");
+		// Verify the item is there
+		App.WaitForElement("cover1.jpg, 0");
 
-	//	// Clear the collection
-	//	App.Tap("Reset");
+		// Clear the collection
+		App.Tap("Reset");
 
-	//	// Verify the item is gone
-	//	App.WaitForNoElement("cover1.jpg, 0");
-	//}
+		// Verify the item is gone
+		App.WaitForNoElement("cover1.jpg, 0");
+	}
 }
+#endif
