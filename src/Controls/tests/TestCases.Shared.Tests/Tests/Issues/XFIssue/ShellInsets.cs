@@ -40,6 +40,8 @@ public class ShellInsets : _IssuesUITest
 	[Test, Order(4)]
 	public void EntryScrollTest()
 	{
+		App.WaitForElement(ResetButton);
+		App.Tap(ResetButton);
 		App.WaitForElement(EntryTest);
 		App.Tap(EntryTest);
 		var originalPosition = App.WaitForElement(EntrySuccess).GetRect();
