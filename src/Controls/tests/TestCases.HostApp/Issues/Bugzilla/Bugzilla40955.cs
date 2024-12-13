@@ -19,6 +19,7 @@ public class Bugzilla40955 : TestFlyoutPage
 
 	protected override void Init()
 	{
+		FlyoutLayoutBehavior = FlyoutLayoutBehavior.Popover;
 		var masterPage = new MasterPage();
 		Flyout = masterPage;
 		masterPage.ListView.ItemSelected += (sender, e) =>
@@ -114,7 +115,8 @@ public class Bugzilla40955 : TestFlyoutPage
 
 			var lbl = new Label
 			{
-				Text = LabelPage1
+				Text = LabelPage1,
+				AutomationId = "LabelOne"
 			};
 
 			lbl.GestureRecognizers.Add(new TapGestureRecognizer
@@ -142,7 +144,8 @@ public class Bugzilla40955 : TestFlyoutPage
 			Title = Page2Title;
 			var lbl = new Label
 			{
-				Text = LabelPage2
+				Text = LabelPage2,
+				AutomationId = "LabelTwo"
 			};
 
 			lbl.GestureRecognizers.Add(new TapGestureRecognizer
@@ -162,7 +165,8 @@ public class Bugzilla40955 : TestFlyoutPage
 
 			var lbl = new Label
 			{
-				Text = LabelPage3
+				Text = LabelPage3,
+				AutomationId = "LabelThree"
 			};
 
 			lbl.GestureRecognizers.Add(new TapGestureRecognizer
