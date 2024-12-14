@@ -14,7 +14,7 @@ public class Issue5793 : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.CollectionView)]
-	public void ResetTest()
+	public void CollectionViewResetTest()
 	{
 		App.WaitForElement("Reset");
 

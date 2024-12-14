@@ -12,7 +12,6 @@ public class NestedCollectionView : _IssuesUITest
 
 	public override string Issue => "[iOS] Crash when creating a CollectionView inside a CollectionView";
 
-	// TODO: HostApp UI pushes some ControlGallery specific page? Commented out now, fix that first!
 	[Test]
 	[Category(UITestCategories.CollectionView)]
 	public void NestedCollectionViewsShouldNotCrash()
