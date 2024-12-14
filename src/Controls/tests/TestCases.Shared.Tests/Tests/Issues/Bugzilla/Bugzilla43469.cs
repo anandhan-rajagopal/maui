@@ -1,5 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST //The test fails on macOS because the alert box can only be opened a maximum of 5 times, while the test attempts to open it 6 times.
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
  
@@ -7,11 +6,11 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
  
 public class Bugzilla43469 : _IssuesUITest
 {
-	#if MACCATALYST
-		const string CancelBtn = "action-button--999";
-	#else
-		const string CancelBtn = "Cancel";
-	#endif
+#if MACCATALYST
+	const string CancelBtn = "action-button--999";
+#else
+	const string CancelBtn = "Cancel";
+#endif
     public Bugzilla43469(TestDevice testDevice) : base(testDevice)
     {
     }
@@ -24,21 +23,23 @@ public class Bugzilla43469 : _IssuesUITest
     {
         App.WaitForElement("kButton");
         App.Tap("kButton");
-        App.WaitForElement("First");
-        TapCancel(CancelBtn);
-        App.WaitForElement("Second");
-        TapCancel(CancelBtn);
-        App.WaitForElement("Three");
-		for(int i=0; i<4; i++)
+        App.WaitForElementTillPageNavigationSettled("First");
+        App.Tap(CancelBtn);
+        App.WaitForElementTillPageNavigationSettled("Second");
+        App.Tap(CancelBtn);
+        App.WaitForElementTillPageNavigationSettled("Three");
+        App.Tap(CancelBtn);
+#if !MACCATALYST // Test fails on Catalyst platforms because the alert box cannot be opened propely 6 times when invoke this on using BeginInvokeOnMainThread Issue: https://github.com/dotnet/maui/issues/26481
+		for(int i=0; i<3; i++)
 		{
 			TapCancel(CancelBtn);
 		}
+#endif
         App.WaitForElement("kButton");
     }
     void TapCancel(string CancelBtn)
     {
-    	App.WaitForElement(CancelBtn, timeout: TimeSpan.FromSeconds(2));
+    	App.WaitForElementTillPageNavigationSettled(CancelBtn);
     	App.Tap(CancelBtn);
     }
 }
-#endif

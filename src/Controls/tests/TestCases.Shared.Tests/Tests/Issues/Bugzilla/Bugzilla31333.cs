@@ -1,6 +1,4 @@
-﻿#if TEST_FAILS_ON_IOS   //In IOS platform,Issue31333FocusEditorInTableViewCell test case was failed. 
-using System.Diagnostics;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -20,7 +18,7 @@ public class Bugzilla31333 : _IssuesUITest
 		{
 			App.Tap("Focus Entry in ListView");
 			App.EnterText("EntryListView", "Entry in ListView Success");
-			WaitForTextQuery("EntryListView", "Entry in ListView Success");
+			Assert.That(App.WaitForElement("EntryListView")?.GetText(), Is.EqualTo("Entry in ListView Success"));
 			App.Tap("Focus Entry in ListView");
 		}
 
@@ -29,7 +27,7 @@ public class Bugzilla31333 : _IssuesUITest
 		{
 			App.Tap("Focus Editor in ListView");
 			App.EnterText("EditorListView", "Editor in ListView Success");
-			WaitForTextQuery("EditorListView", "Editor in ListView Success");
+			Assert.That(App.WaitForElement("EditorListView")?.GetText(), Is.EqualTo("Editor in ListView Success"));
 			App.Tap("Focus Editor in ListView");
 		}
 
@@ -38,41 +36,17 @@ public class Bugzilla31333 : _IssuesUITest
 		{
 			App.Tap("Focus Entry in Table");
 			App.EnterText("EntryTable", "Entry in TableView Success");
-			WaitForTextQuery("EntryTable", "Entry in TableView Success");
+			Assert.That(App.WaitForElement("EntryTable")?.GetText(), Is.EqualTo("Entry in TableView Success"));
 			App.Tap("Focus Entry in Table");
 		}
-
+#if !IOS //Once Editor text is entered the cursor move to second line when using App.EnterText method in appium which results retrived text is not as expected one. 
 		[Test]
 		public void Issue31333FocusEditorInTableViewCell()
 		{
 			App.Tap("Focus Editor in Table");
 			App.EnterText("EditorTable", "Editor in TableView Success");
-			WaitForTextQuery("EditorTable", "Editor in TableView Success");
+			Assert.That(App.WaitForElement("EditorTable")?.GetText(), Is.EqualTo("Editor in TableView Success"));
 			App.Tap("Focus Editor in Table");
 		}
-
-		void WaitForTextQuery(string automationId, string expectedText)
-		{
-			var watch = new Stopwatch();
-			watch.Start();
-			bool textFound = false;
-
-			while (watch.ElapsedMilliseconds < 5000 && !textFound)
-			{
-					var element = App.FindElement(automationId).GetText();
-					if (element != null)
-					{
-						var text = element;
-						if (text == expectedText)
-						{
-							textFound = true;
-							break;
-						}
-					}		
-			}
-
-			watch.Stop();
-			Assert.That(textFound, Is.True, $"Failed to find text '{expectedText}'");
-		}
-	}
 #endif
+	}
