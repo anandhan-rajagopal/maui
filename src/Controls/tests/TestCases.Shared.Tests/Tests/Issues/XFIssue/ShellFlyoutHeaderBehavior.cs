@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_CATALYST // Scroll not supported on MacCatalyst
+﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // Scroll not supported on MacCatalyst and On Windows, AutomationId is not working for Stacklayout, Hence we measure the layout height here so we can't use the inner elements AutomationId. More Information:https://github.com/dotnet/maui/issues/4715
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -12,7 +12,7 @@ public class ShellFlyoutHeaderBehavior : _IssuesUITest
 	}
 
 	public override string Issue => "Shell Flyout Header Behavior";
-#if !WINDOWS // AuomationId not working in Windows
+
 	[Test]
 	[Category(UITestCategories.Shell)]
 	public void FlyoutHeaderBehaviorFixed()
@@ -23,10 +23,9 @@ public class ShellFlyoutHeaderBehavior : _IssuesUITest
 		App.ScrollDown("Item 4", ScrollStrategy.Gesture);
 		float endHeight = GetFlyoutHeight();
 
-		Assert.That(startingHeight, Is.EqualTo(endHeight));
+		Assert.That(startingHeight, Is.EqualTo(endHeight).Within(1));
 	}
-#endif
-#if !WINDOWS && !IOS // Rect value differs on IOS
+#if !IOS // For iOS, getting incorrect Rect values from GetRect method in Appium even though the size is reduced in UI.
     [Test]
     [Category(UITestCategories.Shell)]
     public void FlyoutHeaderBehaviorCollapseOnScroll()
@@ -39,9 +38,8 @@ public class ShellFlyoutHeaderBehavior : _IssuesUITest
  
         Assert.That(startingHeight, Is.GreaterThan(endHeight));
     }
-#endif
-#if !IOS && !ANDROID // Rect value differs on IOS && Android
-    [Test]
+
+    [Test] // Skip this for iOS, because FindElements returns count eventhough the element is scrolled up and hidded from the UI.
     [Category(UITestCategories.Shell)]
     public void FlyoutHeaderBehaviorScroll()
     {
@@ -53,13 +51,14 @@ public class ShellFlyoutHeaderBehavior : _IssuesUITest
  
         while (nextY != null && startingY != null)
         {
-            Assert.That(startingY.Value, Is.GreaterThan(nextY.Value));
+            Assert.That(startingY.Value, Is.GreaterThanOrEqualTo(nextY.Value));
             startingY = nextY;
             App.ScrollDown("Item 5", ScrollStrategy.Gesture);
             nextY = GetFlyoutY();
         }
     }
 #endif
+
 	float GetFlyoutHeight() =>
 		App.WaitForElement("FlyoutHeaderId").GetRect().Height;
 

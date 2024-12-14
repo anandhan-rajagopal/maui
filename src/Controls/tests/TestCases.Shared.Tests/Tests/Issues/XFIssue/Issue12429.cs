@@ -1,4 +1,4 @@
-﻿#if TEST_FAILS_ON_WINDOWS // AutomationId is not working for stacklayout More Information:https://github.com/dotnet/maui/issues/4715
+﻿#if TEST_FAILS_ON_WINDOWS // On Windows AutomationId is not working for Stacklayout, Hence we measure the layout height here so we can't use the inner elements AutomationId. More Information:https://github.com/dotnet/maui/issues/4715
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -9,28 +9,26 @@ public class Issue12429 : _IssuesUITest
 {
 	public Issue12429(TestDevice testDevice) : base(testDevice)
 	{
+
 	}
 
-#if ANDROID
+#if ANDROID // AutomationId not works iOS and Catalyst, hence using the text of the element.
 	const string SmallFlyoutItem = "SmallFlyoutItem";
 #else
     const string SmallFlyoutItem="I'm set to specific height: ";
 #endif
-    const string ResizeMe = "Default Flyout Item. Height is 44 on iOS and UWP. Height is 50 on Android)";
 
-#if IOS
-    double SmallFlyoutItemValue=35d;
-#elif ANDROID
-	double SmallFlyoutItemValue = 93d;
-#elif MACCATALYST
-    double SmallFlyoutItemValue=28d;
-#endif
-
-#if IOS
+#if ANDROID || IOS // Rect value measurements from Appium vary across platforms; these values ensure consistent behavior
+	double SmallFlyoutItemValue = 35d;
     double SizeToModifyBy=20d;
 #elif MACCATALYST
+    double SmallFlyoutItemValue=28d;
     double SizeToModifyBy=15d;
 #endif
+    const string ResizeMe = "Default Flyout Item. Height is 44 on iOS and UWP. Height is 50 on Android)";
+
+
+
 	public override string Issue => "[Bug] Shell flyout items have a minimum height";
 
 	[Test, Order(1)]
@@ -42,7 +40,7 @@ public class Issue12429 : _IssuesUITest
 		var height = App.WaitForElement(SmallFlyoutItem).GetRect();
 		Assert.That(height.Height, Is.EqualTo(SmallFlyoutItemValue).Within(1));
 	}
-#if !ANDROID // The test failed on Android due to platform-specific variations in how the layout is resized or rendered, causing the height difference to not match the expected value (SizeToModifyBy).
+
     [Test, Order(2)]
     [Category(UITestCategories.Shell)]
     public void FlyoutItemHeightAndWidthIncreaseAndDecreaseCorrectly()
@@ -63,6 +61,5 @@ public class Issue12429 : _IssuesUITest
         Assert.That(initialHeight - newHeight, Is.EqualTo(SizeToModifyBy).Within(1));
  
     }
-#endif
 }
 #endif

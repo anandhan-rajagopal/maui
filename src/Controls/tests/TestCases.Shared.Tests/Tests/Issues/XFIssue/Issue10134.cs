@@ -1,9 +1,10 @@
-﻿#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // DragCoordinates is not supported on MacCatalyst; in Windows Tab12 is visible, while on Android tapping elements causes the top tabs to scroll back to the beginning.
+﻿#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID 
+// DragCoordinates is not supported on MacCatalyst
+// On Windows this test case is not valid due to the tob tabs are visbile in drop-down.
+// On Android FindElements are not working as expected in Appium. It always returns 0 elements.
 using NUnit.Framework;
-using NUnit.Framework.Legacy;
 using UITest.Appium;
 using UITest.Core;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Microsoft.Maui.TestCases.Tests.Issues;
 
@@ -17,7 +18,6 @@ public class Github10134 : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.Shell)]
-
 	public void TopTabsDontScrollBackToStartWhenSelected()
 	{
 		App.WaitForElement("Tab 1");
