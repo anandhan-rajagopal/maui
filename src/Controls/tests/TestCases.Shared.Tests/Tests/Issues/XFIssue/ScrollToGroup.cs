@@ -13,17 +13,13 @@ public class ScrollToGroup : _IssuesUITest
 
 	public override string Issue => "CollectionView Scroll To Grouped Item";
 
-	// TODO: HostApp UI pushes some ControlGallery specific page? Commented out now, fix that first!
-	[Test]
+	[Test, Order(2)]
 	public void CanScrollToGroupAndItemIndex()
 	{
 		App.WaitForElement("GroupIndexEntry");
-		App.Tap("GroupIndexEntry");
 		App.ClearText("GroupIndexEntry");
 		App.EnterText("GroupIndexEntry","5");
-		
-		App.WaitForElement("ItemIndexEntry");
-		App.Tap("ItemIndexEntry");
+
 		App.ClearText("ItemIndexEntry");
 		App.EnterText("ItemIndexEntry","1");
 
@@ -33,34 +29,29 @@ public class ScrollToGroup : _IssuesUITest
 		App.WaitForElement("Squirrel Girl");
 	}
 
-	[Test]
+	[Test, Order(1)]
 	public void InvalidScrollToIndexShouldNotCrash()
 	{
-		App.WaitForElement("GroupIndexEntry");
-		App.Tap("GroupIndexEntry");
+		App.WaitForElement("GroupIndexEntry");	
 		App.ClearText("GroupIndexEntry");
 		App.EnterText("GroupIndexEntry","55");
 
-		App.Tap("ItemIndexEntry");
 		App.ClearText("ItemIndexEntry");
 		App.EnterText("ItemIndexEntry","1");
-
+		
 		App.Tap("GoButton");
 
 		// Should scroll enough to display this item
 		App.WaitForElement("Avengers");
 	}
 
-	[Test]
-
+	[Test, Order(3)]
 	public void CanScrollToGroupAndItem()
 	{
 		App.WaitForElement("GroupNameEntry");
-		App.Tap("GroupNameEntry");
 		App.ClearText("GroupNameEntry");
 		App.EnterText("GroupNameEntry","Heroes for Hire");
 
-		App.Tap("ItemNameEntry");
 		App.ClearText("ItemNameEntry");
 		App.EnterText("ItemNameEntry","Misty Knight");
 

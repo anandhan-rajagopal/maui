@@ -11,7 +11,7 @@ public class RadioButtonTemplateFromStyle : _IssuesUITest
 	}
 
 	public override string Issue => "RadioButton: Template From Style";
-	// TODO: HostApp UI pushes some ControlGallery specific page? Commented out now, fix that first!
+
 	[Test]
 	[Category(UITestCategories.RadioButton)]
 	public void ContentRenderers()

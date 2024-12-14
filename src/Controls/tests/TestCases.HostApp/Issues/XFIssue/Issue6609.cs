@@ -6,7 +6,6 @@ public class Issue6609 : TestNavigationPage
 {
 	protected override void Init()
 	{
-
 		PushAsync(new CollectionViewGalleries.SelectionGalleries.SelectionChangedCommandParameter());
 	}
 }

@@ -1,24 +1,22 @@
-#if TEST_FAILS_ON_CATALYST //When tapping Back Button
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
- 
+
 namespace Microsoft.Maui.TestCases.Tests.Issues;
- 
+
 [Category(UITestCategories.TabbedPage)]
 public class Bugzilla30317 : _IssuesUITest
 {
-	public Bugzilla30317(TestDevice testDevice) : base(testDevice)
-	{
-	}
- 
-	const string PageTwoButton = "GoToPageTwoButton";
-	const string PageThreeButton = "GoToPageThreeButton";
-	const string PageOneItem1 = "PageOneItem1";
-	const string PageOneItem5 = "PageOneItem5";
-	const string PageTwoItem1 = "PageTwoItem1";
-	const string PageTwoItem5 = "PageTwoItem5";
-#if ANDROID
+
+#if WINDOWS //On Windows title AutomationId is not working, so using text to find the element. 
+	const string PageOne = "Set ItemSource On Appearing";
+	const string PageTwo = "Set ItemSource in ctor"; 
+#else
+    const string PageOne = "PageOne";
+	const string PageTwo = "PageTwo"; 
+#endif
+
+#if ANDROID 
     const string TabOne = "TABONECTOR";
     const string TabTwo = "TABTWOONAPPEARING";
 #elif WINDOWS
@@ -28,65 +26,55 @@ public class Bugzilla30317 : _IssuesUITest
 	const string TabOne = "TabbedPageOne";
 	const string TabTwo = "TabbedPageTwo";
 #endif
+	const string PageTwoButton = "GoToPageTwoButton";
+	const string PageThreeButton = "GoToPageThreeButton";
+	const string PageOneItem1 = "PageOneItem1";
+	const string PageOneItem5 = "PageOneItem5";
+	const string PageTwoItem1 = "PageTwoItem1";
+	const string PageTwoItem5 = "PageTwoItem5";
+
 	const string TabOneItem1 = "PageThreeTabOneItem1";
 	const string TabOneItem5 = "PageThreeTabOneItem5";
 	const string TabTwoItem1 = "PageThreeTabTwoItem1";
 	const string TabTwoItem5 = "PageThreeTabTwoItem5";
- 
+
+	public Bugzilla30317(TestDevice testDevice) : base(testDevice)
+	{
+	}
+
 	public override string Issue => "https://bugzilla.xamarin.com/show_bug.cgi?id=30137";
  
-	[Test]
+	[Test, Order(1)]
 	public void Bugzilla30317ItemSourceOnAppearingContentPage()
 	{
-#if WINDOWS
-        App.WaitForElement("Set ItemSource On Appearing");  
-#else
-		App.WaitForElement("PageOne");
-#endif
+		App.WaitForElement(PageOne);
+
 		App.WaitForElement(PageOneItem1);
-		HoldMethod(PageOneItem1);
+		TouchAndHold(PageOneItem1);
  
 		App.WaitForElement(PageOneItem5);
-		HoldMethod(PageOneItem5);
+		TouchAndHold(PageOneItem5);
 	}
  
-	[Test]
+	[Test, Order(2)]
 	public void Bugzilla30317ItemSourceCtorContentPage()
 	{
 		App.WaitForElement(PageTwoButton);
 		App.Tap(PageTwoButton);
- 
-#if WINDOWS
-        App.WaitForElement("Set ItemSource in ctor");   
-#else
-		App.WaitForElement("PageTwo");
-#endif
- 
+		App.WaitForElement(PageTwo);
+
 		App.WaitForElement(PageTwoItem1);
-		HoldMethod(PageTwoItem1);
+		TouchAndHold(PageTwoItem1);
  
 		App.WaitForElement(PageTwoItem5);
-		HoldMethod(PageTwoItem5);
-#if MACCATALYST || WINDOWS
-		App.TapBackArrow();
-#else
-        App.Back();
-#endif
- 
+		TouchAndHold(PageTwoItem5);
 	}
  
-	[Test]
+	[Test, Order(3)]
 	public void Bugzilla30317ItemSourceTabbedPage()
 	{
-		App.WaitForElement(PageTwoButton);
-		App.Tap(PageTwoButton);
  
-#if WINDOWS
-        App.WaitForElement("Set ItemSource in ctor");   
-#else
-		App.WaitForElement("PageTwo");
-#endif
- 
+		App.WaitForElement(PageTwo);
 		App.WaitForElement(PageThreeButton);
 		App.Tap(PageThreeButton);
  
@@ -94,32 +82,31 @@ public class Bugzilla30317 : _IssuesUITest
 		App.Tap(TabTwo);
  
 		App.WaitForElement(TabTwoItem1);
-		HoldMethod(TabTwoItem1);
+		TouchAndHold(TabTwoItem1);
 		App.WaitForElement(TabTwoItem1);
  
 		App.WaitForElement(TabTwoItem5);
-		HoldMethod(TabTwoItem5);
+		TouchAndHold(TabTwoItem5);
 		App.WaitForElement(TabTwoItem5);
  
 		App.WaitForElement(TabOne);
 		App.Tap(TabOne);
  
 		App.WaitForElement(TabOneItem1);
-		HoldMethod(TabOneItem1);
+		TouchAndHold(TabOneItem1);
 		App.WaitForElement(TabOneItem1);
  
 		App.WaitForElement(TabOneItem5);
-		HoldMethod(TabOneItem5);
+		TouchAndHold(TabOneItem5);
 		App.WaitForElement(TabOneItem5);
 	}
  
-	void HoldMethod(string item)
+	void TouchAndHold(string item)
 	{
-#if MACCATALYST
+#if MACCATALYST //In Catalyst TouchAndHold is not supported. So using LongPress
 		App.LongPress(item);
 #else
-    App.TouchAndHold(item);
+    	App.TouchAndHold(item);
 #endif
 	}
 }
-#endif
