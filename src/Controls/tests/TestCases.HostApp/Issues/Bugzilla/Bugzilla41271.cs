@@ -35,12 +35,12 @@ public class Bugzilla41271 : TestTabbedPage
 			{
 				Orientation = StackOrientation.Horizontal,
 				Children =
-				{
-					firstNameLabel,
-					lastNameLabel,
-					cityLabel,
-					stateLabel
-				}
+					{
+						firstNameLabel,
+						lastNameLabel,
+						cityLabel,
+						stateLabel
+					}
 			};
 		}
 
@@ -54,11 +54,10 @@ public class Bugzilla41271 : TestTabbedPage
 				lastNameLabel.Text = item.LastName;
 				cityLabel.Text = item.City;
 				stateLabel.Text = item.State;
-				AutomationId = item.State;
+				// AutomationId = item.State;
 			}
 		}
 	}
-
 	class ListViewPage : ContentPage
 	{
 		ListView _ListView;
@@ -67,7 +66,6 @@ public class Bugzilla41271 : TestTabbedPage
 		public ListViewPage(string id)
 		{
 			Title = $"List {id}";
-			AutomationId = $"List {id}";
 
 			for (var x = 0; x < 1000; x++)
 			{
