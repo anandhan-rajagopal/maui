@@ -1,3 +1,5 @@
+
+
 namespace Maui.Controls.Sample.Issues;
 
 [Issue(IssueTracker.Github, 4597, "[Android] ImageCell not loading images and setting ImageSource to null has no effect",
@@ -12,15 +14,18 @@ public class Issue4597 : TestContentPage
 	string _disappearText = "You should see an Image. Clicking this should cause the image to disappear";
 	string _appearText = "Clicking this should cause the image to reappear";
 	string _theListView = "theListViewAutomationId";
-	string _fileName = "xamarinlogo.png";
-	string _fileNameAutomationId = "CoffeeAutomationId";
-	string _uriImage = "https://github.com/xamarin/Xamarin.Forms/blob/3216ce4ccd096f8b9f909bbeea572dcf2a8c4466/Microsoft.Maui.Controls.ControlGallery.iOS/Resources/xamarinlogo.png?raw=true";
+	string _fileName = "coffee.png";
+	string _uriImage = "https://raw.githubusercontent.com/dotnet/maui/main/src/Compatibility/ControlGallery/src/Android/Resources/drawable/coffee.png";
 	bool _isUri = false;
 	string _nextTestId = "NextTest";
 	string _activeTestId = "activeTestId";
 	string _switchUriId = "SwitchUri";
 	string _imageFromUri = "Image From Uri";
 	string _imageFromFile = "Image From File";
+	string _ButtonAutomationId = "Button";
+	string _fileNameAutomationId = "Image";   
+	string _imageButtonAutomationId = "ImageButton"; 
+	string _listViewAutomationId = "ListView";   
 
 	protected override void Init()
 	{
@@ -30,15 +35,15 @@ public class Issue4597 : TestContentPage
 		};
 
 		_image = new Image() { Source = _fileName, AutomationId = _fileNameAutomationId };
-		_button = new Button() { ImageSource = _fileName, AutomationId = _fileNameAutomationId };
-		_imageButton = new ImageButton() { Source = _fileName, AutomationId = _fileNameAutomationId };
+		_button = new Button() { ImageSource = _fileName, AutomationId = _ButtonAutomationId };
+		_imageButton = new ImageButton() { Source = _fileName, AutomationId = _imageButtonAutomationId };
 		_listView = new ListView()
 		{
 			ItemTemplate = new DataTemplate(() =>
 			{
 				var cell = new ImageCell();
 				cell.SetBinding(ImageCell.ImageSourceProperty, ".");
-				cell.AutomationId = _fileNameAutomationId;
+				cell.AutomationId = _listViewAutomationId;
 				return cell;
 			}),
 			AutomationId = _theListView,
@@ -62,11 +67,7 @@ public class Issue4597 : TestContentPage
 					_button.ImageSource = null;
 					_imageButton.Source = null;
 					_listView.ItemsSource = new string[] { null };
-#pragma warning disable CS0618 // Type or member is obsolete
-#pragma warning disable CS0612 // Type or member is obsolete
-					Device.BeginInvokeOnMainThread(() => button.Text = _appearText);
-#pragma warning restore CS0612 // Type or member is obsolete
-#pragma warning restore CS0618 // Type or member is obsolete
+					MainThread.BeginInvokeOnMainThread(() => button.Text = _appearText);
 				}
 				else
 				{
@@ -74,11 +75,7 @@ public class Issue4597 : TestContentPage
 					_button.ImageSource = _isUri ? _uriImage : _fileName;
 					_imageButton.Source = _isUri ? _uriImage : _fileName;
 					_listView.ItemsSource = new string[] { _isUri ? _uriImage : _fileName };
-#pragma warning disable CS0618 // Type or member is obsolete
-#pragma warning disable CS0612 // Type or member is obsolete
-					Device.BeginInvokeOnMainThread(() => button.Text = _disappearText);
-#pragma warning restore CS0612 // Type or member is obsolete
-#pragma warning restore CS0618 // Type or member is obsolete
+					MainThread.BeginInvokeOnMainThread(() => button.Text = _disappearText);
 				}
 			})
 		};
@@ -94,8 +91,6 @@ public class Issue4597 : TestContentPage
 		switchToUri.Toggled += (_, e) =>
 		{
 			_isUri = e.Value;
-
-			// reset the images to visible
 			button.Text = _appearText;
 			button.SendClicked();
 
@@ -133,8 +128,6 @@ public class Issue4597 : TestContentPage
 				layout.Remove(activeImage);
 				layout.Add(imageControls[nextIndex]);
 				labelActiveTest.Text = imageControls[nextIndex].GetType().Name;
-
-				// reset the images to visible
 				button.Text = _appearText;
 				button.SendClicked();
 			}),
@@ -157,3 +150,5 @@ public class Issue4597 : TestContentPage
 	}
 
 }
+
+

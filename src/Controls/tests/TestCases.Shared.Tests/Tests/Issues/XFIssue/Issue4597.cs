@@ -7,157 +7,157 @@ namespace Microsoft.Maui.TestCases.Tests.Issues;
 [Category(UITestCategories.Cells)]
 public class Issue4597 : _IssuesUITest
 {
+
+
 	public Issue4597(TestDevice testDevice) : base(testDevice)
 	{
 	}
 
+
+	string _appearText = "Clicking this should cause the image to reappear";
+	string _theListView = "theListViewAutomationId";
+	string _nextTestId = "NextTest";
+	string _switchUriId = "SwitchUri";
+	string _imageFromUri = "Image From Uri";
+	string _imageFromFile = "Image From File";
+	string _ButtonAutomationId = "Button";
+	string _fileNameAutomationId = "Image";
+	string _imageButtonAutomationId = "ImageButton";
+
 	public override string Issue => "[Android] ImageCell not loading images and setting ImageSource to null has no effect";
 
-	//[Test]
-	//[FailsOnIOS]
-	//public void ImageFromFileSourceAppearsAndDisappearsCorrectly()
-	//{
-	//	RunTest(nameof(Image), true);
-	//}
+	[Test, Order(1)]
+	public void ImageFromFileSourceAppearsAndDisappearsCorrectly()
+	{
+		App.WaitForElement(_nextTestId);
+		VerifySourceLabel(_imageFromFile);
+		var imageElements = App.FindElements(_fileNameAutomationId);
+		Assert.That(imageElements.Count, Is.GreaterThan(0));
+		App.Tap("ClickMe");
+		App.WaitForElement(_appearText);
+		imageElements = App.FindElements(_fileNameAutomationId);
+		Assert.That(imageElements.Count, Is.EqualTo(0));// windows and mac=1
+	}
 
-	//[Test]
-	//[FailsOnIOS]
-	//[FailsOnAndroid]
-	//public void ImageFromUriSourceAppearsAndDisappearsCorrectly()
-	//{
-	//	RunTest(nameof(Image), false);
-	//}
+	[Test, Order(2)]
+	public void ImageFromUriSourceAppearsAndDisappearsCorrectly()
+	{
+		ToggleUriSource();
+		App.WaitForElementTillPageNavigationSettled(_fileNameAutomationId);
+		var imageElements = App.FindElements(_fileNameAutomationId);
+		Assert.That(imageElements.Count, Is.GreaterThan(0));
+		VerifySourceLabel(_imageFromUri);
+		App.Tap("ClickMe");
+		App.WaitForElement(_appearText);
+		imageElements = App.FindElements(_fileNameAutomationId);
+		Assert.That(imageElements.Count, Is.EqualTo(0)); //windows and mac count=1
+	}
 
-
-	//[Test]
-	//[FailsOnIOS]
-	//public void ButtonFromFileSourceAppearsAndDisappearsCorrectly()
-	//{
-	//	RunTest(nameof(Button), true);
-	//}
-
-	//[Test]
-	//[FailsOnIOS]
-	//[FailsOnAndroid]
-	//public void ButtonFromUriSourceAppearsAndDisappearsCorrectly()
-	//{
-	//	RunTest(nameof(Button), false);
-	//}
-
-
-	//[Test]
-	//[FailsOnIOS]
-	//public void ImageButtonFromFileSourceAppearsAndDisappearsCorrectly()
-	//{
-	//	RunTest(nameof(ImageButton), true);
-	//}
-
-	//[Test]
-	//[FailsOnIOS]
-	//[FailsOnAndroid]
-	//public void ImageButtonFromUriSourceAppearsAndDisappearsCorrectly()
-	//{
-	//	RunTest(nameof(ImageButton), false);
-	//}
-
-	//[Test]
-	//[FailsOnIOS]
-	//public void ImageCellFromFileSourceAppearsAndDisappearsCorrectly()
-	//{
-	//	ImageCellTest(true);
-	//}
-
-	//[Test]
-	//[FailsOnIOS]
-	//[FailsOnAndroid]
-	//public void ImageCellFromUriSourceAppearsAndDisappearsCorrectly()
-	//{
-	//	ImageCellTest(false);
-	//}
-
-	//void ImageCellTest(bool fileSource)
-	//{
-	//	string className = "ImageView";
-	//	SetupTest(nameof(ListView), fileSource);
-
-	//	var imageVisible =
-	//		App.QueryUntilPresent(GetImage, 10, 2000);
-
-	//	Assert.AreEqual(1, imageVisible.Length);
-	//	SetImageSourceToNull();
-
-	//	imageVisible = GetImage();
-	//	Assert.AreEqual(0, imageVisible.Length);
-
-	//	Xamarin.UITest.Queries.AppResult[] GetImage()
-	//	{
-	//		return RunningApp
-	//			.Query(app => app.Marked(_theListView).Descendant())
-	//			.Where(x => x.Class != null && x.Class.Contains(className)).ToArray();
-	//	}
-	//}
+	[Test, Order(3)]
+	public void ButtonFromFileSourceAppearsAndDisappearsCorrectly()
+	{
+		ToggleUriSource();
+		WaitForNextTest();
+		VerifySourceLabel(_imageFromFile);
+		var imageElements = App.FindElements(_ButtonAutomationId);
+		Assert.That(imageElements.Count, Is.GreaterThan(0));
+		App.Tap("ClickMe");
+		App.WaitForElement(_appearText);
+		imageElements = App.FindElements(_ButtonAutomationId);
+		Assert.That(imageElements.Count, Is.EqualTo(1));//mac=2
+	}
 
 
-	//void RunTest(string testName, bool fileSource)
-	//{
-	//	SetupTest(testName, fileSource);
-	//	var foundImage = TestForImageVisible();
-	//	SetImageSourceToNull();
-	//	TestForImageNotVisible(foundImage);
-	//}
+	[Test, Order(4)]
+	public void ButtonFromUriSourceAppearsAndDisappearsCorrectly()
+	{
+
+		ToggleUriSource();
+		App.WaitForElementTillPageNavigationSettled(_ButtonAutomationId);
+		var imageElements = App.FindElements(_ButtonAutomationId);
+		Assert.That(imageElements.Count, Is.GreaterThan(0));
+		VerifySourceLabel(_imageFromUri);
+		App.Tap("ClickMe");
+		App.WaitForElement(_appearText);
+		imageElements = App.FindElements(_ButtonAutomationId);
+		Assert.That(imageElements.Count, Is.EqualTo(1));//mac=2
+	}
 
 
-	//void SetImageSourceToNull()
-	//{
-	//	App.Tap("ClickMe");
-	//	App.WaitForElement(_appearText);
-	//}
+	[Test, Order(5)]
+	public void ImageButtonFromFileSourceAppearsAndDisappearsCorrectly()
+	{
+		ToggleUriSource();
+		WaitForNextTest();
+		VerifySourceLabel(_imageFromFile);
+		var imageElements = App.FindElements(_imageButtonAutomationId);
+		Assert.That(imageElements.Count, Is.GreaterThan(0));
+		App.Tap("ClickMe");
+		App.WaitForElement(_appearText);
+		imageElements = App.FindElements(_imageButtonAutomationId);
+		Assert.That(imageElements.Count, Is.EqualTo(0));//windows =1, ios=1, mac=2
+	}
 
-	//Xamarin.UITest.Queries.AppResult TestForImageVisible()
-	//{
-	//	var images = App.QueryUntilPresent(() =>
-	//	{
-	//		var result = App.WaitForElement(_fileNameAutomationId);
 
-	//		if (result[0].Rect.Height > 1)
-	//			return result;
+	[Test, Order(6)]
+	public void ImageButtonFromUriSourceAppearsAndDisappearsCorrectly()
+	{
+		ToggleUriSource();
+		App.WaitForElementTillPageNavigationSettled(_imageButtonAutomationId);
+		var imageElements = App.FindElements(_imageButtonAutomationId);
+		Assert.That(imageElements.Count, Is.GreaterThan(0));
+		VerifySourceLabel(_imageFromUri);
+		App.Tap("ClickMe");
+		App.WaitForElement(_appearText);
+		imageElements = App.FindElements(_imageButtonAutomationId);
+		Assert.That(imageElements.Count, Is.EqualTo(0));//ios=1,windows=1, mac=2
+	}
 
-	//		return Array.Empty<Xamarin.UITest.Queries.AppResult>();
-	//	}, 10, 4000);
 
-	//	Assert.AreEqual(1, images.Length);
-	//	var imageVisible = images[0];
+	[Test, Order(7)]
+	public void ImageCellFromFileSourceAppearsAndDisappearsCorrectly()
+	{
+		ToggleUriSource();
+		WaitForNextTest();
+		VerifySourceLabel(_imageFromFile);
+		var imageElements = App.FindElements(_theListView);
+		Assert.That(imageElements.Count, Is.GreaterThan(0));
+		App.Tap("ClickMe");
+		App.WaitForElement(_appearText);
+		imageElements = App.FindElements(_theListView);
+		Assert.That(imageElements.Count, Is.EqualTo(1));
+	}
 
-	//	Assert.Greater(imageVisible.Rect.Height, 1);
-	//	Assert.Greater(imageVisible.Rect.Width, 1);
-	//	return imageVisible;
-	//}
+	//throws exception in android
+	[Test, Order(8)]
+	public void ImageCellFromUriSourceAppearsAndDisappearsCorrectly()
+	{
 
-	//void TestForImageNotVisible(Xamarin.UITest.Queries.AppResult previousFinding)
-	//{
-	//	var imageVisible = App.Query(_fileNameAutomationId);
+		ToggleUriSource();
+		var imageElements = App.FindElements(_theListView); //couldn't able to get automationid for listview image, so i get lsistview automationid
+		Assert.That(imageElements.Count, Is.GreaterThan(0));
+		VerifySourceLabel(_imageFromUri);
+		App.Tap("ClickMe");
+		App.WaitForElement(_appearText);
+		imageElements = App.FindElements(_theListView);
+		Assert.That(imageElements.Count, Is.EqualTo(1));
+	}
+	private void VerifySourceLabel(string expectedText)
+	{
+		var sourceLabelElement = App.WaitForElement("SourceLabel");
+		string sourceLabel = sourceLabelElement?.GetText() ?? string.Empty;
+		Assert.That(sourceLabel, Is.EqualTo(expectedText));
+	}
+	private void WaitForNextTest()
+	{
+		App.WaitForElement(_nextTestId);
+		App.Tap(_nextTestId);
+	}
 
-	//	if (imageVisible.Length > 0)
-	//	{
-	//		Assert.Less(imageVisible[0].Rect.Height, previousFinding.Rect.Height);
-	//	}
-	//}
+	private void ToggleUriSource()
+	{
+		App.WaitForElement(_switchUriId);
+		App.Tap(_switchUriId);
+	}
 
-	//void SetupTest(string controlType, bool fileSource)
-	//{
-	//	App.WaitForElement(_nextTestId);
-	//	string activeTest = null;
-	//	while (App.Query(controlType).Length == 0)
-	//	{
-	//		activeTest = App.WaitForElement(_activeTestId)[0].ReadText();
-	//		App.Tap(_nextTestId);
-	//		App.WaitForNoElement(activeTest);
-	//	}
-
-	//	string sourceLabel = App.WaitForFirstElement("SourceLabel").ReadText();
-	//	if (fileSource && sourceLabel != _imageFromFile)
-	//		App.Tap(_switchUriId);
-	//	else if (!fileSource && sourceLabel != _imageFromUri)
-	//		App.Tap(_switchUriId);
-	//}
 }
