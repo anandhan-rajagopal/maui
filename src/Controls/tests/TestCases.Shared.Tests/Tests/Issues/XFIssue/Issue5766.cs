@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST //Scroll not working on catalyst , sometimes fail on Android, In IOS it will take more than 100 seconds to run, In windows it will application still running (crash) but it works fine on sample 
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -9,70 +10,66 @@ public class Issue5766 : _IssuesUITest
 	public Issue5766(TestDevice testDevice) : base(testDevice)
 	{
 	}
+	const string StartText1 = "start1";
+	const string BigText1 = "big string > big frame1";
+	const string SmallText1 = "s1";
+	const string List1 = "lst1";
+
+	const string StartText2 = "start2";
+	const string BigText2 = "big string > big frame2";
+	const string SmallText2 = "s2"; 
+	const string List2 = "lst2";
 
 	public override string Issue => "Frame size gets corrupted when ListView is scrolled";
 
-	// TODO: some Xamarin.UITest specific methods that need replacements
-	//Xamarin.UITest.Queries.AppRect[] GetLabels(Xamarin.UITest.IApp RunningApp, string label)
-	//{
-	//	return RunningApp
-	//		.Query(q => q.Class("FormsTextView"))
-	//		.Where(x => x.Text == label)
-	//		.Select(x => x.Rect)
-	//		.ToArray();
-	//}
+	[Test]
+	[Category(UITestCategories.Layout)]
 
-	//bool RectIsEquals(Xamarin.UITest.Queries.AppRect[] left, Xamarin.UITest.Queries.AppRect[] right)
-	//{
-	//	if (left.Length != right.Length)
-	//		return false;
+	public void FrameSizeGetsCorruptedWhenListViewIsScrolled()
+	{
+		var start = App.WaitForElement(StartText1).GetRect();
+		var smalls = App.WaitForElement(SmallText1).GetRect();
+		var bigs = App.WaitForElement(BigText1).GetRect();
 
-	//	for (int i = 0; i < left.Length; i++)
-	//	{
-	//		if (left[i].X != right[i].X ||
-	//			left[i].Y != right[i].Y ||
-	//			left[i].Width != right[i].Width ||
-	//			left[i].Height != right[i].Height)
-	//			return false;
-	//	}
+		 
+		App.ScrollDown(List1);    
+		App.ScrollUp(List1);   
 
-	//	return true;
-	//}
+		var startAfter = App.WaitForElement(StartText1).GetRect();
+		var smallAfter = App.WaitForElement(SmallText1).GetRect();
+		var bigAfter = App.WaitForElement(BigText1).GetRect();
 
-	//[Test]
-	//[Category(UITestCategories.Layout)]
-	//[Ignore("Fails sometimes - needs a better test")]
-	//public void FrameSizeGetsCorruptedWhenListViewIsScrolled()
-	//{
-	//	App.WaitForElement(StartText1);
-	//	var start = GetLabels(RunningApp, StartText1);
-	//	var smalls = GetLabels(RunningApp, SmallText1);
-	//	var bigs = GetLabels(RunningApp, BigText1);
+		Assert.That(start.Width, Is.EqualTo(startAfter.Width));
+		Assert.That(start.Height, Is.EqualTo(startAfter.Height));
 
-	//	App.ScrollDownTo(EndText1, List1, ScrollStrategy.Gesture, 0.9, 15000, timeout: TimeSpan.FromMinutes(1));
-	//	App.ScrollUpTo(StartText1, List1, ScrollStrategy.Gesture, 0.9, 15000, timeout: TimeSpan.FromMinutes(1));
+		Assert.That(smalls.Width, Is.EqualTo(smallAfter.Width));
+		Assert.That(smalls.Height, Is.EqualTo(smallAfter.Height));
 
-	//	var startAfter = GetLabels(RunningApp, StartText1);
-	//	Assert.IsTrue(RectIsEquals(start, startAfter));
-	//	var smallAfter = GetLabels(RunningApp, SmallText1);
-	//	Assert.IsTrue(RectIsEquals(smalls, smallAfter));
-	//	var bigAfter = GetLabels(RunningApp, BigText1);
-	//	Assert.IsTrue(RectIsEquals(bigs, bigAfter));
+		Assert.That(bigs.Width, Is.EqualTo(bigAfter.Width));
+		Assert.That(bigs.Height, Is.EqualTo(bigAfter.Height));
 
-	//	// list2 with ListViewCachingStrategy.RecycleElement - issue 6297
-	//	App.WaitForElement(StartText2);
-	//	start = GetLabels(RunningApp, StartText2);
-	//	smalls = GetLabels(RunningApp, SmallText2);
-	//	bigs = GetLabels(RunningApp, BigText2);
+		start = App.WaitForElement(StartText2).GetRect();
+		smalls = App.WaitForElement(SmallText2).GetRect();
+		bigs = App.WaitForElement(BigText2).GetRect();
 
-	//	App.ScrollDownTo(EndText2, List2, ScrollStrategy.Gesture, 0.9, 15000, timeout: TimeSpan.FromMinutes(1));
-	//	App.ScrollUpTo(StartText2, List2, ScrollStrategy.Gesture, 0.9, 15000, timeout: TimeSpan.FromMinutes(1));
+		 
+		App.ScrollDown(List2);   
+		App.ScrollUp(List2);  
 
-	//	startAfter = GetLabels(RunningApp, StartText2);
-	//	Assert.IsTrue(RectIsEquals(start, startAfter));
-	//	smallAfter = GetLabels(RunningApp, SmallText2);
-	//	Assert.IsTrue(RectIsEquals(smalls, smallAfter));
-	//	bigAfter = GetLabels(RunningApp, BigText2);
-	//	Assert.IsTrue(RectIsEquals(bigs, bigAfter));
-	//}
+		var startAfterList2 = App.WaitForElement(StartText2).GetRect();
+		var smallAfterList2 = App.WaitForElement(SmallText2).GetRect();
+		var bigAfterList2 = App.WaitForElement(BigText2).GetRect();
+
+		Assert.That(start.Width, Is.EqualTo(startAfterList2.Width));
+		Assert.That(start.Height, Is.EqualTo(startAfterList2.Height));
+
+		Assert.That(smalls.Width, Is.EqualTo(smallAfterList2.Width));
+		Assert.That(smalls.Height, Is.EqualTo(smallAfterList2.Height));
+
+		Assert.That(bigs.Width, Is.EqualTo(bigAfterList2.Width));
+		Assert.That(bigs.Height, Is.EqualTo(bigAfterList2.Height));
+	}
 }
+#endif
+
+
