@@ -29,8 +29,8 @@ public class Issue9088 : TestShell
 		{
 			AutomationId = LeftCountLabelId,
 			Text = "0",
-			HorizontalOptions = LayoutOptions.End,
-			HorizontalTextAlignment = TextAlignment.End
+			HorizontalOptions = LayoutOptions.Start,
+			HorizontalTextAlignment = TextAlignment.Start
 		};
 
 		var stackLayout = new StackLayout
@@ -39,7 +39,7 @@ public class Issue9088 : TestShell
 			_leftSwipeCountLabel
 		};
 
-		stackLayout.Orientation = StackOrientation.Horizontal;
+		stackLayout.Orientation = StackOrientation.Vertical;
 
 #pragma warning disable CS0618 // Type or member is obsolete
 		stackLayout.HorizontalOptions = LayoutOptions.FillAndExpand;
