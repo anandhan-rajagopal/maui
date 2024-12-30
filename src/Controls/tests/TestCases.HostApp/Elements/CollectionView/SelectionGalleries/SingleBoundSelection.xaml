@@ -5,6 +5,7 @@
 	x:Class="Maui.Controls.Sample.CollectionViewGalleries.SelectionGalleries.SingleBoundSelection">
 
 	<ContentPage.Content>
+		<ScrollView>
 		<StackLayout
 			Spacing="5">
 
@@ -75,5 +76,6 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </StackLayout>
+		</ScrollView>
 	</ContentPage.Content>
 </ContentPage>

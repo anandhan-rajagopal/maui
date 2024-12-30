@@ -1,36 +1,29 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_ANDROID //Tap not working on the Collection View Items
+using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
 namespace Microsoft.Maui.TestCases.Tests
 {
-	public class CollectionViewSingleBoundSelectionUITests : CollectionViewUITests
+	public class CollectionViewSingleBoundSelectionUITests : _IssuesUITest
 	{
 		public CollectionViewSingleBoundSelectionUITests(TestDevice device)
 			: base(device)
 		{
 		}
-
-		/*
-		// SelectionShouldUpdateBinding (src\Compatibility\ControlGallery\src\Issues.Shared\CollectionViewBoundSingleSelection.cs)
+		public override string Issue => "CollectionView: Single Selection Binding";
+		
 		[Test]
-		[FailsOnAllPlatformsWhenRunningOnXamarinUITest("Click does not find CollectionView elements")]
+		[Category(UITestCategories.CollectionView)]
 		[Description("Single Selection Binding")]
 		public void SelectionShouldUpdateBinding()
 		{
-			// Navigate to the selection galleries
-			VisitInitialGallery("Selection");
-			
-			// Navigate to the specific sample inside selection galleries
-			VisitSubGallery("SingleSelection,Bound");
-			
-			// 1. Initially Item 2 should be selected (from the view model)
-			App.WaitForNoElement("Selected: Item: 2");
-
-			// 2. Tapping Item 3 should select it and updating the binding
-			App.Click("Item 1");
-			App.WaitForNoElement("Selected: Item: 1");
+			App.WaitForElement("Selected: Item: 2");
+			App.WaitForElement("Item 1");
+			App.Tap("Item 1");	
+			App.WaitForElement("Selected: Item: 1");
 		}
-		*/
+		
 	}
 }
+#endif
