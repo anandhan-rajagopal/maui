@@ -15,11 +15,10 @@ public class Bugzilla21177 : _IssuesUITest
 
      [Test]
      [Category(UITestCategories.CollectionView)]
-     [FailsOnIOSWhenRunningOnXamarinUITest]
      public void Bugzilla21177Test()
      {
-         App.WaitForElement("#1");
-         App.Tap("#1");
+         App.WaitForElement("1");
+         App.Tap("1");
          App.WaitForElement("Success");
          App.Tap("Cancel");
      }
