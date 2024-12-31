@@ -20,7 +20,11 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 			App.Click("ChangeValue");
 			App.EnterText("SearchBar", "r");
 			App.EnterText("SearchBar", "c");
+			#if MACCATALYST //While taking a screenshot, the Esc key is automatically pressed to clear the text
+			Assert.That(App.WaitForElement("Sear").GetText(), Is.EqualTo("Sear"));
+			#else
 			VerifyScreenshot();
+			#endif
 		}
 	}
 }
