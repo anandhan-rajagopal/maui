@@ -5,7 +5,6 @@
 	x:Class="Maui.Controls.Sample.CollectionViewGalleries.SelectionGalleries.SingleBoundSelection">
 
 	<ContentPage.Content>
-		<ScrollView>
 		<StackLayout
 			Spacing="5">
 
@@ -35,7 +34,7 @@
 				SelectedItem="{Binding SelectedItem}">
                 <CollectionView.Resources>
                     <ResourceDictionary>
-                        <Style TargetType="Frame">
+                        <Style TargetType="Border">
                             <Setter Property="VisualStateManager.VisualStateGroups">
                                 <VisualStateGroupList>
                                     <VisualStateGroup x:Name="CommonStates">
@@ -58,11 +57,10 @@
                 </CollectionView.Resources>
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame
-							HasShadow="False"
+                        <Border StrokeShape="RoundRectangle 20"
+							Stroke ="Transparent"
 							Margin="10"
-							BackgroundColor="LightBlue"
-							CornerRadius="20">
+							BackgroundColor="LightBlue">
                             <StackLayout>
                                 <Image
 									Source="{Binding Image}"
@@ -71,11 +69,11 @@
                                     AutomationId="{Binding Caption}"
 									Text="{Binding Caption}" />
                             </StackLayout>
-                        </Frame>
+                        </Border>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </StackLayout>
-		</ScrollView>
+
 	</ContentPage.Content>
 </ContentPage>
