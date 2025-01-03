@@ -17,8 +17,11 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		{
 			App.WaitForElement("AddButton");
 			App.Tap("AddButton");
+			App.WaitForElement("AddButton");
 			App.Tap("AddButton");
+			App.WaitForElement("RemoveButton");
 			App.Tap("RemoveButton");
+			App.WaitForElement("RemoveButton");
 			App.Tap("RemoveButton");
 			// Here we check for dynamic Emptyview and Footer proper proper alignment in view it should not be at the bottom of screen.
 			VerifyScreenshot();

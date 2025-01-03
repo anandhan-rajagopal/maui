@@ -15,13 +15,14 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		[Test]
 		[Category(UITestCategories.CollectionView)]
 		[Category(UITestCategories.Compatibility)]
-		[FailsOnIOSWhenRunningOnXamarinUITest]
-		[FailsOnMacWhenRunningOnXamarinUITest]
-		public void Issue12374Test()
+			public void Issue12374Test()
 		{
 			App.WaitForElement("TestReady");
+			App.WaitForElement("RemoveItems");
 			App.Tap("RemoveItems");
+			App.WaitForElement("AddItems");
 			App.Tap("AddItems");
+			App.WaitForElement("RemoveItems");
 			App.Tap("RemoveItems");
 			App.Screenshot("CollectionViewWithEmptyView");
 		}

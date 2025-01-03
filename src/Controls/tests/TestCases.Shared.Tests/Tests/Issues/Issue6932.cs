@@ -26,6 +26,7 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 			App.Screenshot("Screen opens, items are shown");
 
 			App.WaitForElement(LayoutAutomationId);
+			App.WaitForElement(ClearAutomationId);
 			App.Tap(ClearAutomationId);
 			App.WaitForElement(EmptyViewAutomationId);
 
@@ -42,11 +43,12 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 			App.Screenshot("Screen opens, items are shown");
 
 			App.WaitForElement(LayoutAutomationId);
+			App.WaitForElement(ClearAutomationId);
 			App.Tap(ClearAutomationId);
 			App.WaitForElement(EmptyViewAutomationId);
 
 			App.Screenshot("Items are cleared, empty view visible");
-
+			App.WaitForElement(AddAutomationId);
 			App.Tap(AddAutomationId);
 			App.WaitForNoElement(EmptyViewAutomationId);
 

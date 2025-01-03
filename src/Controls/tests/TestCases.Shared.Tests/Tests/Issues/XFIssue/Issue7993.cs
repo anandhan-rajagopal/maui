@@ -25,6 +25,7 @@ public class Issue7993 : _IssuesUITest
 			colView.GetRect().Width - 10,
 			colView.GetRect().Y + 5);
 		App.WaitForElement("19");
+		App.WaitForElement("NewItemsSource");
 		App.Tap("NewItemsSource");
 		App.WaitForElement("VerticalOffset: 0");
 	}
