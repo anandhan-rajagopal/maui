@@ -30,7 +30,12 @@ namespace Maui.Controls.Sample
 				.Issue25436RegisterNavigationService();
 
 #if IOS || MACCATALYST
-
+			appBuilder.UseMauiApp<App>().ConfigureMauiHandlers(handlers =>
+			{
+				#if IOS
+				handlers.AddHandler(typeof(Bugzilla21177.CollectionView), typeof(CustomCollectionViewHandler));
+				#endif
+			});
 			appBuilder.ConfigureCollectionViewHandlers();
 
 #endif
