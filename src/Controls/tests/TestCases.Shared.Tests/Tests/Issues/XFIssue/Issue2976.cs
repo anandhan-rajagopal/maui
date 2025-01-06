@@ -12,16 +12,17 @@ public class Issue2976 : _IssuesUITest
 
 	public override string Issue => "Sample 'WorkingWithListviewNative' throw Exception on Xam.Android project.";
 
-	// [Test]
-	// [Category(UITestCategories.ListView)]
-	// [FailsOnAndroid]
-	// [FailsOnIOS]
-	// public void Issue1Test()
-	// {
-	// 	App.Screenshot("I am at Issue 2976");
-	// 	App.Tap(q => q.Marked("DEMOA"));
-	// 	App.Tap(q => q.Marked("DEMOB"));
-	// 	App.Tap(q => q.Marked("DEMOC"));
-	// 	App.Tap(q => q.Marked("DEMOD"));
-	// }
+	[Test]
+	[Category(UITestCategories.ListView)]
+	public void Issue1Test()
+	{
+		App.WaitForElement("DEMOA");
+		App.Tap("DEMOA");
+		App.WaitForElement("DEMOB");
+		App.Tap("DEMOB");
+		App.WaitForElement("DEMOC");
+		App.Tap("DEMOC");
+		App.WaitForElement("DEMOD");
+		App.Tap("DEMOD");
+	}
 }
