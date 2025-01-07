@@ -44,7 +44,7 @@ namespace Maui.Controls.Sample
 #if IOS || MACCATALYST
 				handlers.AddHandler(typeof(Issue11132Control), typeof(Issue11132ControlHandler));
 #endif
-#if IOS || ANDROID
+#if IOS || ANDROID || WINDOWS
 				handlers.AddHandler(typeof(NativeListView), typeof(NativeListViewHandler));
 				handlers.AddHandler(typeof(NativeListView2), typeof(NativeListView2Handler));
  #endif

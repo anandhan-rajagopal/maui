@@ -1,6 +1,7 @@
 using Microsoft.Maui.Handlers;
 using TextAlignment = Microsoft.Maui.TextAlignment;
 using View = Microsoft.Maui.Controls.View;
+using Microsoft.Maui.Controls;
 #if IOS
 using UIKit;
 using Foundation;
@@ -9,7 +10,9 @@ using Android.Views;
 using Android.Widget;
 using Android.Content;
 #endif
+
 namespace Maui.Controls.Sample.Issues;
+
 
 [Issue(IssueTracker.Github, 2976, "Sample 'WorkingWithListviewNative' throw Exception on Xam.Android project.", PlatformAffected.Android)]
 public class Issue2976 : TestTabbedPage
@@ -51,6 +54,7 @@ public class NativeListPage : ContentPage
 			tableItems.Add(i + " row ");
 		}
 
+
 		var fasterListView = new NativeListView(); // CUSTOM RENDERER using a native control
 #pragma warning disable CS0618 // Type or member is obsolete
 		fasterListView.VerticalOptions = LayoutOptions.FillAndExpand; // REQUIRED: To share a scrollable view with other views in a StackLayout, it should have a VerticalOptions of FillAndExpand.
@@ -68,7 +72,7 @@ public class NativeListPage : ContentPage
 			Children = {
 				new Label {
 					HorizontalTextAlignment = TextAlignment.Center,
-					Text = DeviceInfo.Platform == DevicePlatform.iOS ? "Custom renderer UITableView" : DeviceInfo.Platform == DevicePlatform.Android ? "Custom renderer ListView" : "Custom renderer todo"
+					Text = DeviceInfo.Platform == DevicePlatform.iOS ? "Custom renderer UITableView" : DeviceInfo.Platform == DevicePlatform.Android ? "Custom renderer ListView" : "Custom renderer ListView"
 				},
 				fasterListView
 			}
@@ -83,7 +87,7 @@ public class NativeListPage : ContentPage
 public class NativeListView : View
 {
 	public static readonly BindableProperty ItemsProperty =
-		BindableProperty.Create("Items", typeof(IEnumerable<string>), typeof(NativeListView), new List<string>());
+		BindableProperty.Create(nameof(Items), typeof(IEnumerable<string>), typeof(NativeListView), new List<string>());
 
 	public IEnumerable<string> Items
 	{
@@ -104,67 +108,66 @@ public class NativeListView : View
 	{
 	}
 }
-
 #if IOS
-    public class NativeListViewHandler : ViewHandler<NativeListView, UITableView>
-    {
-        public static PropertyMapper<NativeListView, NativeListViewHandler> PropertyMapper = new PropertyMapper<NativeListView, NativeListViewHandler>(ViewHandler.ViewMapper)
-        {
-            [nameof(NativeListView.Items)] = MapItems
-        };
-        public NativeListViewHandler() : base(PropertyMapper)
-        {
-        }
-        protected override UITableView CreatePlatformView()
-        {
-            var tableView = new UITableView();
-            tableView.Source = new NativeListViewSource(VirtualView);
-            return tableView;
-        }
-        private static void MapItems(NativeListViewHandler handler, NativeListView view)
-        {
-           ((NativeListViewSource)handler.PlatformView.Source).Items = view.Items;
-            handler.PlatformView.ReloadData();
-        }
-    }
-    public class NativeListViewSource : UITableViewSource
-    {
-        private readonly NativeListView _virtualView;
-        private IEnumerable<string> _items;
-        public IEnumerable<string> Items
-        {
-            get => _items;
-            set => _items = value;
-        }
-        public NativeListViewSource(NativeListView virtualView)
-        {
-            _virtualView = virtualView;
-        }
-        public override nint RowsInSection(UITableView tableview, nint section)
-        {
-            return _items?.Count() ?? 0;
-        }
-        public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
-        {
-            const string cellIdentifier = "DefaultCell";
-            var cell = tableView.DequeueReusableCell(cellIdentifier);
-            if (cell == null)
-            {
-                cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
-            }
-			var content = UIListContentConfiguration.CellConfiguration;
-			var item = _items.ElementAt(indexPath.Row);
-			content.Text = item;
-			cell.ContentConfiguration = content;
-			return cell;
-        }
-        public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
-        {
-            var item = _items.ElementAt(indexPath.Row);
-            _virtualView.NotifyItemSelected(item);
-            tableView.DeselectRow(indexPath, true);
-        }
-    }
+public class NativeListViewHandler : ViewHandler<NativeListView, UITableView>
+{
+	public static PropertyMapper<NativeListView, NativeListViewHandler> PropertyMapper = new PropertyMapper<NativeListView, NativeListViewHandler>(ViewHandler.ViewMapper)
+	{
+		[nameof(NativeListView.Items)] = MapItems
+	};
+	public NativeListViewHandler() : base(PropertyMapper)
+	{
+	}
+	protected override UITableView CreatePlatformView()
+	{
+		var tableView = new UITableView();
+		tableView.Source = new NativeListViewSource(VirtualView);
+		return tableView;
+	}
+	private static void MapItems(NativeListViewHandler handler, NativeListView view)
+	{
+		((NativeListViewSource)handler.PlatformView.Source).Items = view.Items;
+		handler.PlatformView.ReloadData();
+	}
+}
+public class NativeListViewSource : UITableViewSource
+{
+	private readonly NativeListView _virtualView;
+	private IEnumerable<string> _items;
+	public IEnumerable<string> Items
+	{
+		get => _items;
+		set => _items = value;
+	}
+	public NativeListViewSource(NativeListView virtualView)
+	{
+		_virtualView = virtualView;
+	}
+	public override nint RowsInSection(UITableView tableview, nint section)
+	{
+		return _items?.Count() ?? 0;
+	}
+	public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+	{
+		const string cellIdentifier = "DefaultCell";
+		var cell = tableView.DequeueReusableCell(cellIdentifier);
+		if (cell == null)
+		{
+			cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
+		}
+		var content = UIListContentConfiguration.CellConfiguration;
+		var item = _items.ElementAt(indexPath.Row);
+		content.Text = item;
+		cell.ContentConfiguration = content;
+		return cell;
+	}
+	public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+	{
+		var item = _items.ElementAt(indexPath.Row);
+		_virtualView.NotifyItemSelected(item);
+		tableView.DeselectRow(indexPath, true);
+	}
+}
 #endif
 
 #if ANDROID
@@ -192,11 +195,11 @@ public class NativeListView : View
         }
         private void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
         {
-			var adapter = (NativeListViewAdapter)_listView.Adapter;
-			var item = adapter.Items.ElementAt(e.Position);
-			VirtualView.NotifyItemSelected(item.ToString());
+            var adapter = (NativeListViewAdapter)_listView.Adapter;
+            var item = adapter.Items.ElementAt(e.Position);
+            VirtualView.NotifyItemSelected(item.ToString());
         }
-		
+        
         private static void MapItems(NativeListViewHandler handler, NativeListView view)
         {
             if (handler.PlatformView.Adapter is NativeListViewAdapter adapter)
@@ -225,7 +228,7 @@ public class NativeListView : View
         public override long GetItemId(int position) => position;
         public override Android.Views.View GetView(int position, Android.Views.View convertView, ViewGroup parent)
         {
-			TextView view = (TextView)convertView;
+            TextView view = (TextView)convertView;
             if (view == null)
             {
                 view = new TextView(_context)
@@ -243,7 +246,52 @@ public class NativeListView : View
         public override int Count => _items?.Count() ?? 0;
         public override string this[int position] => _items.ElementAt(position);
     }
-    #endif
+#endif
+
+#if WINDOWS
+  public class NativeListViewHandler : ViewHandler<NativeListView, Microsoft.UI.Xaml.Controls.ListView>
+    {
+        public static PropertyMapper<NativeListView, NativeListViewHandler> PropertyMapper = new PropertyMapper<NativeListView, NativeListViewHandler>(ViewHandler.ViewMapper)
+        {
+            [nameof(NativeListView.Items)] = MapItems
+        };
+
+        public NativeListViewHandler() : base(PropertyMapper)
+        {
+        }
+
+        protected override Microsoft.UI.Xaml.Controls.ListView CreatePlatformView()
+        {
+            var listView = new Microsoft.UI.Xaml.Controls.ListView();
+            listView.SelectionMode = Microsoft.UI.Xaml.Controls.ListViewSelectionMode.Single;
+            listView.SelectionChanged += ListView_SelectionChanged;
+            return listView;
+        }
+
+        private void ListView_SelectionChanged(object sender, Microsoft.UI.Xaml.Controls.SelectionChangedEventArgs e)
+        {
+            var selectedItem = e.AddedItems.FirstOrDefault();
+            if (selectedItem != null)
+            {
+                VirtualView.NotifyItemSelected(selectedItem);
+            }
+        }
+
+        private static void MapItems(NativeListViewHandler handler, NativeListView view)
+        {
+            if (handler.PlatformView.ItemsSource is List<string> items)
+            {
+                items.Clear();
+                items.AddRange(view.Items);
+            }
+            else
+            {
+                handler.PlatformView.ItemsSource = new List<string>(view.Items);
+            }
+        }
+    }
+#endif
+
 /// <summary>
 /// This page uses built-in Xamarin.Forms controls to display a fast-scrolling list.
 /// 
@@ -330,24 +378,25 @@ public class XamarinFormsNativeCellPage : ContentPage
 	}
 }
 
+
 public class NativeCell : ViewCell
 {
 	public NativeCell()
 	{
-        var nameLabel = new Label();
-        nameLabel.SetBinding(Label.TextProperty, new Binding("Name"));
-        
-        var categoryLabel = new Label();
-        categoryLabel.SetBinding(Label.TextProperty, new Binding("Category"));
-        
-        var image = new Image();
-        image.SetBinding(Image.SourceProperty, new Binding("ImageFilename"));
+		var nameLabel = new Label();
+		nameLabel.SetBinding(Label.TextProperty, new Binding("Name"));
 
-        View = new StackLayout
-        {
-            Padding = new Thickness(5),
-            Children = { nameLabel, categoryLabel, image }
-        };
+		var categoryLabel = new Label();
+		categoryLabel.SetBinding(Label.TextProperty, new Binding("Category"));
+
+		var image = new Image();
+		image.SetBinding(Image.SourceProperty, new Binding("ImageFilename"));
+
+		View = new StackLayout
+		{
+			Padding = new Thickness(5),
+			Children = { nameLabel, categoryLabel, image }
+		};
 	}
 
 	public static readonly BindableProperty NameProperty =
@@ -358,6 +407,7 @@ public class NativeCell : ViewCell
 		set { SetValue(NameProperty, value); }
 	}
 
+
 	public static readonly BindableProperty CategoryProperty =
 		BindableProperty.Create("Category", typeof(string), typeof(NativeCell), "");
 	public string Category
@@ -365,6 +415,7 @@ public class NativeCell : ViewCell
 		get { return (string)GetValue(CategoryProperty); }
 		set { SetValue(CategoryProperty, value); }
 	}
+
 
 	public static readonly BindableProperty ImageFilenameProperty =
 		BindableProperty.Create("ImageFilename", typeof(string), typeof(NativeCell), "");
@@ -445,7 +496,7 @@ public class NativeListViewPage2 : ContentPage
 			Children = {
 				new Label {
 					HorizontalTextAlignment = TextAlignment.Center,
-					Text = DeviceInfo.Platform == DevicePlatform.iOS ? "Custom UITableView+UICell" : DeviceInfo.Platform == DevicePlatform.Android ? "Custom ListView+Cell" : "Custom renderer todo"
+					Text = DeviceInfo.Platform == DevicePlatform.iOS ? "Custom UITableView+UICell" : DeviceInfo.Platform == DevicePlatform.Android ? "Custom ListView+Cell" : "Custom ListView + Grid Cell"
 				},
 				nativeListView2
 			}
@@ -481,74 +532,73 @@ public class NativeListView2 : View
 	{
 	}
 }
-
 #if IOS
 public class NativeListView2Handler : ViewHandler<NativeListView2, UITableView>
 {
-    public static PropertyMapper<NativeListView2, NativeListView2Handler> PropertyMapper = new PropertyMapper<NativeListView2, NativeListView2Handler>(ViewHandler.ViewMapper)
-    {
-        [nameof(NativeListView2.Items)] = MapItems
-    };
-    public NativeListView2Handler() : base(PropertyMapper)
-    {
-    }
-    protected override UITableView CreatePlatformView()
-    {
-        var tableView = new UITableView();
-        tableView.Source = new NativeListView2Source(VirtualView);
-        return tableView;
-    }
-    private static void MapItems(NativeListView2Handler handler, NativeListView2 view)
-    {
-       ((NativeListView2Source)handler.PlatformView.Source).Items = view.Items;
-        handler.PlatformView.ReloadData();
-    }
+	public static PropertyMapper<NativeListView2, NativeListView2Handler> PropertyMapper = new PropertyMapper<NativeListView2, NativeListView2Handler>(ViewHandler.ViewMapper)
+	{
+		[nameof(NativeListView2.Items)] = MapItems
+	};
+	public NativeListView2Handler() : base(PropertyMapper)
+	{
+	}
+	protected override UITableView CreatePlatformView()
+	{
+		var tableView = new UITableView();
+		tableView.Source = new NativeListView2Source(VirtualView);
+		return tableView;
+	}
+	private static void MapItems(NativeListView2Handler handler, NativeListView2 view)
+	{
+		((NativeListView2Source)handler.PlatformView.Source).Items = view.Items;
+		handler.PlatformView.ReloadData();
+	}
 }
 public class NativeListView2Source : UITableViewSource
 {
-    private readonly NativeListView2 _virtualView;
-    private IEnumerable<DataSource> _items;
-    public IEnumerable<DataSource> Items
-    {
-        get => _items;
-        set => _items = value;
-    }
-    public NativeListView2Source(NativeListView2 virtualView)
-    {
-        _virtualView = virtualView;
-    }
-    public override nint RowsInSection(UITableView tableview, nint section)
-    {
-        return _items?.Count() ?? 0;
-    }
-    public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
-    {
-        const string cellIdentifier = "CustomCell";
-        var cell = tableView.DequeueReusableCell(cellIdentifier);
-        if (cell == null)
-        {
-            cell = new UITableViewCell(UITableViewCellStyle.Subtitle, cellIdentifier);
-        }
-        var item = _items.ElementAt(indexPath.Row);
-        var content = UIListContentConfiguration.SubtitleCellConfiguration;
-        content.Text = item.Name;
-        content.SecondaryText = item.Category;
-        cell.ContentConfiguration = content;
-        return cell;
-    }
-    public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
-    {
-        var item = _items.ElementAt(indexPath.Row);
-        _virtualView.NotifyItemSelected(item);
-        tableView.DeselectRow(indexPath, true);
-    }
+	private readonly NativeListView2 _virtualView;
+	private IEnumerable<DataSource> _items;
+	public IEnumerable<DataSource> Items
+	{
+		get => _items;
+		set => _items = value;
+	}
+	public NativeListView2Source(NativeListView2 virtualView)
+	{
+		_virtualView = virtualView;
+	}
+	public override nint RowsInSection(UITableView tableview, nint section)
+	{
+		return _items?.Count() ?? 0;
+	}
+	public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+	{
+		const string cellIdentifier = "CustomCell";
+		var cell = tableView.DequeueReusableCell(cellIdentifier);
+		if (cell == null)
+		{
+			cell = new UITableViewCell(UITableViewCellStyle.Subtitle, cellIdentifier);
+		}
+		var item = _items.ElementAt(indexPath.Row);
+		var content = UIListContentConfiguration.SubtitleCellConfiguration;
+		content.Text = item.Name;
+		content.SecondaryText = item.Category;
+		cell.ContentConfiguration = content;
+		return cell;
+	}
+	public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+	{
+		var item = _items.ElementAt(indexPath.Row);
+		_virtualView.NotifyItemSelected(item);
+		tableView.DeselectRow(indexPath, true);
+	}
 }
 #endif
 
 #if ANDROID
 public class NativeListView2Handler : ViewHandler<NativeListView2, Android.Widget.ListView>
 {
-	private Android.Widget.ListView _listView;
+    private Android.Widget.ListView _listView;
     public static PropertyMapper<NativeListView2, NativeListView2Handler> PropertyMapper = new PropertyMapper<NativeListView2, NativeListView2Handler>(ViewHandler.ViewMapper)
     {
         [nameof(NativeListView2.Items)] = MapItems
@@ -570,9 +620,9 @@ public class NativeListView2Handler : ViewHandler<NativeListView2, Android.Widge
     }
     private void ListView_ItemClick(object sender, AdapterView.ItemClickEventArgs e)
     {
-			var adapter = (NativeListView2Adapter)_listView.Adapter;
-			var item = adapter.Items.ElementAt(e.Position);
-			VirtualView.NotifyItemSelected(item);
+            var adapter = (NativeListView2Adapter)_listView.Adapter;
+            var item = adapter.Items.ElementAt(e.Position);
+            VirtualView.NotifyItemSelected(item);
     }
     private static void MapItems(NativeListView2Handler handler, NativeListView2 view)
     {
@@ -605,7 +655,7 @@ public class NativeListView2Adapter : BaseAdapter<DataSource>
     }
     public override Android.Views.View GetView(int position, Android.Views.View convertView, ViewGroup parent)
     {
-		Android.Views.View view = convertView;
+        Android.Views.View view = convertView;
         if (view == null)
         {
             view = LayoutInflater.From(_context).Inflate(Android.Resource.Layout.SimpleListItem2, null);
@@ -621,6 +671,61 @@ public class NativeListView2Adapter : BaseAdapter<DataSource>
     public override DataSource this[int position] => _items.ElementAt(position);
 }
 #endif
+
+#if WINDOWS
+public class NativeListView2Handler : ViewHandler<NativeListView2, Microsoft.UI.Xaml.Controls.ListView>
+{
+    public static PropertyMapper<NativeListView2, NativeListView2Handler> PropertyMapper = new PropertyMapper<NativeListView2, NativeListView2Handler>(ViewHandler.ViewMapper)
+    {
+        [nameof(NativeListView2.Items)] = MapItems
+    };
+
+    public NativeListView2Handler() : base(PropertyMapper)
+    {
+    }
+
+    protected override Microsoft.UI.Xaml.Controls.ListView CreatePlatformView()
+    {
+        var listView = new Microsoft.UI.Xaml.Controls.ListView();
+		listView.SelectionMode = Microsoft.UI.Xaml.Controls.ListViewSelectionMode.Single;    
+		listView.IsItemClickEnabled = true;
+		listView.ItemClick += ListView_ItemClick;
+        return listView;
+    }
+
+    private void ListView_ItemClick(object sender, Microsoft.UI.Xaml.Controls.ItemClickEventArgs e)
+    {
+        var item = e.ClickedItem as DataSource;
+        VirtualView.NotifyItemSelected(item);
+    }
+
+    private static void MapItems(NativeListView2Handler handler, NativeListView2 view)
+    {
+        if (view.Items != null)
+        {
+            var listView = handler.PlatformView;
+            listView.Items.Clear();  
+
+            foreach (var dataItem in view.Items)
+            {
+                var listViewItem = new Microsoft.UI.Xaml.Controls.ListViewItem();
+                var grid = new Microsoft.UI.Xaml.Controls.Grid();
+				grid.RowDefinitions.Add(new Microsoft.UI.Xaml.Controls.RowDefinition());
+                grid.RowDefinitions.Add(new Microsoft.UI.Xaml.Controls.RowDefinition());
+                var textBlock1 = new Microsoft.UI.Xaml.Controls.TextBlock { Text = dataItem.Name };
+                Microsoft.UI.Xaml.Controls.Grid.SetRow(textBlock1, 0);
+				var textBlock2 = new Microsoft.UI.Xaml.Controls.TextBlock { Text = dataItem.Category };
+				Microsoft.UI.Xaml.Controls.Grid.SetRow(textBlock2, 1);
+                grid.Children.Add(textBlock1);
+                grid.Children.Add(textBlock2);
+                listViewItem.Content = grid;
+                listView.Items.Add(listViewItem);
+            }
+        }
+    }
+}
+#endif
+
 public class DataSource
 {
 	public string Name { get; set; }
@@ -641,6 +746,7 @@ public class DataSource
 	public static List<DataSource> GetList()
 	{
 		var l = new List<DataSource>();
+
 
 		l.Add(new DataSource("Asparagus", "Vegetables", "Vegetables"));
 		l.Add(new DataSource("Avocados", "Vegetables", "Vegetables"));
@@ -732,6 +838,7 @@ public class DataSource
 		l.Add(new DataSource("Sage", "Herbs & Spices", "FlowerBuds"));
 		l.Add(new DataSource("Thyme", "Herbs & Spices", "FlowerBuds"));
 		l.Add(new DataSource("Turmeric", "Herbs & Spices", "FlowerBuds"));
+
 
 		return l;
 	}
