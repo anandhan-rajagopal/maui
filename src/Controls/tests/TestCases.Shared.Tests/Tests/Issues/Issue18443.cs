@@ -15,6 +15,8 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		public void EntrySelectionLengthRuntimeUpdate()
 		{
 			App.WaitForElement("entry");
+			if(App.IsKeyboardShown())
+            	App.DismissKeyboard();
 			VerifyScreenshot();
 		}
 

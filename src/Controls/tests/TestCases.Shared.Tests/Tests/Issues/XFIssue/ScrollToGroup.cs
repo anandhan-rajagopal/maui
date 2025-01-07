@@ -23,6 +23,7 @@ public class ScrollToGroup : _IssuesUITest
 		App.ClearText("ItemIndexEntry");
 		App.EnterText("ItemIndexEntry","1");
 
+		App.WaitForElement("GoButton");
 		App.Tap("GoButton");
 
 		// Should scroll enough to display this item
@@ -39,7 +40,8 @@ public class ScrollToGroup : _IssuesUITest
 
 		App.ClearText("ItemIndexEntry");
 		App.EnterText("ItemIndexEntry","1");
-		
+
+		App.WaitForElement("GoButton");
 		App.Tap("GoButton");
 
 		// Should scroll enough to display this item
@@ -57,6 +59,7 @@ public class ScrollToGroup : _IssuesUITest
 		App.ClearText("ItemNameEntry");
 		App.EnterText("ItemNameEntry","Misty Knight");
 
+		App.WaitForElement("GoButton");
 		App.Tap("GoItemButton");
 
 		// Should scroll enough to display this item

@@ -17,7 +17,10 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		public void EntryClearButtonColorShouldMatchTextColor()
 		{
 			App.WaitForElement("entry");
+			App.WaitForElement("button");
 			App.Tap("button");
+			if(App.IsKeyboardShown())
+            	App.DismissKeyboard();
 			VerifyScreenshot();
 		}
 	}
