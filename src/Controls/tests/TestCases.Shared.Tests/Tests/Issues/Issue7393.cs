@@ -12,14 +12,12 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		{
 		}
 
-		public override string Issue => "[Bug] CollectionView problems and crashes with IsGrouped=\"true\"";
+		public override string Issue => "[Bug] CollectionView problems and crashes with IsGrouped is true";
 
 		[Test]
 		[Category(UITestCategories.CollectionView)]
 		[Category(UITestCategories.Compatibility)]
-		[FailsOnAndroidWhenRunningOnXamarinUITest]
-		[FailsOnMacWhenRunningOnXamarinUITest]
-		[FailsOnWindowsWhenRunningOnXamarinUITest]
+		[FailsOnWindowsWhenRunningOnXamarinUITest("This test is failing, More Information:https://github.com/dotnet/maui/issues/18481")]
 		public void AddingItemsToGroupedCollectionViewShouldNotCrash()
 		{
 			App.WaitForElement(Success, timeout: TimeSpan.FromSeconds(30));
