@@ -8,6 +8,7 @@
 		{
 			FlyoutLayoutBehavior = FlyoutLayoutBehavior.Split;
 
+			//for more information: https://github.com/dotnet/maui/issues/21205
 			Flyout = new ContentPage() { Title = "Flyout" };
 			Detail = new NavigationPage(new ContentPage { Content = new Label { AutomationId = "Success", Text = "Success" } });
 		}
