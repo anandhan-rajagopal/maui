@@ -1,4 +1,4 @@
-﻿#if IOS
+﻿// #if IOS
 using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
@@ -15,7 +15,7 @@ public class Issue11107 : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.Shell)]
-	[FailsOnIOSWhenRunningOnXamarinUITest]
+	// [FailsOnIOSWhenRunningOnXamarinUITest]
 	public void TabShouldntBeVisibleWhenThereIsOnlyOnePage()
 	{
 		RunTests();
@@ -24,16 +24,16 @@ public class Issue11107 : _IssuesUITest
 		App.Tap("RunTestTwoTabs");
 		RunTests();
 
-		RunningApp.Back();
+		// RunningApp.Back();
 
 		void RunTests()
 		{
 			App.WaitForElement("SecondPageLoaded");
 			App.WaitForNoElement("Tab1AutomationId");
-			App.Back();
+			App.TapBackArrow();
 			App.WaitForElement("Page1Loaded");
 			App.WaitForNoElement("Tab1AutomationId");
 		}
 	}
 }
-#endif
+// #endif

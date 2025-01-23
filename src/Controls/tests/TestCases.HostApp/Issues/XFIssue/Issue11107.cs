@@ -40,7 +40,7 @@ public class Issue11107 : TestShell
 						Text = "Run test again with TabBarIsVisible Toggled",
 						Command = new Command(() =>
 						{
-							Application.Current.MainPage = new Issue11107(!Shell.GetTabBarIsVisible(this));
+							Application.Current.MainPage = new Issue11107(Shell.GetTabBarIsVisible(this));
 						}),
 						AutomationId = "RunTestTabBarIsVisible"
 					},

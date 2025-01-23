@@ -8,9 +8,7 @@
 		{
 			FlyoutLayoutBehavior = FlyoutLayoutBehavior.Split;
 
-			Flyout = new Page() { Title = "Flyout" };
-
-			Detail = new NavigationPage(new Page());
+			Flyout = new ContentPage() { Title = "Flyout" };
 			Detail = new NavigationPage(new ContentPage { Content = new Label { AutomationId = "Success", Text = "Success" } });
 		}
 	}
