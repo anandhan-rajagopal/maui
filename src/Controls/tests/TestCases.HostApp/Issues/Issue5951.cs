@@ -62,11 +62,15 @@ namespace Maui.Controls.Sample.Issues
 			{
 				var shadowButton = new Button { Text = "Never Visible", IsVisible = false };
 
-				shadowButton.On<iOS>()
-					.SetIsShadowEnabled(true)
-					.SetShadowColor(Colors.Black)
-					.SetShadowOffset(new Size(10, 10))
-					.SetShadowOpacity(0.2);
+
+				if (shadowButton.IsVisible)
+				{
+					shadowButton.On<iOS>()
+						.SetIsShadowEnabled(true)
+						.SetShadowColor(Colors.Black)
+						.SetShadowOffset(new Size(10, 10))
+						.SetShadowOpacity(0.2);
+				}
 
 				Content = new StackLayout
 				{

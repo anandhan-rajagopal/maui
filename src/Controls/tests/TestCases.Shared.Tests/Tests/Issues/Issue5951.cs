@@ -15,12 +15,11 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		[Test]
 		[Category(UITestCategories.Button)]
 		[Category(UITestCategories.Compatibility)]
-		[FailsOnAllPlatformsWhenRunningOnXamarinUITest]
 		public void Issue5951Test()
 		{
 			App.Tap("Push page");
 			App.WaitForElement("Push page");
-			App.WaitForNoElement("Success");
+			App.WaitForElement("Success");
 		}
 	}
 }
