@@ -8,6 +8,7 @@ public class Issue8526 : TestContentPage
 
 	protected override async void Init()
 	{
+		await Task.Delay(100);
 		await DisplayPromptAsync(Success, "This prompt should display when the page loads.");
 	}
 }
