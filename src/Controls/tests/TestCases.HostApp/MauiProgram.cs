@@ -45,7 +45,7 @@ namespace Maui.Controls.Sample
 #if IOS || MACCATALYST
 				handlers.AddHandler(typeof(Issue11132Control), typeof(Issue11132ControlHandler));
 #endif
-#if ANDROID || IOS || MACCATALYST
+#if ANDROID || IOS || MACCATALYST || WINDOWS
 				handlers.AddHandler(typeof(CustomGrid), typeof(CustomGrid1942Handler));
 #endif
 			});
