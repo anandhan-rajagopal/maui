@@ -1,5 +1,4 @@
-﻿#if ANDROID
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -17,13 +16,11 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 
 		[Test]
 		[Category(UITestCategories.Button)]
-		[Category(UITestCategories.Compatibility)]
-		[FailsOnAndroidWhenRunningOnXamarinUITest]
 		public void ClickPropagatesToOnTouchListener()
 		{
 			App.WaitForElement(ClickMeString);
 			App.Tap(ClickMeString);
+			App.WaitForElement("Success");
 		}
 	}
 }
-#endif

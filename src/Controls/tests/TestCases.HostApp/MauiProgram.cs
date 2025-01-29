@@ -41,9 +41,24 @@ namespace Maui.Controls.Sample
 #if IOS || MACCATALYST || ANDROID || WINDOWS
 				handlers.AddHandler(typeof(_60122Image), typeof(_60122ImageHandler));
 				handlers.AddHandler(typeof(_57114View), typeof(_57114ViewHandler));
+				handlers.AddHandler(typeof(CustomGrid), typeof(CustomGrid1942Handler));
 #endif
 #if IOS || MACCATALYST
 				handlers.AddHandler(typeof(Issue11132Control), typeof(Issue11132ControlHandler));
+#endif
+#if IOS || ANDROID || MACCATALYST
+				handlers.AddHandler(typeof(Bugzilla21177.CollectionView), typeof(CustomCollectionViewHandler));
+#endif
+#if IOS
+ 				handlers.AddHandler(typeof(Issue6368.MainPage.RoundedLabel), typeof(Issue6368.RoundedLabelHandler));
+                handlers.AddHandler(typeof(Issue6368.MainPage.CustomView), typeof(Issue6368.CustomViewHandler));
+#endif
+#if IOS || ANDROID || WINDOWS
+				handlers.AddHandler(typeof(NativeListView), typeof(NativeListViewHandler));
+				handlers.AddHandler(typeof(NativeListView2), typeof(NativeListView2Handler));
+#endif
+#if ANDROID
+				handlers.AddHandler(typeof(Issue12484CustomView), typeof(Issue12484CustomViewHandler));
 #endif
 			});
 
