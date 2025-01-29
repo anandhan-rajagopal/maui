@@ -27,16 +27,13 @@ public class Issue16910 : _IssuesUITest
 		App.WaitForElement("IsNotRefreshing");
 	}
 
-#if !MACCATALYST
 	[Test]
 	public void BindingUpdatesFromInteractiveRefresh()
 	{
 		_ = App.WaitForElement("CollectionView");
-		App.ScrollUp("CollectionView");
+		App.ScrollUp("CollectionView", ScrollStrategy.Gesture, swipeSpeed: 7000);
 		App.WaitForElement("IsRefreshing");
 		App.Tap("StopRefreshing");
 		App.WaitForElement("IsNotRefreshing");
 	}
-#endif
-
 }

@@ -1,5 +1,4 @@
-﻿// #if IOS
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -15,7 +14,6 @@ public class Issue11107 : _IssuesUITest
 
 	[Test]
 	[Category(UITestCategories.Shell)]
-	// [FailsOnIOSWhenRunningOnXamarinUITest]
 	public void TabShouldntBeVisibleWhenThereIsOnlyOnePage()
 	{
 		RunTests();
@@ -24,7 +22,6 @@ public class Issue11107 : _IssuesUITest
 		App.Tap("RunTestTwoTabs");
 		RunTests();
 
-		// RunningApp.Back();
 
 		void RunTests()
 		{
@@ -36,4 +33,3 @@ public class Issue11107 : _IssuesUITest
 		}
 	}
 }
-// #endif
