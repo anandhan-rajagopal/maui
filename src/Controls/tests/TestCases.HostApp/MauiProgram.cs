@@ -49,11 +49,11 @@ namespace Maui.Controls.Sample
 #if IOS || ANDROID || MACCATALYST
 				handlers.AddHandler(typeof(Bugzilla21177.CollectionView), typeof(CustomCollectionViewHandler));
 #endif
-#if IOS
+#if IOS || MACCATALYST || ANDROID
  				handlers.AddHandler(typeof(Issue6368.MainPage.RoundedLabel), typeof(Issue6368.RoundedLabelHandler));
                 handlers.AddHandler(typeof(Issue6368.MainPage.CustomView), typeof(Issue6368.CustomViewHandler));
 #endif
-#if IOS || ANDROID || WINDOWS
+#if IOS || ANDROID || WINDOWS || MACCATALYST
 				handlers.AddHandler(typeof(NativeListView), typeof(NativeListViewHandler));
 				handlers.AddHandler(typeof(NativeListView2), typeof(NativeListView2Handler));
 #endif

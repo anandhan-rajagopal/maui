@@ -1,8 +1,7 @@
 using Microsoft.Maui.Handlers;
 using TextAlignment = Microsoft.Maui.TextAlignment;
 using View = Microsoft.Maui.Controls.View;
-using Microsoft.Maui.Controls;
-#if IOS
+#if IOS || MACCATALYST
 using UIKit;
 using Foundation;
 #elif ANDROID
@@ -108,7 +107,7 @@ public class NativeListView : View
 	{
 	}
 }
-#if IOS
+#if IOS || MACCATALYST
 public class NativeListViewHandler : ViewHandler<NativeListView, UITableView>
 {
 	public static PropertyMapper<NativeListView, NativeListViewHandler> PropertyMapper = new PropertyMapper<NativeListView, NativeListViewHandler>(ViewHandler.ViewMapper)
@@ -532,7 +531,7 @@ public class NativeListView2 : View
 	{
 	}
 }
-#if IOS
+#if IOS || MACCATALYST
 public class NativeListView2Handler : ViewHandler<NativeListView2, UITableView>
 {
 	public static PropertyMapper<NativeListView2, NativeListView2Handler> PropertyMapper = new PropertyMapper<NativeListView2, NativeListView2Handler>(ViewHandler.ViewMapper)

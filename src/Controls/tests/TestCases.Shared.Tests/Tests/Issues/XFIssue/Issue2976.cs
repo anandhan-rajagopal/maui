@@ -1,5 +1,4 @@
-﻿#if IOS || ANDROID || WINDOWS
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using UITest.Appium;
 using UITest.Core;
 
@@ -27,4 +26,3 @@ public class Issue2976 : _IssuesUITest
 		App.Tap("DEMOD");
 	}
 }
-#endif
