@@ -53,6 +53,24 @@ namespace Microsoft.Maui.DeviceTests
 				Assert.Equal(expectedValue, valuesSecond.PlatformViewValue);
 			});
 		}
+
+		[Fact]
+		[Description("The IsEnabled of a RadioButton should match with native IsEnabled")]		
+		public async Task RadioButtonIsEnabled()
+		{
+			var radioButton = new RadioButton();
+			radioButton.IsEnabled = false;
+			var expectedValue = radioButton.IsEnabled;
+
+			var handler = await CreateHandlerAsync<RadioButtonHandler>(radioButton);
+			var nativeView = GetNativeCheckBox(handler);
+			await InvokeOnMainThreadAsync(() =>
+			{
+				var isEnabled = nativeView.Enabled;
+				Assert.Equal(expectedValue, isEnabled);
+			});		
+		}
+
 #endif
 	}
 }

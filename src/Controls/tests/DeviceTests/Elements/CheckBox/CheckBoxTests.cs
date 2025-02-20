@@ -5,6 +5,7 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Hosting;
 using Xunit;
+using System.Diagnostics;
 
 namespace Microsoft.Maui.DeviceTests
 {
@@ -42,6 +43,22 @@ namespace Microsoft.Maui.DeviceTests
 			checkBox.BackgroundColor = color;
 
 			await ValidateHasColor<CheckBoxHandler>(checkBox, color);
+		}
+
+		[Fact("The IsEnabled of a CheckBox should match with native IsEnabled")]
+		public async Task CheckBoxIsEnabled()
+		{
+			var checkBox = new CheckBox();
+			checkBox.IsEnabled = false;
+			var expectedValue = checkBox.IsEnabled;
+
+			var handler = await CreateHandlerAsync<CheckBoxHandler>(checkBox);
+			var nativeView = GetNativeCheckBox(handler);
+			await InvokeOnMainThreadAsync(() =>
+			{
+				var isEnabled = nativeView.Enabled;
+				Assert.Equal(expectedValue, isEnabled);
+			});		
 		}
 	}
 }

@@ -4,7 +4,9 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Hosting;
 using Xunit;
-
+using System.ComponentModel;
+using Microsoft.Maui.Controls.Handlers;
+using System.Diagnostics;
 
 namespace Microsoft.Maui.DeviceTests
 {
@@ -27,6 +29,55 @@ namespace Microsoft.Maui.DeviceTests
 			};
 
 			await ValidateHasColor(boxView, expected, typeof(ShapeViewHandler));
+		}
+
+		[Fact]
+		[Description("The Cornerradius of a Button should match with native CornerRadius")]
+		public async Task BoxViewCornerRadius()
+		{
+			var boxView = new BoxView
+			{
+				HeightRequest = 100,
+				WidthRequest = 200,
+				BackgroundColor = Colors.Red,
+				CornerRadius = new CornerRadius(15)
+			};
+			var expected = boxView.CornerRadius;
+			var handler = await CreateHandlerAsync<BoxViewHandler>(boxView);
+			var nativeView = GetNativeBoxView(handler);
+
+			await InvokeOnMainThreadAsync( () =>
+            {
+#if ANDROID
+				if (nativeView.Background is Android.Graphics.Drawables.GradientDrawable gradientDrawable)
+                {
+                    var cornerRadius = gradientDrawable.CornerRadius;
+                    Assert.Equal((float)expected.TopLeft, cornerRadius);
+                }
+#elif IOS || MACCATALYST
+				nativeView.Layer.CornerRadius = 15f;
+                var cornerRadius = (float)nativeView.Layer.CornerRadius;
+				Assert.Equal(expected.TopLeft, cornerRadius);
+#elif WINDOWS
+                var cornerRadius = (float)nativeView.CornerRadius.TopLeft;
+                Assert.Equal(expected, cornerRadius);
+#endif
+            });
+        }
+
+		[Fact]
+		[Description("The Background of a Button should match with native Background")]
+		public async Task BoxViewBackground()
+		{
+			var boxView = new BoxView
+			{
+				HeightRequest = 100,	
+				WidthRequest = 200,
+				Background = Brush.Red
+			};
+			var expected = (boxView.Background as SolidColorBrush)?.Color;
+			
+			await ValidateHasColor(boxView, expected, typeof(BoxViewHandler));
 		}
 	}
 }

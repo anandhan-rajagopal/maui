@@ -2,6 +2,8 @@
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Handlers;
 using Xunit;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace Microsoft.Maui.DeviceTests
 {
@@ -52,6 +54,48 @@ namespace Microsoft.Maui.DeviceTests
 			{
 				Assert.Equal(expectedValue, GetPlatformLineBreakMode(handler));
 			});
+		}
+
+		[Fact]
+		[Description("The CornerRadius of a Button should match with native CornerRadius")]		
+		public async Task ButtonCornerRadius()
+		{
+			var button = new Button();
+			button.CornerRadius = 15;
+			var expectedValue = button.CornerRadius;
+
+			var handler = await CreateHandlerAsync<ButtonHandler>(button);
+			var nativeView = GetPlatformButton(handler);
+			await InvokeOnMainThreadAsync(() =>
+			{
+#if ANDROID
+			if (nativeView.Background is Android.Graphics.Drawables.GradientDrawable gradientDrawable)
+			{
+                    var cornerRadius = gradientDrawable.CornerRadius;
+                    Assert.Equal(expectedValue, cornerRadius);
+			}
+#elif IOS || MACCATALYST
+				var cornerRadius = (float)nativeView.Layer.CornerRadius;
+				Assert.Equal(expectedValue, cornerRadius);
+#endif
+			});
+ 		}
+
+		[Fact]
+		[Description("The IsEnabled of a Button should match with native IsEnabled")]		
+		public async Task ButtonIsEnabled()
+		{
+			var button = new Button();
+			button.IsEnabled = true;
+			var expectedValue = button.IsEnabled;
+
+			var handler = await CreateHandlerAsync<ButtonHandler>(button);
+			var nativeView = GetPlatformButton(handler);
+			await InvokeOnMainThreadAsync(() =>
+			{
+				var isEnabled = nativeView.Enabled;
+				Assert.Equal(expectedValue, isEnabled);
+			});		
 		}
 	}
 }
