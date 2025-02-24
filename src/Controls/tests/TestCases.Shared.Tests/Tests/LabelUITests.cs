@@ -55,9 +55,6 @@ public class LabelUITests : _ViewUITests
 		VerifyScreenshot("LabelUITests_FontFamily_Ionicons");
 	}
 
-#if WINDOWS
-	[Ignore("Windows App SDK 1.6 broke this test. See more details in https://github.com/dotnet/maui/issues/26749")]
-#endif
 	[Test]
 	public void FontFamily()
 	{
