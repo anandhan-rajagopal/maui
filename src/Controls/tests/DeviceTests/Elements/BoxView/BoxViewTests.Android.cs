@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Maui.Controls.Handlers;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
-
+using System.ComponentModel;
+using Xunit;
+using Microsoft.Maui.Controls;
+using System.Diagnostics;
 namespace Microsoft.Maui.DeviceTests
 {
 	public partial class BoxViewTests
