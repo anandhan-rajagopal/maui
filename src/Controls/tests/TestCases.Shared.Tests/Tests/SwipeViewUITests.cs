@@ -1,5 +1,4 @@
-﻿#if ANDROID || IOS
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using NUnit.Framework.Legacy;
 using UITest.Appium;
 using UITest.Core;
@@ -37,8 +36,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			// 2. Check if the SwipeView has been opened correctly.
 			var result = App.FindElement(ResultToRightId).GetText();
 			ClassicAssert.AreEqual("Success", result);
-
-			App.Screenshot("The SwipeView is Open");
 		}
 
 		[Test]
@@ -53,9 +50,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			// 2. Check if the SwipeView has been opened correctly.
 			var result = App.FindElement(ResultToLeftId).GetText();
 			ClassicAssert.AreEqual("Success", result);
-
-			App.Screenshot("The SwipeView is Open");
 		}
 	}
 }
-#endif
