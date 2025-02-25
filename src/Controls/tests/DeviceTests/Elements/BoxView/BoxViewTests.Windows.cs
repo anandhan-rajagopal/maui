@@ -10,5 +10,14 @@ namespace Microsoft.Maui.DeviceTests
 	{
 		W2DGraphicsView GetNativeBoxView(ShapeViewHandler boxViewHandler) =>
 			boxViewHandler.PlatformView;
+
+		Task<bool> GetPlatformIsVisible(ShapeViewHandler boxViewHandler)
+		{
+			return InvokeOnMainThreadAsync(() =>
+			{
+				var nativeView = GetPlatformButton(boxViewHandler);
+				return nativeView.Visibility == Windows.UI.Xaml.Visibility.Visible;
+			});
+		}
 	}
 }
