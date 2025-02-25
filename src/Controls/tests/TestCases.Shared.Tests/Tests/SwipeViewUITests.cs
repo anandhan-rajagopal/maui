@@ -36,6 +36,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			// 2. Check if the SwipeView has been opened correctly.
 			var result = App.FindElement(ResultToRightId).GetText();
 			ClassicAssert.AreEqual("Success", result);
+			VerifyScreenshot();
 		}
 
 		[Test]
@@ -50,6 +51,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			// 2. Check if the SwipeView has been opened correctly.
 			var result = App.FindElement(ResultToLeftId).GetText();
 			ClassicAssert.AreEqual("Success", result);
+			VerifyScreenshot();
 		}
 	}
 }

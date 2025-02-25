@@ -27,25 +27,39 @@ internal class ImageUITests : _ViewUITests
 	[Test]
 	public void Source_FontImageSource()
 	{
+
+		Exception? exception = null;
 		var remote = GoToStateRemote();
-		VerifyScreenshot("ImageUITests_Source_FontImageSource_FontAwesome");
+		VerifyScreenshotOrSetException(ref exception, "ImageUITests_Source_FontImageSource_FontAwesome");
 
 		remote.TapStateButton();
-		VerifyScreenshot("ImageUITests_Source_FontImageSource_Ionicons");
+		VerifyScreenshotOrSetException(ref exception, "ImageUITests_Source_FontImageSource_Ionicons");
 
 		remote.TapStateButton();
-		VerifyScreenshot("ImageUITests_Source_FontImageSource_FontAwesome");
+		VerifyScreenshotOrSetException(ref exception, "ImageUITests_Source_FontImageSource_FontAwesome");
+
+		if (exception != null)
+			{
+				throw exception;
+			}
 	}
 
 	[Test]
 	public async Task IsAnimationPlaying()
 	{
+
+		Exception? exception = null;
 		var remote = GoToStateRemote();
 		await Task.Delay(500); // make sure the gif is NOT playing
-		VerifyScreenshot("ImageUITests_IsAnimationPlaying_No");
+		VerifyScreenshotOrSetException(ref exception, "ImageUITests_IsAnimationPlaying_No");
 
 		remote.TapStateButton();
 		await Task.Delay(500); // make sure the gif IS playing
-		VerifyScreenshot("ImageUITests_IsAnimationPlaying_Yes");
+		VerifyScreenshotOrSetException(ref exception, "ImageUITests_IsAnimationPlaying_Yes");
+
+		if (exception != null)
+			{
+				throw exception;
+			}
 	}
 }
