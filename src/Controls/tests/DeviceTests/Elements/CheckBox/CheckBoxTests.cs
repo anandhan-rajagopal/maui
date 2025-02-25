@@ -5,6 +5,7 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Hosting;
 using Xunit;
+using System.ComponentModel;
 
 namespace Microsoft.Maui.DeviceTests
 {
@@ -42,6 +43,23 @@ namespace Microsoft.Maui.DeviceTests
 			checkBox.BackgroundColor = color;
 
 			await ValidateHasColor<CheckBoxHandler>(checkBox, color);
+		}
+
+		[Fact]
+		[Description("The IsVisible property of a CheckBox should match with native IsVisible")]		
+		public async Task VerifyCheckBoxIsVisibleProperty()
+		{
+			var checkBox = new CheckBox();
+			checkBox.IsVisible = false;
+			var expectedValue = checkBox.IsVisible;
+
+			var handler = await CreateHandlerAsync<CheckBoxHandler>(checkBox);
+			var nativeView = GetNativeCheckBox(handler);
+			 await InvokeOnMainThreadAsync( async () =>
+   			 {
+				var nativeView = await GetPlatformIsVisible(handler);
+		        Assert.Equal(expectedValue, nativeView);
+    		});	
 		}
 	}
 }
