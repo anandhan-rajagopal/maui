@@ -11,6 +11,7 @@ namespace UITest.Appium
 			: base(new WindowsDriver(remoteAddress, GetOptions(config)), config)
 		{
 			_commandExecutor.AddCommandGroup(new AppiumWindowsContextMenuActions(this));
+			_commandExecutor.AddCommandGroup(new AppiumWindowsAlertActions(this));
 			_commandExecutor.AddCommandGroup(new AppiumWindowsStepperActions(this));
 			_commandExecutor.AddCommandGroup(new AppiumWindowsThemeChangeAction());
 			_commandExecutor.AddCommandGroup(new AppiumWindowsVirtualKeyboardActions(this));
