@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿#if TEST_FAILS_ON_CATALYST //In Mac, SwipeRightToLeft decreases the display brightness instead of performing the intended item swipe action.
+using NUnit.Framework;
 using NUnit.Framework.Legacy;
 using UITest.Appium;
 using UITest.Core;
@@ -55,3 +56,4 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 	}
 }
+#endif
