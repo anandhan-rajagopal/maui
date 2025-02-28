@@ -1,8 +1,11 @@
 ﻿#nullable enable
+using System.ComponentModel;
 using System.Threading.Tasks;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using Microsoft.UI.Xaml.Controls;
+using Xunit;
 
 namespace Microsoft.Maui.DeviceTests
 {

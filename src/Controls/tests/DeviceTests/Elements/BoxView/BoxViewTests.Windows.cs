@@ -5,6 +5,8 @@ using Microsoft.Maui.Graphics.Win2D;
 using Microsoft.Maui.Handlers;
 using Xunit;
 using System.ComponentModel;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Handlers;
 
 namespace Microsoft.Maui.DeviceTests
 {
