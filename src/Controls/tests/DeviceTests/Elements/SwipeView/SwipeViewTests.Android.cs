@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.ComponentModel;
+using System.Threading.Tasks;
 using Android.Views;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
@@ -9,7 +10,6 @@ using static Microsoft.Maui.DeviceTests.AssertHelpers;
 
 namespace Microsoft.Maui.DeviceTests
 {
-	[Category(TestCategory.SwipeView)]
 	public partial class SwipeViewTests : ControlsHandlerTestBase
 	{
 		[Fact(DisplayName = "SwipeItem Size Initializes Correctly")]
@@ -69,6 +69,28 @@ namespace Microsoft.Maui.DeviceTests
 				Assert.NotEqual(0, swipeItem.Width);
 			});
 		}
+
+		[Fact]
+		[Description("The ScaleX property of a SwipeView should match with native ScaleX")]
+        public async Task ScaleXConsistent()
+        {
+            var swipeView = new SwipeView() { ScaleX = 0.45f };
+            var handler = await CreateHandlerAsync<SwipeViewHandler>(swipeView);
+            var expected = swipeView.ScaleX;
+            var platformScaleX = await InvokeOnMainThreadAsync(() => handler.PlatformView.ScaleX);
+            Assert.Equal(expected, platformScaleX);
+        }
+
+		[Fact]
+		[Description("The ScaleY property of a SwipeView should match with native ScaleY")]
+        public async Task ScaleYConsistent()
+        {
+            var swipeView = new SwipeView() { ScaleY = 0.45f };
+            var handler = await CreateHandlerAsync<SwipeViewHandler>(swipeView);
+            var expected = swipeView.ScaleY;
+            var platformScaleY = await InvokeOnMainThreadAsync(() => handler.PlatformView.ScaleY);
+            Assert.Equal(expected, platformScaleY);
+        }
 
 		MauiSwipeView GetPlatformControl(SwipeViewHandler handler) =>
 			handler.PlatformView;
