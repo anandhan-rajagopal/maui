@@ -1,4 +1,5 @@
-﻿using Microsoft.Maui.Handlers;
+﻿using System.Threading.Tasks;
+using Microsoft.Maui.Handlers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
