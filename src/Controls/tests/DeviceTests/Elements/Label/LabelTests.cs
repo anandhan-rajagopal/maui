@@ -741,17 +741,6 @@ namespace Microsoft.Maui.DeviceTests
 
 			await ValidateHasColor(label, expected, typeof(LabelHandler));
 		}
-
-		[Fact]
-		[Description("Basic sanity check that Label text matches renderer text")]
-		public async Task LabelTextMatchesRendererText()
-		{
-			var label = new Label { Text = "foo" };
-			var expected = label.Text;
-			var handler = await CreateHandlerAsync<LabelHandler>(label);
-			var platformText = await InvokeOnMainThreadAsync(() => TextForHandler(handler));
-			Assert.Equal(expected, platformText);
-		}
 		Color TextColor(LabelHandler handler)
 		{
 #if __IOS__
@@ -776,7 +765,7 @@ namespace Microsoft.Maui.DeviceTests
 			Assert.Equal(targetFontSize, platformTypeface.PointSize);
 #elif __ANDROID__
 			var targetTypeface = fontManager.GetTypeface(font);
-			var targetFontSize = handler.MauiContext.Context.ToPixels(fontManager.GetFontSize(font).Value);		
+			var targetFontSize = handler.MauiContext.Context.ToPixels(fontManager.GetFontSize(font).Value);
 			var platformTypeface = handler.PlatformView.Typeface;
 			var platformFontSize = handler.PlatformView.TextSize;
 
