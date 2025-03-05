@@ -742,6 +742,16 @@ namespace Microsoft.Maui.DeviceTests
 			await ValidateHasColor(label, expected, typeof(LabelHandler));
 		}
 
+		[Fact]
+		[Description("Basic sanity check that Label text matches renderer text")]
+		public async Task LabelTextMatchesRendererText()
+		{
+			var label = new Label { Text = "foo" };
+			var expected = label.Text;
+			var handler = await CreateHandlerAsync<LabelHandler>(label);
+			var platformText = await InvokeOnMainThreadAsync(() => TextForHandler(handler));
+			Assert.Equal(expected, platformText);
+		}
 		Color TextColor(LabelHandler handler)
 		{
 #if __IOS__
