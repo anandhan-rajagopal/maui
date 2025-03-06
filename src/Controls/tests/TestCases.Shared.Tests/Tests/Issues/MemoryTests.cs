@@ -17,7 +17,6 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		[Category(UITestCategories.DatePicker)]
 		public void DatePickerDoesNotLeak()
 		{
-			VerifyInternetConnectivity();
 			App.WaitForElement("DataTypeEntry");
 			App.EnterText("DataTypeEntry", "DatePicker");
 			App.Tap("RunMemoryTestButton");
@@ -31,6 +30,16 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 			VerifyInternetConnectivity();
 			App.WaitForElement("DataTypeEntry");
 			App.EnterText("DataTypeEntry", "WebView");
+			App.Tap("RunMemoryTestButton");
+			App.AssertMemoryTest();
+		}
+
+		[Test]
+		[Category(UITestCategories.Image)]
+		public void ImageDoesNotLeak()
+		{
+			App.WaitForElement("DataTypeEntry");
+			App.EnterText("DataTypeEntry", "Image");
 			App.Tap("RunMemoryTestButton");
 			App.AssertMemoryTest();
 		}
