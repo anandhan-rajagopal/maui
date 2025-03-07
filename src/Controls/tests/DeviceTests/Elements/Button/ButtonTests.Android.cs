@@ -8,6 +8,7 @@ using Microsoft.Maui.DeviceTests.Stubs;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Hosting;
 using Xunit;
+using System.ComponentModel;
 
 namespace Microsoft.Maui.DeviceTests
 {
@@ -81,5 +82,31 @@ namespace Microsoft.Maui.DeviceTests
 			});
 		}
 
+		[Fact]
+		[Description("The Translation property of a Button should match with native Translation")]
+        public async Task ButtonTranslationConsistent()
+        {
+            var button = new Button()
+            {
+                Text = "Button Test",
+                TranslationX = 50,
+                TranslationY = -20
+            };
+
+            var handler = await CreateHandlerAsync<ButtonHandler>(button);
+			var nativeView = GetPlatformButton(handler);
+            await InvokeOnMainThreadAsync(() =>
+            {
+				var translation = nativeView.TranslationX;
+				var density = Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo.Density;       
+				var expectedInPixels = density * button.TranslationX;
+				
+				Assert.Equal(expectedInPixels, translation, 1.0);
+
+				var translationY = nativeView.TranslationY;
+				var expectedYInPixels = density * button.TranslationY;
+				Assert.Equal(expectedYInPixels, translationY, 1.0);
+            });
+        }
 	}
 }
