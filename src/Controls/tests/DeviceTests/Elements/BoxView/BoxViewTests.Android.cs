@@ -22,24 +22,24 @@ namespace Microsoft.Maui.DeviceTests
 				return nativeView.Alpha;
 		[Fact]
 		[Description("The Translation property of a BoxView should match with native Translation")]
-        public async Task BoxViewTranslationConsistent()
-        {
-            var boxView = new BoxView()
-            {
+		public async Task BoxViewTranslationConsistent()
+		{
+			var boxView = new BoxView()
+			{
 				HeightRequest = 100,
 				WidthRequest = 200,
-                TranslationX = 50,
-                TranslationY = -20
-            };
+				TranslationX = 50,
+				TranslationY = -20
+			};
 
-            var handler = await CreateHandlerAsync<ShapeViewHandler>(boxView);
+			var handler = await CreateHandlerAsync<ShapeViewHandler>(boxView);
 			var nativeView = GetNativeBoxView(handler);
-            await InvokeOnMainThreadAsync(() =>
-            {
+			await InvokeOnMainThreadAsync(() =>
+			{
 				var translation = nativeView.TranslationX;
-				var density = Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo.Density;       
+				var density = Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo.Density;
 				var expectedInPixels = density * boxView.TranslationX;
-				
+
 				Assert.Equal(expectedInPixels, translation, 1.0);
 
 				var translationY = nativeView.TranslationY;

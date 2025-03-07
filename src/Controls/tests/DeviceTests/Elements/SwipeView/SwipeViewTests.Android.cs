@@ -73,29 +73,29 @@ namespace Microsoft.Maui.DeviceTests
 
 		[Fact]
 		[Description("The Translation property of a SwipeView should match with native Translation")]
-        public async Task SwipeViewTranslationConsistent()
-        {
-            var swipeView = new SwipeView()
-            {
-                TranslationX = 50,
-                TranslationY = -20
-            };
+		public async Task SwipeViewTranslationConsistent()
+		{
+			var swipeView = new SwipeView()
+			{
+				TranslationX = 50,
+				TranslationY = -20
+			};
 
-            var handler = await CreateHandlerAsync<SwipeViewHandler>(swipeView);
+			var handler = await CreateHandlerAsync<SwipeViewHandler>(swipeView);
 			var nativeView = GetPlatformControl(handler);
-            await InvokeOnMainThreadAsync(() =>
-            {
+			await InvokeOnMainThreadAsync(() =>
+			{
 				var translation = nativeView.TranslationX;
-				var density = Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo.Density;       
+				var density = Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo.Density;
 				var expectedInPixels = density * swipeView.TranslationX;
-				
+
 				Assert.Equal(expectedInPixels, translation, 1.0);
 
 				var translationY = nativeView.TranslationY;
 				var expectedYInPixels = density * swipeView.TranslationY;
 				Assert.Equal(expectedYInPixels, translationY, 1.0);
-            });
-        }
+			});
+		}
 
 		MauiSwipeView GetPlatformControl(SwipeViewHandler handler) =>
 			handler.PlatformView;

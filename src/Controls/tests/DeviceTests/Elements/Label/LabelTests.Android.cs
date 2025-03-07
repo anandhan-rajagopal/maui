@@ -91,30 +91,30 @@ namespace Microsoft.Maui.DeviceTests
 
 		[Fact]
 		[Description("The Translation property of a Label should match with native Translation")]
-        public async Task LabelTranslationConsistent()
-        {
-            var label = new Label()
-            {
-                Text = "Label Test",
-                TranslationX = 50,
-                TranslationY = -20
-            };
+		public async Task LabelTranslationConsistent()
+		{
+			var label = new Label()
+			{
+				Text = "Label Test",
+				TranslationX = 50,
+				TranslationY = -20
+			};
 
-            var handler = await CreateHandlerAsync<LabelHandler>(label);
+			var handler = await CreateHandlerAsync<LabelHandler>(label);
 			var nativeView = GetPlatformLabel(handler);
-            await InvokeOnMainThreadAsync(() =>
-            {
+			await InvokeOnMainThreadAsync(() =>
+			{
 				var translation = nativeView.TranslationX;
-				var density = Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo.Density;       
+				var density = Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo.Density;
 				var expectedInPixels = density * label.TranslationX;
-				
+
 				Assert.Equal(expectedInPixels, translation, 1.0);
 
 				var translationY = nativeView.TranslationY;
 				var expectedYInPixels = density * label.TranslationY;
 				Assert.Equal(expectedYInPixels, translationY, 1.0);
-            });
-        }
+			});
+		}
 
 		TextView GetPlatformLabel(LabelHandler labelHandler) =>
 			labelHandler.PlatformView;

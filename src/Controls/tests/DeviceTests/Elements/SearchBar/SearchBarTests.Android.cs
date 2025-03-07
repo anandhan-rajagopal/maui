@@ -44,29 +44,29 @@ namespace Microsoft.Maui.DeviceTests
 		}
 		[Fact]
 		[Description("The Translation property of a SearchBar should match with native Translation")]
-        public async Task SearchBarTranslationConsistent()
-        {
-            var searchBar = new SearchBar()
-            {
-                Text = "SearchBar Test",
-                TranslationX = 50,
-                TranslationY = -20
-            };
+		public async Task SearchBarTranslationConsistent()
+		{
+			var searchBar = new SearchBar()
+			{
+				Text = "SearchBar Test",
+				TranslationX = 50,
+				TranslationY = -20
+			};
 
-            var handler = await CreateHandlerAsync<SearchBarHandler>(searchBar);
+			var handler = await CreateHandlerAsync<SearchBarHandler>(searchBar);
 			var nativeView = GetPlatformControl(handler);
-            await InvokeOnMainThreadAsync(() =>
-            {
+			await InvokeOnMainThreadAsync(() =>
+			{
 				var translation = nativeView.TranslationX;
-				var density = Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo.Density;       
+				var density = Microsoft.Maui.Devices.DeviceDisplay.Current.MainDisplayInfo.Density;
 				var expectedInPixels = density * searchBar.TranslationX;
-				
+
 				Assert.Equal(expectedInPixels, translation, 1.0);
 
 				var translationY = nativeView.TranslationY;
 				var expectedYInPixels = density * searchBar.TranslationY;
 				Assert.Equal(expectedYInPixels, translationY, 1.0);
-            });
-        }
+			});
+		}
 	}
 }
