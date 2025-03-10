@@ -460,7 +460,7 @@ namespace Microsoft.Maui.DeviceTests
 			SetupBuilder();
 			
 			var initialHeader = new Label() { Text = "Hello" };
-			var newHeader = new Label() { Text = "MAUI FRAMEWORK" };
+			var newHeader = new Label() { Text = "Hello Part 2" };
 			
 			var shell = await CreateShellAsync(shell =>
 			{
