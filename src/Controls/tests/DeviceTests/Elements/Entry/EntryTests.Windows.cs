@@ -46,6 +46,7 @@ namespace Microsoft.Maui.DeviceTests
 		[InlineData(false, FlowDirection.RightToLeft, WTextAlignment.Left)]
 		[Description("The Entry's text alignment should match the expected alignment when FlowDirection is applied explicitly or implicitly.")]
 		public async Task EntryAlignmentMatchesFlowDirection(bool isExplicit, FlowDirection flowDirection, WTextAlignment expectedAlignment)
+		public async Task<WTextAlignment> EntryAlignmentMatchesFlowDirection(bool isExplicit, FlowDirection flowDirection)
 		{
 			var entry = new Entry { Text = "Checking flow direction", HorizontalTextAlignment = TextAlignment.Start };
 			var contentPage = new ContentPage { Title = "Flow Direction", Content = entry };
