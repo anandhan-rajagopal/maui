@@ -143,6 +143,23 @@ namespace Microsoft.Maui.DeviceTests
 			}
 		}
 
+		[Fact(DisplayName = "IndexPath Range Generation Is Correct")]
+		public async Task GenerateIndexPathRange()
+		{
+			SetupBuilder();
+			
+			var result = await InvokeOnMainThreadAsync(() => 
+        			IndexPathHelpers.GenerateIndexPathRange(0, 0, 5));
+			
+			Assert.Equal(5, result.Length);
+			
+			Assert.Equal(0, result[0].Section);
+			Assert.Equal(0, (int)result[0].Item);
+			
+			Assert.Equal(0, result[4].Section);
+			Assert.Equal(4, (int)result[4].Item);
+		}
+
 		Rect GetCollectionViewCellBounds(IView cellContent)
 		{
 			if (!cellContent.ToPlatform().IsLoaded())
