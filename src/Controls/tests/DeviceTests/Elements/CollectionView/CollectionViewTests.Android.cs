@@ -86,6 +86,15 @@ namespace Microsoft.Maui.DeviceTests
 				});
 		}
 
+		[Fact(DisplayName = "EmptySource should have a count of zero")]
+		[Trait("Category", "CollectionView")]
+		public void EmptySourceCountIsZero()
+		{
+			var emptySource = new EmptySource();
+			var count = emptySource.Count;
+			Assert.Equal(0, count);
+		}
+
 		Rect GetCollectionViewCellBounds(IView cellContent)
 		{
 			if (!cellContent.ToPlatform().IsLoaded())
