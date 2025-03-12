@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using CoreGraphics;
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.DeviceTests.Stubs;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
@@ -40,6 +41,21 @@ namespace Microsoft.Maui.DeviceTests
 			Assert.Equal(expectedValue, values.PlatformViewValue);
 		}
 
+		[Fact]
+		[Trait("Category", "ImageButton")]
+		public async Task CreatedWithCorrectButtonType()
+		{
+			var imageButton = new ImageButton();
+			var handler = await CreateHandlerAsync(imageButton);
+			
+			var buttonType = await InvokeOnMainThreadAsync(() =>
+			{
+				var uiButton = GetPlatformImageButton(handler);
+				return uiButton.ButtonType;
+			});
+			
+			Assert.NotEqual(UIButtonType.Custom, buttonType);
+		}
 		UIButton GetPlatformImageButton(ImageButtonHandler imageButtonHandler) =>
 			imageButtonHandler.PlatformView;
 
