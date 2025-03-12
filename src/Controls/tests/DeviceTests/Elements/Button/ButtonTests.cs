@@ -70,5 +70,6 @@ namespace Microsoft.Maui.DeviceTests
 
 			await ValidateHasColor(button, expected, typeof(ButtonHandler));
 		}
+		
 	}
 }

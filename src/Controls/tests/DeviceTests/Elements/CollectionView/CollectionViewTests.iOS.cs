@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using CoreGraphics;
+using Foundation;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Handlers.Items;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using UIKit;
 using Xunit;
@@ -160,6 +162,69 @@ namespace Microsoft.Maui.DeviceTests
 			Assert.Equal(4, (int)result[4].Item);
 		}
 
+		[Fact(DisplayName = "IndexPath Range Generation For Loops Is Correct")]
+		public async Task GenerateIndexPathRangeForLoop()
+		{
+			SetupBuilder();
+			
+			var result = await InvokeOnMainThreadAsync(() => 
+					IndexPathHelpers.GenerateLoopedIndexPathRange(0, 15, 3, 2, 3));
+			
+			Assert.Equal(9, result.Length);
+			
+			for (int i = 0; i < result.Length; i++)
+			{
+				Assert.Equal(0, result[i].Section);
+			}
+			
+			Assert.Equal(2, (int)result[0].Item);
+			Assert.Equal(3, (int)result[1].Item);
+			Assert.Equal(4, (int)result[2].Item);
+			
+			Assert.Equal(7, (int)result[3].Item);
+			Assert.Equal(8, (int)result[4].Item);
+			Assert.Equal(9, (int)result[5].Item);
+			
+			Assert.Equal(12, (int)result[6].Item);
+			Assert.Equal(13, (int)result[7].Item);
+			Assert.Equal(14, (int)result[8].Item);
+		}
+
+		[Fact(DisplayName = "IndexPath Validity Check Is Correct")]
+		public async Task IndexPathValidTest()
+		{
+			SetupBuilder();
+
+			var list = new List<string> { "one", "two", "three" };
+			var collectionView = new CollectionView
+			{
+				ItemsSource = list,
+				ItemTemplate = new DataTemplate(() => new Label{})
+			};
+
+			var contentPage = new ContentPage { Content = collectionView };
+
+			await CreateHandlerAndAddToWindow<IWindowHandler>(contentPage, async (_) =>
+			{
+				await Task.Delay(1000);
+
+				await InvokeOnMainThreadAsync(() =>
+				{
+					Assert.NotNull(collectionView.Handler);
+
+					var validPath = NSIndexPath.FromItemSection(2, 0);
+					var invalidItemPath = NSIndexPath.FromItemSection(7, 0);
+					var invalidSectionPath = NSIndexPath.FromItemSection(1, 9);
+					
+					var source = new ListSource((IEnumerable<object>)list);
+					
+					Assert.True(IndexPathHelpers.IsIndexPathValid(source, validPath));
+					Assert.False(IndexPathHelpers.IsIndexPathValid(source, invalidItemPath));
+					Assert.False(IndexPathHelpers.IsIndexPathValid(source, invalidSectionPath)); 
+				});
+			});
+		}
+		 
 		Rect GetCollectionViewCellBounds(IView cellContent)
 		{
 			if (!cellContent.ToPlatform().IsLoaded())
