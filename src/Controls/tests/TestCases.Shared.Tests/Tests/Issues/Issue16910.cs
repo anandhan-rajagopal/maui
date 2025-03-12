@@ -26,16 +26,19 @@ public class Issue16910 : _IssuesUITest
 		App.Tap("StopRefreshing");
 		App.WaitForElement("IsNotRefreshing");
 	}
+
+#if TEST_FAILS_ON_CATALYST // Appium commands like scroll and drag are unable to activate the refresh command for the CollectionView control. In Manual testing also requires quick and fast scrolling to activate.
 	[Test]
 	public void BindingUpdatesFromInteractiveRefresh()
 	{
 		const int offset = 50;
 
 		var collectionViewRect = App.WaitForElement("CollectionView").GetRect();
-		//In CI, using App.ScrollDown sometimes fails to trigger the refresh command, so here use DragCoordinates instead of the ScrollDown action in Appium.
+		//In CI, using App.ScrollUp sometimes fails to trigger the refresh command, so here use DragCoordinates instead of the ScrollUp action in Appium.
 		App.DragCoordinates(collectionViewRect.CenterX(), collectionViewRect.Y + offset, collectionViewRect.CenterX(), collectionViewRect.Y + collectionViewRect.Height - offset);
 		App.WaitForElement("IsRefreshing");
 		App.Tap("StopRefreshing");
 		App.WaitForElement("IsNotRefreshing");
 	}
+#endif
 }
