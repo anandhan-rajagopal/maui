@@ -38,7 +38,13 @@ namespace Microsoft.Maui.DeviceTests
 		static int GetPlatformSelectionLength(EntryHandler entryHandler) =>
 			GetPlatformControl(entryHandler).SelectionLength;
 
-		public async Task<WTextAlignment> EntryAlignmentMatchesFlowDirection(bool isExplicit, FlowDirection flowDirection)
+		[Theory]
+		[InlineData(true, FlowDirection.LeftToRight, WTextAlignment.Left)]
+		[InlineData(true, FlowDirection.RightToLeft, WTextAlignment.Left)]
+		[InlineData(false, FlowDirection.LeftToRight, WTextAlignment.Left)]
+		[InlineData(false, FlowDirection.RightToLeft, WTextAlignment.Left)]
+		[Description("The Entry's text alignment should match the expected alignment when FlowDirection is applied explicitly or implicitly.")]
+		public async Task EntryAlignmentMatchesFlowDirection(bool isExplicit, FlowDirection flowDirection, WTextAlignment expectedAlignment)
 		{
 			var entry = new Entry { Text = "Checking flow direction", HorizontalTextAlignment = TextAlignment.Start };
 			var contentPage = new ContentPage { Title = "Flow Direction", Content = entry };
@@ -58,39 +64,8 @@ namespace Microsoft.Maui.DeviceTests
 				var textField = GetPlatformControl(handler);
 				return textField.TextAlignment;
 			});
-			return nativeAlignment;
-		}
 
-		[Fact]
-		[Description("The Entry's text alignment should match the expected alignment when FlowDirection is explicitly set to LeftToRight.")]
-		public async Task EntryAlignmentMatchesFlowDirectionLtrExplicit()
-		{
-			var results = await EntryAlignmentMatchesFlowDirection(true, FlowDirection.LeftToRight);
-			Assert.Equal(WTextAlignment.Left, results);
-		}
-
-		[Fact]
-		[Description("The Entry's text alignment should match the expected alignment when FlowDirection is explicitly set to RightToLeft.")]
-		public async Task EntryAlignmentMatchesFlowDirectionRtlExplicit()
-		{
-			var results = await EntryAlignmentMatchesFlowDirection(true, FlowDirection.RightToLeft);
-			Assert.Equal(WTextAlignment.Left, results);
-		}
-
-		[Fact]
-		[Description("The Entry's text alignment should match the expected alignment when FlowDirection is implicitly set to LeftToRight.")]
-		public async Task EntryAlignmentMatchesFlowDirectionLtrImplicit()
-		{
-			var results = await EntryAlignmentMatchesFlowDirection(false, FlowDirection.LeftToRight);
-			Assert.Equal(WTextAlignment.Left, results);
-		}
-
-		[Fact]
-		[Description("The Entry's text alignment should match the expected alignment when FlowDirection is implicitly set to RightToLeft.")]
-		public async Task EntryAlignmentMatchesFlowDirectionRtlImplicit()
-		{
-			var results = await EntryAlignmentMatchesFlowDirection(false, FlowDirection.RightToLeft);
-			Assert.Equal(WTextAlignment.Left, results);
+			Assert.Equal(expectedAlignment, nativeAlignment);
 		}
 	}
 }
