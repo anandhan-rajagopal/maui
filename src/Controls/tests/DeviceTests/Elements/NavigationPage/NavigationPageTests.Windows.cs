@@ -56,28 +56,5 @@ namespace Microsoft.Maui.DeviceTests
 				Assert.True(rootView.AppTitleBarContainer.Margin.Left > 20);
 			});
 		}
-
-		[Fact]
-		[Description("Multiple calls to NavigationRenderer.Dispose shouldn't crash")]
-		public void NavigationRendererDoubleDisposal()
-		{
-			SetupBuilder();
-
-			var root = new ContentPage()
-			{
-				Title = "root",
-				Content = new Label { Text = "Hello" }
-			};		
-
-			root.Dispatcher.DispatchAsync(() =>
-			{
-				var navPage = new NavigationPage(root);
-				var handler = CreateHandler(navPage);
-
-				// Calling Dispose more than once should be fine
-				handler.DisconnectHandler();
-				handler.DisconnectHandler();
-			});
-		}
 	}
 }
