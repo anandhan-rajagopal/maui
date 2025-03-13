@@ -40,7 +40,12 @@ namespace Microsoft.Maui.DeviceTests
 		static int GetPlatformSelectionLength(EditorHandler editorHandler) =>
 			GetPlatformControl(editorHandler).SelectionLength;
 
-		private async Task<Tuple<WTextAlignment, WFlowDirection>> GetEditorAlignmentAndFlowDirection(bool isExplicit, FlowDirection flowDirection)
+		[Theory]
+		[InlineData(true, FlowDirection.RightToLeft, WTextAlignment.Left, WFlowDirection.RightToLeft)]
+		[InlineData(true, FlowDirection.LeftToRight, WTextAlignment.Left, WFlowDirection.LeftToRight)]
+		[InlineData(false, FlowDirection.LeftToRight, WTextAlignment.Left, WFlowDirection.LeftToRight)]
+		[Description("The Editor's text alignment and flow direction should match the expected values when FlowDirection is applied explicitly or implicitly.")]
+		public async Task EditorAlignmentMatchesFlowDirection(bool isExplicit, FlowDirection flowDirection, WTextAlignment expectedAlignment, WFlowDirection expectedFlowDirection)
 		{
 			var editor = new Editor { Text = " تسجيل الدخول" };
 			var contentPage = new ContentPage { Title = "Flow Direction", Content = editor };
@@ -53,40 +58,16 @@ namespace Microsoft.Maui.DeviceTests
 			{
 				contentPage.FlowDirection = flowDirection;
 			}
+
 			var handler = await CreateHandlerAsync<EditorHandler>(editor);
 			var (nativeAlignment, nativeFlowDirection) = await contentPage.Dispatcher.DispatchAsync(() =>
 			{
 				var textField = GetPlatformControl(handler);
 				return (textField.TextAlignment, textField.FlowDirection);
 			});
-			return new Tuple<WTextAlignment, WFlowDirection>(nativeAlignment, nativeFlowDirection);
-		}
 
-		[Fact]
-		[Description("The Editor's text alignment and flow direction should match the expected values when FlowDirection is explicitly set to RightToLeft.")]
-		public async Task EditorAlignmentMatchesFlowDirectionRtlExplicit()
-		{
-			var results = await GetEditorAlignmentAndFlowDirection(true, FlowDirection.RightToLeft);
-			Assert.Equal(WTextAlignment.Left, results.Item1);
-			Assert.Equal(WFlowDirection.RightToLeft, results.Item2);
-		}
-
-		[Fact]
-		[Description("The Editor's text alignment and flow direction should match the expected values when FlowDirection is explicitly set to LeftToRight.")]
-		public async Task EditorAlignmentMatchesFlowDirectionLtrExplicit()
-		{
-			var results = await GetEditorAlignmentAndFlowDirection(true, FlowDirection.LeftToRight);
-			Assert.Equal(WTextAlignment.Left, results.Item1);
-			Assert.Equal(WFlowDirection.LeftToRight, results.Item2);
-		}
-
-		[Fact]
-		[Description("The Editor's text alignment and flow direction should match the expected values when FlowDirection is implicitly set to LeftToRight.")]
-		public async Task EditorAlignmentMatchesFlowDirectionLtrImplicit()
-		{
-			var results = await GetEditorAlignmentAndFlowDirection(false, FlowDirection.LeftToRight);
-			Assert.Equal(WTextAlignment.Left, results.Item1);
-			Assert.Equal(WFlowDirection.LeftToRight, results.Item2);
+			Assert.Equal(expectedAlignment, nativeAlignment);
+			Assert.Equal(expectedFlowDirection, nativeFlowDirection);
 		}
 	}
 }

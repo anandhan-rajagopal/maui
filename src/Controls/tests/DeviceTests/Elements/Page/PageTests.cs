@@ -6,8 +6,10 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using Xunit;
+#if ANDROID
 using AView = Android.Views.View;
 using AndroidX.Fragment.App;
+#endif
 
 namespace Microsoft.Maui.DeviceTests
 {
