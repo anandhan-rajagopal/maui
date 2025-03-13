@@ -47,7 +47,6 @@ namespace Microsoft.Maui.DeviceTests
 		[InlineData(false, FlowDirection.LeftToRight, WTextAlignment.Left, WFlowDirection.LeftToRight)]
 		[Description("The Editor's text alignment and flow direction should match the expected values when FlowDirection is applied explicitly or implicitly.")]
 		public async Task EditorAlignmentMatchesFlowDirection(bool isExplicit, FlowDirection flowDirection, WTextAlignment expectedAlignment, WFlowDirection expectedFlowDirection)
-		private async Task<Tuple<WTextAlignment, WFlowDirection>> GetEditorAlignmentAndFlowDirection(bool isExplicit, FlowDirection flowDirection)
 		{
 			var editor = new Editor { Text = " تسجيل الدخول" };
 			var contentPage = new ContentPage { Title = "Flow Direction", Content = editor };
