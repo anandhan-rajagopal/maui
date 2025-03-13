@@ -11,6 +11,7 @@ namespace Microsoft.Maui.DeviceTests
 {
 	public partial class PageTests : ControlsHandlerTestBase
 	{
+		//src/Compatibility/Core/tests/Android/EmbeddingTests.cs
 		[Fact(DisplayName = "Can Create Platform View From ContentPage")]
 		public async Task CanCreatePlatformViewFromContentPage()
 		{

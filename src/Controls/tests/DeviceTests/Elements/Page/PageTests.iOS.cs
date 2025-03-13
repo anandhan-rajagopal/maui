@@ -44,6 +44,7 @@ namespace Microsoft.Maui.DeviceTests
 			});
 		}
 
+		//src/Compatibility/Core/tests/iOS/EmbeddingTests.cs
 		[Fact(DisplayName = "Can Create Platform View From ContentPage")]
 		public async Task CanCreateViewControllerFromContentPage()
 		{
