@@ -67,28 +67,29 @@ namespace Microsoft.Maui.DeviceTests
 			var translucent = await GetValueAsync(navPage, (handler) => (handler.ViewController as UINavigationController).NavigationBar.Translucent);
 			Assert.Equal(enabled, translucent);
 		}
-
+		
+		//src/Compatibility/Core/tests/iOS/NavigationTests.cs
 		[Fact]
-		[Description("Multiple calls to NavigationRenderer.Dispose shouldn't crash")]
-		public void NavigationRendererDoubleDisposal()
-		{
-			SetupBuilder();
-
-			var root = new ContentPage()
-			{
-				Title = "root",
-				Content = new Label { Text = "Hello" }
-			};
-
-			root.Dispatcher.DispatchAsync(() =>
-			{
-				var navPage = new NavigationPage(root);
-				var handler = CreateHandler(navPage);
-
-				// Calling Dispose more than once should be fine
-				handler.DisconnectHandler();
-				handler.DisconnectHandler();
-			});
-		}
+        [Description("Multiple calls to NavigationRenderer.Dispose shouldn't crash")]
+        public void NavigationRendererDoubleDisposal()
+        {
+            SetupBuilder();
+ 
+            var root = new ContentPage()
+            {
+                Title = "root",
+                Content = new Label { Text = "Hello" }
+            };
+ 
+            root.Dispatcher.DispatchAsync(() =>
+            {
+                var navPage = new NavigationPage(root);
+                var handler = CreateHandler(navPage);
+ 
+                // Calling Dispose more than once should be fine
+                (handler.PlatformView as NavigationRenderer).Dispose();
+                (handler.PlatformView as NavigationRenderer).Dispose();
+            });
+        }
 	}
 }
