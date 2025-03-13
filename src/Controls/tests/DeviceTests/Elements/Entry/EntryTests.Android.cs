@@ -82,6 +82,7 @@ namespace Microsoft.Maui.DeviceTests
 			Assert.Equal(longText[..4], entry.Text);
 		}
 
+		//src/Compatibility/Core/tests/Android/TranslationTests.cs
 		[Fact]
 		[Description("The Translation property of a Entry should match with native Translation")]
 		public async Task EntryTranslationConsistent()

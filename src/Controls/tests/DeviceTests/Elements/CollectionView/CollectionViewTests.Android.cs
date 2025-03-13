@@ -88,157 +88,197 @@ namespace Microsoft.Maui.DeviceTests
 				});
 		}
 
+		//src/Compatibility/Core/tests/Android/ObservrableItemsSourceTests.cs#L52
 		[Fact(DisplayName = "CollectionView with SnapPointsType set should not crash")]
 		public async Task SnapPointsDoNotCrashOnOlderAPIs()
 		{
 			SetupBuilder();
 
 			var collectionView = new CollectionView();
+
 			var itemsLayout = new LinearItemsLayout(ItemsLayoutOrientation.Vertical)
 			{
 				SnapPointsType = SnapPointsType.Mandatory
 			};
 			collectionView.ItemsLayout = itemsLayout;
-			
-			collectionView.ItemsSource = new string[]
-			{
-				"Item 1",
-				"Item 2",
-				"Item 3",
-			};
 
-			ContentPage contentPage = new ContentPage() { Content = collectionView };
-
-			await CreateHandlerAndAddToWindow<IWindowHandler>(contentPage, async (_) =>
+			await InvokeOnMainThreadAsync(() => 
 			{
-				await Task.Delay(100);				
-			});
-			
-			Assert.NotNull(collectionView.Handler);
+				var handler = CreateHandler<CollectionViewHandler>(collectionView);
+				
+				var platformView = handler.PlatformView;
+				
+				collectionView.Handler = null;
+			});			
 		}
 
+		//src/Compatibility/Core/tests/Android/ObservrableItemsSourceTests.cs#L52
 		[Fact(DisplayName = "ObservableCollection modifications are reflected after UI thread processes them")]
 		public async Task ObservableSourceItemsCountConsistent()
 		{
 			SetupBuilder();
 			
-			var source = new ObservableCollection<string>
-			{
-				"Item 1",
-				"Item 2"
-			};
-
-			var collectionView = new CollectionView
-			{
-				ItemsSource = source
-			};
+			var source = new ObservableCollection<string>();
+			source.Add("Item 1");
+			source.Add("Item 2");
+			var ois = ItemsSourceFactory.Create(source, Application.Current, new MockCollectionChangedNotifier());
 			
-			ContentPage contentPage = new ContentPage() { Content = collectionView };
-			
-			await CreateHandlerAndAddToWindow<IWindowHandler>(contentPage, async (_) =>
-			{
-				await Task.Delay(100);
-				
-				Assert.Equal(2, collectionView.ItemsSource.Cast<object>().Count());				
-				await Task.Run(() => source.Add("Item 3"));
-				
-				await Task.Delay(100);	
+			Assert.Equal(2, ois.Count);
 
-				Assert.Equal(3, collectionView.ItemsSource.Cast<object>().Count());
+			source.Add("Item 3");
+
+			var count = 0;
+			await Task.Run(() => 
+			{
+				Application.Current.Dispatcher.Dispatch(() => 
+				{
+					count = ois.Count;
+				});
 			});
-			
-			Assert.NotNull(collectionView.Handler);
+			Assert.Equal(3, ois.Count);
 		}
 
+    	Android.OS.Handler _handler = new Android.OS.Handler(Android.OS.Looper.MainLooper);
+
+		//src/Compatibility/Core/tests/Android/ObservrableItemsSourceTests.cs#L52
 		[Fact(DisplayName = "Adding items is reflected after UI thread processes them")]
 		public async Task AddItemCountConsistentOnUIThread()
 		{
 			SetupBuilder();
-			
-			var source = new ObservableCollection<string>();
-			
-			var collectionView = new CollectionView
-			{
-				ItemsSource = source
-			};
-			
-			ContentPage contentPage = new ContentPage() { Content = collectionView };
-			
-			await CreateHandlerAndAddToWindow<IWindowHandler>(contentPage, async (_) =>
-			{
-				await Task.Delay(100);
-				
-				Assert.Empty(collectionView.ItemsSource.Cast<object>());
-				
-				var backgroundTask = Task.Run(() => source.Add("New Item"));
 
-				await backgroundTask;
-				
-				await Task.Delay(100);
-				
-				Assert.Single(collectionView.ItemsSource.Cast<object>());
+			var notifier = new MockCollectionChangedNotifier();
+			var source = new ObservableCollection<int>();
+			IItemsViewSource ois = ItemsSourceFactory.Create(source, Application.Current, notifier);
+
+			int countBeforeNotify = -1;
+			int onMainThreadCount = -1;
+
+
+			await Task.Run(() =>
+			{
+				source.Add(1);
+
+				_handler.PostAtFrontOfQueue(() =>
+				{
+					countBeforeNotify = ois.Count;
+				});
 			});
+
+			await Task.Delay(100);
+
+			await InvokeOnMainThreadAsync(() =>
+			{
+				onMainThreadCount = ois.Count;
+			});
+
+			Assert.Equal(0, countBeforeNotify); 
+			Assert.Equal(1, onMainThreadCount); 
+			Assert.Equal(1, notifier.InsertCount); 
 		}
 
+        //src/Compatibility/Core/tests/Android/ObservrableItemsSourceTests.cs#L52
 		[Fact(DisplayName = "Removing items is reflected after UI thread processes them")]
 		public async Task RemoveItemCountConsistentOnUIThread()
 		{
-			SetupBuilder();
-			
-			var source = new ObservableCollection<string> { "Item to remove" };
-			
-			var collectionView = new CollectionView
+			var notifier = new MockCollectionChangedNotifier();
+			var source = new ObservableCollection<int> { 1 };
+			IItemsViewSource ois = ItemsSourceFactory.Create(source, Application.Current, notifier);
+
+			int countBeforeNotify = -1;
+
+			await Task.Run(() =>
 			{
-				ItemsSource = source
-			};
-			
-			ContentPage contentPage = new ContentPage() { Content = collectionView };
-			
-			await CreateHandlerAndAddToWindow<IWindowHandler>(contentPage, async (_) =>
-			{
-				await Task.Delay(100);
-				
-				Assert.Single(collectionView.ItemsSource.Cast<object>());
-				
-				await Task.Run(() => source.RemoveAt(0));
-				
-				await Task.Delay(100);
-				
-				Assert.Empty(collectionView.ItemsSource.Cast<object>());
+				source.Remove(1);
+
+				_handler.PostAtFrontOfQueue(() => countBeforeNotify = ois.Count);
 			});
+
+			var onMainThreadCount = 0;
+			await Task.Run(() => 
+			{
+				Application.Current.Dispatcher.Dispatch(() => 
+				{
+					onMainThreadCount = ois.Count;
+				});
+			});
+			Assert.Equal(1, countBeforeNotify);
+			Assert.Equal(0, onMainThreadCount);
+			Assert.Equal(1, notifier.RemoveCount);
 		}
 
+		//src/Compatibility/Core/tests/Android/ObservrableItemsSourceTests.cs#L52
 		[Fact(DisplayName = "Item positions are updated after UI thread processes changes")]
 		public async Task GetPositionConsistentOnUIThread()
 		{
 			SetupBuilder();
-			
-			var source = new ObservableCollection<string> 
-			{ 
-				"one", 
-				"two" 
-			};
-			
-			var collectionView = new CollectionView
+
+			var notifier = new MockCollectionChangedNotifier();
+			var source = new ObservableCollection<string> { "zero", "one", "two" };
+			IItemsViewSource ois = ItemsSourceFactory.Create(source, Application.Current, notifier);
+
+			int positionBeforeNotify = -1;
+
+			await Task.Run(() =>
 			{
-				ItemsSource = source
-			};
-			
-			ContentPage contentPage = new ContentPage() { Content = collectionView };
-			
-			await CreateHandlerAndAddToWindow<IWindowHandler>(contentPage, async (_) =>
-			{
-				await Task.Delay(100);
-				
-				Assert.Equal(0, ((ObservableCollection<string>)collectionView.ItemsSource).IndexOf("one"));
-				
-				await Task.Run(() => source.Insert(0, "zero"));
-				
-				await Task.Delay(100);
-				
-				Assert.Equal(1, ((ObservableCollection<string>)collectionView.ItemsSource).IndexOf("one"));
-				Assert.Equal(0, ((ObservableCollection<string>)collectionView.ItemsSource).IndexOf("zero"));
+				source.Insert(0, "foo");
+
+				_handler.PostAtFrontOfQueue(() =>
+				{
+					positionBeforeNotify = ois.GetPosition("zero");
+				});
 			});
+
+			await Task.Delay(100);
+
+			int positionAfterNotify = -1;
+			await InvokeOnMainThreadAsync(() =>
+			{
+				positionAfterNotify = ois.GetPosition("zero");
+			});
+
+			Assert.Equal(0, positionBeforeNotify);
+			Assert.Equal(1, positionAfterNotify);
+			Assert.Equal(1, notifier.InsertCount);
+		}
+
+		class MockCollectionChangedNotifier : ICollectionChangedNotifier
+		{
+			public int InsertCount;
+			public int RemoveCount;
+
+			public void NotifyDataSetChanged()
+			{
+			}
+
+			public void NotifyItemChanged(IItemsViewSource source, int startIndex)
+			{
+			}
+
+			public void NotifyItemInserted(IItemsViewSource source, int startIndex)
+			{
+				InsertCount += 1;
+			}
+
+			public void NotifyItemMoved(IItemsViewSource source, int fromPosition, int toPosition)
+			{
+			}
+
+			public void NotifyItemRangeChanged(IItemsViewSource source, int start, int end)
+			{
+			}
+
+			public void NotifyItemRangeInserted(IItemsViewSource source, int startIndex, int count)
+			{
+			}
+
+			public void NotifyItemRangeRemoved(IItemsViewSource source, int startIndex, int count)
+			{
+			}
+
+			public void NotifyItemRemoved(IItemsViewSource source, int startIndex)
+			{
+				RemoveCount += 1;
+			}
 		}
 
 		Rect GetCollectionViewCellBounds(IView cellContent)

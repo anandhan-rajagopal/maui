@@ -42,6 +42,8 @@ namespace Microsoft.Maui.DeviceTests
 				return nativeView.Alpha;
 			});
 		}
+
+		//src/Compatibility/Core/tests/Android/TranslationTests.cs
 		[Fact]
 		[Description("The Translation property of a SearchBar should match with native Translation")]
 		public async Task SearchBarTranslationConsistent()

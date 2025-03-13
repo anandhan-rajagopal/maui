@@ -23,6 +23,8 @@ namespace Microsoft.Maui.DeviceTests
 				return nativeView.Alpha;
 			});
 		}
+
+		//src/Compatibility/Core/tests/Android/TranslationTests.cs
 		[Fact]
 		[Description("The Translation property of a CheckBox should match with native Translation")]
 		public async Task CheckBoxTranslationConsistent()

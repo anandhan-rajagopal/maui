@@ -145,13 +145,13 @@ namespace Microsoft.Maui.DeviceTests
 			}
 		}
 
+		//src/Compatibility/Core/tests/iOS/ObservableItemsSourceTests.cs
 		[Fact(DisplayName = "IndexPath Range Generation Is Correct")]
-		public async Task GenerateIndexPathRange()
+		public void GenerateIndexPathRange()
 		{
 			SetupBuilder();
 			
-			var result = await InvokeOnMainThreadAsync(() => 
-        			IndexPathHelpers.GenerateIndexPathRange(0, 0, 5));
+			var result = IndexPathHelpers.GenerateIndexPathRange(0, 0, 5);
 			
 			Assert.Equal(5, result.Length);
 			
@@ -162,13 +162,13 @@ namespace Microsoft.Maui.DeviceTests
 			Assert.Equal(4, (int)result[4].Item);
 		}
 
+		//src/Compatibility/Core/tests/iOS/ObservableItemsSourceTests.cs
 		[Fact(DisplayName = "IndexPath Range Generation For Loops Is Correct")]
-		public async Task GenerateIndexPathRangeForLoop()
+		public void GenerateIndexPathRangeForLoop()
 		{
 			SetupBuilder();
 			
-			var result = await InvokeOnMainThreadAsync(() => 
-					IndexPathHelpers.GenerateLoopedIndexPathRange(0, 15, 3, 2, 3));
+			var result = IndexPathHelpers.GenerateLoopedIndexPathRange(0, 15, 3, 2, 3);
 			
 			Assert.Equal(9, result.Length);
 			
@@ -190,39 +190,26 @@ namespace Microsoft.Maui.DeviceTests
 			Assert.Equal(14, (int)result[8].Item);
 		}
 
+		//src/Compatibility/Core/tests/iOS/ObservableItemsSourceTests.cs
 		[Fact(DisplayName = "IndexPath Validity Check Is Correct")]
-		public async Task IndexPathValidTest()
+		public void IndexPathValidTest()
 		{
-			SetupBuilder();
-
-			var list = new List<string> { "one", "two", "three" };
-			var collectionView = new CollectionView
+			var list = new List<string>
 			{
-				ItemsSource = list,
-				ItemTemplate = new DataTemplate(() => new Label{})
+				"one",
+				"two",
+				"three"
 			};
 
-			var contentPage = new ContentPage { Content = collectionView };
+			var source = new ListSource((IEnumerable<object>)list);
 
-			await CreateHandlerAndAddToWindow<IWindowHandler>(contentPage, async (_) =>
-			{
-				await Task.Delay(1000);
+			var valid = NSIndexPath.FromItemSection(2, 0);
+			var invalidItem = NSIndexPath.FromItemSection(7, 0);
+			var invalidSection = NSIndexPath.FromItemSection(1, 9);
 
-				await InvokeOnMainThreadAsync(() =>
-				{
-					Assert.NotNull(collectionView.Handler);
-
-					var validPath = NSIndexPath.FromItemSection(2, 0);
-					var invalidItemPath = NSIndexPath.FromItemSection(7, 0);
-					var invalidSectionPath = NSIndexPath.FromItemSection(1, 9);
-					
-					var source = new ListSource((IEnumerable<object>)list);
-					
-					Assert.True(IndexPathHelpers.IsIndexPathValid(source, validPath));
-					Assert.False(IndexPathHelpers.IsIndexPathValid(source, invalidItemPath));
-					Assert.False(IndexPathHelpers.IsIndexPathValid(source, invalidSectionPath)); 
-				});
-			});
+			Assert.True(source.IsIndexPathValid(valid));
+			Assert.False(source.IsIndexPathValid(invalidItem));
+			Assert.False(source.IsIndexPathValid(invalidSection));
 		}
 		 
 		Rect GetCollectionViewCellBounds(IView cellContent)

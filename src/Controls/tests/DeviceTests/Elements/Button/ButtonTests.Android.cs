@@ -9,7 +9,6 @@ using Microsoft.Maui.DeviceTests.Stubs;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Hosting;
 using Xunit;
-using System.ComponentModel;
 
 namespace Microsoft.Maui.DeviceTests
 {
@@ -109,6 +108,7 @@ namespace Microsoft.Maui.DeviceTests
 			});
 		}
 
+		//src/Compatibility/Core/tests/Android/TranslationTests.cs
 		[Fact]
 		[Description("The Translation property of a Button should match with native Translation")]
 		public async Task ButtonTranslationConsistent()

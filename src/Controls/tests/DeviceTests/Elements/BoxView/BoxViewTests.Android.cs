@@ -20,6 +20,10 @@ namespace Microsoft.Maui.DeviceTests
 			{
 				var nativeView = GetNativeBoxView(handler);
 				return nativeView.Alpha;
+			});
+		}
+		
+		//src/Compatibility/Core/tests/Android/TranslationTests.cs
 		[Fact]
 		[Description("The Translation property of a BoxView should match with native Translation")]
 		public async Task BoxViewTranslationConsistent()

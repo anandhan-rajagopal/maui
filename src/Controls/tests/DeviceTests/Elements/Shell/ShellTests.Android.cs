@@ -454,7 +454,8 @@ namespace Microsoft.Maui.DeviceTests
 			});
 		}
 
-		[Fact]
+		//src/Compatibility/Core/tests/Android/ShellTests.cs
+		[Fact(DisplayName = "Flyout Header Changes When Updated")]
 		public async Task FlyoutHeaderReactsToChanges()
 		{
 			SetupBuilder();
@@ -469,17 +470,13 @@ namespace Microsoft.Maui.DeviceTests
 			});
 			
 			await CreateHandlerAndAddToWindow<ShellRenderer>(shell, async (handler) =>
-			{
-				await Task.Delay(100);
-				
+			{				
 				var initialHeaderPlatformView = initialHeader.ToPlatform();
 				Assert.NotNull(initialHeaderPlatformView);
 				Assert.NotNull(initialHeader.Handler);
 				
 				shell.FlyoutHeader = newHeader;
-				
-				await Task.Delay(100);
-				
+								
 				var newHeaderPlatformView = newHeader.ToPlatform();
 				Assert.NotNull(newHeaderPlatformView);
 				Assert.NotNull(newHeader.Handler);
@@ -493,7 +490,8 @@ namespace Microsoft.Maui.DeviceTests
 			});
 		}
 
-		[Fact]
+		//src/Compatibility/Core/tests/Android/ShellTests.cs
+		[Fact(DisplayName = "Ensure Default Colors are White for BottomNavigationView")]
 		public async Task ShellTabColorsDefaultToWhite()
 		{
 			SetupBuilder();

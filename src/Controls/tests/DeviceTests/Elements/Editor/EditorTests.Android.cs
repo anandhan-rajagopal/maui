@@ -68,6 +68,7 @@ namespace Microsoft.Maui.DeviceTests
 			Assert.Equal(2, editor.CursorPosition);
 		}
 
+		//src/Compatibility/Core/tests/Android/TranslationTests.cs
 		[Fact]
 		[Description("The Translation property of a Editor should match with native Translation")]
 		public async Task EditorTranslationConsistent()
