@@ -128,6 +128,12 @@ namespace Microsoft.Maui.DeviceTests
 		[InlineData("https://example.com/test?query=%26value")] // Another escaped character from reserved set (e.g., & as %26)
 		public async Task WebViewShouldLoadEncodedUrl(string encodedUrl)
 		{
+
+			if (await AssertionExtensions.SkipTestIfNoInternetConnection())
+			{
+				return;
+			}
+
 			var webView = new WebView();
 			var tcs = new TaskCompletionSource<WebNavigationResult>();
 
@@ -147,6 +153,6 @@ namespace Microsoft.Maui.DeviceTests
 			Assert.Equal(WebNavigationResult.Success, navigationResult);
 		}
 
-		
+
 	}
 }
