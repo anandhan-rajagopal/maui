@@ -85,17 +85,7 @@ namespace Microsoft.Maui.DeviceTests
 					Assert.True(footer.Height > 0, "Footer should be arranged");
 				});
 		}
-
-		//src/Compatibility/Core/tests/Android/RendererTests.cs
-		[Fact(DisplayName = "EmptySource should have a count of zero")]
-		[Trait("Category", "CollectionView")]
-		public void EmptySourceCountIsZero()
-		{
-			var emptySource = new EmptySource();
-			var count = emptySource.Count;
-			Assert.Equal(0, count);
-		}
-
+		
 		Rect GetCollectionViewCellBounds(IView cellContent)
 		{
 			if (!cellContent.ToPlatform().IsLoaded())
