@@ -85,7 +85,7 @@ namespace Microsoft.Maui.DeviceTests
 					Assert.True(footer.Height > 0, "Footer should be arranged");
 				});
 		}
-		
+
 		Rect GetCollectionViewCellBounds(IView cellContent)
 		{
 			if (!cellContent.ToPlatform().IsLoaded())
