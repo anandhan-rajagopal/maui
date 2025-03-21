@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui.Controls.Sample.SearchBarControlMainPage"
+             Title="ControlPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Options"
+                     Clicked="NavigateToOptionsPage_Clicked"
+                     AutomationId="Options"/>
+    </ContentPage.ToolbarItems>
+
+    <Grid>
+        <Label Text="SearchBar Control"
+               FontSize="34"
+               HeightRequest="100"
+               HorizontalOptions="Center"
+               VerticalOptions="Start"/>
+        <SearchBar AutomationId="SearchBar"
+                   BackgroundColor="white"
+                   HeightRequest="100"
+                   CancelButtonColor="{Binding CancelButtonColor}"
+                   CharacterSpacing="{Binding CharacterSpacing}"
+                   CursorPosition="{Binding CursorPosition}"
+                   FontAttributes="{Binding FontAttributes}"
+                   FontAutoScalingEnabled="{Binding FontAutoScalingEnabled}"
+                   FontFamily="{Binding FontFamily}"
+                   FontSize="{Binding FontSize}"
+                   HorizontalTextAlignment="{Binding HorizontalTextAlignment}"
+                   IsReadOnly="{Binding IsReadOnly}"
+                   IsSpellCheckEnabled="{Binding IsSpellCheckEnabled}"
+                   IsTextPredictionEnabled="{Binding IsTextPredictionEnabled}"
+                   MaxLength="{Binding MaxLength}"
+                   Placeholder="{Binding Placeholder}"
+                   PlaceholderColor="{Binding PlaceholderColor}"
+                   SelectionLength="{Binding SelectionLength}"
+                   Text="{Binding Text}"
+                   TextColor="{Binding TextColor}"
+                   TextTransform="{Binding TextTransform}"
+                   VerticalTextAlignment="{Binding VerticalTextAlignment}"/>
+
+        <VerticalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="Character Spacing :"/>
+                <Label Text="{Binding CharacterSpacing}"
+                        AutomationId="CharacterSpacingLabel"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Cursor Position :"/>
+                <Label Text="{Binding CursorPosition}"
+                        AutomationId="CursorPositionLabel"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Maximum Text Length :"/>
+                <Label Text="{Binding MaxLength}"
+                        AutomationId="MaxLengthLabel"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Selection Length :"/>
+                <Label Text="{Binding SelectionLength}"
+                        AutomationId="SelectionLengthLabel"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
