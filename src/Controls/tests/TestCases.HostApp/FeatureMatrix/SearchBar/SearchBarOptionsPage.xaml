@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui.Controls.Sample.SearchBarOptionsPage"
+             Title="OptionsPage">
+        <ContentPage.ToolbarItems>
+                <ToolbarItem Text="Apply"
+                             Clicked="ApplyButton_Clicked"
+                             AutomationId="Apply"/>
+        </ContentPage.ToolbarItems>
+
+        <ScrollView>
+                <StackLayout Spacing="10"
+                             Padding="10">
+
+                        <!-- Cancel button color -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="Cancel button color:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="Red"
+                                                BackgroundColor="Red"
+                                                TextColor="White"
+                                                Clicked="CancelButtonColor_Clicked"
+                                                AutomationId="CancelButtonRedColor"/>
+                                        <Button Text="Green"
+                                                BackgroundColor="Green"
+                                                TextColor="White"
+                                                Clicked="CancelButtonColor_Clicked"
+                                                AutomationId="CancelButtonGreenColor"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Character Spacing -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="Character Spacing:"
+                                       FontSize="20"/>
+                                <Entry Text="{Binding CharacterSpacing}"
+                                       AutomationId="CharacterSpacingEntry"/>
+                        </VerticalStackLayout>
+
+                        <!-- Cursor Position -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="CursorPosition:"
+                                       FontSize="20"/>
+                                <Entry Text="{Binding CursorPosition}"
+                                       AutomationId="CursorPositionEntry"/>
+                        </VerticalStackLayout>
+
+                        <!-- Font Attributes -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="FontAttributes:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="Italic"
+                                                FontAttributes="Italic"
+                                                Clicked="FontAttributes_Clicked"
+                                                AutomationId="FontAttributesItalicButton"/>
+                                        <Button Text="Bold"
+                                                FontAttributes="Bold"
+                                                Clicked="FontAttributes_Clicked"
+                                                AutomationId="FontAttributesBoldButton"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Font Auto Scaling -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="FontAutoScalingEnabled:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="False"
+                                                Clicked="FontAutoScalingEnabled_Clicked"
+                                                AutomationId="FontAutoScalingEnabledFalseButton"/>
+                                        <Button Text="True"
+                                                Clicked="FontAutoScalingEnabled_Clicked"
+                                                AutomationId="FontAutoScalingEnabledTrueButton"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Font Family -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="FontFamily:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="Arial"
+                                                Clicked="FontFamily_Clicked"
+                                                AutomationId="FontFamilyArialButton"/>
+                                        <Button Text="Courier New"
+                                                Clicked="FontFamily_Clicked"
+                                                AutomationId="FontFamilyCourierNewButton"/>
+                                        <Button Text="Times New Roman"
+                                                Clicked="FontFamily_Clicked"
+                                                AutomationId="FontFamilyTimesNewRomanButton"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Font Size -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="FontSize:"
+                                       FontSize="20"/>
+                                <Entry Text="{Binding FontSize}"
+                                       AutomationId="FontSizeEntry"/>
+                        </VerticalStackLayout>
+
+                        <!-- Horizontal Text Alignment -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="HorizontalTextAlignment:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="Start"
+                                                Clicked="HorizontalTextAlignment_Clicked"
+                                                AutomationId="HorizontalTextAlignmentStartButton"/>
+                                        <Button Text="Center"
+                                                Clicked="HorizontalTextAlignment_Clicked"
+                                                AutomationId="HorizontalTextAlignmentCenterButton"/>
+                                        <Button Text="End"
+                                                Clicked="HorizontalTextAlignment_Clicked"
+                                                AutomationId="HorizontalTextAlignmentEndButton"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- IsReadOnly -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="IsReadOnly:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="True"
+                                                Clicked="IsReadOnly_Clicked"
+                                                AutomationId="IsReadOnlyTrueButton"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- IsSpellCheckEnabled -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="IsSpellCheckEnabled:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="False"
+                                                Clicked="IsSpellCheckEnabled_Clicked"
+                                                AutomationId="IsSpellCheckEnabledFalseButton"/>
+                                        <Button Text="True"
+                                                Clicked="IsSpellCheckEnabled_Clicked"
+                                                AutomationId="IsSpellCheckEnabledTrueButton"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+                        
+                        <!-- IsTextPredictionEnabled -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="IsTextPredictionEnabled:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="False"
+                                                Clicked="IsTextPredictionEnabled_Clicked"
+                                                AutomationId="IsTextPredictionEnabledFalseButton"/>
+                                        <Button Text="True"
+                                                Clicked="IsTextPredictionEnabled_Clicked"
+                                                AutomationId="IsTextPredictionEnabledTrueButton"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- MaxLength -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="MaxLength:"
+                                       FontSize="20"/>
+                                <Entry Text="{Binding MaxLength}"
+                                       AutomationId="MaxLengthEntry"/>
+                        </VerticalStackLayout>
+
+                        <!-- Placeholder -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="Placeholder:"
+                                       FontSize="20"/>
+                                <Entry Text="{Binding Placeholder}"
+                                       AutomationId="PlaceholderEntry"/>
+                        </VerticalStackLayout>
+
+                        <!-- Placeholder Color -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="PlaceholderColor:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="Red"
+                                                BackgroundColor="Red"
+                                                TextColor="White"
+                                                Clicked="PlaceholderColor_Clicked"
+                                                AutomationId="PlaceholderColorRedButton"/>
+                                        <Button Text="Green"
+                                                BackgroundColor="Green"
+                                                TextColor="White"
+                                                Clicked="PlaceholderColor_Clicked"
+                                                AutomationId="PlaceholderColorGreenButton"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Selection Length -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="SelectionLength:"
+                                       FontSize="20"/>
+                                <Entry Text="{Binding SelectionLength}"
+                                       AutomationId="SelectionLengthEntry"/>
+                        </VerticalStackLayout>
+
+                        <!-- Text -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="Text:"
+                                       FontSize="20"/>
+                                <Entry Text="{Binding Text}"
+                                       AutomationId="TextEntry"/>
+                        </VerticalStackLayout>
+
+                        <!-- Text Color -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="TextColor:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="Red"
+                                                BackgroundColor="Red"
+                                                TextColor="White"
+                                                Clicked="TextColor_Clicked"
+                                                AutomationId="TextColorRedButton"/>
+                                        <Button Text="Green"
+                                                BackgroundColor="Green"
+                                                TextColor="White"
+                                                Clicked="TextColor_Clicked"
+                                                AutomationId="TextColorGreenButton"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Text Transform -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="TextTransform:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="Lowercase"
+                                                TextTransform="Lowercase"
+                                                Clicked="TextTransform_Clicked"
+                                                AutomationId="TextTransformLowercaseButton"/>
+                                        <Button Text="Uppercase"
+                                                TextTransform="Uppercase"
+                                                Clicked="TextTransform_Clicked"
+                                                AutomationId="TextTransformUppercaseButton"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+
+                        <!-- Vertical Text Alignment -->
+                        <VerticalStackLayout Spacing="1"
+                                             Padding="10">
+                                <Label Text="VerticalTextAlignment:"
+                                       FontSize="20"/>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="10">
+                                        <Button Text="Start"
+                                                Clicked="VerticalTextAlignment_Clicked"
+                                                AutomationId="VerticalTextAlignmentStartButton"/>
+                                        <Button Text="Center"
+                                                Clicked="VerticalTextAlignment_Clicked"
+                                                AutomationId="VerticalTextAlignmentCenterButton"/>
+                                        <Button Text="End"
+                                                Clicked="VerticalTextAlignment_Clicked"
+                                                AutomationId="VerticalTextAlignmentEndButton"/>
+                                </StackLayout>
+                        </VerticalStackLayout>
+                </StackLayout>
+        </ScrollView>
+</ContentPage>
