@@ -10,16 +10,14 @@ namespace Maui.Controls.Sample
 
 		public CollectionViewControlPage()
 		{
-			InitializeComponent();
+            InitializeComponent();
 			_viewModel = new CollectionViewViewModel();
-			_viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T;
 			BindingContext = _viewModel;
 		}
 
 		private async void NavigateToOptionsPage_Clicked(object sender, EventArgs e)
 		{
 			BindingContext = _viewModel = new CollectionViewViewModel();
-			_viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T;
 			await Navigation.PushAsync(new CollectionViewOptionsPage(_viewModel));
 		}
 	}

@@ -3,26 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:Maui.Controls.Sample"
              x:Class="Maui.Controls.Sample.CollectionViewControlPage"
-             Title="CollectionViewFeature">
+             Title="CollectionViewControlPage">
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Options"
                      Clicked="NavigateToOptionsPage_Clicked"
                      AutomationId="Options"/>
     </ContentPage.ToolbarItems>
-        <local:CollectionView2
+    <VerticalStackLayout Padding="20"
+                         Spacing="10"
+                         VerticalOptions="Start">
+        <CollectionView
             x:Name="collectionView"
             ItemsSource="{Binding ItemsSource}"
-            EmptyView="{Binding EmptyView}"
-            Header="{Binding Header}"
-            Footer="{Binding Footer}"
-            EmptyViewTemplate="{Binding EmptyViewTemplate}"
-            HeaderTemplate="{Binding HeaderTemplate}"
-            FooterTemplate="{Binding FooterTemplate}"
-            GroupHeaderTemplate="{Binding GroupHeaderTemplate}"
-            GroupFooterTemplate="{Binding GroupFooterTemplate}"
             ItemTemplate="{Binding ItemTemplate}"
-            ItemsLayout="{Binding ItemsLayout}"
-            IsGrouped="{Binding IsGrouped}"
+            GroupHeaderTemplate="{Binding GroupHeaderTemplate}"
+            EmptyView="{Binding EmptyView}"
+            SelectionMode="{Binding SelectionMode}"
+            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+            SelectedItems="{Binding SelectedItems, Mode=TwoWay}"
             AutomationId="CollectionViewControl">
-        </local:CollectionView2>
+    </CollectionView>
+    </VerticalStackLayout>
 </ContentPage>
