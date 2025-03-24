@@ -19,6 +19,8 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 			_ = App.WaitForElement("editor");
 			App.ScrollDown("editor");
 
+			App.WaitForElement("editor");
+
 			// The test passes if the text inside the editor scrolls down
 			VerifyScreenshot();
 		}
