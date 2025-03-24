@@ -17,6 +17,8 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 		[Category(UITestCategories.CollectionView)]
 		public async Task Issue18751Test()
 		{
+			VerifyInternetConnectivity();
+			
 			App.WaitForElement("WaitForStubControl");
 
 			// Load images.
