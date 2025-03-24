@@ -10,13 +10,7 @@
     </ContentPage.ToolbarItems>
 
     <Grid>
-        <Label Text="SearchBar Control"
-               FontSize="34"
-               HeightRequest="100"
-               HorizontalOptions="Center"
-               VerticalOptions="Start"/>
         <SearchBar AutomationId="SearchBar"
-                   BackgroundColor="white"
                    HeightRequest="100"
                    CancelButtonColor="{Binding CancelButtonColor}"
                    CharacterSpacing="{Binding CharacterSpacing}"
@@ -42,25 +36,25 @@
             <HorizontalStackLayout>
                 <Label Text="Character Spacing :"/>
                 <Label Text="{Binding CharacterSpacing}"
-                        AutomationId="CharacterSpacingLabel"/>
+                       AutomationId="CharacterSpacingLabel"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout>
                 <Label Text="Cursor Position :"/>
                 <Label Text="{Binding CursorPosition}"
-                        AutomationId="CursorPositionLabel"/>
+                       AutomationId="CursorPositionLabel"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout>
                 <Label Text="Maximum Text Length :"/>
                 <Label Text="{Binding MaxLength}"
-                        AutomationId="MaxLengthLabel"/>
+                       AutomationId="MaxLengthLabel"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout>
                 <Label Text="Selection Length :"/>
                 <Label Text="{Binding SelectionLength}"
-                        AutomationId="SelectionLengthLabel"/>
+                       AutomationId="SelectionLengthLabel"/>
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </Grid>
