@@ -20,102 +20,80 @@ namespace Maui.Controls.Sample
 			await Navigation.PopAsync();
 		}
 
-		private void CancelButtonColor_Clicked(object sender, EventArgs e)
+		private void OnColorsRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			var button = sender as Button;
-			if (button != null)
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
 			{
-				_viewModel.CancelButtonColor = button.BackgroundColor;
+				_viewModel.CancelButtonColor = radioButton.Content.ToString() == "Red" ? Colors.Red : Colors.Green;
 			}
 		}
 
-		private void FontAttributes_Clicked(object sender, EventArgs e)
+		private void OnFontAttributesRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			var button = sender as Button;
-			if (button != null)
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
 			{
-				_viewModel.FontAttributes = button.FontAttributes;
+				_viewModel.FontAttributes = radioButton.Content.ToString() == "Italic" ? FontAttributes.Italic : radioButton.Content.ToString() == "Bold" ? FontAttributes.Bold : FontAttributes.None;
 			}
 		}
-		private void FontAutoScalingEnabled_Clicked(object sender, EventArgs e)
+		private void OnFontFamilyRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			var button = sender as Button;
-			if (button != null)
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
 			{
-				_viewModel.FontAutoScalingEnabled = button.Text == "True" ? true : false;
+				_viewModel.FontFamily = radioButton.Content.ToString() == "Courier New" ? "Courier New" : "Times New Roman";
 			}
 		}
-		private void FontFamily_Clicked(object sender, EventArgs e)
+		private void OnHorizontalTextAlignmentRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			var button = sender as Button;
-			if (button != null)
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
 			{
-				_viewModel.FontFamily = button.Text;
+				_viewModel.HorizontalTextAlignment = radioButton.Content.ToString() == "Center"
+					? TextAlignment.Center
+					: TextAlignment.End;
 			}
 		}
-		private void HorizontalTextAlignment_Clicked(object sender, EventArgs e)
+		private void OnPlaceholderColorRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			var button = sender as Button;
-			if (button != null)
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
 			{
-				_viewModel.HorizontalTextAlignment = button.Text == "Start" ? TextAlignment.Start : button.Text == "Center" ? TextAlignment.Center : TextAlignment.End;
+				_viewModel.PlaceholderColor = radioButton.Content.ToString() == "Red" ? Colors.Red : Colors.Green;
 			}
 		}
-		private void IsReadOnly_Clicked(object sender, EventArgs e)
+
+		private void OnTextColorRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			var button = sender as Button;
-			if (button != null)
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
 			{
-				_viewModel.IsReadOnly = button.Text == "True" ? true : false;
+				_viewModel.TextColor = radioButton.Content.ToString() == "Red" ? Colors.Red : Colors.Green;
 			}
 		}
-		private void IsSpellCheckEnabled_Clicked(object sender, EventArgs e)
+
+		private void OnTextTransformRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			var button = sender as Button;
-			if (button != null)
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
 			{
-				_viewModel.IsSpellCheckEnabled = button.Text == "True" ? true : false;
+				_viewModel.TextTransform = radioButton.Content.ToString() == "Lowercase"
+					? TextTransform.Lowercase
+					: TextTransform.Uppercase;
 			}
 		}
-		private void IsTextPredictionEnabled_Clicked(object sender, EventArgs e)
+
+		private void OnVerticalTextAlignmentRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			var button = sender as Button;
-			if (button != null)
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
 			{
-				_viewModel.IsSpellCheckEnabled = button.Text == "True" ? true : false;
+				_viewModel.VerticalTextAlignment = radioButton.Content.ToString() == "Center"
+					? TextAlignment.Center
+					: TextAlignment.End;
 			}
 		}
-		private void PlaceholderColor_Clicked(object sender, EventArgs e)
-		{
-			var button = sender as Button;
-			if (button != null)
-			{
-				_viewModel.PlaceholderColor = button.BackgroundColor;
-			}
-		}
-		private void TextColor_Clicked(object sender, EventArgs e)
-		{
-			var button = sender as Button;
-			if (button != null)
-			{
-				_viewModel.TextColor = button.BackgroundColor;
-			}
-		}
-		private void TextTransform_Clicked(object sender, EventArgs e)
-		{
-			var button = sender as Button;
-			if (button != null)
-			{
-				_viewModel.TextTransform = button.Text == "None" ? TextTransform.None : button.Text == "Uppercase" ? TextTransform.Uppercase : TextTransform.Lowercase;
-			}
-		}
-		private void VerticalTextAlignment_Clicked(object sender, EventArgs e)
-		{
-			var button = sender as Button;
-			if (button != null)
-			{
-				_viewModel.VerticalTextAlignment = button.Text == "Start" ? TextAlignment.Start : button.Text == "Center" ? TextAlignment.Center : TextAlignment.End;
-			}
-		}
+
 	}
 }
