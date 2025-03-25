@@ -27,44 +27,13 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Options");
             App.WaitForElement("CancelButtonGreenColor");
             App.Tap("CancelButtonGreenColor");
-            App.ScrollDown("ScrollView");   
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
             App.WaitForElement("TextColorRedButton");
             App.Tap("TextColorRedButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
-        }
-
-        //(Excel-3E) Checking the CharacterSpacing and Cursor Position
-        [Test]
-        [Category(UITestCategories.SearchBar)]
-        public void SearchBar_CharacterSpacingCursorPosition()
-        {
-            App.WaitForElement("Options");
-            App.Tap("Options");
-            App.WaitForElement("CharacterSpacingEntry");
-            App.ClearText("CharacterSpacingEntry");
-            App.EnterText("CharacterSpacingEntry", "10");
-            App.PressEnter();
-            App.WaitForElement("CursorPositionEntry");
-            App.ClearText("CursorPositionEntry");
-            App.EnterText("CursorPositionEntry", "5");
-            App.PressEnter();
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
-            App.WaitForElement("Apply");
-            App.Tap("Apply");
-            App.WaitForElement("CharacterSpacingLabel");
-            var characterSpacing = App.WaitForElement("CharacterSpacingLabel").GetText();
-            Assert.That(characterSpacing, Is.EqualTo("10"));
-            App.WaitForElement("CursorPositionLabel");
-            var cursorPosition = App.WaitForElement("CursorPositionLabel").GetText();
-            Assert.That(cursorPosition, Is.EqualTo("5"));
         }
 
         //(Excel-5H) Checking the FontAttributes and Font Familly of Text
@@ -78,12 +47,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("FontAttributesBoldButton");
             App.WaitForElement("FontFamilyCourierNewButton");
             App.Tap("FontFamilyCourierNewButton");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();            
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -99,13 +66,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.WaitForElement("FontSizeEntry");
             App.ClearText("FontSizeEntry");
             App.EnterText("FontSizeEntry", "20");
-            App.PressEnter();
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -120,12 +84,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("FontAttributesBoldButton");
             App.WaitForElement("HorizontalTextAlignmentCenterButton");
             App.Tap("HorizontalTextAlignmentCenterButton");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -138,10 +100,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Options");
             App.WaitForElement("FontAttributesItalicButton");
             App.Tap("FontAttributesItalicButton");
-            App.ScrollDown("ScrollView");
             App.WaitForElement("PlaceholderEntry");
             App.EnterText("PlaceholderEntry", "Placeholder Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
             // VerifyScreenshot();
@@ -156,12 +116,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Options");
             App.WaitForElement("FontAttributesItalicButton");
             App.Tap("FontAttributesItalicButton");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");            
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -174,15 +132,12 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Options");
             App.WaitForElement("FontAttributesBoldButton");
             App.Tap("FontAttributesBoldButton");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
-            App.ScrollDown("ScrollView");
             App.WaitForElement("TextTransformUppercaseButton");
             App.Tap("TextTransformUppercaseButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -195,15 +150,12 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Options");
             App.WaitForElement("FontAttributesBoldButton");
             App.Tap("FontAttributesBoldButton");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("VerticalTextAlignmentCenterButton");
-            App.Tap("VerticalTextAlignmentCenterButton");
+            App.WaitForElement("VerticalTextAlignmentEndButton");
+            App.Tap("VerticalTextAlignmentEndButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -219,13 +171,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.WaitForElement("FontSizeEntry");
             App.ClearText("FontSizeEntry");
             App.EnterText("FontSizeEntry", "20");
-            App.PressEnter();
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -240,12 +189,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("FontFamilyTimesNewRomanButton");
             App.WaitForElement("HorizontalTextAlignmentEndButton");
             App.Tap("HorizontalTextAlignmentEndButton");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -258,10 +205,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Options");
             App.WaitForElement("FontFamilyTimesNewRomanButton");
             App.Tap("FontFamilyTimesNewRomanButton");
-            App.ScrollDown("ScrollView");
             App.WaitForElement("PlaceholderEntry");
             App.EnterText("PlaceholderEntry", "Placeholder Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
             // VerifyScreenshot();
@@ -276,12 +221,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Options");
             App.WaitForElement("FontFamilyTimesNewRomanButton");
             App.Tap("FontFamilyTimesNewRomanButton");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -294,15 +237,12 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Options");
             App.WaitForElement("FontFamilyCourierNewButton");
             App.Tap("FontFamilyCourierNewButton");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();         
-            App.ScrollDown("ScrollView");
             App.WaitForElement("VerticalTextAlignmentCenterButton");
             App.Tap("VerticalTextAlignmentCenterButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -316,15 +256,12 @@ namespace Microsoft.Maui.TestCases.Tests
             App.WaitForElement("FontSizeEntry");
             App.ClearText("FontSizeEntry");
             App.EnterText("FontSizeEntry", "20");
-            App.PressEnter();
             App.WaitForElement("HorizontalTextAlignmentCenterButton");
             App.Tap("HorizontalTextAlignmentCenterButton");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -338,11 +275,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.WaitForElement("FontSizeEntry");
             App.ClearText("FontSizeEntry");
             App.EnterText("FontSizeEntry", "20");
-            App.PressEnter();
-            App.ScrollDown("ScrollView");
             App.WaitForElement("PlaceholderEntry");
             App.EnterText("PlaceholderEntry", "Placeholder Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
             // VerifyScreenshot();
@@ -358,13 +292,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.WaitForElement("FontSizeEntry");
             App.ClearText("FontSizeEntry");
             App.EnterText("FontSizeEntry", "20");
-            App.PressEnter();
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -377,10 +308,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Options");
             App.WaitForElement("HorizontalTextAlignmentCenterButton");
             App.Tap("HorizontalTextAlignmentCenterButton");
-            App.ScrollDown("ScrollView");
             App.WaitForElement("PlaceholderEntry");
             App.EnterText("PlaceholderEntry", "Placeholder Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
             // VerifyScreenshot();
@@ -394,12 +323,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Options");
             App.WaitForElement("HorizontalTextAlignmentEndButton");
             App.Tap("HorizontalTextAlignmentEndButton");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -412,15 +339,12 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Options");
             App.WaitForElement("HorizontalTextAlignmentCenterButton");
             App.Tap("HorizontalTextAlignmentCenterButton");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
-            App.ScrollDown("ScrollView");
             App.WaitForElement("VerticalTextAlignmentCenterButton");
-            App.Tap("VerticalTextAlignmentCenterButton");          
+            App.Tap("VerticalTextAlignmentCenterButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
@@ -434,17 +358,13 @@ namespace Microsoft.Maui.TestCases.Tests
             App.WaitForElement("CharacterSpacingEntry");
             App.ClearText("CharacterSpacingEntry");
             App.EnterText("CharacterSpacingEntry", "2");
-            App.PressEnter();
-            App.ScrollDown("ScrollView");
             App.WaitForElement("MaxLengthEntry");
             App.ClearText("MaxLengthEntry");
             App.EnterText("MaxLengthEntry", "10");
-            App.PressEnter();            
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search");
             App.WaitForElement("MaxLengthLabel");
             var maxLength = App.WaitForElement("MaxLengthLabel").GetText();
             Assert.That(maxLength, Is.EqualTo("10"));
@@ -459,14 +379,11 @@ namespace Microsoft.Maui.TestCases.Tests
         {
             App.WaitForElement("Options");
             App.Tap("Options");
-            App.ScrollDown("ScrollView");
             App.WaitForElement("MaxLengthEntry");
             App.ClearText("MaxLengthEntry");
             App.EnterText("MaxLengthEntry", "10");
-            App.PressEnter();
             App.WaitForElement("PlaceholderEntry");
             App.EnterText("PlaceholderEntry", "Placeholder Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
             App.WaitForElement("MaxLengthLabel");
@@ -480,15 +397,12 @@ namespace Microsoft.Maui.TestCases.Tests
         {
             App.WaitForElement("Options");
             App.Tap("Options");
-            App.ScrollDown("ScrollView");
             App.WaitForElement("MaxLengthEntry");
             App.ClearText("MaxLengthEntry");
             App.EnterText("MaxLengthEntry", "10");
-            App.PressEnter();
             App.WaitForElement("SelectionLengthEntry");
             App.ClearText("SelectionLengthEntry");
             App.EnterText("SelectionLengthEntry", "5");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
             App.WaitForElement("MaxLengthLabel");
@@ -506,23 +420,20 @@ namespace Microsoft.Maui.TestCases.Tests
         {
             App.WaitForElement("Options");
             App.Tap("Options");
-            App.ScrollDown("ScrollView");
             App.WaitForElement("MaxLengthEntry");
             App.ClearText("MaxLengthEntry");
             App.EnterText("MaxLengthEntry", "10");
-            App.PressEnter();
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
             App.WaitForElement("MaxLengthLabel");
             var maxLength = App.WaitForElement("MaxLengthLabel").GetText();
             Assert.That(maxLength, Is.EqualTo("10"));
             App.WaitForElement("SearchBar");
             var text = string.Empty;
 #if ANDROID
-            text = App.WaitForElement(AppiumQuery.ByXPath("//android.widget.EditText")).GetText();
+            text = App.WaitForElement("SearchBar").GetText();
 #elif IOS || MACCATALYST
             text = App.WaitForElement(AppiumQuery.ByXPath("//XCUIElementTypeSearchField")).GetText();
 #else
@@ -539,10 +450,8 @@ namespace Microsoft.Maui.TestCases.Tests
         {
             App.WaitForElement("Options");
             App.Tap("Options");
-            App.ScrollDown("ScrollView");
             App.WaitForElement("PlaceholderEntry");
             App.EnterText("PlaceholderEntry", "Placeholder Text");
-            App.PressEnter();
             App.WaitForElement("PlaceholderColorRedButton");
             App.Tap("PlaceholderColorRedButton");
             App.WaitForElement("Apply");
@@ -557,12 +466,10 @@ namespace Microsoft.Maui.TestCases.Tests
         {
             App.WaitForElement("Options");
             App.Tap("Options");
-            App.ScrollDown("ScrollView");
             App.WaitForElement("TextColorGreenButton");
             App.Tap("TextColorGreenButton");
             App.WaitForElement("PlaceholderEntry");
             App.EnterText("PlaceholderEntry", "Placeholder Text");
-            App.PressEnter();
             App.WaitForElement("PlaceholderColorRedButton");
             App.Tap("PlaceholderColorRedButton");
             App.WaitForElement("Apply");
@@ -577,19 +484,16 @@ namespace Microsoft.Maui.TestCases.Tests
         {
             App.WaitForElement("Options");
             App.Tap("Options");
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "Search Text");
-            App.PressEnter();
-            App.ScrollDown("ScrollView");
             App.WaitForElement("TextTransformUppercaseButton");
             App.Tap("TextTransformUppercaseButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
             App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
+            App.WaitForElement("SearchBar");
             var text = string.Empty;
 #if ANDROID
-            text = App.WaitForElement(AppiumQuery.ByXPath("//android.widget.EditText")).GetText();
+            text = App.WaitForElement("SearchBar").GetText();
 #elif IOS || MACCATALYST
             text = App.WaitForElement(AppiumQuery.ByXPath("//XCUIElementTypeSearchField")).GetText();
 #else
@@ -608,30 +512,11 @@ namespace Microsoft.Maui.TestCases.Tests
             App.WaitForElement("CharacterSpacingEntry");
             App.ClearText("CharacterSpacingEntry");
             App.EnterText("CharacterSpacingEntry", "10");
-            App.PressEnter();
-            App.ScrollDown("ScrollView");
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "SearchText");
-            App.PressEnter();            
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "SearchText");
             // VerifyScreenshot();
         }
-
-        //(Excel-20X) Checking the SearchBar Text and VerticalTextAlignment
-        // [Test]
-        // [Category(UITestCategories.SearchBar)]
-        // public void SearchBar_SearchTextVerticalTextAlignment_VerifyVisualState() //VerticalTextAlignment not set correctly for start
-        // {
-        //     App.WaitForElement("Options");
-        //     App.Tap("Options");
-        //     App.WaitForElement("TextEntry");
-        //     App.EnterText("TextEntry", "Search Text");
-        //     App.PressEnter();
-        //     App.WaitForElement("VerticalTextAlignmentStartButton");
-        //     App.Tap("VerticalTextAlignmentStartButton");
-        //     App.WaitForElement("Apply");
-        //     App.Tap("Apply");
-        // }
     }
 }

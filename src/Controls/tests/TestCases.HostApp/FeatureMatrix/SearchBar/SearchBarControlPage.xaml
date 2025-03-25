@@ -10,7 +10,8 @@
     </ContentPage.ToolbarItems>
 
     <Grid>
-        <SearchBar AutomationId="SearchBar"
+        <SearchBar VerticalOptions="Start"
+                   AutomationId="SearchBar"
                    HeightRequest="100"
                    CancelButtonColor="{Binding CancelButtonColor}"
                    CharacterSpacing="{Binding CharacterSpacing}"
@@ -32,17 +33,12 @@
                    TextTransform="{Binding TextTransform}"
                    VerticalTextAlignment="{Binding VerticalTextAlignment}"/>
 
-        <VerticalStackLayout>
+        <VerticalStackLayout HorizontalOptions="Center"
+                             VerticalOptions="Center">
             <HorizontalStackLayout>
                 <Label Text="Character Spacing :"/>
                 <Label Text="{Binding CharacterSpacing}"
                        AutomationId="CharacterSpacingLabel"/>
-            </HorizontalStackLayout>
-
-            <HorizontalStackLayout>
-                <Label Text="Cursor Position :"/>
-                <Label Text="{Binding CursorPosition}"
-                       AutomationId="CursorPositionLabel"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout>

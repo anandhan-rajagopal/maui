@@ -3,290 +3,290 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Maui.Controls.Sample.SearchBarOptionsPage"
              Title="OptionsPage">
-        <ContentPage.ToolbarItems>
-                <ToolbarItem Text="Apply"
-                             Clicked="ApplyButton_Clicked"
-                             AutomationId="Apply"/>
-        </ContentPage.ToolbarItems>
+       <ContentPage.ToolbarItems>
+              <ToolbarItem Text="Apply"
+                           Clicked="ApplyButton_Clicked"
+                           AutomationId="Apply"/>
+       </ContentPage.ToolbarItems>
 
-        <ScrollView AutomationId="ScrollView">
-                <StackLayout Spacing="10"
-                             Padding="10">
+       <ScrollView AutomationId="ScrollView">
+              <Grid ColumnSpacing="3"
+                    RowSpacing="3"
+                    Padding="1"
+                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                    ColumnDefinitions="Auto,Auto">
 
-                        <!-- Cancel button color -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="Cancel button color:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="Red"
-                                                BackgroundColor="Red"
-                                                TextColor="White"
-                                                Clicked="CancelButtonColor_Clicked"
-                                                AutomationId="CancelButtonRedColor"/>
-                                        <Button Text="Green"
-                                                BackgroundColor="Green"
-                                                TextColor="White"
-                                                Clicked="CancelButtonColor_Clicked"
-                                                AutomationId="CancelButtonGreenColor"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
+                     <!-- Cancel button color -->
 
-                        <!-- Character Spacing -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="Character Spacing:"
-                                       FontSize="20"
-                                       VerticalOptions="Center"/>
-                                <Entry Text="{Binding CharacterSpacing}"
-                                       AutomationId="CharacterSpacingEntry"/>
-                        </HorizontalStackLayout>
+                     <Label Grid.Row="0"
+                            Grid.Column="0"
+                            Text="Cancel button color:"
+                            VerticalOptions="Center"/>
+                     <StackLayout Grid.Row="0"
+                                  Grid.Column="1"
+                                  Orientation="Horizontal"
+                                  Spacing="10"
+                                  VerticalOptions="Center">
+                            <RadioButton GroupName="CancelButtonColor"
+                                         Content="Red"
+                                         AutomationId="CancelButtonRedColor"
+                                         CheckedChanged="OnColorsRadioButtonCheckedChanged"/>
 
-                        <!-- Cursor Position -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="CursorPosition:"
-                                       FontSize="20"
-                                       VerticalOptions="Center"/>
-                                <Entry Text="{Binding CursorPosition}"
-                                       AutomationId="CursorPositionEntry"/>
-                        </HorizontalStackLayout>
+                            <RadioButton GroupName="CancelButtonColor"
+                                         Content="Green"
+                                         AutomationId="CancelButtonGreenColor"
+                                         CheckedChanged="OnColorsRadioButtonCheckedChanged"/>
+                     </StackLayout>
 
-                        <!-- Font Attributes -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="FontAttributes:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="Italic"
-                                                FontAttributes="Italic"
-                                                Clicked="FontAttributes_Clicked"
-                                                AutomationId="FontAttributesItalicButton"/>
-                                        <Button Text="Bold"
-                                                FontAttributes="Bold"
-                                                Clicked="FontAttributes_Clicked"
-                                                AutomationId="FontAttributesBoldButton"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
+                     <!-- Character Spacing -->
+                     <Label Grid.Row="1"
+                            Grid.Column="0"
+                            Text="Character Spacing:"
+                            VerticalOptions="Center"/>
+                     <Entry Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{Binding CharacterSpacing}"
+                            AutomationId="CharacterSpacingEntry"
+                            VerticalOptions="Center"/>
 
-                        <!-- Font Auto Scaling -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="FontAutoScalingEnabled:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="False"
-                                                Clicked="FontAutoScalingEnabled_Clicked"
-                                                AutomationId="FontAutoScalingEnabledFalseButton"/>
-                                        <Button Text="True"
-                                                Clicked="FontAutoScalingEnabled_Clicked"
-                                                AutomationId="FontAutoScalingEnabledTrueButton"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
 
-                        <!-- Font Family -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="FontFamily:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="Courier New"
-                                                Clicked="FontFamily_Clicked"
-                                                AutomationId="FontFamilyCourierNewButton"/>
-                                        <Button Text="Times New Roman"
-                                                Clicked="FontFamily_Clicked"
-                                                AutomationId="FontFamilyTimesNewRomanButton"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
+                     <!-- Font Attributes -->
 
-                        <!-- Font Size -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="FontSize:"
-                                       FontSize="20"
-                                       VerticalOptions="Center"/>
-                                <Entry Text="{Binding FontSize}"
-                                       AutomationId="FontSizeEntry"/>
-                        </HorizontalStackLayout>
+                     <Label Grid.Row="2"
+                            Grid.Column="0"
+                            Text="FontAttributes:"
+                            VerticalOptions="Center"/>
+                     <StackLayout Grid.Row="2"
+                                  Grid.Column="1"
+                                  Orientation="Horizontal"
+                                  Spacing="10"
+                                  VerticalOptions="Center">
+                            <RadioButton GroupName="FontAttributes"
+                                         Content="Italic"
+                                         CheckedChanged="OnFontAttributesRadioButtonCheckedChanged"
+                                         AutomationId="FontAttributesItalicButton"/>
 
-                        <!-- Horizontal Text Alignment -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="HorizontalTextAlignment:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="Center"
-                                                Clicked="HorizontalTextAlignment_Clicked"
-                                                AutomationId="HorizontalTextAlignmentCenterButton"/>
-                                        <Button Text="End"
-                                                Clicked="HorizontalTextAlignment_Clicked"
-                                                AutomationId="HorizontalTextAlignmentEndButton"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
+                            <RadioButton GroupName="FontAttributes"
+                                         Content="Bold"
+                                         CheckedChanged="OnFontAttributesRadioButtonCheckedChanged"
+                                         AutomationId="FontAttributesBoldButton"/>
 
-                        <!-- IsReadOnly -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="IsReadOnly:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="True"
-                                                Clicked="IsReadOnly_Clicked"
-                                                AutomationId="IsReadOnlyTrueButton"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
+                            <RadioButton GroupName="FontAttributes"
+                                         Content="None"
+                                         CheckedChanged="OnFontAttributesRadioButtonCheckedChanged"
+                                         AutomationId="FontAttributesNoneButton"/>
+                     </StackLayout>
 
-                        <!-- IsSpellCheckEnabled -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="IsSpellCheckEnabled:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="False"
-                                                Clicked="IsSpellCheckEnabled_Clicked"
-                                                AutomationId="IsSpellCheckEnabledFalseButton"/>
-                                        <Button Text="True"
-                                                Clicked="IsSpellCheckEnabled_Clicked"
-                                                AutomationId="IsSpellCheckEnabledTrueButton"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
+                     <!-- Font Family -->
 
-                        <!-- IsTextPredictionEnabled -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="IsTextPredictionEnabled:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="False"
-                                                Clicked="IsTextPredictionEnabled_Clicked"
-                                                AutomationId="IsTextPredictionEnabledFalseButton"/>
-                                        <Button Text="True"
-                                                Clicked="IsTextPredictionEnabled_Clicked"
-                                                AutomationId="IsTextPredictionEnabledTrueButton"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
+                     <Label Grid.Row="4"
+                            Grid.Column="0"
+                            Text="FontFamily:"
+                            VerticalOptions="Center"/>
+                     <StackLayout Grid.Row="4"
+                                  Grid.Column="1"
+                                  Orientation="Horizontal"
+                                  Spacing="1"
+                                  VerticalOptions="Center">
+                            <RadioButton GroupName="FontFamily"
+                                         Content="CourierNew"
+                                         CheckedChanged="OnFontFamilyRadioButtonCheckedChanged"
+                                         AutomationId="FontFamilyCourierNewButton"/>
 
-                        <!-- MaxLength -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="MaxLength:"
-                                       FontSize="20"
-                                       VerticalOptions="Center"/>
-                                <Entry Text="{Binding MaxLength}"
-                                       AutomationId="MaxLengthEntry"/>
-                        </HorizontalStackLayout>
+                            <RadioButton GroupName="FontFamily"
+                                         Content="TimesNewRoman"
+                                         CheckedChanged="OnFontFamilyRadioButtonCheckedChanged"
+                                         AutomationId="FontFamilyTimesNewRomanButton"/>
+                     </StackLayout>
 
-                        <!-- Placeholder -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="Placeholder:"
-                                       FontSize="20"
-                                       VerticalOptions="Center"/>
-                                <Entry Text="{Binding Placeholder}"
-                                       AutomationId="PlaceholderEntry"/>
-                        </HorizontalStackLayout>
 
-                        <!-- Placeholder Color -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="PlaceholderColor:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="Red"
-                                                BackgroundColor="Red"
-                                                TextColor="White"
-                                                Clicked="PlaceholderColor_Clicked"
-                                                AutomationId="PlaceholderColorRedButton"/>
-                                        <Button Text="Green"
-                                                BackgroundColor="Green"
-                                                TextColor="White"
-                                                Clicked="PlaceholderColor_Clicked"
-                                                AutomationId="PlaceholderColorGreenButton"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
+                     <!-- Font Size -->
 
-                        <!-- Selection Length -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="SelectionLength:"
-                                       FontSize="20"
-                                       VerticalOptions="Center"/>
-                                <Entry Text="{Binding SelectionLength}"
-                                       AutomationId="SelectionLengthEntry"/>
-                        </HorizontalStackLayout>
+                     <Label Grid.Row="5"
+                            Grid.Column="0"
+                            Text="FontSize:"
+                            VerticalOptions="Center"/>
+                     <Entry Grid.Row="5"
+                            Grid.Column="1"
+                            Text="{Binding FontSize}"
+                            AutomationId="FontSizeEntry"
+                            VerticalOptions="Center"/>
 
-                        <!-- Text -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="Text:"
-                                       FontSize="20"
-                                       VerticalOptions="Center"/>
-                                <Entry Text="{Binding Text}"
-                                       AutomationId="TextEntry"/>
-                        </HorizontalStackLayout>
 
-                        <!-- Text Color -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="TextColor:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="Red"
-                                                BackgroundColor="Red"
-                                                TextColor="White"
-                                                Clicked="TextColor_Clicked"
-                                                AutomationId="TextColorRedButton"/>
-                                        <Button Text="Green"
-                                                BackgroundColor="Green"
-                                                TextColor="White"
-                                                Clicked="TextColor_Clicked"
-                                                AutomationId="TextColorGreenButton"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
+                     <!-- Horizontal Text Alignment -->
 
-                        <!-- Text Transform -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="TextTransform:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="Lowercase"
-                                                TextTransform="Lowercase"
-                                                Clicked="TextTransform_Clicked"
-                                                AutomationId="TextTransformLowercaseButton"/>
-                                        <Button Text="Uppercase"
-                                                TextTransform="Uppercase"
-                                                Clicked="TextTransform_Clicked"
-                                                AutomationId="TextTransformUppercaseButton"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
+                     <Label Grid.Row="6"
+                            Grid.Column="0"
+                            Text="HorizontalTextAlignment:"
+                            VerticalOptions="Center"/>
+                     <StackLayout Grid.Row="6"
+                                  Grid.Column="1"
+                                  Orientation="Horizontal"
+                                  Spacing="10"
+                                  VerticalOptions="Center">
+                            <RadioButton GroupName="HorizontalTextAlignment"
+                                         Content="Center"
+                                         Value="Center"
+                                         CheckedChanged="OnHorizontalTextAlignmentRadioButtonCheckedChanged"
+                                         AutomationId="HorizontalTextAlignmentCenterButton"/>
 
-                        <!-- Vertical Text Alignment -->
-                        <HorizontalStackLayout Spacing="3"
-                                               Padding="10">
-                                <Label Text="VerticalTextAlignment:"
-                                       FontSize="20"/>
-                                <StackLayout Orientation="Horizontal"
-                                             Spacing="10">
-                                        <Button Text="Center"
-                                                Clicked="VerticalTextAlignment_Clicked"
-                                                AutomationId="VerticalTextAlignmentCenterButton"/>
-                                        <Button Text="End"
-                                                Clicked="VerticalTextAlignment_Clicked"
-                                                AutomationId="VerticalTextAlignmentEndButton"/>
-                                </StackLayout>
-                        </HorizontalStackLayout>
-                </StackLayout>
-        </ScrollView>
+                            <RadioButton GroupName="HorizontalTextAlignment"
+                                         Content="End"
+                                         Value="End"
+                                         CheckedChanged="OnHorizontalTextAlignmentRadioButtonCheckedChanged"
+                                         AutomationId="HorizontalTextAlignmentEndButton"/>
+
+                     </StackLayout>
+
+                     <!-- MaxLength -->
+
+                     <Label Grid.Row="7"
+                            Grid.Column="0"
+                            Text="MaxLength:"
+                            VerticalOptions="Center"/>
+                     <Entry Grid.Row="7"
+                            Grid.Column="1"
+                            Text="{Binding MaxLength}"
+                            AutomationId="MaxLengthEntry"
+                            VerticalOptions="Center"/>
+
+
+                     <!-- Placeholder -->
+
+                     <Label Grid.Row="8"
+                            Grid.Column="0"
+                            Text="Placeholder:"
+                            VerticalOptions="Center"/>
+                     <Entry Grid.Row="8"
+                            Grid.Column="1"
+                            Text="{Binding Placeholder}"
+                            AutomationId="PlaceholderEntry"
+                            VerticalOptions="Center"/>
+
+
+                     <!-- Placeholder Color -->
+
+                     <Label Grid.Row="9"
+                            Grid.Column="0"
+                            Text="PlaceholderColor:"
+                            VerticalOptions="Center"/>
+                     <StackLayout Grid.Row="9"
+                                  Grid.Column="1"
+                                  Orientation="Horizontal"
+                                  Spacing="10"
+                                  VerticalOptions="Center">
+                            <RadioButton GroupName="PlaceholderColor"
+                                         Content="Red"
+                                         CheckedChanged="OnPlaceholderColorRadioButtonCheckedChanged"
+                                         AutomationId="PlaceholderColorRedButton"/>
+
+                            <RadioButton GroupName="PlaceholderColor"
+                                         Content="Green"
+                                         CheckedChanged="OnPlaceholderColorRadioButtonCheckedChanged"
+                                         AutomationId="PlaceholderColorGreenButton"/>
+
+                     </StackLayout>
+
+
+                     <!-- Selection Length -->
+
+                     <Label Grid.Row="10"
+                            Grid.Column="0"
+                            Text="SelectionLength:"
+                            VerticalOptions="Center"/>
+                     <Entry Grid.Row="10"
+                            Grid.Column="1"
+                            Text="{Binding SelectionLength}"
+                            AutomationId="SelectionLengthEntry"
+                            VerticalOptions="Center"/>
+
+
+                     <!-- Text -->
+
+                     <Label Grid.Row="11"
+                            Grid.Column="0"
+                            Text="Text:"
+                            VerticalOptions="Center"/>
+                     <Entry Grid.Row="11"
+                            Grid.Column="1"
+                            Text="{Binding Text}"
+                            AutomationId="TextEntry"
+                            VerticalOptions="Center"/>
+
+
+                     <!-- Text Color -->
+
+                     <Label Grid.Row="12"
+                            Grid.Column="0"
+                            Text="TextColor:"
+                            VerticalOptions="Center"/>
+                     <StackLayout Grid.Row="12"
+                                  Grid.Column="1"
+                                  Orientation="Horizontal"
+                                  Spacing="10"
+                                  VerticalOptions="Center">
+                            <RadioButton GroupName="TextColor"
+                                         Content="Red"
+                                         CheckedChanged="OnTextColorRadioButtonCheckedChanged"
+                                         AutomationId="TextColorRedButton"/>
+
+                            <RadioButton GroupName="TextColor"
+                                         Content="Green"
+                                         CheckedChanged="OnTextColorRadioButtonCheckedChanged"
+                                         AutomationId="TextColorGreenButton"/>
+
+                     </StackLayout>
+
+
+                     <!-- Text Transform -->
+
+                     <Label Grid.Row="13"
+                            Grid.Column="0"
+                            Text="TextTransform:"
+                            VerticalOptions="Center"/>
+                     <StackLayout Grid.Row="13"
+                                  Grid.Column="1"
+                                  Orientation="Horizontal"
+                                  Spacing="10"
+                                  VerticalOptions="Center">
+                            <RadioButton GroupName="TextTransform"
+                                         Content="Lowercase"
+                                         Value="Lowercase"
+                                         CheckedChanged="OnTextTransformRadioButtonCheckedChanged"
+                                         AutomationId="TextTransformLowercaseButton"/>
+
+                            <RadioButton GroupName="TextTransform"
+                                         Content="Uppercase"
+                                         Value="Uppercase"
+                                         CheckedChanged="OnTextTransformRadioButtonCheckedChanged"
+                                         AutomationId="TextTransformUppercaseButton"/>
+
+                     </StackLayout>
+
+
+                     <!-- Vertical Text Alignment -->
+
+                     <Label Grid.Row="14"
+                            Grid.Column="0"
+                            Text="VerticalTextAlignment:"
+                            VerticalOptions="Center"/>
+                     <StackLayout Grid.Row="14"
+                                  Grid.Column="1"
+                                  Orientation="Horizontal"
+                                  Spacing="10"
+                                  VerticalOptions="Center">
+                            <RadioButton GroupName="VerticalTextAlignment"
+                                         Content="Center"
+                                         CheckedChanged="OnVerticalTextAlignmentRadioButtonCheckedChanged"
+                                         AutomationId="VerticalTextAlignmentCenterButton"/>
+
+                            <RadioButton GroupName="VerticalTextAlignment"
+                                         Content="End"
+                                         CheckedChanged="OnVerticalTextAlignmentRadioButtonCheckedChanged"
+                                         AutomationId="VerticalTextAlignmentEndButton"/>
+
+                     </StackLayout>
+
+              </Grid>
+       </ScrollView>
 </ContentPage>
