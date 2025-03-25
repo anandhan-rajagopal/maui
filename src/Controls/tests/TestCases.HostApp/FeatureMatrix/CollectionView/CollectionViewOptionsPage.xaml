@@ -95,6 +95,25 @@
                                      FontSize="11"
                                      AutomationId="EmptyViewGrid"/>
                     </StackLayout>
+                    <!--IsGrouped-->
+                    <Label Text="IsGrouped:"
+                           FontSize="12"
+                           FontAttributes="Bold"/>
+                    <StackLayout Orientation="Horizontal">
+                        <RadioButton x:Name="IsGroupedTrue"
+                                     Content="True"
+                                     GroupName="IsGrouped"
+                                     CheckedChanged="OnIsGroupedChanged"
+                                     FontSize="11"
+                                     AutomationId="IsGroupedTrue"/>
+                        <RadioButton x:Name="IsGroupedFalse"
+                                     Content="False"
+                                     GroupName="IsGrouped"
+                                     IsChecked="True"
+                                     CheckedChanged="OnIsGroupedChanged"
+                                     FontSize="11"
+                                     AutomationId="IsGroupedFalse"/>
+                    </StackLayout>
                 </VerticalStackLayout>
             </StackLayout>
         </Grid>
