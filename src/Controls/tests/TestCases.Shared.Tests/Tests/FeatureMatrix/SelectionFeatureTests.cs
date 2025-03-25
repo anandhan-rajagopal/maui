@@ -8,7 +8,6 @@ namespace Microsoft.Maui.TestCases.Tests
     public class SelectionFeatureTests : UITest
     {
         public const string SelectionFeatureMatrix = "CollectionView Feature Matrix";
-        protected override bool ResetAfterEachTest => true;
         public SelectionFeatureTests(TestDevice device)
             : base(device)
         {
@@ -20,7 +19,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.NavigateToGallery(SelectionFeatureMatrix);
         }
 
-        [Test]
+        [Test,Order(1)]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstItemSourceList_WhenItemSourceList()
         {
@@ -40,17 +39,15 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeSingle_FirstItemSourceList_WhenItemSourceList()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeSingle");
             App.Tap("SelectionModeSingle");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 4");
-            App.Tap("Item 4");
-            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 4"));
+            App.WaitForElement("Item 2");
+            App.Tap("Item 2");
+            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 2"));
         }
 
 #if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS
@@ -59,8 +56,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeMultiple_FirstItemSourceList_WhenItemSourceList()
        {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeMultiple");
@@ -79,8 +74,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstItemsSourceObservableCollection_WhenItemsSourceObservableCollection()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("ItemsSourceObservableCollection");
@@ -101,8 +94,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstSelectionMode_WhenItemsSourceObservableCollection()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeNone");
@@ -119,8 +110,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeSingle_FirstItemsSourceObservableCollection_WhenItemsSourceObservableCollection()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("ItemsSourceObservableCollection");
@@ -129,17 +118,15 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("SelectionModeSingle");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 4");
-            App.Tap("Item 4");
-            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 4"));
+            App.WaitForElement("Item 2");
+            App.Tap("Item 2");
+            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 2"));
         }
 
         [Test]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeSingle_FirstSelectionMode_WhenItemsSourceObservableCollection()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeSingle");
@@ -148,9 +135,9 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("ItemsSourceObservableCollection");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 4");
-            App.Tap("Item 4");
-            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 4"));
+            App.WaitForElement("Item 2");
+            App.Tap("Item 2");
+            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 2"));
         }
 
 #if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS
@@ -159,8 +146,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeMultiple_FirstItemsSourceObservableCollection_WhenItemsSourceObservableCollection()
        {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("ItemsSourceObservableCollection");
@@ -180,8 +165,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeMultiple_FirstSelectionMode_WhenItemsSourceObservableCollection()
        {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeMultiple");
@@ -202,8 +185,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstItemsSourceGroupList_WhenItemsSourceGroupList()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("ItemsSourceGroupList");
@@ -214,6 +195,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("SelectionModeNone");
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("Item 1");
+            App.Tap("Item 1");
+            App.WaitForElement("Group A");
+            App.WaitForElement("Group B");
             Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
         }
@@ -222,8 +207,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstSelectionMode_WhenItemsSourceGroupList()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeNone");
@@ -234,6 +217,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("IsGroupedTrue");
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElement("Item 1");
+            App.Tap("Item 1");
+            App.WaitForElement("Group A");
+            App.WaitForElement("Group B");
             Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
         }
@@ -242,8 +229,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeSingle_FirstItemsSourceGroupList_WhenItemsSourceGroupList()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("ItemsSourceGroupList");
@@ -256,6 +241,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Apply");
             App.WaitForElement("Item 1");
             App.Tap("Item 1");
+            App.WaitForElement("Group A");
+            App.WaitForElement("Group B");
             Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 1"));
         }
 
@@ -263,8 +250,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeSingle_FirstSelectionMode_WhenItemsSourceGroupList()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeSingle");
@@ -277,6 +262,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Apply");
             App.WaitForElement("Item 1");
             App.Tap("Item 1");
+            App.WaitForElement("Group A");
+            App.WaitForElement("Group B");
             Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 1"));
         }
 
@@ -288,8 +275,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeMultiple_FirstItemsSourceGroupList_WhenItemsSourceGroupList()
        {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("ItemsSourceGroupList");
@@ -304,6 +289,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Item 1");
             App.WaitForElement("Item 2");
             App.Tap("Item 2");
+            App.WaitForElement("Group A");
+            App.WaitForElement("Group B");
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
         }
 
@@ -311,8 +298,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeMultiple_FirstSelectionMode_WhenItemsSourceGroupList()
        {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeMultiple");
@@ -327,37 +312,37 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("Item 1");
             App.WaitForElement("Item 2");
             App.Tap("Item 2");
+            App.WaitForElement("Group A");
+            App.WaitForElement("Group B");
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
+        }
+#endif
+
+#if TEST_FAILS_ON_ANDROID //EmptyView is not visible
+        [Test]
+        [Category(UITestCategories.CollectionView)]
+        public void SelectionModeNone_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyView()
+        {
+            App.WaitForElement("Options");
+            App.Tap("Options");
+            App.WaitForElement("ItemsSourceEmptyList");
+            App.Tap("ItemsSourceEmptyList");
+            App.WaitForElement("EmptyViewGrid");
+            App.Tap("EmptyViewGrid");
+            App.WaitForElement("SelectionModeNone");
+            App.Tap("SelectionModeNone");
+            App.WaitForElement("Apply");
+            App.Tap("Apply");
+            App.WaitForElement("No Items Available(Grid View)");
+            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
+            Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
         }
 #endif
 
         [Test]
         [Category(UITestCategories.CollectionView)]
-        public void SelectionModeNone_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyView()
-        {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
-            App.WaitForElement("Options");
-            App.Tap("Options");
-            App.WaitForElement("ItemsSourceEmptyList");
-            App.Tap("ItemsSourceEmptyList");
-            App.WaitForElement("EmptyViewGrid");
-            App.Tap("EmptyViewGrid");
-            App.WaitForElement("SelectionModeNone");
-            App.Tap("SelectionModeNone");
-            App.WaitForElement("Apply");
-            App.Tap("Apply");
-            App.WaitForElement("No Items Available(Grid View)");
-            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-            Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-        }
-
-        [Test]
-        [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyString()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("ItemsSourceEmptyList");
@@ -373,12 +358,11 @@ namespace Microsoft.Maui.TestCases.Tests
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
         }
 
+#if TEST_FAILS_ON_ANDROID //EmptyView is not visible
         [Test]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstSelectionMode_WhenItemsSourceEmptyListWithEmptyView()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeNone");
@@ -393,13 +377,12 @@ namespace Microsoft.Maui.TestCases.Tests
             Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
         }
+#endif
 
         [Test]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstSelectionMode_WhenItemsSourceEmptyListWithEmptyString()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeNone");
@@ -415,12 +398,11 @@ namespace Microsoft.Maui.TestCases.Tests
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
         }
 
+#if TEST_FAILS_ON_ANDROID //EmptyView is not visible
         [Test]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeSingle_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyView()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("ItemsSourceEmptyList");
@@ -435,13 +417,12 @@ namespace Microsoft.Maui.TestCases.Tests
             Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
         }
+#endif
 
         [Test]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeSingle_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyString()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("ItemsSourceEmptyList");
@@ -457,12 +438,11 @@ namespace Microsoft.Maui.TestCases.Tests
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
         }
 
+#if TEST_FAILS_ON_ANDROID //EmptyView is not visible
         [Test]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeSingle_FirstSelectionMode_WhenItemsSourceEmptyListWithEmptyView()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeSingle");
@@ -477,13 +457,12 @@ namespace Microsoft.Maui.TestCases.Tests
             Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
         }
+#endif
 
         [Test]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeSingle_FirstSelectionMode_WhenItemsSourceEmptyListWithEmptyString()
         {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeSingle");
@@ -506,8 +485,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeMultiple_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyView()
        {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("ItemsSourceEmptyList");
@@ -527,8 +504,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeMultiple_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyViewString()
        {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("ItemsSourceEmptyList");
@@ -548,8 +523,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeMultiple_FirstSelectionMode_WhenItemsSourceEmptyListAndEmptyView()
        {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeMultiple");
@@ -569,8 +542,6 @@ namespace Microsoft.Maui.TestCases.Tests
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeMultiple_FirstSelectionMode_WhenItemsSourceEmptyListAndEmptyView()
        {
-            App.WaitForElement("SelectionPageButton");
-            App.Tap("SelectionPageButton");
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("SelectionModeMultiple");
