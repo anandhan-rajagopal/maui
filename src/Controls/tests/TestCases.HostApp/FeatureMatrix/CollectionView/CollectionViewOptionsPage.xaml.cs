@@ -50,6 +50,18 @@ namespace Maui.Controls.Sample
             }
         }
 
+        private void OnIsGroupedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            if (IsGroupedFalse.IsChecked)
+            {
+                _viewModel.IsGrouped = false;
+            }
+            else if (IsGroupedTrue.IsChecked)
+            {
+                _viewModel.IsGrouped = true;
+            }
+        }
+
         private void OnItemsSourceChanged(object sender, CheckedChangedEventArgs e)
         {
             if (!(sender is RadioButton radioButton) || !e.Value)
