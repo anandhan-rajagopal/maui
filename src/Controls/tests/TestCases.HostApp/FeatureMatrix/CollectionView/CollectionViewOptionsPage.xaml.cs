@@ -85,29 +85,6 @@ namespace Maui.Controls.Sample
                 _viewModel.ItemsSourceType = ItemsSourceType.GroupedListT;
         }
 
-        private void OnSelectionModeChanged(object sender, System.EventArgs e)
-        {
-            if (sender is RadioButton radioButton)
-            {
-                // Use AutomationId to determine the selection mode
-                switch (radioButton.AutomationId)
-                {
-                    case "SelectionModeNone":
-                        _viewModel.SelectionMode = SelectionMode.None;
-                        break;
-                    case "SelectionModeSingle":
-                        _viewModel.SelectionMode = SelectionMode.Single;
-                        break;
-                    case "SelectionModeMultiple":
-                        _viewModel.SelectionMode = SelectionMode.Multiple;
-                        break;
-                    default:
-                        // Handle unexpected cases if necessary
-                        break;
-                }
-            }
-        }
-
         private void OnSelectionModeButtonClicked(object sender, EventArgs e)
         {
             if (sender is Button button)
