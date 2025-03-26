@@ -111,7 +111,6 @@ namespace Maui.Controls.Sample
                 {
                     _isGrouped = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(ItemsSource)); // Refresh ItemsSource when grouped changes
                 }
             }
         }
@@ -236,12 +235,17 @@ namespace Maui.Controls.Sample
             for (int n = 0; n < count; n++)
             {
                 list.Add(new CollectionViewTestItem(
-                    $"Item {n + 1}", images[n % images.Length], n));
+                    $"{images[n % images.Length]}, {n}", images[n % images.Length], n));
             }
         }
 
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
+            if (propertyName == nameof(IsGrouped))
+            {
+                OnPropertyChanged(nameof(ItemsSource));
+            }
+
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
