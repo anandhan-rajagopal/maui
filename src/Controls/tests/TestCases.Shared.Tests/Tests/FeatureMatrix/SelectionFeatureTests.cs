@@ -45,9 +45,9 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("SelectionModeSingle");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 2");
-            App.Tap("Item 2");
-            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 2"));
+            App.WaitForElement("oasis.jpg, 1");
+            App.Tap("oasis.jpg, 1");
+            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("oasis.jpg, 1"));
         }
 
 #if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS
@@ -62,10 +62,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("SelectionModeMultiple");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 1");
-            App.Tap("Item 1");
-            App.WaitForElement("Item 2");
-            App.Tap("Item 2");
+            App.WaitForElement("cover1.jpg, 0");
+            App.Tap("cover1.jpg, 0");
+            App.WaitForElement("oasis.jpg, 1");
+            App.Tap("oasis.jpg, 1");
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
         }
 #endif
@@ -82,10 +82,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("SelectionModeNone");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 1");
-            App.Tap("Item 1");
-            App.WaitForElement("Item 2");
-            App.Tap("Item 2");
+            App.WaitForElement("cover1.jpg, 0");
+            App.Tap("cover1.jpg, 0");
+            App.WaitForElement("oasis.jpg, 1");
+            App.Tap("oasis.jpg, 1");
             Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
         }
@@ -118,9 +118,9 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("SelectionModeSingle");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 2");
-            App.Tap("Item 2");
-            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 2"));
+            App.WaitForElement("oasis.jpg, 1");
+            App.Tap("oasis.jpg, 1");
+            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("oasis.jpg, 1"));
         }
 
         [Test]
@@ -135,9 +135,9 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("ItemsSourceObservableCollection");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 2");
-            App.Tap("Item 2");
-            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 2"));
+            App.WaitForElement("oasis.jpg, 1");
+            App.Tap("oasis.jpg, 1");
+            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("oasis.jpg, 1"));
         }
 
 #if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS
@@ -154,10 +154,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("SelectionModeMultiple");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 1");
-            App.Tap("Item 1");
-            App.WaitForElement("Item 2");
-            App.Tap("Item 2");
+            App.WaitForElement("cover1.jpg, 0");
+            App.Tap("cover1.jpg, 0");
+            App.WaitForElement("oasis.jpg, 1");
+            App.Tap("oasis.jpg, 1");
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
         }
 
@@ -173,15 +173,14 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("ItemsSourceObservableCollection");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 1");
-            App.Tap("Item 1");
-            App.WaitForElement("Item 2");
-            App.Tap("Item 2");
+            App.WaitForElement("cover1.jpg, 0");
+            App.Tap("cover1.jpg, 0");
+            App.WaitForElement("oasis.jpg, 1");
+            App.Tap("oasis.jpg, 1");
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
         }
 #endif
 
-#if TEST_FAILS_ON_WINDOWS //In Windows, While tap the GroupList or IsGroupedTrue, application is crashed
         [Test]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstItemsSourceGroupList_WhenItemsSourceGroupList()
@@ -196,8 +195,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("SelectionModeNone");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 1");
-            App.Tap("Item 1");
+            App.WaitForElement("cover1.jpg, 0");
+            App.Tap("cover1.jpg, 0");
             App.WaitForElement("Group A");
             App.WaitForElement("Group B");
             Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
@@ -218,8 +217,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("IsGroupedTrue");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 1");
-            App.Tap("Item 1");
+            App.WaitForElement("cover1.jpg, 0");
+            App.Tap("cover1.jpg, 0");
             App.WaitForElement("Group A");
             App.WaitForElement("Group B");
             Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
@@ -240,11 +239,11 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("SelectionModeSingle");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 1");
-            App.Tap("Item 1");
+            App.WaitForElement("cover1.jpg, 0");
+            App.Tap("cover1.jpg, 0");
             App.WaitForElement("Group A");
             App.WaitForElement("Group B");
-            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 1"));
+            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("cover1.jpg, 0"));
         }
 
         [Test]
@@ -261,11 +260,11 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("IsGroupedTrue");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 1");
-            App.Tap("Item 1");
+            App.WaitForElement("cover1.jpg, 0");
+            App.Tap("cover1.jpg, 0");
             App.WaitForElement("Group A");
             App.WaitForElement("Group B");
-            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Item 1"));
+            Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("cover1.jpg, 0"));
         }
 
 
@@ -286,10 +285,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("SelectionModeMultiple");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 1");
-            App.Tap("Item 1");
-            App.WaitForElement("Item 2");
-            App.Tap("Item 2");
+            App.WaitForElement("cover1.jpg, 0");
+            App.Tap("cover1.jpg, 0");
+            App.WaitForElement("oasis.jpg, 1");
+            App.Tap("oasis.jpg, 1");
             App.WaitForElement("Group A");
             App.WaitForElement("Group B");
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
@@ -309,15 +308,14 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("IsGroupedTrue");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("Item 1");
-            App.Tap("Item 1");
-            App.WaitForElement("Item 2");
-            App.Tap("Item 2");
+            App.WaitForElement("cover1.jpg, 0");
+            App.Tap("cover1.jpg, 0");
+            App.WaitForElement("oasis.jpg, 1");
+            App.Tap("oasis.jpg, 1");
             App.WaitForElement("Group A");
             App.WaitForElement("Group B");
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
         }
-#endif
 #endif
 
 #if TEST_FAILS_ON_ANDROID //EmptyView is not visible
