@@ -19,7 +19,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.NavigateToGallery(SelectionFeatureMatrix);
         }
 
-        [Test,Order(1)]
+        [Test, Order(1)]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstItemSourceList_WhenItemSourceList()
         {
@@ -181,6 +181,7 @@ namespace Microsoft.Maui.TestCases.Tests
         }
 #endif
 
+#if TEST_FAILS_ON_WINDOWS //In Windows, While tap the GroupList or IsGroupedTrue, application is crashed
         [Test]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstItemsSourceGroupList_WhenItemsSourceGroupList()
@@ -317,6 +318,7 @@ namespace Microsoft.Maui.TestCases.Tests
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
         }
 #endif
+#endif
 
 #if TEST_FAILS_ON_ANDROID //EmptyView is not visible
         [Test]
@@ -339,6 +341,7 @@ namespace Microsoft.Maui.TestCases.Tests
         }
 #endif
 
+#if TEST_FAILS_ON_WINDOWS //related issues:https://github.com/dotnet/maui/issues/28022
         [Test]
         [Category(UITestCategories.CollectionView)]
         public void SelectionModeNone_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyString()
@@ -556,6 +559,7 @@ namespace Microsoft.Maui.TestCases.Tests
             Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
             Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
         }
+#endif
 #endif
     }
 }
