@@ -28,6 +28,7 @@ public class EditorFeatureTests : UITest
         App.WaitForElement("Options");
         App.Tap("Options");
         App.WaitForElement("CharacterSpacingEntry");
+        App.ClearText("CharacterSpacingEntry");
         App.EnterText("CharacterSpacingEntry", "2");
         App.WaitForElement("PlaceholderEntry");
         App.EnterText("PlaceholderEntry", "PlaceholderText");
@@ -44,6 +45,7 @@ public class EditorFeatureTests : UITest
         App.WaitForElement("Options");
         App.Tap("Options");
         App.WaitForElement("CharacterSpacingEntry");
+        App.ClearText("CharacterSpacingEntry");
         App.EnterText("CharacterSpacingEntry", "2");
         App.WaitForElement("TextEntry");
         App.EnterText("TextEntry", "Text");
@@ -279,7 +281,7 @@ public class EditorFeatureTests : UITest
 #elif IOS || MACCATALYST
         text = App.WaitForElement(AppiumQuery.ByXPath("//XCUIElementTypeTextView")).GetText();
 #else
-        text = App.WaitForElement("TextBox").GetText();
+        text = App.WaitForElement("EditorControl").GetText();
 #endif
         Assert.That(text, Is.EqualTo("Edito"));
     }
