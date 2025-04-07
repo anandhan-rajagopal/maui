@@ -20,6 +20,26 @@ public class EditorFeatureTests : UITest
         App.NavigateToGallery(EditorFeatureMatrix);
     }
 
+    //2O
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetAutoSizeAndText_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("AutoSizeTextChangesButton");
+        App.Tap("AutoSizeTextChangesButton");
+        App.WaitForElement("TextEntry");
+        string testParagraph = "This is a long paragraph of text used to test the AutoSizeTextChange property of the Editor control. "
+            + "The purpose is to determine whether the text resizes appropriately when a large amount of content is entered. "
+            + "As more text is added, the font size may shrink to fit the text within the bounds of the editor, depending on the auto-size settings. "
+            + "This behavior helps ensure that all the content remains visible without requiring scrolling or clipping.";
+        App.EnterText("TextEntry", testParagraph);
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        Task.Delay(4000).Wait();
+        // VerifyScreenshot();
+    }
     //(2F)
     [Test]
     [Category(UITestCategories.Editor)]
@@ -63,8 +83,8 @@ public class EditorFeatureTests : UITest
         App.Tap("Options");
         App.WaitForElement("FontAttributesBoldButton");
         App.Tap("FontAttributesBoldButton");
-        App.WaitForElement("FontFamilyCourierNewButton");
-        App.Tap("FontFamilyCourierNewButton");
+        App.WaitForElement("FontFamilyMontserratBoldButton");
+        App.Tap("FontFamilyMontserratBoldButton");
         App.WaitForElement("TextEntry");
         App.EnterText("TextEntry", "Button Text");
         App.WaitForElement("Apply");
@@ -148,8 +168,8 @@ public class EditorFeatureTests : UITest
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("FontFamilyTimesNewRomanButton");
-        App.Tap("FontFamilyTimesNewRomanButton");
+        App.WaitForElement("FontFamilyDokdoButton");
+        App.Tap("FontFamilyDokdoButton");
         App.WaitForElement("FontSizeEntry");
         App.ClearText("FontSizeEntry");
         App.EnterText("FontSizeEntry", "20");
@@ -168,8 +188,8 @@ public class EditorFeatureTests : UITest
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("FontFamilyCourierNewButton");
-        App.Tap("FontFamilyCourierNewButton");
+        App.WaitForElement("FontFamilyMontserratBoldButton");
+        App.Tap("FontFamilyMontserratBoldButton");
         App.WaitForElement("PlaceholderEntry");
         App.EnterText("PlaceholderEntry", "Placeholder Text");
         App.WaitForElement("Apply");
@@ -183,8 +203,8 @@ public class EditorFeatureTests : UITest
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("FontFamilyCourierNewButton");
-        App.Tap("FontFamilyCourierNewButton");
+        App.WaitForElement("FontFamilyMontserratBoldButton");
+        App.Tap("FontFamilyMontserratBoldButton");
         App.WaitForElement("TextEntry");
         App.EnterText("TextEntry", "Editor Text");
         App.WaitForElement("Apply");
@@ -199,8 +219,8 @@ public class EditorFeatureTests : UITest
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("FontFamilyCourierNewButton");
-        App.Tap("FontFamilyCourierNewButton");
+        App.WaitForElement("FontFamilyMontserratBoldButton");
+        App.Tap("FontFamilyMontserratBoldButton");
         App.WaitForElement("TextTransformUppercaseButton");
         App.Tap("TextTransformUppercaseButton");
         App.WaitForElement("TextEntry");
@@ -286,6 +306,127 @@ public class EditorFeatureTests : UITest
         Assert.That(text, Is.EqualTo("Edito"));
     }
 
+    //(7M)
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetHorizontalTextAlignmentAndPlaceholder_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("HorizontalTextAlignmentCenterButton");
+        App.Tap("HorizontalTextAlignmentCenterButton");
+        App.WaitForElement("PlaceholderEntry");
+        App.EnterText("PlaceholderEntry", "Centered Placeholder");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        // VerifyScreenshot();
+    }
+
+    //(7O)
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetHorizontalTextAlignmentAndText_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("HorizontalTextAlignmentCenterButton");
+        App.Tap("HorizontalTextAlignmentCenterButton");
+        App.WaitForElement("TextEntry");
+        App.EnterText("TextEntry", "Centered Text");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        // VerifyScreenshot();
+    }
+
+    //(8O)
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetIsReadOnlyAndText_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("IsReadOnlyTrueButton");
+        App.Tap("IsReadOnlyTrueButton");
+        App.WaitForElement("TextEntry");
+        App.EnterText("TextEntry", "ReadOnly Text");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+
+        var initialText = string.Empty;
+#if ANDROID
+        initialText = App.WaitForElement("EditorControl").GetText();
+#elif IOS || MACCATALYST
+        initialText = App.WaitForElement(AppiumQuery.ByXPath("//XCUIElementTypeTextView")).GetText();
+#else
+        initialText = App.WaitForElement("EditorControl").GetText();
+#endif
+
+        App.EnterText("EditorControl", "Attempted Change");
+
+        var finalText = string.Empty;
+#if ANDROID
+        finalText = App.WaitForElement("EditorControl").GetText();
+#elif IOS || MACCATALYST
+        finalText = App.WaitForElement(AppiumQuery.ByXPath("//XCUIElementTypeTextView")).GetText();
+#else
+        finalText = App.WaitForElement("EditorControl").GetText();
+#endif
+
+        Assert.That(initialText, Is.EqualTo("ReadOnly Text"));
+        Assert.That(finalText, Is.EqualTo(initialText));
+        // VerifyScreenshot();
+    }
+
+    //(9O)
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetIsSpellCheckEnabledAndText_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("IsSpellCheckEnabledTrueButton");
+        App.Tap("IsSpellCheckEnabledTrueButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        App.WaitForElement("EditorControl");
+        App.EnterText("EditorControl", "Ths is a spleling eror");
+        Task.Delay(4000).Wait();
+        // VerifyScreenshot();
+    }
+
+    //(10O)
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetIsTextPredictionEnabledAndText_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("IsTextPredictionEnabledTrueButton");
+        App.Tap("IsTextPredictionEnabledTrueButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        App.WaitForElement("EditorControl");
+        App.EnterText("EditorControl", "t");
+        Task.Delay(4000).Wait();
+        // VerifyScreenshot();
+    }
+
+    //(11O)
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetKeyboardAndText_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("KeyboardNumericButton");
+        App.Tap("KeyboardNumericButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        App.WaitForElement("EditorControl");
+        App.EnterText("EditorControl", "1234567890");
+
+        // VerifyScreenshot();
+    }
     //(7I)
     [Test]
     [Category(UITestCategories.Editor)]
@@ -317,6 +458,21 @@ public class EditorFeatureTests : UITest
         // VerifyScreenshot();
     }
 
+    //(8L)
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetPlaceholderAndVerticalTextAlignment_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("PlaceholderEntry");
+        App.EnterText("PlaceholderEntry", "Placeholder Text");
+        App.WaitForElement("VerticalTextAlignmentCenterButton");
+        App.Tap("VerticalTextAlignmentCenterButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        // VerifyScreenshot();
+    }
     //(8J)
     [Test]
     [Category(UITestCategories.Editor)]
@@ -350,6 +506,4 @@ public class EditorFeatureTests : UITest
         App.Tap("Apply");
         // VerifyScreenshot();
     }
-
-
 }
