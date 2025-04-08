@@ -4,7 +4,7 @@ namespace Microsoft.Maui.DeviceTests
 {
 	public static class ColorComparison
 	{
-		public const int ColorPrecision = 1;
+		public const int ColorPrecision = 0;
 
 		public static bool IsEquivalent(this WColor actualColor, WColor expectedColor, int precision = ColorPrecision)
 		{

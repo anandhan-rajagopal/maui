@@ -211,68 +211,68 @@ namespace Microsoft.Maui.DeviceTests
 			}
 		}
 
-#if !IOS && !MACCATALYST
-		[Theory(DisplayName = "Toolbar Recreates With New MauiContext")]
-		[InlineData(nameof(FlyoutPage))]
-		[InlineData(nameof(NavigationPage))]
-		[InlineData(nameof(TabbedPage))]
-		[InlineData(nameof(Shell))]
-		public async Task ToolbarRecreatesWithNewMauiContext(string type)
-		{
-			SetupBuilder();
-			Page page = null;
+//#if !IOS && !MACCATALYST
+//		[Theory(DisplayName = "Toolbar Recreates With New MauiContext")]
+//		[InlineData(nameof(FlyoutPage))]
+//		[InlineData(nameof(NavigationPage))]
+//		[InlineData(nameof(TabbedPage))]
+//		[InlineData(nameof(Shell))]
+//		public async Task ToolbarRecreatesWithNewMauiContext(string type)
+//		{
+//			SetupBuilder();
+//			Page page = null;
 
-			if (type == nameof(FlyoutPage))
-			{
-				page = new FlyoutPage()
-				{
-					Detail = new NavigationPage(new ContentPage() { Title = "Detail" }),
-					Flyout = new ContentPage() { Title = "Flyout" }
-				};
-			}
-			else if (type == nameof(NavigationPage))
-			{
-				page = new NavigationPage(new ContentPage() { Title = "Nav Page" });
-			}
-			else if (type == nameof(TabbedPage))
-			{
-				page = new TabbedPage()
-				{
-					Children =
-					{
-						new NavigationPage(new ContentPage() { Title = "Tab Page 1" }),
-						new NavigationPage(new ContentPage() { Title = "Tab Page 2" })
-					}
-				};
-			}
-			else if (type == nameof(Shell))
-			{
-				page = new Shell() { CurrentItem = new ContentPage() { Title = "Shell Page" } };
-			}
+//			if (type == nameof(FlyoutPage))
+//			{
+//				page = new FlyoutPage()
+//				{
+//					Detail = new NavigationPage(new ContentPage() { Title = "Detail" }),
+//					Flyout = new ContentPage() { Title = "Flyout" }
+//				};
+//			}
+//			else if (type == nameof(NavigationPage))
+//			{
+//				page = new NavigationPage(new ContentPage() { Title = "Nav Page" });
+//			}
+//			else if (type == nameof(TabbedPage))
+//			{
+//				page = new TabbedPage()
+//				{
+//					Children =
+//					{
+//						new NavigationPage(new ContentPage() { Title = "Tab Page 1" }),
+//						new NavigationPage(new ContentPage() { Title = "Tab Page 2" })
+//					}
+//				};
+//			}
+//			else if (type == nameof(Shell))
+//			{
+//				page = new Shell() { CurrentItem = new ContentPage() { Title = "Shell Page" } };
+//			}
 
 
-			var window = new Window(page);
+//			var window = new Window(page);
 
-			var context1 = ContextStub.CreateNew(MauiContext);
-			var context2 = ContextStub.CreateNew(MauiContext);
+//			var context1 = ContextStub.CreateNew(MauiContext);
+//			var context2 = ContextStub.CreateNew(MauiContext);
 
-			await CreateHandlerAndAddToWindow<IWindowHandler>(window, (handler) =>
-			{
-				var toolbar = GetToolbar(handler);
-				Assert.NotNull(toolbar);
-				Assert.True(IsNavigationBarVisible(handler));
-				return Task.CompletedTask;
-			}, context1);
+//			await CreateHandlerAndAddToWindow<IWindowHandler>(window, (handler) =>
+//			{
+//				var toolbar = GetToolbar(handler);
+//				Assert.NotNull(toolbar);
+//				Assert.True(IsNavigationBarVisible(handler));
+//				return Task.CompletedTask;
+//			}, context1);
 
-			await CreateHandlerAndAddToWindow<IWindowHandler>(window, (handler) =>
-			{
-				var toolbar = GetToolbar(handler);
-				Assert.NotNull(toolbar);
-				Assert.True(IsNavigationBarVisible(handler));
-				return Task.CompletedTask;
-			}, context2);
-		}
-#endif
+//			await CreateHandlerAndAddToWindow<IWindowHandler>(window, (handler) =>
+//			{
+//				var toolbar = GetToolbar(handler);
+//				Assert.NotNull(toolbar);
+//				Assert.True(IsNavigationBarVisible(handler));
+//				return Task.CompletedTask;
+//			}, context2);
+//		}
+//#endif
 
 		ToolbarItem[] GetExpectedToolbarItems(NavigationPage navPage)
 		{

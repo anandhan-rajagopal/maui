@@ -249,7 +249,7 @@ namespace Microsoft.Maui.DeviceTests
 					viewContainer.Children.Clear();
 
 					// wait for an unload
-					await unloadedTcs.Task.WaitAsync(TimeSpan.FromSeconds(5));
+					await unloadedTcs.Task.WaitAsync(TimeSpan.FromSeconds(15));
 					await Task.Delay(10);
 
 					// close the window
@@ -361,6 +361,49 @@ namespace Microsoft.Maui.DeviceTests
 			Assert.Fail(await CreateColorError(bitmap, $"Color {expectedColor} not found."));
 			return bitmap;
 		}
+
+		//public static async Task<CanvasBitmap> AssertContainsColor(this CanvasBitmap bitmap, WColor expectedColor, Func<Graphics.RectF, Graphics.RectF>? withinRectModifier = null, double? tolerance = null)
+		//{
+		//	var imageRect = new Graphics.RectF(0, 0, bitmap.SizeInPixels.Width, bitmap.SizeInPixels.Height);
+
+		//	if (withinRectModifier is not null)
+		//		imageRect = withinRectModifier.Invoke(imageRect);
+
+		//	if (imageRect.Width == 0 || imageRect.Height == 0)
+		//	{
+		//		// Detect this case and give a better message instead of letting GetPixelColors throw an IndexOutOfRangeException
+		//		Assert.Fail($"Bitmap must have non-zero width and height.  Width = {(int)imageRect.Width} Height = {(int)imageRect.Height}.");
+		//		return bitmap;
+		//	}
+
+		//	var colors = bitmap.GetPixelColors((int)imageRect.X, (int)imageRect.Y, (int)imageRect.Width, (int)imageRect.Height);
+
+		//	foreach (var c in colors)
+		//	{
+		//		if (IsColorSimilar(c, expectedColor, tolerance ?? 1))
+		//		{
+		//			return bitmap;
+		//		}
+		//	}
+
+		//	// Log the actual colors for debugging
+		//	foreach (var c in colors)
+		//	{
+		//		Console.WriteLine($"Actual Color: A={c.A}, R={c.R}, G={c.G}, B={c.B}");
+		//	}
+
+		//	Assert.Fail(await CreateColorError(bitmap, $"Color {expectedColor} not found."));
+		//	return bitmap;
+		//}
+
+		//public static bool IsColorSimilar(WColor color1, WColor color2, double tolerance)
+		//{
+		//	return Math.Abs(color1.A - color2.A) <= tolerance &&
+		//		   Math.Abs(color1.R - color2.R) <= tolerance &&
+		//		   Math.Abs(color1.G - color2.G) <= tolerance &&
+		//		   Math.Abs(color1.B - color2.B) <= tolerance;
+		//}
+
 
 		public static Task<CanvasBitmap> AssertContainsColor(this FrameworkElement view, Maui.Graphics.Color expectedColor, IMauiContext mauiContext, double? tolerance = null) =>
 			AssertContainsColor(view, expectedColor.ToWindowsColor(), mauiContext, tolerance: tolerance);

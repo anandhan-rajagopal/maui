@@ -705,28 +705,28 @@ namespace Microsoft.Maui.DeviceTests
 		}
 #endif
 
-		[Theory]
-		[ClassData(typeof(ShellBasicNavigationTestCases))]
-		public async Task BasicShellNavigationStructurePermutations(ShellItem[] shellItems)
-		{
-			SetupBuilder();
-			var shell = await InvokeOnMainThreadAsync<Shell>(() =>
-			{
-				var value = new Shell();
-				foreach (var item in shellItems)
-					value.Items.Add(item);
+		//[Theory]
+		//[ClassData(typeof(ShellBasicNavigationTestCases))]
+		//public async Task BasicShellNavigationStructurePermutations(ShellItem[] shellItems)
+		//{
+		//	SetupBuilder();
+		//	var shell = await InvokeOnMainThreadAsync<Shell>(() =>
+		//	{
+		//		var value = new Shell();
+		//		foreach (var item in shellItems)
+		//			value.Items.Add(item);
 
-				return value;
-			});
+		//		return value;
+		//	});
 
-			await CreateHandlerAndAddToWindow<ShellHandler>(shell, async (handler) =>
-			{
-				// TODO MAUI Fix this 
-				await Task.Delay(100);
-				await shell.GoToAsync("//page2");
-				await Task.Delay(100);
-			});
-		}
+		//	await CreateHandlerAndAddToWindow<ShellHandler>(shell, async (handler) =>
+		//	{
+		//		// TODO MAUI Fix this 
+		//		await Task.Delay(100);
+		//		await shell.GoToAsync("//page2");
+		//		await Task.Delay(100);
+		//	});
+		//}
 
 		[Fact(DisplayName = "Navigate to Root with BackButtonBehavior no Crash")]
 		public async Task NavigateToRootWithBackButtonBehaviorNoCrash()

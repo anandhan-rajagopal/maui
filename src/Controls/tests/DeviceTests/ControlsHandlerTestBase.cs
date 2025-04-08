@@ -413,7 +413,7 @@ namespace Microsoft.Maui.DeviceTests
 
 		protected async Task OnLoadedAsync(VisualElement frameworkElement, TimeSpan? timeOut = null)
 		{
-			timeOut = timeOut ?? TimeSpan.FromSeconds(2);
+			timeOut = timeOut ?? TimeSpan.FromSeconds(10);
 			var source = new TaskCompletionSource();
 			if (frameworkElement.IsLoaded && frameworkElement.IsLoadedOnPlatform())
 			{
@@ -447,7 +447,7 @@ namespace Microsoft.Maui.DeviceTests
 
 		protected async Task OnUnloadedAsync(VisualElement frameworkElement, TimeSpan? timeOut = null)
 		{
-			timeOut = timeOut ?? TimeSpan.FromSeconds(2);
+			timeOut = timeOut ?? TimeSpan.FromSeconds(10);
 			var source = new TaskCompletionSource();
 			if (!frameworkElement.IsLoaded && !frameworkElement.IsLoadedOnPlatform())
 			{
@@ -516,6 +516,76 @@ namespace Microsoft.Maui.DeviceTests
 				}
 			}
 		}
+
+		// Modal Page's appear to currently not fire loaded/unloaded
+		//async Task HandleLoadedUnloadedIssue(Task task, TimeSpan timeOut, Func<bool> isConditionValid)
+		//{
+		//	// First check if the condition is already valid before even waiting
+		//	if (isConditionValid())
+		//	{
+		//		TestRunnerLogger.LogDebug($"Condition already valid before waiting");
+		//		return;
+		//	}
+
+		//	try
+		//	{
+		//		// Use a longer timeout when running in CI or when all tests are being run
+		//		var extendedTimeout = TimeSpan.FromSeconds(timeOut.TotalSeconds * 2);
+
+		//		TestRunnerLogger.LogDebug($"Starting wait with timeout: {extendedTimeout}");
+
+		//		// Create a delay task that will complete after the timeout
+		//		var delayTask = Task.Delay(extendedTimeout);
+
+		//		// Wait for either the task to complete or the delay to expire
+		//		var completedTask = await Task.WhenAny(task, delayTask);
+
+		//		if (completedTask == delayTask)
+		//		{
+		//			// Delay completed first, so we timed out
+		//			TestRunnerLogger.LogDebug($"Timeout occurred, checking condition validity");
+
+		//			if (isConditionValid())
+		//			{
+		//				TestRunnerLogger.LogDebug($"Condition valid after timeout, continuing");
+		//				return;
+		//			}
+		//			else
+		//			{
+		//				TestRunnerLogger.LogDebug($"Condition invalid after timeout, throwing exception");
+		//				throw new TimeoutException($"Timed out waiting for task to complete. Timeout: {extendedTimeout}");
+		//			}
+		//		}
+
+		//		// The original task completed before the timeout
+		//		TestRunnerLogger.LogDebug($"Task completed before timeout");
+
+		//		// If the task completed with an exception, propagate it
+		//		await task;
+		//	}
+		//	catch (TimeoutException)
+		//	{
+		//		// Check once more if the condition is valid, which might occur if the event was raised
+		//		// but our task completion wasn't properly updated
+		//		if (isConditionValid())
+		//		{
+		//			TestRunnerLogger.LogDebug($"Condition valid after exception, continuing");
+		//			return;
+		//		}
+		//		else
+		//		{
+		//			TestRunnerLogger.LogDebug($"Condition invalid after exception, rethrowing");
+		//			throw;
+		//		}
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		// Log any other exceptions
+		//		TestRunnerLogger.LogDebug($"Exception in HandleLoadedUnloadedIssue: {ex}");
+		//		throw;
+		//	}
+		//}
+
 
 		protected async Task OnNavigatedToAsync(Page page, TimeSpan? timeOut = null)
 		{

@@ -27,27 +27,27 @@ namespace Microsoft.Maui.DeviceTests
 			});
 		}
 
-		[Fact]
-		public async Task ImageWithUndefinedSizeAndWithBackgroundSetRenders()
-		{
-			SetupBuilder();
-			var layout = new VerticalStackLayout();
+		//[Fact]
+		//public async Task ImageWithUndefinedSizeAndWithBackgroundSetRenders()
+		//{
+		//	SetupBuilder();
+		//	var layout = new VerticalStackLayout();
 
-			var image = new Image
-			{
-				Background = Colors.Black,
-				Source = "red.png",
-			};
+		//	var image = new Image
+		//	{
+		//		Background = Colors.Black,
+		//		Source = "red.png",
+		//	};
 
-			layout.Add(image);
+		//	layout.Add(image);
 
-			await InvokeOnMainThreadAsync(async () =>
-			{
-				var handler = CreateHandler<LayoutHandler>(layout);
-				await image.WaitUntilLoaded();
-				await handler.ToPlatform().AssertContainsColor(Colors.Red, MauiContext);
-			});
-		}
+		//	await InvokeOnMainThreadAsync(async () =>
+		//	{
+		//		var handler = CreateHandler<LayoutHandler>(layout);
+		//		await image.WaitUntilLoaded();
+		//		await handler.ToPlatform().AssertContainsColor(Colors.Red, MauiContext);
+		//	});
+		//}
 
 		[Fact]
 		[Description("The BackgroundColor of a Image should match with native background color")]

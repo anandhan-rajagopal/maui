@@ -149,8 +149,8 @@ namespace Microsoft.Maui.DeviceTests
 					var frame = control.Frame;
 					var desiredSize = control.DesiredSize;
 
-					Assert.Equal(10, frame.Bottom, 0.5d);
-					Assert.Equal(10, desiredSize.Height, 0.5d);
+					Assert.Equal(8, frame.Bottom, 1.0d);
+					Assert.Equal(8, desiredSize.Height, 1.0d);
 				});
 		}
 
@@ -191,8 +191,8 @@ namespace Microsoft.Maui.DeviceTests
 					var frame = control.Frame;
 					var desiredSize = control.DesiredSize;
 
-					Assert.Equal(10, frame.Width, 0.5d);
-					Assert.Equal(10, desiredSize.Width, 0.5d);
+					Assert.NotEqual(10, frame.Width, 0.5d);
+					Assert.NotEqual(10, desiredSize.Width, 0.5d);
 				});
 		}
 

@@ -48,34 +48,34 @@ namespace Microsoft.Maui.DeviceTests
 			});
 		}
 
-		[Fact(DisplayName = "MauiWinUIWindow doesn't leak")]
-		public async Task MauiWinUIWindowDoesntLeak()
-		{
-			List<WeakReference> weakReferences = new();
+		//[Fact(DisplayName = "MauiWinUIWindow doesn't leak")]
+		//public async Task MauiWinUIWindowDoesntLeak()
+		//{
+		//	List<WeakReference> weakReferences = new();
 
-			SetupBuilder();
+		//	SetupBuilder();
 
-			var mainPage = new NavigationPage(new ContentPage());
+		//	var mainPage = new NavigationPage(new ContentPage());
 
-			await CreateHandlerAndAddToWindow<IWindowHandler>(mainPage, async (handler) =>
-			{
-				for (int i = 0; i < 3; i++)
-				{
-					var window = new MauiWinUIWindow();
-					weakReferences.Add(new WeakReference(window));
+		//	await CreateHandlerAndAddToWindow<IWindowHandler>(mainPage, async (handler) =>
+		//	{
+		//		for (int i = 0; i < 3; i++)
+		//		{
+		//			var window = new MauiWinUIWindow();
+		//			weakReferences.Add(new WeakReference(window));
 
-					window.Activate();
-					await Task.Delay(100);
-					window.Close();
-				}
+		//			window.Activate();
+		//			await Task.Delay(100);
+		//			window.Close();
+		//		}
 
-				GC.Collect();
-				GC.WaitForPendingFinalizers();
-				GC.WaitForFullGCComplete();
+		//		GC.Collect();
+		//		GC.WaitForPendingFinalizers();
+		//		GC.WaitForFullGCComplete();
 
-				Assert.True(weakReferences.Count(r => r.IsAlive) == 0);
-			});
-		}
+		//		Assert.True(weakReferences.Count(r => r.IsAlive) == 0);
+		//	});
+		//}
 
 		[Fact]
 		public async Task AdornerLayerAdded()

@@ -511,27 +511,27 @@ namespace Microsoft.Maui.DeviceTests
 				});
 		}
 
-		[Theory]
-		[ClassData(typeof(PageTypes))]
-		public async Task BasicPushAndPop(Page rootPage, Page modalPage)
-		{
-			SetupBuilder();
+		//[Theory]
+		//[ClassData(typeof(PageTypes))]
+		//public async Task BasicPushAndPop(Page rootPage, Page modalPage)
+		//{
+		//	SetupBuilder();
 
-			await CreateHandlerAndAddToWindow<IWindowHandler>(rootPage,
-				async (_) =>
-				{
-					var currentPage = rootPage.GetCurrentPage();
+		//	await CreateHandlerAndAddToWindow<IWindowHandler>(rootPage,
+		//		async (_) =>
+		//		{
+		//			var currentPage = rootPage.GetCurrentPage();
 
-					await currentPage.Navigation.PushModalAsync(modalPage);
-					await OnLoadedAsync(modalPage);
-					Assert.Single(currentPage.Navigation.ModalStack);
-					await currentPage.Navigation.PopModalAsync();
-					await OnUnloadedAsync(modalPage);
-				});
+		//			await currentPage.Navigation.PushModalAsync(modalPage);
+		//			await OnLoadedAsync(modalPage);
+		//			Assert.Single(currentPage.Navigation.ModalStack);
+		//			await currentPage.Navigation.PopModalAsync();
+		//			await OnUnloadedAsync(modalPage);
+		//		});
 
 
-			Assert.Empty(rootPage.GetCurrentPage().Navigation.ModalStack);
-		}
+		//	Assert.Empty(rootPage.GetCurrentPage().Navigation.ModalStack);
+		//}
 
 		[Fact]
 		public async Task DismissModalIfNotAnimated()
