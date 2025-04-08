@@ -12,6 +12,10 @@ public class SearchBarViewModel : INotifyPropertyChanged
     private string _fontFamily = string.Empty;
     private double _fontSize = 14;
     private TextAlignment _horizontalTextAlignment = TextAlignment.Start;
+    private bool _isReadOnly = default;
+    private bool _isSpellCheckEnabled = default;
+    private bool _isTextPredictionEnabled = default;
+    private Keyboard _keyboard = default;
     private int _maxLength = 100;
     private string _placeholder = string.Empty;
     private Color _placeholderColor = Colors.Gray;
@@ -52,6 +56,26 @@ public class SearchBarViewModel : INotifyPropertyChanged
     {
         get => _horizontalTextAlignment;
         set { _horizontalTextAlignment = value; OnPropertyChanged(); }
+    }
+    public bool IsReadOnly
+    {
+        get => _isReadOnly;
+        set { _isReadOnly = value; OnPropertyChanged(); }
+    }
+    public bool IsSpellCheckEnabled
+    {
+        get => _isSpellCheckEnabled;
+        set { _isSpellCheckEnabled = value; OnPropertyChanged(); }
+    }
+    public bool IsTextPredictionEnabled
+    {
+        get => _isTextPredictionEnabled;
+        set { _isTextPredictionEnabled = value; OnPropertyChanged(); }
+    }
+    public Keyboard Keyboard
+    {
+        get => _keyboard;
+        set { _keyboard = value; OnPropertyChanged(); }
     }
     public int MaxLength
     {

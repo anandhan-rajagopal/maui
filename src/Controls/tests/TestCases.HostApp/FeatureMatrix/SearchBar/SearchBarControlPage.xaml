@@ -24,6 +24,7 @@
                    IsReadOnly="{Binding IsReadOnly}"
                    IsSpellCheckEnabled="{Binding IsSpellCheckEnabled}"
                    IsTextPredictionEnabled="{Binding IsTextPredictionEnabled}"
+                   Keyboard="{Binding Keyboard}"
                    MaxLength="{Binding MaxLength}"
                    Placeholder="{Binding Placeholder}"
                    PlaceholderColor="{Binding PlaceholderColor}"
