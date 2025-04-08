@@ -42,7 +42,7 @@ namespace Maui.Controls.Sample
 			var radioButton = sender as RadioButton;
 			if (radioButton.IsChecked)
 			{
-				_viewModel.FontFamily = radioButton.Content.ToString() == "Courier New" ? "Courier New" : "Times New Roman";
+				_viewModel.FontFamily = radioButton.Content.ToString() == "Dokdo" ? "Dokdo" : "MontserratBold";
 			}
 		}
 		private void OnHorizontalTextAlignmentRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
@@ -53,6 +53,44 @@ namespace Maui.Controls.Sample
 				_viewModel.HorizontalTextAlignment = radioButton.Content.ToString() == "Center"
 					? TextAlignment.Center
 					: TextAlignment.End;
+			}
+		}
+		private void OnIsReadOnlyRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+		{
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
+			{
+				_viewModel.IsReadOnly = radioButton.Content.ToString() == "True" ? true : false;
+			}
+		}
+		private void OnIsSpellCheckEnabledRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+		{
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
+			{
+				_viewModel.IsSpellCheckEnabled = radioButton.Content.ToString() == "True" ? true : false;
+			}
+		}
+		private void OnIsTextPredictionEnabledRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+		{
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
+			{
+				_viewModel.IsTextPredictionEnabled = radioButton.Content.ToString() == "True" ? true : false;
+			}
+		}
+		private void OnKeyboardRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+		{
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
+			{
+				_viewModel.Keyboard = radioButton.Content.ToString() == "Chat" ? Keyboard.Chat :
+					radioButton.Content.ToString() == "Default" ? Keyboard.Default :
+					radioButton.Content.ToString() == "Email" ? Keyboard.Email :
+					radioButton.Content.ToString() == "Numeric" ? Keyboard.Numeric :
+					radioButton.Content.ToString() == "Plain" ? Keyboard.Plain :
+					radioButton.Content.ToString() == "Telephone" ? Keyboard.Telephone :
+					radioButton.Content.ToString() == "Text" ? Keyboard.Text : Keyboard.Url;
 			}
 		}
 		private void OnPlaceholderColorRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
