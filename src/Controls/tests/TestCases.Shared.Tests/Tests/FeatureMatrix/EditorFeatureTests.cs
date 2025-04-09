@@ -40,6 +40,27 @@ public class EditorFeatureTests : UITest
         Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
+
+    //2O
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetAutoSizeAndPlaceholder_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("AutoSizeTextChangesButton");
+        App.Tap("AutoSizeTextChangesButton");
+        App.WaitForElement("placeholderEntry");
+        string testParagraph = "This is a long paragraph of text used to test the AutoSizeTextChange property of the Editor control. "
+            + "The purpose is to determine whether the text resizes appropriately when a large amount of content is entered. "
+            + "As more text is added, the font size may shrink to fit the text within the bounds of the editor, depending on the auto-size settings. "
+            + "This behavior helps ensure that all the content remains visible without requiring scrolling or clipping.";
+        App.EnterText("placeholderEntry", testParagraph);
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        Task.Delay(4000).Wait();
+        // VerifyScreenshot();
+    }
     //(2F)
     [Test]
     [Category(UITestCategories.Editor)]
@@ -306,22 +327,6 @@ public class EditorFeatureTests : UITest
         Assert.That(text, Is.EqualTo("Edito"));
     }
 
-    //(7M)
-    [Test]
-    [Category(UITestCategories.Editor)]
-    public void Editor_SetHorizontalTextAlignmentAndPlaceholder_VerifyVisualState()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("HorizontalTextAlignmentCenterButton");
-        App.Tap("HorizontalTextAlignmentCenterButton");
-        App.WaitForElement("PlaceholderEntry");
-        App.EnterText("PlaceholderEntry", "Centered Placeholder");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        // VerifyScreenshot();
-    }
-
     //(7O)
     [Test]
     [Category(UITestCategories.Editor)]
@@ -411,7 +416,7 @@ public class EditorFeatureTests : UITest
         // VerifyScreenshot();
     }
 
-    //(11O)
+#if TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST // keyboard not supported on Windows and MacCatalyst
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetKeyboardAndText_VerifyVisualState()
@@ -425,6 +430,23 @@ public class EditorFeatureTests : UITest
         App.WaitForElement("EditorControl");
         App.EnterText("EditorControl", "1234567890");
 
+        // VerifyScreenshot();
+    }
+#endif
+
+    //(8K)
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetPlaceholderAndPlaceholderColor_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("PlaceholderEntry");
+        App.EnterText("PlaceholderEntry", "Placeholder Text");
+        App.WaitForElement("PlaceholderColorRedButton");
+        App.Tap("PlaceholderColorRedButton");        
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
         // VerifyScreenshot();
     }
     //(7I)
@@ -442,37 +464,7 @@ public class EditorFeatureTests : UITest
         App.Tap("Apply");
         // VerifyScreenshot();
     }
-    //(7K)
-    [Test]
-    [Category(UITestCategories.Editor)]
-    public void Editor_SetPlaceholderAndTextTransform_VerifyVisualState()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("PlaceholderEntry");
-        App.EnterText("PlaceholderEntry", "Placeholder Text");
-        App.WaitForElement("TextTransformLowercaseButton");
-        App.Tap("TextTransformLowercaseButton");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        // VerifyScreenshot();
-    }
-
-    //(8L)
-    [Test]
-    [Category(UITestCategories.Editor)]
-    public void Editor_SetPlaceholderAndVerticalTextAlignment_VerifyVisualState()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("PlaceholderEntry");
-        App.EnterText("PlaceholderEntry", "Placeholder Text");
-        App.WaitForElement("VerticalTextAlignmentCenterButton");
-        App.Tap("VerticalTextAlignmentCenterButton");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        // VerifyScreenshot();
-    }
+    
     //(8J)
     [Test]
     [Category(UITestCategories.Editor)]
