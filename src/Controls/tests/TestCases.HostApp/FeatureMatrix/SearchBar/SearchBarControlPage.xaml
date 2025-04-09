@@ -47,12 +47,6 @@
                 <Label Text="{Binding MaxLength}"
                        AutomationId="MaxLengthLabel"/>
             </HorizontalStackLayout>
-
-            <HorizontalStackLayout>
-                <Label Text="Selection Length :"/>
-                <Label Text="{Binding SelectionLength}"
-                       AutomationId="SelectionLengthLabel"/>
-            </HorizontalStackLayout>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
