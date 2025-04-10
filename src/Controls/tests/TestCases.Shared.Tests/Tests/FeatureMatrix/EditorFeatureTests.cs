@@ -31,9 +31,7 @@ public class EditorFeatureTests : UITest
         App.Tap("AutoSizeTextChangesButton");
         App.WaitForElement("TextEntry");
         string testParagraph = "This is a long paragraph of text used to test the AutoSizeTextChange property of the Editor control. "
-            + "The purpose is to determine whether the text resizes appropriately when a large amount of content is entered. "
-            + "As more text is added, the font size may shrink to fit the text within the bounds of the editor, depending on the auto-size settings. "
-            + "This behavior helps ensure that all the content remains visible without requiring scrolling or clipping.";
+            + "The purpose is to determine whether the text resizes appropriately when a large amount of content is entered.";
         App.EnterText("TextEntry", testParagraph);
         App.WaitForElement("Apply");
         App.Tap("Apply");
@@ -50,12 +48,10 @@ public class EditorFeatureTests : UITest
         App.Tap("Options");
         App.WaitForElement("AutoSizeTextChangesButton");
         App.Tap("AutoSizeTextChangesButton");
-        App.WaitForElement("placeholderEntry");
+        App.WaitForElement("PlaceholderEntry");
         string testParagraph = "This is a long paragraph of text used to test the AutoSizeTextChange property of the Editor control. "
-            + "The purpose is to determine whether the text resizes appropriately when a large amount of content is entered. "
-            + "As more text is added, the font size may shrink to fit the text within the bounds of the editor, depending on the auto-size settings. "
-            + "This behavior helps ensure that all the content remains visible without requiring scrolling or clipping.";
-        App.EnterText("placeholderEntry", testParagraph);
+            + "The purpose is to determine whether the text resizes appropriately when a large amount of content is entered.";
+        App.EnterText("PlaceholderEntry", testParagraph);
         App.WaitForElement("Apply");
         App.Tap("Apply");
         Task.Delay(4000).Wait();
@@ -64,7 +60,7 @@ public class EditorFeatureTests : UITest
     //(2F)
     [Test]
     [Category(UITestCategories.Editor)]
-    public void Editor_SetCharacterSpacingAndPlaceholder_VerifyVisualState()
+    public void Editor_SetCharacterSpacingAndPlaceholder_VerifyVisualState()  // for windows CharacterSpacing not set to placeholder
     {
         App.WaitForElement("Options");
         App.Tap("Options");
@@ -98,7 +94,7 @@ public class EditorFeatureTests : UITest
     //(3D)
     [Test]
     [Category(UITestCategories.Editor)]
-    public void Editor_SetFontAtributesAndFontFamily_VerifyVisualState()
+    public void Editor_SetFontAttributesAndFontFamily_VerifyVisualState()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
@@ -116,7 +112,7 @@ public class EditorFeatureTests : UITest
     //(3E)
     [Test]
     [Category(UITestCategories.Editor)]
-    public void Editor_SetFontAtributesAndFontSize_VerifyVisualState()
+    public void Editor_SetFontAttributesAndFontSize_VerifyVisualState()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
@@ -135,7 +131,7 @@ public class EditorFeatureTests : UITest
     //(3G)
     [Test]
     [Category(UITestCategories.Editor)]
-    public void Editor_SetFontAtributesAndPlaceholder_VerifyVisualState()
+    public void Editor_SetFontAttributesAndPlaceholder_VerifyVisualState()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
@@ -151,7 +147,7 @@ public class EditorFeatureTests : UITest
     //(3I)
     [Test]
     [Category(UITestCategories.Editor)]
-    public void Editor_SetFontAtributesAndText_VerifyVisualState()
+    public void Editor_SetFontAttributesAndText_VerifyVisualState()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
@@ -167,7 +163,7 @@ public class EditorFeatureTests : UITest
     //(3k)
     [Test]
     [Category(UITestCategories.Editor)]
-    public void Editor_SetFontAtributesAndTextTransform_VerifyVisualState()
+    public void Editor_SetFontAttributesAndTextTransform_VerifyVisualState()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
@@ -309,11 +305,11 @@ public class EditorFeatureTests : UITest
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("MaxLengthEntry");
-        App.ClearText("MaxLengthEntry");
-        App.EnterText("MaxLengthEntry", "5");
         App.WaitForElement("TextEntry");
         App.EnterText("TextEntry", "EditorText");
+        App.WaitForElement("MaxLengthEntry");
+        App.ClearText("MaxLengthEntry");
+        App.EnterText("MaxLengthEntry", "5");        
         App.WaitForElement("Apply");
         App.Tap("Apply");
         var text = string.Empty;
@@ -494,6 +490,22 @@ public class EditorFeatureTests : UITest
         App.EnterText("TextEntry", "Editor Text");
         App.WaitForElement("TextTransformUppercaseButton");
         App.Tap("TextTransformUppercaseButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        // VerifyScreenshot();
+    }
+
+    //(11O)
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetTextAndVerticalTextAlignment_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("VerticalTextAlignmentEndButton");
+        App.Tap("VerticalTextAlignmentEndButton");
+        App.WaitForElement("TextEntry");
+        App.EnterText("TextEntry", "End Vertically");
         App.WaitForElement("Apply");
         App.Tap("Apply");
         // VerifyScreenshot();
