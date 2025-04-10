@@ -18,10 +18,9 @@ namespace Microsoft.Maui.TestCases.Tests
             App.NavigateToGallery(SearchBarFeatureMatrix);
         }
 
-        //(Excel-2V) Checking the Cancell button color and Search Text color
         [Test]
         [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetCancellButtonAndColorTextColor_VerifyVisualState()
+        public void SearchBar_SetCancelButtonAndColorTextColor_VerifyVisualState()
         {
             App.WaitForElement("Options");
             App.Tap("Options");
@@ -36,7 +35,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-5H) Checking the FontAttributes and Font Familly of Text
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetFontAttributesAndFontFamily_VerifyVisualState()
@@ -54,7 +52,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-5I) Checking the FontAttributes and FontSize
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetFontAttributesAndFontSize_VerifyVisualState()
@@ -73,25 +70,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-5J) Checking the FontAttributes and HorizontalTextAlignment
-        [Test]
-        [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetFontAttributesAndHorizontalTextAlignment_VerifyVisualState()
-        {
-            App.WaitForElement("Options");
-            App.Tap("Options");
-            App.WaitForElement("FontAttributesBoldButton");
-            App.Tap("FontAttributesBoldButton");
-            App.WaitForElement("HorizontalTextAlignmentCenterButton");
-            App.Tap("HorizontalTextAlignmentCenterButton");
-            App.WaitForElement("Apply");
-            App.Tap("Apply");
-            App.WaitForElement("SearchBar");
-            App.EnterText("SearchBar", "Search Text");
-            // VerifyScreenshot();
-        }
-
-        //(Excel-5P) Checking the FontAttributes and Placeholder Text
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetFontAttributesAndPlaceholderText_VerifyVisualState()
@@ -108,7 +86,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-5U) Checking the FontAttributes and Search Text
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetFontAttributesAndText_VerifyVisualState()
@@ -124,7 +101,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-5W) Checking the FontAttributes and TextTransform
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetFontAttributesAndTextTransform_VerifyVisualState()
@@ -142,26 +118,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-5X) Checking the FontAttributes and VerticalTextAlignment
-        [Test]
-        [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetFontAttributesAndVerticalTextAlignment_VerifyVisualState()
-        {
-            App.WaitForElement("Options");
-            App.Tap("Options");
-            App.WaitForElement("FontAttributesBoldButton");
-            App.Tap("FontAttributesBoldButton");
-            App.WaitForElement("VerticalTextAlignmentEndButton");
-            App.Tap("VerticalTextAlignmentEndButton");
-            App.WaitForElement("Apply");
-            App.Tap("Apply");
-            App.WaitForElement("SearchBar");
-            App.EnterText("SearchBar", "Search Text");
-            Task.Delay(4000).Wait();
-            // VerifyScreenshot();
-        }
-
-        //(Excel-7I) Checking the FontFamily and FontSize
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetFontFamilyAndFontSize_VerifyVisualState()
@@ -180,25 +136,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-7J) Checking the FontFamily and HorizontalTextAlignment
-        [Test]
-        [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetFontFamilyAndHorizontalTextAlignment_VerifyVisualState()
-        {
-            App.WaitForElement("Options");
-            App.Tap("Options");
-            App.WaitForElement("FontFamilyDokdoButton");
-            App.Tap("FontFamilyDokdoButton");
-            App.WaitForElement("HorizontalTextAlignmentEndButton");
-            App.Tap("HorizontalTextAlignmentEndButton");
-            App.WaitForElement("Apply");
-            App.Tap("Apply");
-            App.WaitForElement("SearchBar");
-            App.EnterText("SearchBar", "Search Text");
-            // VerifyScreenshot();
-        }
-
-        //(Excel-7P) Checking the FontFamily and Placeholder Text
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetFontFamilyAndPlaceholder_VerifyVisualState()
@@ -215,7 +152,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-7U) Checking the FontFamily and Search Text
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetFontFamilyAndText_VerifyVisualState()
@@ -231,44 +167,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-7X) Checking the FontFamily and VerticalTextAlignment
-        [Test]
-        [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetFontFamilyAndVerticalTextAlignment_VerifyVisualState()
-        {
-            App.WaitForElement("Options");
-            App.Tap("Options");
-            App.WaitForElement("FontFamilyDokdoButton");
-            App.Tap("FontFamilyDokdoButton");
-            App.WaitForElement("VerticalTextAlignmentEndButton");
-            App.Tap("VerticalTextAlignmentEndButton");
-            App.WaitForElement("Apply");
-            App.Tap("Apply");
-            App.WaitForElement("SearchBar");
-            App.EnterText("SearchBar", "Search Text");
-            // VerifyScreenshot();
-        }
-
-        //(Excel-8J) Checking the FontSize and HorizontalTextAlignment
-        [Test]
-        [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetFontSizeAndHorizontalTextAlignment_VerifyVisualState()
-        {
-            App.WaitForElement("Options");
-            App.Tap("Options");
-            App.WaitForElement("FontSizeEntry");
-            App.ClearText("FontSizeEntry");
-            App.EnterText("FontSizeEntry", "20");
-            App.WaitForElement("HorizontalTextAlignmentCenterButton");
-            App.Tap("HorizontalTextAlignmentCenterButton");
-            App.WaitForElement("Apply");
-            App.Tap("Apply");
-            App.WaitForElement("SearchBar");
-            App.EnterText("SearchBar", "Search Text");
-            // VerifyScreenshot();
-        }
-
-        //(Excel-8P) Checking the FontSize and Placeholder Text
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetFontSizeAndPlaceholder_VerifyVisualState()
@@ -286,7 +184,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-8U) Checking the FontSize and Search Text
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetFontSizeAndText_VerifyVisualState()
@@ -303,7 +200,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-9P) Checking the HorizontalTextAlignment and Placeholder Text
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetHorizontalTextAlignmentAndPlaceholder_VerifyVisualState() // For ios, Mac placeholder text not set the with horizontal text alignment
@@ -319,7 +215,7 @@ namespace Microsoft.Maui.TestCases.Tests
             Task.Delay(4000).Wait();
             // VerifyScreenshot();
         }
-        //(Excel-9U) Checking the HorizontalTextAlignment and Search Text
+
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetHorizontalTextAlignmentAndText_VerifyVisualState()
@@ -335,7 +231,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-9X) Checking the HorizontalTextAlignment and VerticalTextAlignment
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetHorizontalTextAlignmentAndVerticalTextAlignment_VerifyVisualState()
@@ -356,7 +251,7 @@ namespace Microsoft.Maui.TestCases.Tests
 #if TEST_FAILS_ON_ANDROID
         [Test]
         [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetIsReadOnlyTextAndVerifyVisualState() // For android IsReadOnly not privent typing text during automation
+        public void SearchBar_SetIsReadOnlyTextAndVerifyVisualState() // For android IsReadOnly not prevent typing text during automation
         {
             App.WaitForElement("Options");
             App.Tap("Options");
@@ -379,7 +274,6 @@ namespace Microsoft.Maui.TestCases.Tests
         }
 #endif
 
-        //(Excel-13V) Checking the IsSpellCheckEnabled and Text property
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetIsSpellCheckEnabledTextAndVerifyVisualState()
@@ -431,7 +325,6 @@ namespace Microsoft.Maui.TestCases.Tests
         }
 #endif
 
-        //(Excel-14U) Checking the MaxLength and Text
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetMaxLengthAndText()
@@ -461,11 +354,10 @@ namespace Microsoft.Maui.TestCases.Tests
             Assert.That(textLength, Is.EqualTo(10));
         }
 
-        //(Excel-15D) Checking the Placeholder and CharacterSpacing
         [Test]
         [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetPlaceholderAndCharacterSpacingVerifyVisualState()
-        {
+        public void SearchBar_SetPlaceholderAndCharacterSpacingVerifyVisualState() // For windows characterSpacing not set to placeholder text
+		{
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("PlaceholderEntry");
@@ -478,7 +370,7 @@ namespace Microsoft.Maui.TestCases.Tests
             Task.Delay(4000).Wait();
             // VerifyScreenshot();
         }
-        //(Excel-15Q) Checking the Placeholder and PlaceholderColor
+
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetPlaceholderAndPlaceholderColor_VerifyVisualState()
@@ -495,7 +387,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-15X) Checking the Placeholder and VerticalTextAlignment
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetPlaceholderAndVerticalTextAlignment_VerifyVisualState()
@@ -512,7 +403,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-16V) Checking the Placeholder Color and Text Color
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetPlaceholderColorAndTextColor_VerifyVisualState()
@@ -557,7 +447,6 @@ namespace Microsoft.Maui.TestCases.Tests
             // VerifyScreenshot();
         }
 
-        //(Excel-20W) Checking the Text and TextTransform
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetTextAndTextTransform()
