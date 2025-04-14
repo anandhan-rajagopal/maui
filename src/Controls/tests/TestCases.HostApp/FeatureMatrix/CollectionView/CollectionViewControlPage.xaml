@@ -20,8 +20,7 @@
             EmptyView="{Binding EmptyView}"
             IsGrouped="{Binding IsGrouped}"
             SelectionMode="{Binding SelectionMode}"
-            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
-            SelectedItems="{Binding SelectedItems, Mode=TwoWay}"
+            SelectedItems="{Binding SelectedItems}"
             AutomationId="CollectionViewControl">
         </CollectionView>
 

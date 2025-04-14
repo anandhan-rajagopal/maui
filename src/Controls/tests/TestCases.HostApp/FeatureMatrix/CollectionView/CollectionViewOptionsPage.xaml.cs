@@ -30,24 +30,6 @@ namespace Maui.Controls.Sample
             {
                 _viewModel.EmptyView = "No Items Available(String)";
             }
-            else if (EmptyViewGrid.IsChecked)
-            {
-                Grid grid = new Grid
-                {
-                    BackgroundColor = Colors.LightGray,
-                    Padding = new Thickness(10)
-                };
-                grid.Children.Add(new Label
-                {
-                    Text = "No Items Available(Grid View)",
-                    HorizontalOptions = LayoutOptions.Center,
-                    VerticalOptions = LayoutOptions.Center,
-                    FontSize = 18,
-                    TextColor = Colors.Blue,
-                    AutomationId = "EmptyViewLabel"
-                });
-                _viewModel.EmptyView = grid;
-            }
         }
 
         private void OnIsGroupedChanged(object sender, CheckedChangedEventArgs e)
@@ -66,23 +48,12 @@ namespace Maui.Controls.Sample
         {
             if (!(sender is RadioButton radioButton) || !e.Value)
                 return;
-            if (radioButton == ItemsSourceGroupedList)
-            {
-                _viewModel.IsGrouped = true;
-            }
-            else
-            {
-                _viewModel.IsGrouped = false;
-            }
-            // Set ItemsSourceType based on selection
-            if (radioButton == ItemsSourceList)
-                _viewModel.ItemsSourceType = ItemsSourceType.ListT;
-            else if (radioButton == ItemsSourceEmptyList)
-                _viewModel.ItemsSourceType = ItemsSourceType.EmptyListT;
-            else if (radioButton == ItemsSourceObservableCollection)
-                _viewModel.ItemsSourceType = ItemsSourceType.ObservableCollectionT;
+            else if (radioButton == ItemsSourceObservableCollection5)
+                _viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T;
             else if (radioButton == ItemsSourceGroupedList)
                 _viewModel.ItemsSourceType = ItemsSourceType.GroupedListT;
+            else if (radioButton == ItemsSourceNone)
+                _viewModel.ItemsSourceType = ItemsSourceType.None;
         }
 
         private void OnSelectionModeButtonClicked(object sender, EventArgs e)
