@@ -20,7 +20,7 @@ namespace Microsoft.Maui.TestCases.Tests
 
         [Test]
         [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetCancelButtonAndColorTextColor_VerifyVisualState()
+        public void SearchBar_SetCancelButtonAndTextColor_VerifyVisualState()
         {
             App.WaitForElement("Options");
             App.Tap("Options");
@@ -251,7 +251,7 @@ namespace Microsoft.Maui.TestCases.Tests
 #if TEST_FAILS_ON_ANDROID
         [Test]
         [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetIsReadOnlyTextAndVerifyVisualState() // For android IsReadOnly not prevent typing text during automation
+        public void SearchBar_SetIsReadOnlyAndText_VerifyVisualState() // For android IsReadOnly not prevent typing text during automation
         {
             App.WaitForElement("Options");
             App.Tap("Options");
@@ -276,7 +276,7 @@ namespace Microsoft.Maui.TestCases.Tests
 
         [Test]
         [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetIsSpellCheckEnabledTextAndVerifyVisualState()
+        public void SearchBar_SetIsSpellCheckEnabledAndText_VerifyVisualState()
         {
             App.WaitForElement("Options");
             App.Tap("Options");
@@ -292,7 +292,7 @@ namespace Microsoft.Maui.TestCases.Tests
 
         [Test]
         [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetIsTextPredictionEnabledAndTextAndVerifyVisualState() // In android, ios, Mac while automation nothing happens for prediction
+        public void SearchBar_SetIsTextPredictionEnabledAndText_VerifyVisualState() // In android, ios, Mac while automation nothing happens for prediction
         {
             App.WaitForElement("Options");
             App.Tap("Options");
@@ -309,7 +309,7 @@ namespace Microsoft.Maui.TestCases.Tests
 #if TestFailsOnMacCatalyst && TestFailsOnWindows // For MacCatalyst and Windows, the virtual keyboard is not displayed
         [Test]
         [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetKeyboardAndTextAndVerifyVisualState()
+        public void SearchBar_SetKeyboardAndText_VerifyVisualState()
         {
             App.WaitForElement("Options");
             App.Tap("Options");
@@ -356,7 +356,7 @@ namespace Microsoft.Maui.TestCases.Tests
 
         [Test]
         [Category(UITestCategories.SearchBar)]
-        public void SearchBar_SetPlaceholderAndCharacterSpacingVerifyVisualState() // For windows characterSpacing not set to placeholder text
+        public void SearchBar_SetPlaceholderAndCharacterSpacing_VerifyVisualState() // For windows characterSpacing not set to placeholder text
 		{
             App.WaitForElement("Options");
             App.Tap("Options");
@@ -469,6 +469,22 @@ namespace Microsoft.Maui.TestCases.Tests
             text = App.WaitForElement("TextBox").GetText();
 #endif
             Assert.That(text, Is.EqualTo("SEARCHTEXT"));
+        }
+
+        [Test]
+        [Category(UITestCategories.SearchBar)]
+        public void SearchBar_SetTextAndVerticalTextAlignment_VerifyVisualState()
+        {
+            App.WaitForElement("Options");
+            App.Tap("Options");
+            App.WaitForElement("VerticalTextAlignmentEndButton");
+            App.Tap("VerticalTextAlignmentEndButton");
+            App.WaitForElement("Apply");
+            App.Tap("Apply");
+            App.WaitForElement("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
+            App.WaitForElement("SearchBar");
+            // VerifyScreenshot();
         }
     }
 }
