@@ -21,6 +21,7 @@
             IsGrouped="{Binding IsGrouped}"
             SelectionMode="{Binding SelectionMode}"
             SelectedItems="{Binding SelectedItems}"
+            SelectedItem="{Binding SelectedItem}"
             AutomationId="CollectionViewControl">
         </CollectionView>
 

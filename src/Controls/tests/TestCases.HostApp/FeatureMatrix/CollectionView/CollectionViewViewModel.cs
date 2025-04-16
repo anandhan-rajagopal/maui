@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Maui.Controls.Sample.CollectionViewGalleries;
+using System.Collections.Specialized;
 
 namespace Maui.Controls.Sample
 {
@@ -43,7 +44,7 @@ namespace Maui.Controls.Sample
         private List<Grouping<string, CollectionViewTestItem>> _groupedList;
         private List<Grouping<string, CollectionViewTestItem>> _emptyGroupedList;
         private SelectionMode _selectionMode = SelectionMode.None;
-        private CollectionViewTestItem _selectedItem;
+        private object _selectedItem;
         private ObservableCollection<object> _selectedItems = new ObservableCollection<object>();
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -84,6 +85,9 @@ namespace Maui.Controls.Sample
                 stackLayout.Children.Add(label);
                 return stackLayout;
             });
+
+            SelectedItems = new ObservableCollection<object>();
+            SelectedItems.CollectionChanged += OnSelectedItemsChanged;
         }
         public object EmptyView
         {
@@ -103,7 +107,7 @@ namespace Maui.Controls.Sample
             set { _itemTemplate = value; OnPropertyChanged(); }
         }
 
-       public ItemsSourceType ItemsSourceType
+        public ItemsSourceType ItemsSourceType
         {
             get => _itemsSourceType;
             set
@@ -130,7 +134,7 @@ namespace Maui.Controls.Sample
             }
         }
 
-         public object ItemsSource
+        public object ItemsSource
         {
             get
             {
@@ -156,15 +160,13 @@ namespace Maui.Controls.Sample
                 {
                     _selectionMode = value;
                     OnPropertyChanged();
-                    // SelectedItem = null;
+                    SelectedItem = null;
                     SelectedItems.Clear();
-
-                    OnPropertyChanged(nameof(SelectedItemsCount));
                 }
             }
         }
 
-        public CollectionViewTestItem SelectedItem
+        public object SelectedItem
         {
             get => _selectedItem;
             set
@@ -174,7 +176,6 @@ namespace Maui.Controls.Sample
                     _selectedItem = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(SelectedItemText));
-                    OnPropertyChanged(nameof(SelectedItemsCount));
                 }
             }
         }
@@ -186,23 +187,31 @@ namespace Maui.Controls.Sample
             {
                 if (_selectedItems != value)
                 {
-                    if (_selectedItems != null)
-                        _selectedItems.CollectionChanged -= SelectedItems_CollectionChanged;
-
                     _selectedItems = value;
-
-                    if (_selectedItems != null)
-                        _selectedItems.CollectionChanged += SelectedItems_CollectionChanged;
-
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(SelectedItemsCount));
                 }
             }
         }
+        public int SelectedItemsCount => SelectedItems?.Count() ?? 0;
+        public string SelectedItemText
+        {
+            get
+            {
+                if (SelectionMode == SelectionMode.Single && SelectedItem is CollectionViewTestItem item)
+                {
+                    return $"{item.Caption}";
+                }
+                else if (SelectionMode == SelectionMode.Multiple && SelectedItems?.Count > 0)
+                {
+                    var selectedCaptions = SelectedItems
+                        .OfType<CollectionViewTestItem>()
+                        .Select(i => i.Caption);
+                    return string.Join(", ", selectedCaptions);
+                }
 
-        public int SelectedItemsCount => SelectedItems?.Count ?? 0;
-        public string SelectedItemText => SelectedItem?.Caption ?? "No item selected";
-
+                return "No items selected";
+            }
+        }
         private void LoadItems()
         {
             _observableCollection25 = new ObservableCollection<CollectionViewTestItem>();
@@ -225,7 +234,7 @@ namespace Maui.Controls.Sample
             _emptyGroupedList = new List<Grouping<string, CollectionViewTestItem>>();
         }
 
-         private void AddItems(IList<CollectionViewTestItem> list, int count, string category)
+        private void AddItems(IList<CollectionViewTestItem> list, int count, string category)
         {
             string[] fruits =
             {
@@ -263,9 +272,10 @@ namespace Maui.Controls.Sample
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void SelectedItems_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void OnSelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(nameof(SelectedItemsCount));
+            OnPropertyChanged(nameof(SelectedItemText));
         }
 
         public class CollectionViewTestItem
