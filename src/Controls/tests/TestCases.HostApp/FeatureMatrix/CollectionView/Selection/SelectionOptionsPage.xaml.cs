@@ -4,11 +4,11 @@ using System.Collections.ObjectModel;
 
 namespace Maui.Controls.Sample
 {
-    public partial class CollectionViewOptionsPage : ContentPage
+    public partial class SelectionOptionsPage : ContentPage
     {
         private CollectionViewViewModel _viewModel;
 
-        public CollectionViewOptionsPage(CollectionViewViewModel viewModel)
+        public SelectionOptionsPage(CollectionViewViewModel viewModel)
         {
             InitializeComponent();
             _viewModel = viewModel;
