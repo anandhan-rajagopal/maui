@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui.Controls.Sample.TimePickerControlMainPage"
+             Title="TimePickerControlPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Options"
+                     Clicked="NavigateToOptionsPage_Clicked"
+                     AutomationId="Options"/>
+    </ContentPage.ToolbarItems>
+
+    <TimePicker AutomationId="TimePickerControl"
+                CharacterSpacing="{Binding CharacterSpacing}"
+                Format="{Binding Format}"
+                FontAttributes="{Binding FontAttributes}"
+                FontFamily="{Binding FontFamily}"
+                FontSize="{Binding FontSize}"
+                Time="{Binding Time}"
+                TextColor="{Binding TextColor}"/>
+</ContentPage>
