@@ -230,6 +230,7 @@ public class CollectionViewViewModel : INotifyPropertyChanged
                 _selectedItem = value;
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SelectedItemText));
+                OnPropertyChanged(nameof(SelectedItemsCount));
             }
         }
     }
@@ -246,7 +247,22 @@ public class CollectionViewViewModel : INotifyPropertyChanged
             }
         }
     }
-    public int SelectedItemsCount => SelectedItems?.Count() ?? 0;
+     public int SelectedItemsCount
+    {
+        get
+        {
+            if (SelectionMode == SelectionMode.Single)
+            {
+                return SelectedItem != null ? 1 : 0;
+            }
+            else if (SelectionMode == SelectionMode.Multiple)
+            {
+                return SelectedItems?.Count ?? 0;
+            }
+            return 0;
+
+        }
+    }
     public string SelectedItemText
     {
         get

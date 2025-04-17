@@ -1,4 +1,4 @@
-using Maui.Controls.Sample;
+using System;
 using Microsoft.Maui.Controls;
 
 namespace Maui.Controls.Sample;
@@ -17,13 +17,13 @@ public partial class CollectionViewFeatureMainPage : ContentPage
 		InitializeComponent();
 	}
 
-	private async void OnSelectionMainPageClicked(object sender, EventArgs e)
-	{
-		await Navigation.PushAsync(new CollectionViewSelectionPage());
-	}
-
 	private async void OnHeaderFooterViewButtonClicked(object sender, EventArgs e)
 	{
 		await Navigation.PushAsync(new CollectionViewHeaderPage());
+	}
+
+	private async void OnSelectionMainPageClicked(object sender, EventArgs e)
+	{
+		await Navigation.PushAsync(new CollectionViewSelectionPage());
 	}
 }
