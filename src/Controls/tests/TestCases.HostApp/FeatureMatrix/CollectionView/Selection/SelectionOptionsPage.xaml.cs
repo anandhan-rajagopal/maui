@@ -19,43 +19,6 @@ namespace Maui.Controls.Sample
         {
             Navigation.PopAsync();
         }
-
-        private void OnEmptyViewChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (EmptyViewNone.IsChecked)
-            {
-                _viewModel.EmptyView = null;
-            }
-            else if (EmptyViewString.IsChecked)
-            {
-                _viewModel.EmptyView = "No Items Available(String)";
-            }
-        }
-
-        private void OnIsGroupedChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (IsGroupedFalse.IsChecked)
-            {
-                _viewModel.IsGrouped = false;
-            }
-            else if (IsGroupedTrue.IsChecked)
-            {
-                _viewModel.IsGrouped = true;
-            }
-        }
-
-        private void OnItemsSourceChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (!(sender is RadioButton radioButton) || !e.Value)
-                return;
-            else if (radioButton == ItemsSourceObservableCollection5)
-                _viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T;
-            else if (radioButton == ItemsSourceGroupedList)
-                _viewModel.ItemsSourceType = ItemsSourceType.GroupedListT;
-            else if (radioButton == ItemsSourceNone)
-                _viewModel.ItemsSourceType = ItemsSourceType.None;
-        }
-
         private void OnSelectionModeButtonClicked(object sender, EventArgs e)
         {
             if (sender is Button button)
@@ -73,10 +36,50 @@ namespace Maui.Controls.Sample
                         _viewModel.SelectionMode = SelectionMode.Multiple;
                         break;
                     default:
-                        // Handle unexpected cases if necessary
                         break;
                 }
             }
+        }
+        private void OnIsGroupedChanged(object sender, CheckedChangedEventArgs e)
+        {
+            if (IsGroupedFalse.IsChecked)
+            {
+                _viewModel.IsGrouped = false;
+            }
+            else if (IsGroupedTrue.IsChecked)
+            {
+                _viewModel.IsGrouped = true;
+            }
+        }
+        private void OnItemsLayoutChanged(object sender, CheckedChangedEventArgs e)
+        {
+            if (ItemsLayoutVerticalList.IsChecked)
+            {
+                _viewModel.ItemsLayout = new LinearItemsLayout(ItemsLayoutOrientation.Vertical);
+            }
+            else if (ItemsLayoutHorizontalList.IsChecked)
+            {
+                _viewModel.ItemsLayout = new LinearItemsLayout(ItemsLayoutOrientation.Horizontal);
+            }
+            else if (ItemsLayoutVerticalGrid.IsChecked)
+            {
+                _viewModel.ItemsLayout = new GridItemsLayout(2, ItemsLayoutOrientation.Vertical); // 2 columns
+            }
+            else if (ItemsLayoutHorizontalGrid.IsChecked)
+            {
+                _viewModel.ItemsLayout = new GridItemsLayout(2, ItemsLayoutOrientation.Horizontal); // 2 rows
+            }
+        }
+        private void OnItemsSourceChanged(object sender, CheckedChangedEventArgs e)
+        {
+            if (!(sender is RadioButton radioButton) || !e.Value)
+                return;
+            else if (radioButton == ItemsSourceObservableCollection5)
+                _viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T;
+            else if (radioButton == ItemsSourceGroupedList)
+                _viewModel.ItemsSourceType = ItemsSourceType.GroupedListT;
+            else if (radioButton == ItemsSourceNone)
+                _viewModel.ItemsSourceType = ItemsSourceType.None;
         }
     }
 }

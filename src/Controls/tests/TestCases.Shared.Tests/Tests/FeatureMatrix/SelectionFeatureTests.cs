@@ -8,6 +8,21 @@ namespace Microsoft.Maui.TestCases.Tests;
 public class SelectionFeatureTests : UITest
 {
     public const string SelectionFeatureMatrix = "CollectionView Feature Matrix";
+    public const string ItemsSourceGroupedList = "ItemsSourceGroupedList";
+    public const string ItemsSourceNone = "ItemsSourceNone";
+    public const string IsGroupedTrue = "IsGroupedTrue";
+    public const string IsGroupedFalse = "IsGroupedFalse";
+    public const string SelectionModeNone = "SelectionModeNone";
+    public const string SelectionModeSingle = "SelectionModeSingle";
+    public const string SelectionModeMultiple = "SelectionModeMultiple";
+    public const string Apply = "Apply";
+    public const string Options = "Options";
+    public const string SelectedSingle = "SelectedSingle";
+    public const string SelectedMultiple = "SelectedMultiple";
+    public const string ItemsLayoutVerticalList = "ItemsLayoutVerticalList";
+    public const string ItemsLayoutHorizontalList = "ItemsLayoutHorizontalList";
+    public const string ItemsLayoutVerticalGrid = "ItemsLayoutVerticalGrid";
+    public const string ItemsLayoutHorizontalGrid = "ItemsLayoutHorizontalGrid";
     public SelectionFeatureTests(TestDevice device)
         : base(device)
     {
@@ -21,498 +36,405 @@ public class SelectionFeatureTests : UITest
 
     [Test, Order(1)]
     [Category(UITestCategories.CollectionView)]
-    public void SelectionModeNone_FirstItemSourceList_WhenItemSourceList()
+    public void VerifySelectionModeNoneWhenItemsSourceNone()
     {
         App.WaitForElement("SelectionPageButton");
         App.Tap("SelectionPageButton");
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeNone");
-        App.Tap("SelectionModeNone");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeNone);
+        App.Tap(SelectionModeNone);
+        App.WaitForElement(ItemsSourceNone);
+        App.Tap(ItemsSourceNone);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
     }
 
     [Test]
     [Category(UITestCategories.CollectionView)]
-    public void SelectionModeSingle_FirstItemSourceList_WhenItemSourceList()
+    public void VerifySelectionModeSingleWhenItemsSourceNone()
     {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeSingle");
-        App.Tap("SelectionModeSingle");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("Banana");
-        App.Tap("Banana");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Banana"));
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeSingle);
+        App.Tap(SelectionModeSingle);
+        App.WaitForElement(ItemsSourceNone);
+        App.Tap(ItemsSourceNone);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
     }
 
     [Test]
     [Category(UITestCategories.CollectionView)]
-    public void SelectionModeMultiple_FirstItemSourceList_WhenItemSourceList()
+    public void VerifySelectionModeMultipleWhenItemsSourceNone()
     {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeMultiple");
-        App.Tap("SelectionModeMultiple");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeMultiple);
+        App.Tap(SelectionModeMultiple);
+        App.WaitForElement(ItemsSourceNone);
+        App.Tap(ItemsSourceNone);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
+    }
+
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeNoneWhenItemsSourceObservableCollection5()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeNone);
+        App.Tap(SelectionModeNone);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
         App.WaitForElement("Orange");
         App.Tap("Orange");
         App.WaitForElement("Banana");
         App.Tap("Banana");
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
     }
 
     [Test]
     [Category(UITestCategories.CollectionView)]
-    public void SelectionModeNone_FirstItemsSourceObservableCollection_WhenItemsSourceObservableCollection()
+    public void VerifySelectionModeSingleWhenItemsSourceObservableCollection5()
     {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceObservableCollection");
-        App.Tap("ItemsSourceObservableCollection");
-        App.WaitForElement("SelectionModeNone");
-        App.Tap("SelectionModeNone");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeSingle);
+        App.Tap(SelectionModeSingle);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        App.WaitForElement("Banana");
+        App.Tap("Banana");
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
+    }
+
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeMultipleWhenItemSourceObservableCollection5()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeMultiple);
+        App.Tap(SelectionModeMultiple);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
         App.WaitForElement("Orange");
         App.Tap("Orange");
         App.WaitForElement("Banana");
         App.Tap("Banana");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Banana"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("2"));
+    }
+
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS //related issue link: https://github.com/dotnet/maui/issues/28509
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeNoneWhenItemsSourceGroupList()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeNone);
+        App.Tap(SelectionModeNone);
+        App.WaitForElement(ItemsSourceGroupedList);
+        App.Tap(ItemsSourceGroupedList);
+        App.WaitForElement(IsGroupedTrue);
+        App.Tap(IsGroupedTrue);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        App.WaitForElement("Orange");
+        App.Tap("Orange");
+        App.WaitForElement("Fruits");
+        App.WaitForElement("Vegetables");
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
     }
 
     [Test]
     [Category(UITestCategories.CollectionView)]
-    public void SelectionModeNone_FirstSelectionMode_WhenItemsSourceObservableCollection()
+    public void VerifySelectionModeSingleWhenItemsSourceGroupList()
     {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeNone");
-        App.Tap("SelectionModeNone");
-        App.WaitForElement("ItemsSourceObservableCollection");
-        App.Tap("ItemsSourceObservableCollection");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeSingle);
+        App.Tap(SelectionModeSingle);
+        App.WaitForElement(ItemsSourceGroupedList);
+        App.Tap(ItemsSourceGroupedList);
+        App.WaitForElement(IsGroupedTrue);
+        App.Tap(IsGroupedTrue);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        App.WaitForElement("Carrot");
+        App.Tap("Carrot");
+        App.WaitForElement("Fruits");
+        App.WaitForElement("Vegetables");
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Carrot"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
     }
 
     [Test]
     [Category(UITestCategories.CollectionView)]
-    public void SelectionModeSingle_FirstItemsSourceObservableCollection_WhenItemsSourceObservableCollection()
+    public void VerifySelectionModeMultipleWhenItemsSourceGroupList()
     {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceObservableCollection");
-        App.Tap("ItemsSourceObservableCollection");
-        App.WaitForElement("SelectionModeSingle");
-        App.Tap("SelectionModeSingle");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeMultiple);
+        App.Tap(SelectionModeMultiple);
+        App.WaitForElement(ItemsSourceGroupedList);
+        App.Tap(ItemsSourceGroupedList);
+        App.WaitForElement(IsGroupedTrue);
+        App.Tap(IsGroupedTrue);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        App.WaitForElement("Orange");
+        App.Tap("Orange");
+        App.WaitForElement("Carrot");
+        App.Tap("Carrot");
+        App.WaitForElement("Apple");
+        App.Tap("Apple");
+        App.WaitForElement("Spinach");
+        App.Tap("Spinach");
+        App.WaitForElement("Potato");
+        App.Tap("Potato");
+        App.WaitForElement("Fruits");
+        App.WaitForElement("Vegetables");
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("5"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Carrot, Apple, Spinach, Potato"));
+    }
+#endif
+
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS //related issue link: https://github.com/dotnet/maui/issues/28030
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeNoneWhenItemsLayoutVerticalList()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeNone);
+        App.Tap(SelectionModeNone);
+        App.WaitForElement(ItemsLayoutVerticalList);
+        App.Tap(ItemsLayoutVerticalList);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
+    }
+
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeSingleWhenItemsLayoutVerticalList()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeSingle);
+        App.Tap(SelectionModeSingle);
+        App.WaitForElement(ItemsLayoutVerticalList);
+        App.Tap(ItemsLayoutVerticalList);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        App.WaitForElement("Grapes");
+        App.Tap("Grapes");
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Grapes"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
+    }
+
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeMultipleWhenItemsLayoutVerticalList()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeMultiple);
+        App.Tap(SelectionModeMultiple);
+        App.WaitForElement(ItemsLayoutVerticalList);
+        App.Tap(ItemsLayoutVerticalList);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        App.WaitForElement("Orange");
+        App.Tap("Orange");
+        App.WaitForElement("Apple");
+        App.Tap("Apple");
+        App.WaitForElement("Mango");
+        App.Tap("Mango");
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("3"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Apple, Mango"));
+    }
+
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeNoneWhenItemsLayoutHorizontalList()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeNone);
+        App.Tap(SelectionModeNone);
+        App.WaitForElement(ItemsLayoutHorizontalList);
+        App.Tap(ItemsLayoutHorizontalList);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
+    }
+
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeSingleWhenItemsLayoutHorizontalList()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeSingle);
+        App.Tap(SelectionModeSingle);
+        App.WaitForElement(ItemsLayoutHorizontalList);
+        App.Tap(ItemsLayoutHorizontalList);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        App.WaitForElement("Mango");
+        App.Tap("Mango");
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Mango"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
+    }
+
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeMultipleWhenItemsLayoutHorizontalList()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeMultiple);
+        App.Tap(SelectionModeMultiple);
+        App.WaitForElement(ItemsLayoutHorizontalList);
+        App.Tap(ItemsLayoutHorizontalList);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        App.WaitForElement("Orange");
+        App.Tap("Orange");
+        App.WaitForElement("Apple");
+        App.Tap("Apple");
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("2"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Apple"));
+    }
+
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeNoneWhenItemsLayoutVerticalGrid()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeNone);
+        App.Tap(SelectionModeNone);
+        App.WaitForElement(ItemsLayoutVerticalGrid);
+        App.Tap(ItemsLayoutVerticalGrid);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
+    }
+
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeSingleWhenItemsLayoutVerticalGrid()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeSingle);
+        App.Tap(SelectionModeSingle);
+        App.WaitForElement(ItemsLayoutVerticalGrid);
+        App.Tap(ItemsLayoutVerticalGrid);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
         App.WaitForElement("Banana");
         App.Tap("Banana");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Banana"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
     }
 
     [Test]
     [Category(UITestCategories.CollectionView)]
-    public void SelectionModeSingle_FirstSelectionMode_WhenItemsSourceObservableCollection()
+    public void VerifySelectionModeMultipleWhenItemsLayoutVerticalGrid()
     {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeSingle");
-        App.Tap("SelectionModeSingle");
-        App.WaitForElement("ItemsSourceObservableCollection");
-        App.Tap("ItemsSourceObservableCollection");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeMultiple);
+        App.Tap(SelectionModeMultiple);
+        App.WaitForElement(ItemsLayoutVerticalGrid);
+        App.Tap(ItemsLayoutVerticalGrid);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        App.WaitForElement("Orange");
+        App.Tap("Orange");
+        App.WaitForElement("Grapes");
+        App.Tap("Grapes");
         App.WaitForElement("Banana");
         App.Tap("Banana");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Banana"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("3"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Grapes, Banana"));
     }
 
     [Test]
     [Category(UITestCategories.CollectionView)]
-    public void SelectionModeMultiple_FirstItemsSourceObservableCollection_WhenItemsSourceObservableCollection()
+    public void VerifySelectionModeNoneWhenItemsLayoutHorizontalGrid()
     {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceObservableCollection");
-        App.Tap("ItemsSourceObservableCollection");
-        App.WaitForElement("SelectionModeMultiple");
-        App.Tap("SelectionModeMultiple");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("Orange");
-        App.Tap("Orange");
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeNone);
+        App.Tap(SelectionModeNone);
+        App.WaitForElement(ItemsLayoutHorizontalGrid);
+        App.Tap(ItemsLayoutHorizontalGrid);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
+    }
+
+    [Test]
+    [Category(UITestCategories.CollectionView)]
+    public void VerifySelectionModeSingleWhenItemsLayoutHorizontalGrid()
+    {
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeSingle);
+        App.Tap(SelectionModeSingle);
+        App.WaitForElement(ItemsLayoutHorizontalGrid);
+        App.Tap(ItemsLayoutHorizontalGrid);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
         App.WaitForElement("Banana");
         App.Tap("Banana");
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
     }
 
     [Test]
     [Category(UITestCategories.CollectionView)]
-    public void SelectionModeMultiple_FirstSelectionMode_WhenItemsSourceObservableCollection()
+    public void VerifySelectionModeMultipleWhenItemsLayoutHorizontalGrid()
     {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeMultiple");
-        App.Tap("SelectionModeMultiple");
-        App.WaitForElement("ItemsSourceObservableCollection");
-        App.Tap("ItemsSourceObservableCollection");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("Orange");
-        App.Tap("Orange");
-        App.WaitForElement("Banana");
-        App.Tap("Banana");
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeNone_FirstItemsSourceGroupList_WhenItemsSourceGroupList()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceGroupList");
-        App.Tap("ItemsSourceGroupList");
-        App.WaitForElement("IsGroupedTrue");
-        App.Tap("IsGroupedTrue");
-        App.WaitForElement("SelectionModeNone");
-        App.Tap("SelectionModeNone");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("Orange");
-        App.Tap("Orange");
-        App.WaitForElement("Group A");
-        App.WaitForElement("Group B");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeNone_FirstSelectionMode_WhenItemsSourceGroupList()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeNone");
-        App.Tap("SelectionModeNone");
-        App.WaitForElement("ItemsSourceGroupList");
-        App.Tap("ItemsSourceGroupList");
-        App.WaitForElement("IsGroupedTrue");
-        App.Tap("IsGroupedTrue");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("Orange");
-        App.Tap("Orange");
-        App.WaitForElement("Group A");
-        App.WaitForElement("Group B");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeSingle_FirstItemsSourceGroupList_WhenItemsSourceGroupList()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceGroupList");
-        App.Tap("ItemsSourceGroupList");
-        App.WaitForElement("IsGroupedTrue");
-        App.Tap("IsGroupedTrue");
-        App.WaitForElement("SelectionModeSingle");
-        App.Tap("SelectionModeSingle");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("Orange");
-        App.Tap("Orange");
-        App.WaitForElement("Group A");
-        App.WaitForElement("Group B");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Orange"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeSingle_FirstSelectionMode_WhenItemsSourceGroupList()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeSingle");
-        App.Tap("SelectionModeSingle");
-        App.WaitForElement("ItemsSourceGroupList");
-        App.Tap("ItemsSourceGroupList");
-        App.WaitForElement("IsGroupedTrue");
-        App.Tap("IsGroupedTrue");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("Orange");
-        App.Tap("Orange");
-        App.WaitForElement("Group A");
-        App.WaitForElement("Group B");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("Orange"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeMultiple_FirstItemsSourceGroupList_WhenItemsSourceGroupList()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceGroupList");
-        App.Tap("ItemsSourceGroupList");
-        App.WaitForElement("IsGroupedTrue");
-        App.Tap("IsGroupedTrue");
-        App.WaitForElement("SelectionModeMultiple");
-        App.Tap("SelectionModeMultiple");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
+        App.WaitForElement(Options);
+        App.Tap(Options);
+        App.WaitForElement(SelectionModeMultiple);
+        App.Tap(SelectionModeMultiple);
+        App.WaitForElement(ItemsLayoutHorizontalGrid);
+        App.Tap(ItemsLayoutHorizontalGrid);
+        App.WaitForElement(Apply);
+        App.Tap(Apply);
         App.WaitForElement("Orange");
         App.Tap("Orange");
         App.WaitForElement("Banana");
         App.Tap("Banana");
-        App.WaitForElement("Group A");
-        App.WaitForElement("Group B");
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
+        App.WaitForElement("Apple");
+        App.Tap("Apple");
+        App.WaitForElement("Grapes");
+        App.Tap("Grapes");
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("4"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Banana, Apple, Grapes"));
     }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeMultiple_FirstSelectionMode_WhenItemsSourceGroupList()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeMultiple");
-        App.Tap("SelectionModeMultiple");
-        App.WaitForElement("ItemsSourceGroupList");
-        App.Tap("ItemsSourceGroupList");
-        App.WaitForElement("IsGroupedTrue");
-        App.Tap("IsGroupedTrue");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("Orange");
-        App.Tap("Orange");
-        App.WaitForElement("Banana");
-        App.Tap("Banana");
-        App.WaitForElement("Group A");
-        App.WaitForElement("Group B");
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("2"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeNone_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyView()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceEmptyList");
-        App.Tap("ItemsSourceEmptyList");
-        App.WaitForElement("EmptyViewGrid");
-        App.Tap("EmptyViewGrid");
-        App.WaitForElement("SelectionModeNone");
-        App.Tap("SelectionModeNone");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("No Items Available(Grid View)");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeNone_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyString()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceEmptyList");
-        App.Tap("ItemsSourceEmptyList");
-        App.WaitForElement("EmptyViewString");
-        App.Tap("EmptyViewString");
-        App.WaitForElement("SelectionModeNone");
-        App.Tap("SelectionModeNone");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("No Items Available(String)");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeNone_FirstSelectionMode_WhenItemsSourceEmptyListWithEmptyView()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeNone");
-        App.Tap("SelectionModeNone");
-        App.WaitForElement("ItemsSourceEmptyList");
-        App.Tap("ItemsSourceEmptyList");
-        App.WaitForElement("EmptyViewGrid");
-        App.Tap("EmptyViewGrid");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("No Items Available(Grid View)");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeNone_FirstSelectionMode_WhenItemsSourceEmptyListWithEmptyString()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeNone");
-        App.Tap("SelectionModeNone");
-        App.WaitForElement("ItemsSourceEmptyList");
-        App.Tap("ItemsSourceEmptyList");
-        App.WaitForElement("EmptyViewString");
-        App.Tap("EmptyViewString");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("No Items Available(String)");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeSingle_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyView()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceEmptyList");
-        App.Tap("ItemsSourceEmptyList");
-        App.WaitForElement("EmptyViewGrid");
-        App.Tap("EmptyViewGrid");
-        App.WaitForElement("SelectionModeSingle");
-        App.Tap("SelectionModeSingle");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("No Items Available(Grid View)");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeSingle_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyString()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceEmptyList");
-        App.Tap("ItemsSourceEmptyList");
-        App.WaitForElement("EmptyViewString");
-        App.Tap("EmptyViewString");
-        App.WaitForElement("SelectionModeSingle");
-        App.Tap("SelectionModeSingle");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("No Items Available(String)");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeSingle_FirstSelectionMode_WhenItemsSourceEmptyListWithEmptyView()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeSingle");
-        App.Tap("SelectionModeSingle");
-        App.WaitForElement("ItemsSourceEmptyList");
-        App.Tap("ItemsSourceEmptyList");
-        App.WaitForElement("EmptyViewGrid");
-        App.Tap("EmptyViewGrid");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("No Items Available(Grid View)");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeSingle_FirstSelectionMode_WhenItemsSourceEmptyListWithEmptyString()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeSingle");
-        App.Tap("SelectionModeSingle");
-        App.WaitForElement("ItemsSourceEmptyList");
-        App.Tap("ItemsSourceEmptyList");
-        App.WaitForElement("EmptyViewString");
-        App.Tap("EmptyViewString");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("No Items Available(String)");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeMultiple_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyView()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceEmptyList");
-        App.Tap("ItemsSourceEmptyList");
-        App.WaitForElement("EmptyViewGrid");
-        App.Tap("EmptyViewGrid");
-        App.WaitForElement("SelectionModeMultiple");
-        App.Tap("SelectionModeMultiple");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("No Items Available(Grid View)");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeMultiple_FirstItemsSourceEmptyList_WhenItemsSourceEmptyListWithEmptyViewString()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("ItemsSourceEmptyList");
-        App.Tap("ItemsSourceEmptyList");
-        App.WaitForElement("EmptyViewString");
-        App.Tap("EmptyViewString");
-        App.WaitForElement("SelectionModeMultiple");
-        App.Tap("SelectionModeMultiple");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("No Items Available(String)");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void SelectionModeMultiple_FirstSelectionMode_WhenItemsSourceEmptyListAndEmptyView()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectionModeMultiple");
-        App.Tap("SelectionModeMultiple");
-        App.WaitForElement("ItemsSourceEmptyList");
-        App.Tap("ItemsSourceEmptyList");
-        App.WaitForElement("EmptyViewGrid");
-        App.Tap("EmptyViewGrid");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        App.WaitForElement("No Items Available(Grid View)");
-        Assert.That(App.WaitForElement("SelectedSingle").GetText(), Is.EqualTo("No item selected"));
-        Assert.That(App.WaitForElement("SelectedMultiple").GetText(), Is.EqualTo("0"));
-    }
+#endif
 }

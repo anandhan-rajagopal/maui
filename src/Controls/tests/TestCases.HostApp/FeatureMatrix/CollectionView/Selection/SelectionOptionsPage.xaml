@@ -33,6 +33,62 @@
                                            Clicked="OnSelectionModeButtonClicked"
                                            AutomationId="SelectionModeMultiple"/>
                             </StackLayout>
+                            <!--IsGrouped-->
+                            <Label Text="IsGrouped:"
+                                   FontSize="12"
+                                   FontAttributes="Bold"/>
+                            <StackLayout Orientation="Horizontal">
+                                   <RadioButton x:Name="IsGroupedTrue"
+                                                Content="True"
+                                                GroupName="IsGrouped"
+                                                CheckedChanged="OnIsGroupedChanged"
+                                                FontSize="11"
+                                                AutomationId="IsGroupedTrue"/>
+                                   <RadioButton x:Name="IsGroupedFalse"
+                                                Content="False"
+                                                GroupName="IsGrouped"
+                                                IsChecked="True"
+                                                CheckedChanged="OnIsGroupedChanged"
+                                                FontSize="11"
+                                                AutomationId="IsGroupedFalse"/>
+                            </StackLayout>
+                            <!--Items Layout-->
+                            <Label Text="ItemsLayout:"
+                                   FontAttributes="Bold"
+                                   FontSize="12"/>
+                            <VerticalStackLayout>
+                                   <!-- First Row -->
+                                   <HorizontalStackLayout Spacing="10">
+                                          <RadioButton x:Name="ItemsLayoutVerticalList"
+                                                       IsChecked="True"
+                                                       CheckedChanged="OnItemsLayoutChanged"
+                                                       Content="Vertical List"
+                                                       FontSize="11"
+                                                       GroupName="ItemsLayoutGroup"
+                                                       AutomationId="ItemsLayoutVerticalList"/>
+                                          <RadioButton x:Name="ItemsLayoutHorizontalList"
+                                                       CheckedChanged="OnItemsLayoutChanged"
+                                                       Content="Horizontal List"
+                                                       FontSize="11"
+                                                       GroupName="ItemsLayoutGroup"
+                                                       AutomationId="ItemsLayoutHorizontalList"/>
+                                   </HorizontalStackLayout>
+                                   <!-- Second Row -->
+                                   <HorizontalStackLayout Spacing="10">
+                                          <RadioButton x:Name="ItemsLayoutVerticalGrid"
+                                                       CheckedChanged="OnItemsLayoutChanged"
+                                                       Content="Vertical Grid"
+                                                       FontSize="11"
+                                                       GroupName="ItemsLayoutGroup"
+                                                       AutomationId="ItemsLayoutVerticalGrid"/>
+                                          <RadioButton x:Name="ItemsLayoutHorizontalGrid"
+                                                       CheckedChanged="OnItemsLayoutChanged"
+                                                       Content="Horizontal Grid"
+                                                       FontSize="11"
+                                                       GroupName="ItemsLayoutGroup"
+                                                       AutomationId="ItemsLayoutHorizontalGrid"/>
+                                   </HorizontalStackLayout>
+                            </VerticalStackLayout>
                             <!-- ItemsSource Selection -->
                             <Label Text="ItemsSource:"
                                    FontAttributes="Bold"
@@ -60,44 +116,6 @@
                                                        AutomationId="ItemsSourceGroupedList"/>
                                    </HorizontalStackLayout>
                             </VerticalStackLayout>
-                            <!-- Empty View -->
-                            <Label Text="EmptyView:"
-                                   FontSize="12"
-                                   FontAttributes="Bold"/>
-                            <StackLayout Orientation="Horizontal">
-                                   <RadioButton x:Name="EmptyViewNone"
-                                                Content="None"
-                                                GroupName="EmptyView"
-                                                IsChecked="True"
-                                                CheckedChanged="OnEmptyViewChanged"
-                                                FontSize="11"
-                                                AutomationId="EmptyViewNone"/>
-                                   <RadioButton x:Name="EmptyViewString"
-                                                Content="String"
-                                                GroupName="EmptyView"
-                                                CheckedChanged="OnEmptyViewChanged"
-                                                FontSize="11"
-                                                AutomationId="EmptyViewString"/>
-                            </StackLayout>
-                            <!--IsGrouped-->
-                            <Label Text="IsGrouped:"
-                                   FontSize="12"
-                                   FontAttributes="Bold"/>
-                            <StackLayout Orientation="Horizontal">
-                                   <RadioButton x:Name="IsGroupedTrue"
-                                                Content="True"
-                                                GroupName="IsGrouped"
-                                                CheckedChanged="OnIsGroupedChanged"
-                                                FontSize="11"
-                                                AutomationId="IsGroupedTrue"/>
-                                   <RadioButton x:Name="IsGroupedFalse"
-                                                Content="False"
-                                                GroupName="IsGrouped"
-                                                IsChecked="True"
-                                                CheckedChanged="OnIsGroupedChanged"
-                                                FontSize="11"
-                                                AutomationId="IsGroupedFalse"/>
-                            </StackLayout>
                      </StackLayout>
               </Grid>
        </ScrollView>
