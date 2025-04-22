@@ -198,7 +198,7 @@ public class PickerFeatureTests : UITest
 
     [Test]
     [Category(UITestCategories.Picker)]
-    public void Picker_SetPickerAndTitle_VerifyVisualState() // On ios Title not shown when index is set to -1 and 
+    public void Picker_SetPickerAndTitle_VerifyVisualState() 
     {
         App.WaitForElement("Options");
         App.Tap("Options");
@@ -251,15 +251,14 @@ public class PickerFeatureTests : UITest
     [Category(UITestCategories.Picker)]
     public void Picker_SetTitleAndTitleColor_VerifyVisualState()
     {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.ClearText("TitleEntry");
-        App.EnterText("TitleEntry", "Picker Title");  // Title not show title when index is set to -1 in ios and mac.
-        App.WaitForElement("TitleColorGreenButton");  //Title color not set to picker in ios and mac. https://github.com/dotnet/maui/issues/19191
-        App.Tap("TitleColorGreenButton");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        Thread.Sleep(3000);
+        App.WaitForElement("Options");                // In Android text can be entered in picker. https://github.com/dotnet/maui/issues/8265
+        App.Tap("Options");                           // In Mac picker items not shown when title is set. https://github.com/dotnet/maui/issues/27474
+        App.ClearText("TitleEntry");                  // In Windows title is shown above the picker. https://github.com/dotnet/maui/issues/6845
+        App.EnterText("TitleEntry", "Picker Title");  // In Mac and iOS title not show again. Even when selected index is set to -1 or selected item set to null.(No bug issue raised for this)
+        App.WaitForElement("TitleColorGreenButton");  // In Mac and iOS title color not set to picker. https://github.com/dotnet/maui/issues/19191
+        App.WaitForElement("Apply");                  // In Mac When opening the Picker, the first item is selected instead of the currently selected item. https://github.com/dotnet/maui/issues/27519
+        App.Tap("Apply");                             // In all platforms selected index set in the picker control not works. https://github.com/dotnet/maui/issues/22028
+        Thread.Sleep(3000);                           // Picker ItemDisplayBinding doesn't support MVVM properly. https://github.com/dotnet/maui/issues/25634
         // VerifyScreenshot();
     }
 
