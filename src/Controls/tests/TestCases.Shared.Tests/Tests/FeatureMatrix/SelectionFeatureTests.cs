@@ -182,6 +182,7 @@ public class SelectionFeatureTests : UITest
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
         Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
         App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
+        App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
         App.WaitForElement("Cucumber");
         App.Tap("Cucumber");
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Cucumber"));
@@ -203,6 +204,7 @@ public class SelectionFeatureTests : UITest
         App.Tap(Apply);
         App.WaitForElement("Orange");
         App.Tap("Orange");
+        App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
         App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
         App.WaitForElement("Cucumber");
         App.Tap("Cucumber");
@@ -277,6 +279,7 @@ public class SelectionFeatureTests : UITest
         App.Tap("Carrot");
         App.WaitForElement("Apple");
         App.Tap("Apple");
+        App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
         App.WaitForElement("Spinach");
         App.Tap("Spinach");
         App.WaitForElement("Potato");
@@ -585,8 +588,6 @@ public class SelectionFeatureTests : UITest
         App.Tap(Options);
         App.WaitForElement(SelectionModeSingle);
         App.Tap(SelectionModeSingle);
-        App.WaitForElement(ItemsSourceNone);
-        App.Tap(ItemsSourceNone);
         App.WaitForElement(Apply);
         App.Tap(Apply);
         App.WaitForElement("Banana");
@@ -606,8 +607,6 @@ public class SelectionFeatureTests : UITest
         App.Tap(Options);
         App.WaitForElement(SelectionModeMultiple);
         App.Tap(SelectionModeMultiple);
-        App.WaitForElement(ItemsSourceNone);
-        App.Tap(ItemsSourceNone);
         App.WaitForElement(Apply);
         App.Tap(Apply);
         App.WaitForElement("Banana");
@@ -627,8 +626,6 @@ public class SelectionFeatureTests : UITest
         App.Tap(Options);
         App.WaitForElement(SelectionModeNone);
         App.Tap(SelectionModeNone);
-        App.WaitForElement(ItemsSourceNone);
-        App.Tap(ItemsSourceNone);
         App.WaitForElement(Apply);
         App.Tap(Apply);
         App.WaitForElement("Banana");
@@ -644,8 +641,6 @@ public class SelectionFeatureTests : UITest
         App.Tap(Options);
         App.WaitForElement(SelectionModeSingle);
         App.Tap(SelectionModeSingle);
-        App.WaitForElement(ItemsSourceNone);
-        App.Tap(ItemsSourceNone);
         App.WaitForElement(Apply);
         App.Tap(Apply);
         App.WaitForElement("Banana");
@@ -665,8 +660,6 @@ public class SelectionFeatureTests : UITest
         App.Tap(Options);
         App.WaitForElement(SelectionModeMultiple);
         App.Tap(SelectionModeMultiple);
-        App.WaitForElement(ItemsSourceNone);
-        App.Tap(ItemsSourceNone);
         App.WaitForElement(Apply);
         App.Tap(Apply);
         App.WaitForElement("Banana");
@@ -689,8 +682,6 @@ public class SelectionFeatureTests : UITest
         App.Tap(Options);
         App.WaitForElement(SelectionModeNone);
         App.Tap(SelectionModeNone);
-        App.WaitForElement(ItemsSourceNone);
-        App.Tap(ItemsSourceNone);
         App.WaitForElement(Apply);
         App.Tap(Apply);
         App.WaitForElement("Banana");
@@ -736,18 +727,18 @@ public class SelectionFeatureTests : UITest
         App.Tap(SelectionModeMultiple);
         App.WaitForElement(Apply);
         App.Tap(Apply);
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("2"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("2 times"));
         App.WaitForElement("Orange");
         App.Tap("Orange");
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("3"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("3 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange"));
         App.WaitForElement("Banana");
         App.Tap("Banana");
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("4"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("4 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Banana"));
         App.WaitForElement("Orange");
         App.Tap("Orange");
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("5"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("5 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
     }
 #endif
@@ -762,15 +753,15 @@ public class SelectionFeatureTests : UITest
         App.Tap(SelectionModeSingle);
         App.WaitForElement(Apply);
         App.Tap(Apply);
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("2"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("2 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
         App.WaitForElement("Orange");
         App.Tap("Orange");
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("3"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("3 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange"));
         App.WaitForElement("Banana");
         App.Tap("Banana");
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("4"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("4 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
     }
 }
