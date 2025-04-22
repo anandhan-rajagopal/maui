@@ -28,6 +28,16 @@ namespace Maui.Controls.Sample
 			if (BindingContext is CollectionViewViewModel vm)
 			{
 				vm.SelectionChangedEventCount++;
+
+				var previousSelection = e.PreviousSelection.Any()
+					? string.Join(", ", e.PreviousSelection.OfType<CollectionViewViewModel.CollectionViewTestItem>().Select(item => item.Caption))
+					: "No previous items";
+
+				var currentSelection = e.CurrentSelection.Any()
+					? string.Join(", ", e.CurrentSelection.OfType<CollectionViewViewModel.CollectionViewTestItem>().Select(item => item.Caption))
+					: "No current items";
+				vm.PreviousSelectionText = $"{previousSelection}";
+				vm.CurrentSelectionText = $"{currentSelection}";
 			}
 		}
 	}

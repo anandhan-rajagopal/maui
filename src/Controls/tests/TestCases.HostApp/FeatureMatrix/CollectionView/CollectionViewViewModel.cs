@@ -54,6 +54,8 @@ public class CollectionViewViewModel : INotifyPropertyChanged
     private object _selectedItem;
     private ObservableCollection<object> _selectedItems = new ObservableCollection<object>();
     private int _selectionChangedEventCount = 0;
+    private string _previousSelectionText;
+    private string _currentSelectionText;
     public event PropertyChangedEventHandler PropertyChanged;
 
     public CollectionViewViewModel()
@@ -292,6 +294,18 @@ public class CollectionViewViewModel : INotifyPropertyChanged
             _selectionChangedEventCount = value;
             OnPropertyChanged();
         }
+    }
+
+    public string PreviousSelectionText
+    {
+        get => _previousSelectionText;
+        set { _previousSelectionText = value; OnPropertyChanged(); }
+    }
+
+    public string CurrentSelectionText
+    {
+        get => _currentSelectionText;
+        set { _currentSelectionText = value; OnPropertyChanged(); }
     }
 
     private void LoadItems()
