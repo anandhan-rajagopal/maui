@@ -4,45 +4,83 @@
              xmlns:local="clr-namespace:Maui.Controls.Sample"
              x:Class="Maui.Controls.Sample.CollectionViewSelectionPage"
              Title="CollectionViewControlPage">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Options"
-                     Clicked="NavigateToOptionsPage_Clicked"
-                     AutomationId="Options"/>
-    </ContentPage.ToolbarItems>
-    <Grid Padding="20" RowSpacing="10" ColumnSpacing="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+       <ContentPage.ToolbarItems>
+              <ToolbarItem Text="Options"
+                           Clicked="NavigateToOptionsPage_Clicked"
+                           AutomationId="Options"/>
+       </ContentPage.ToolbarItems>
+       <Grid Padding="20"
+             RowSpacing="10"
+             ColumnSpacing="10">
+              <Grid.RowDefinitions>
+                     <RowDefinition Height="*"/>
+                     <RowDefinition Height="Auto"/>
+                     <RowDefinition Height="Auto"/>
+                     <RowDefinition Height="Auto"/>
+                     <RowDefinition Height="Auto"/>
+                     <RowDefinition Height="Auto"/>
+                     <RowDefinition Height="Auto"/>
+              </Grid.RowDefinitions>
+              <Grid.ColumnDefinitions>
+                     <ColumnDefinition Width="*"/>
+                     <ColumnDefinition Width="*"/>
+              </Grid.ColumnDefinitions>
 
-        <!-- CollectionView -->
-        <CollectionView
-            x:Name="collectionView"
-            Grid.Row="0" Grid.ColumnSpan="2"
-            ItemsSource="{Binding ItemsSource}"
-            ItemTemplate="{Binding ItemTemplate}"
-            ItemsLayout="{Binding ItemsLayout}"
-            GroupHeaderTemplate="{Binding GroupHeaderTemplate}"
-            IsGrouped="{Binding IsGrouped}"
-            SelectionMode="{Binding SelectionMode}"
-            SelectedItems="{Binding SelectedItems}"
-            SelectedItem="{Binding SelectedItem}"
-            AutomationId="CollectionViewControl">
-        </CollectionView>
+              <!-- CollectionView -->
+              <CollectionView
+                     x:Name="collectionView"
+                     Grid.Row="0"
+                     Grid.ColumnSpan="2"
+                     ItemsSource="{Binding ItemsSource}"
+                     ItemTemplate="{Binding ItemTemplate}"
+                     ItemsLayout="{Binding ItemsLayout}"
+                     GroupHeaderTemplate="{Binding GroupHeaderTemplate}"
+                     IsGrouped="{Binding IsGrouped}"
+                     SelectionMode="{Binding SelectionMode}"
+                     SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+                     SelectedItems="{Binding SelectedItems, Mode=TwoWay}"
+                     SelectionChanged="OnCollectionViewSelectionChanged"
+                     AutomationId="CollectionViewControl">
+              </CollectionView>
 
-        <!-- Display Selected Item -->
-        <Label Text="Selected Item:" FontSize="14" FontAttributes="Bold" Grid.Row="1" Grid.Column="0"/>
-        <Label Text="{Binding SelectedItemText}" AutomationId="SelectedSingle" FontSize="14" TextColor="Blue" Grid.Row="2" Grid.Column="0"/>
+              <!-- Display Selected Item -->
+              <Label Text="Selected Item:"
+                     FontSize="14"
+                     FontAttributes="Bold"
+                     Grid.Row="1"
+                     Grid.Column="0"/>
+              <Label Text="{Binding SelectedItemText}"
+                     AutomationId="SelectedSingle"
+                     FontSize="14"
+                     TextColor="Blue"
+                     Grid.Row="2"
+                     Grid.Column="0"/>
 
-        <!-- Display Selected Items Count -->
-        <Label Text="Selected Items Count:" FontSize="14" FontAttributes="Bold" Grid.Row="3" Grid.Column="0"/>
-        <Label Text="{Binding SelectedItemsCount}" AutomationId="SelectedMultiple" FontSize="14" TextColor="Blue" Grid.Row="4" Grid.Column="0"/>
-    </Grid>
+              <!-- Display Selected Items Count -->
+              <Label Text="Selected Items Count:"
+                     FontSize="14"
+                     FontAttributes="Bold"
+                     Grid.Row="3"
+                     Grid.Column="0"/>
+              <Label Text="{Binding SelectedItemsCount}"
+                     AutomationId="SelectedMultiple"
+                     FontSize="14"
+                     TextColor="Blue"
+                     Grid.Row="4"
+                     Grid.Column="0"/>
+
+
+              <!-- Display SelectionChangedEventArgs -->
+              <Label Text="SelectionChangedEventArgs Trigger Count:"
+                     FontSize="14"
+                     FontAttributes="Bold"
+                     Grid.Row="5"
+                     Grid.Column="0"/>
+              <Label Text="{Binding SelectionChangedEventCount, StringFormat='{0} times'}"
+                     FontSize="14"
+                     TextColor="Blue"
+                     Grid.Row="6"
+                     Grid.Column="0"
+                     AutomationId="SelectionChangedEventCountLabel"/>
+       </Grid>
 </ContentPage>

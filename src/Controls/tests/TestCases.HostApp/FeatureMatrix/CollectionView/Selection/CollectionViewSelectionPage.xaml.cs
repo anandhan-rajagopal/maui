@@ -10,9 +10,9 @@ namespace Maui.Controls.Sample
 
 		public CollectionViewSelectionPage()
 		{
-            InitializeComponent();
+			InitializeComponent();
 			_viewModel = new CollectionViewViewModel();
-			_viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T; 
+			_viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T;
 			BindingContext = _viewModel;
 		}
 
@@ -21,6 +21,14 @@ namespace Maui.Controls.Sample
 			BindingContext = _viewModel = new CollectionViewViewModel();
 			_viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T;
 			await Navigation.PushAsync(new SelectionOptionsPage(_viewModel));
+		}
+
+		void OnCollectionViewSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (BindingContext is CollectionViewViewModel vm)
+			{
+				vm.SelectionChangedEventCount++;
+			}
 		}
 	}
 }

@@ -76,10 +76,43 @@ namespace Maui.Controls.Sample
                 return;
             else if (radioButton == ItemsSourceObservableCollection5)
                 _viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T;
+            else if (radioButton == ItemsSourceObservableCollection25)
+                _viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection25T;
             else if (radioButton == ItemsSourceGroupedList)
                 _viewModel.ItemsSourceType = ItemsSourceType.GroupedListT;
             else if (radioButton == ItemsSourceNone)
                 _viewModel.ItemsSourceType = ItemsSourceType.None;
+        }
+
+        private void OnUpdateItemsChanged(object sender, CheckedChangedEventArgs e)
+        {
+            if (!e.Value)
+                return;
+
+            var radioButton = sender as RadioButton;
+            string selectedFruit = radioButton?.Content?.ToString();
+
+            if (string.IsNullOrEmpty(selectedFruit))
+                return;
+
+            if (_viewModel.ItemsSourceType != ItemsSourceType.ObservableCollection5T)
+            {
+                _viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T;
+            }
+
+            var selectedItem = (_viewModel.ItemsSource as System.Collections.ObjectModel.ObservableCollection<CollectionViewViewModel.CollectionViewTestItem>)
+                ?.FirstOrDefault(item => item.Caption == selectedFruit);
+
+            if (_viewModel.SelectionMode == SelectionMode.Single)
+            {
+                _viewModel.SelectedItem = selectedItem;
+            }
+            else if (_viewModel.SelectionMode == SelectionMode.Multiple)
+            {
+                _viewModel.SelectedItems.Clear();
+                if (selectedItem != null)
+                    _viewModel.SelectedItems.Add(selectedItem);
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ using Maui.Controls.Sample.CollectionViewGalleries;
 using System.Collections.Specialized;
 
 namespace Maui.Controls.Sample;
+
 public class Grouping<TKey, TItem> : ObservableCollection<TItem>
 {
     public TKey Key { get; }
@@ -48,9 +49,11 @@ public class CollectionViewViewModel : INotifyPropertyChanged
     private ObservableCollection<CollectionViewTestItem> _emptyObservableCollection;
     private List<Grouping<string, CollectionViewTestItem>> _groupedList;
     private List<Grouping<string, CollectionViewTestItem>> _emptyGroupedList;
+
     private SelectionMode _selectionMode = SelectionMode.None;
     private object _selectedItem;
     private ObservableCollection<object> _selectedItems = new ObservableCollection<object>();
+    private int _selectionChangedEventCount = 0;
     public event PropertyChangedEventHandler PropertyChanged;
 
     public CollectionViewViewModel()
@@ -204,7 +207,6 @@ public class CollectionViewViewModel : INotifyPropertyChanged
             };
         }
     }
-
     public SelectionMode SelectionMode
     {
         get => _selectionMode;
@@ -247,7 +249,7 @@ public class CollectionViewViewModel : INotifyPropertyChanged
             }
         }
     }
-     public int SelectedItemsCount
+    public int SelectedItemsCount
     {
         get
         {
@@ -279,6 +281,16 @@ public class CollectionViewViewModel : INotifyPropertyChanged
                 return string.Join(", ", selectedCaptions);
             }
             return "No items selected";
+        }
+    }
+
+    public int SelectionChangedEventCount
+    {
+        get => _selectionChangedEventCount;
+        set
+        {
+            _selectionChangedEventCount = value;
+            OnPropertyChanged();
         }
     }
 
