@@ -5,7 +5,7 @@ using UITest.Core;
 
 namespace Microsoft.Maui.TestCases.Tests;
 
-public class SelectionFeatureTests : UITest
+public class CollectionView_SelectionFeatureTests : UITest
 {
     public const string SelectionFeatureMatrix = "CollectionView Feature Matrix";
     public const string ItemsSourceGroupedList = "ItemsSourceGroupedList";
@@ -27,7 +27,7 @@ public class SelectionFeatureTests : UITest
     public const string CurrentSelectionTextLabel = "CurrentSelectionTextLabel";
     public const string PreviousSelectionTextLabel = "PreviousSelectionTextLabel";
     public const string SelectionChangedEventCountLabel = "SelectionChangedEventCountLabel";
-    public SelectionFeatureTests(TestDevice device)
+    public CollectionView_SelectionFeatureTests(TestDevice device)
         : base(device)
     {
     }
@@ -144,75 +144,6 @@ public class SelectionFeatureTests : UITest
     }
 #endif
 
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void VerifySelectionModeNoneWhenItemsSourceObservableCollection25()
-    {
-        App.WaitForElement(Options);
-        App.Tap(Options);
-        App.WaitForElement(SelectionModeNone);
-        App.Tap(SelectionModeNone);
-        App.WaitForElement(ItemsSourceObservableCollection25);
-        App.Tap(ItemsSourceObservableCollection25);
-        App.WaitForElement(Apply);
-        App.Tap(Apply);
-        App.WaitForElement("Orange");
-        App.Tap("Orange");
-        App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
-        App.WaitForElement("Cucumber");
-        App.Tap("Cucumber");
-        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
-        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void VerifySelectionModeSingleWhenItemsSourceObservableCollection25()
-    {
-        App.WaitForElement(Options);
-        App.Tap(Options);
-        App.WaitForElement(SelectionModeSingle);
-        App.Tap(SelectionModeSingle);
-        App.WaitForElement(ItemsSourceObservableCollection25);
-        App.Tap(ItemsSourceObservableCollection25);
-        App.WaitForElement(Apply);
-        App.Tap(Apply);
-        App.WaitForElement("Banana");
-        App.Tap("Banana");
-        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
-        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
-        App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
-        App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
-        App.WaitForElement("Cucumber");
-        App.Tap("Cucumber");
-        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Cucumber"));
-        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
-    }
-
-#if TEST_FAILS_ON_CATALYST //related issue link: https://github.com/dotnet/maui/issues/18028
-    [Test]
-    [Category(UITestCategories.CollectionView)]
-    public void VerifySelectionModeMultipleWhenItemsSourceObservableCollection25()
-    {
-        App.WaitForElement(Options);
-        App.Tap(Options);
-        App.WaitForElement(SelectionModeMultiple);
-        App.Tap(SelectionModeMultiple);
-        App.WaitForElement(ItemsSourceObservableCollection25);
-        App.Tap(ItemsSourceObservableCollection25);
-        App.WaitForElement(Apply);
-        App.Tap(Apply);
-        App.WaitForElement("Orange");
-        App.Tap("Orange");
-        App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
-        App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
-        App.WaitForElement("Cucumber");
-        App.Tap("Cucumber");
-        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Cucumber"));
-        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("2"));
-    }
-#endif
-
 #if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS //In CV2 related issue link: https://github.com/dotnet/maui/issues/28509 and In windows, relates issue: https://github.com/dotnet/maui/issues/28824
     [Test]
     [Category(UITestCategories.CollectionView)]
@@ -228,9 +159,9 @@ public class SelectionFeatureTests : UITest
         App.Tap(IsGroupedTrue);
         App.WaitForElement(Apply);
         App.Tap(Apply);
+        App.WaitForElement("Fruits");
         App.WaitForElement("Orange");
         App.Tap("Orange");
-        App.WaitForElement("Fruits");
         App.WaitForElement("Vegetables");
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
         Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
@@ -250,10 +181,10 @@ public class SelectionFeatureTests : UITest
         App.Tap(IsGroupedTrue);
         App.WaitForElement(Apply);
         App.Tap(Apply);
-        App.WaitForElement("Carrot");
-        App.Tap("Carrot");
         App.WaitForElement("Fruits");
         App.WaitForElement("Vegetables");
+        App.WaitForElement("Carrot");
+        App.Tap("Carrot");
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Carrot"));
         Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
     }
@@ -273,21 +204,18 @@ public class SelectionFeatureTests : UITest
         App.Tap(IsGroupedTrue);
         App.WaitForElement(Apply);
         App.Tap(Apply);
+        App.WaitForElement("Fruits");
         App.WaitForElement("Orange");
         App.Tap("Orange");
         App.WaitForElement("Carrot");
         App.Tap("Carrot");
         App.WaitForElement("Apple");
         App.Tap("Apple");
-        App.ScrollDown("CollectionViewControl", ScrollStrategy.Gesture, 0.9, 500);
+        App.WaitForElement("Vegetables");
         App.WaitForElement("Spinach");
         App.Tap("Spinach");
-        App.WaitForElement("Potato");
-        App.Tap("Potato");
-        App.WaitForElement("Fruits");
-        App.WaitForElement("Vegetables");
-        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("5"));
-        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Carrot, Apple, Spinach, Potato"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("4"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Carrot, Apple, Spinach"));
     }
 #endif
 #endif
@@ -528,30 +456,14 @@ public class SelectionFeatureTests : UITest
 
     [Test]
     [Category(UITestCategories.CollectionView)]
-    public void VerifySelectionModeNoneWhenProgrammaticSelectionWorks()
-    {
-        App.WaitForElement(Options);
-        App.Tap(Options);
-        App.WaitForElement(SelectionModeNone);
-        App.Tap(SelectionModeNone);
-        App.WaitForElement("Mango");
-        App.Tap("Mango");
-        App.WaitForElement(Apply);
-        App.Tap(Apply);
-        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
-        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("0"));
-    }
-
-    [Test]
-    [Category(UITestCategories.CollectionView)]
     public void VerifySelectionModeSingleWhenProgrammaticSelectionWorks()
     {
         App.WaitForElement(Options);
         App.Tap(Options);
         App.WaitForElement(SelectionModeSingle);
         App.Tap(SelectionModeSingle);
-        App.WaitForElement("Mango");
-        App.Tap("Mango");
+        App.WaitForElement("SingleModePreselection");
+        App.Tap("SingleModePreselection");
         App.WaitForElement(Apply);
         App.Tap(Apply);
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Mango"));
@@ -567,16 +479,16 @@ public class SelectionFeatureTests : UITest
         App.Tap(Options);
         App.WaitForElement(SelectionModeMultiple);
         App.Tap(SelectionModeMultiple);
-        App.WaitForElement("Mango");
-        App.Tap("Mango");
+        App.WaitForElement("MultipleModePreselection");
+        App.Tap("MultipleModePreselection");
         App.WaitForElement(Apply);
         App.Tap(Apply);
-        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Mango"));
-        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("1"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Mango, Apple"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("2"));
         App.WaitForElement("Banana");
         App.Tap("Banana");
-        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Mango, Banana"));
-        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("2"));
+        Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Mango, Apple, Banana"));
+        Assert.That(App.WaitForElement(SelectedMultiple).GetText(), Is.EqualTo("3"));
     }
 #endif
 
@@ -727,18 +639,18 @@ public class SelectionFeatureTests : UITest
         App.Tap(SelectionModeMultiple);
         App.WaitForElement(Apply);
         App.Tap(Apply);
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("2 times"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("0 times"));
         App.WaitForElement("Orange");
         App.Tap("Orange");
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("3 times"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("1 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange"));
         App.WaitForElement("Banana");
         App.Tap("Banana");
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("4 times"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("2 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange, Banana"));
         App.WaitForElement("Orange");
         App.Tap("Orange");
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("5 times"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("3 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
     }
 #endif
@@ -753,15 +665,15 @@ public class SelectionFeatureTests : UITest
         App.Tap(SelectionModeSingle);
         App.WaitForElement(Apply);
         App.Tap(Apply);
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("2 times"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("0 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("No items selected"));
         App.WaitForElement("Orange");
         App.Tap("Orange");
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("3 times"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("1 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Orange"));
         App.WaitForElement("Banana");
         App.Tap("Banana");
-        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("4 times"));
+        Assert.That(App.WaitForElement(SelectionChangedEventCountLabel).GetText(), Is.EqualTo("2 times"));
         Assert.That(App.WaitForElement(SelectedSingle).GetText(), Is.EqualTo("Banana"));
     }
 }

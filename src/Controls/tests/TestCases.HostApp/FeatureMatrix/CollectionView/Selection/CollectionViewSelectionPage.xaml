@@ -19,11 +19,6 @@
                      <RowDefinition Height="Auto"/>
                      <RowDefinition Height="Auto"/>
                      <RowDefinition Height="Auto"/>
-                     <RowDefinition Height="Auto"/>
-                     <RowDefinition Height="Auto"/>
-                     <RowDefinition Height="Auto"/>
-                     <RowDefinition Height="Auto"/>
-                     <RowDefinition Height="Auto"/>
               </Grid.RowDefinitions>
               <Grid.ColumnDefinitions>
                      <ColumnDefinition Width="*"/>
@@ -57,59 +52,59 @@
                      AutomationId="SelectedSingle"
                      FontSize="14"
                      TextColor="Blue"
-                     Grid.Row="2"
-                     Grid.Column="0"/>
+                     Grid.Row="1"
+                     Grid.Column="1"/>
 
               <!-- Display Selected Items Count -->
               <Label Text="Selected Items Count:"
                      FontSize="14"
                      FontAttributes="Bold"
-                     Grid.Row="3"
+                     Grid.Row="2"
                      Grid.Column="0"/>
               <Label Text="{Binding SelectedItemsCount}"
                      AutomationId="SelectedMultiple"
                      FontSize="14"
                      TextColor="Blue"
-                     Grid.Row="4"
-                     Grid.Column="0"/>
+                     Grid.Row="2"
+                     Grid.Column="1"/>
 
 
               <!-- Display SelectionChangedEventArgs -->
-              <Label Text="SelectionChangedEventArgs Trigger Count:"
+              <Label Text="SelectionChangedEvent Trigger Count:"
                      FontSize="14"
                      FontAttributes="Bold"
-                     Grid.Row="5"
+                     Grid.Row="3"
                      Grid.Column="0"/>
               <Label Text="{Binding SelectionChangedEventCount, StringFormat='{0} times'}"
                      FontSize="14"
                      TextColor="Blue"
-                     Grid.Row="6"
-                     Grid.Column="0"
+                     Grid.Row="3"
+                     Grid.Column="1"
                      AutomationId="SelectionChangedEventCountLabel"/>
 
               <!--Display Previous Selection Text-->
               <Label Text="Previous Selection:"
                      FontSize="14"
                      FontAttributes="Bold"
-                     Grid.Row="7"
+                     Grid.Row="4"
                      Grid.Column="0"/>
               <Label Text="{Binding PreviousSelectionText}"
                      FontSize="14"
                      TextColor="Blue"
-                     Grid.Row="8"
-                     Grid.Column="0"
+                     Grid.Row="4"
+                     Grid.Column="1"
                      AutomationId="PreviousSelectionTextLabel"/>
               <!--Display Current Selection Text-->
               <Label Text="Current Selection:"
                      FontSize="14"
                      FontAttributes="Bold"
-                     Grid.Row="9"
+                     Grid.Row="5"
                      Grid.Column="0"/>
               <Label Text="{Binding CurrentSelectionText}"
                      FontSize="14"
                      TextColor="Blue"
-                     Grid.Row="10"
-                     Grid.Column="0"
+                     Grid.Row="5"
+                     Grid.Column="1"
                      AutomationId="CurrentSelectionTextLabel"/>
        </Grid>
 </ContentPage>

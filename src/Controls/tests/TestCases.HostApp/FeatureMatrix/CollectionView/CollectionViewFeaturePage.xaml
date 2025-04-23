@@ -11,7 +11,7 @@
                         HorizontalOptions="Center"
                         AutomationId="HeaderFooterViewButton"
                         WidthRequest="400"/>
-                <Button Text="Selection MainPage"
+                <Button Text="Selection FeaturePage"
                         HorizontalOptions="Center"
                         Clicked="OnSelectionMainPageClicked"
                         AutomationId="SelectionPageButton"

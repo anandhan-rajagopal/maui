@@ -12,6 +12,8 @@ namespace Maui.Controls.Sample
         {
             InitializeComponent();
             _viewModel = viewModel;
+            _viewModel.SelectionChangedEventCount = 0;
+			_viewModel.PreviousSelectionText = "No previous items";
             BindingContext = _viewModel;
         }
 
@@ -23,7 +25,6 @@ namespace Maui.Controls.Sample
         {
             if (sender is Button button)
             {
-                // Use AutomationId to determine the selection mode
                 switch (button.AutomationId)
                 {
                     case "SelectionModeNone":
@@ -63,56 +64,54 @@ namespace Maui.Controls.Sample
             }
             else if (ItemsLayoutVerticalGrid.IsChecked)
             {
-                _viewModel.ItemsLayout = new GridItemsLayout(2, ItemsLayoutOrientation.Vertical); // 2 columns
+                _viewModel.ItemsLayout = new GridItemsLayout(2, ItemsLayoutOrientation.Vertical);
             }
             else if (ItemsLayoutHorizontalGrid.IsChecked)
             {
-                _viewModel.ItemsLayout = new GridItemsLayout(2, ItemsLayoutOrientation.Horizontal); // 2 rows
+                _viewModel.ItemsLayout = new GridItemsLayout(2, ItemsLayoutOrientation.Horizontal);
             }
         }
+
+        private void OnPreSelectionButtonClicked(object sender, EventArgs e)
+        {
+            if (sender is not Button button)
+                return;
+
+            var items = _viewModel.ItemsSource as ObservableCollection<CollectionViewViewModel.CollectionViewTestItem>;
+            if (items == null)
+                return;
+
+            var mangoItem = items.FirstOrDefault(item => item.Caption == "Mango");
+            var appleItem = items.FirstOrDefault(item => item.Caption == "Apple");
+
+            if (button.AutomationId == "SingleModePreselection" && _viewModel.SelectionMode == SelectionMode.Single)
+            {
+                _viewModel.SelectionMode = SelectionMode.Single;
+                _viewModel.SelectedItem = mangoItem;
+            }
+            else if (button.AutomationId == "MultipleModePreselection" && _viewModel.SelectionMode == SelectionMode.Multiple)
+            {
+                _viewModel.SelectionMode = SelectionMode.Multiple;
+
+                _viewModel.SelectedItems.Clear();
+                if (mangoItem != null)
+                    _viewModel.SelectedItems.Add(mangoItem);
+                if (appleItem != null)
+                    _viewModel.SelectedItems.Add(appleItem);
+            }
+        }
+        
         private void OnItemsSourceChanged(object sender, CheckedChangedEventArgs e)
         {
             if (!(sender is RadioButton radioButton) || !e.Value)
                 return;
             else if (radioButton == ItemsSourceObservableCollection5)
                 _viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T;
-            else if (radioButton == ItemsSourceObservableCollection25)
-                _viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection25T;
             else if (radioButton == ItemsSourceGroupedList)
                 _viewModel.ItemsSourceType = ItemsSourceType.GroupedListT;
             else if (radioButton == ItemsSourceNone)
                 _viewModel.ItemsSourceType = ItemsSourceType.None;
         }
 
-        private void OnUpdateItemsChanged(object sender, CheckedChangedEventArgs e)
-        {
-            if (!e.Value)
-                return;
-
-            var radioButton = sender as RadioButton;
-            string selectedFruit = radioButton?.Content?.ToString();
-
-            if (string.IsNullOrEmpty(selectedFruit))
-                return;
-
-            if (_viewModel.ItemsSourceType != ItemsSourceType.ObservableCollection5T)
-            {
-                _viewModel.ItemsSourceType = ItemsSourceType.ObservableCollection5T;
-            }
-
-            var selectedItem = (_viewModel.ItemsSource as System.Collections.ObjectModel.ObservableCollection<CollectionViewViewModel.CollectionViewTestItem>)
-                ?.FirstOrDefault(item => item.Caption == selectedFruit);
-
-            if (_viewModel.SelectionMode == SelectionMode.Single)
-            {
-                _viewModel.SelectedItem = selectedItem;
-            }
-            else if (_viewModel.SelectionMode == SelectionMode.Multiple)
-            {
-                _viewModel.SelectedItems.Clear();
-                if (selectedItem != null)
-                    _viewModel.SelectedItems.Add(selectedItem);
-            }
-        }
     }
 }

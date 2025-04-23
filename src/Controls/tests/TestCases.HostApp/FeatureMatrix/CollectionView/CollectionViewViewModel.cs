@@ -218,8 +218,6 @@ public class CollectionViewViewModel : INotifyPropertyChanged
             {
                 _selectionMode = value;
                 OnPropertyChanged();
-                SelectedItem = null;
-                SelectedItems.Clear();
             }
         }
     }
