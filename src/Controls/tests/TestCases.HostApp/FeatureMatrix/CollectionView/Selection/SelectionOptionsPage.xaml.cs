@@ -13,7 +13,7 @@ namespace Maui.Controls.Sample
             InitializeComponent();
             _viewModel = viewModel;
             _viewModel.SelectionChangedEventCount = 0;
-			_viewModel.PreviousSelectionText = "No previous items";
+            _viewModel.PreviousSelectionText = "No previous items";
             BindingContext = _viewModel;
         }
 
@@ -77,30 +77,35 @@ namespace Maui.Controls.Sample
             if (sender is not Button button)
                 return;
 
-            var items = _viewModel.ItemsSource as ObservableCollection<CollectionViewViewModel.CollectionViewTestItem>;
-            if (items == null)
-                return;
+            var allItems = new List<CollectionViewViewModel.CollectionViewTestItem>();
 
-            var mangoItem = items.FirstOrDefault(item => item.Caption == "Mango");
-            var appleItem = items.FirstOrDefault(item => item.Caption == "Apple");
+            if (_viewModel.ItemsSourceType == ItemsSourceType.ObservableCollection5T &&
+                _viewModel.ItemsSource is ObservableCollection<CollectionViewViewModel.CollectionViewTestItem> flatItems)
+            {
+                allItems = flatItems.ToList();
+            }
+            else if (_viewModel.ItemsSourceType == ItemsSourceType.GroupedListT &&
+                     _viewModel.ItemsSource is List<Grouping<string, CollectionViewViewModel.CollectionViewTestItem>> groupedItems)
+            {
+                allItems = groupedItems.SelectMany(g => g).ToList();
+            }
+
+            var itemsToSelect = allItems.Where(item =>
+                item.Caption == "Orange" ||
+                item.Caption == "Apple" ||
+                item.Caption == "Carrot" ||
+                item.Caption == "Spinach").ToList();
 
             if (button.AutomationId == "SingleModePreselection" && _viewModel.SelectionMode == SelectionMode.Single)
             {
-                _viewModel.SelectionMode = SelectionMode.Single;
-                _viewModel.SelectedItem = mangoItem;
+                _viewModel.SelectedItem = itemsToSelect.FirstOrDefault();
             }
             else if (button.AutomationId == "MultipleModePreselection" && _viewModel.SelectionMode == SelectionMode.Multiple)
             {
-                _viewModel.SelectionMode = SelectionMode.Multiple;
-
-                _viewModel.SelectedItems.Clear();
-                if (mangoItem != null)
-                    _viewModel.SelectedItems.Add(mangoItem);
-                if (appleItem != null)
-                    _viewModel.SelectedItems.Add(appleItem);
+                _viewModel.SelectedItems = new ObservableCollection<object>(itemsToSelect.Cast<object>());
             }
         }
-        
+
         private void OnItemsSourceChanged(object sender, CheckedChangedEventArgs e)
         {
             if (!(sender is RadioButton radioButton) || !e.Value)
@@ -112,6 +117,5 @@ namespace Maui.Controls.Sample
             else if (radioButton == ItemsSourceNone)
                 _viewModel.ItemsSourceType = ItemsSourceType.None;
         }
-
     }
 }
