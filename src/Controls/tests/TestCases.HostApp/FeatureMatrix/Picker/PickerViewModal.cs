@@ -12,27 +12,19 @@ public class PickerViewModal : INotifyPropertyChanged
     private string _fontFamily = default;
     private double _fontSize = default;
     private TextAlignment _horizontalTextAlignment = default;
-    private ObservableCollection<string> _itemsSource = new ObservableCollection<string>
-            {
-                "Item 1",
-                "Item 2",
-                "Item 3",
-                "Item 4",
-                "Item 5"
-            };
-    // private ObservableCollection<ComplexItem> _itemsSource = new ObservableCollection<ComplexItem>
-    // {
-    //     new ComplexItem { Id = 1, Name = "Item 1", Description = "Description for Item 1" },
-    //     new ComplexItem { Id = 2, Name = "Item 2", Description = "Description for Item 2" },
-    //     new ComplexItem { Id = 3, Name = "Item 3", Description = "Description for Item 3" }
-    // };
+    private ObservableCollection<ComplexItem> _itemsSource = new ObservableCollection<ComplexItem>
+    {
+        new ComplexItem { Id = 1, Name = "Item 0", Description = "Description for Item 0" },
+        new ComplexItem { Id = 2, Name = "Item 1", Description = "Description for Item 1" },
+        new ComplexItem { Id = 3, Name = "Item 2", Description = "Description for Item 2" },
+        new ComplexItem { Id = 4, Name = "Item 3", Description = "Description for Item 3" },
+        new ComplexItem { Id = 5, Name = "Item 4", Description = "Description for Item 4" }
+    };
 
-    private int _selectedIndex = default;
-    private object _selectedItem = default;
-    private BindingBase _itemDisplayBinding = new Binding(".");
+    private int _selectedIndex = 1;
+    private BindingBase _itemDisplayBinding = new Binding("Name");
     private Color _textColor = Colors.Black;
-    // private TextTransform _textTransform = default;
-    private string _title = "Picker Title";
+    private string _title = "";
     private Color _titleColor = Colors.Black;
     private TextAlignment _verticalTextAlignment = default;
 
@@ -49,6 +41,7 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
+
     public FontAttributes FontAttributes
     {
         get => _fontAttributes;
@@ -61,6 +54,7 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
+
     public bool FontAutoScalingEnabled
     {
         get => _fontAutoScalingEnabled;
@@ -73,6 +67,7 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
+
     public string FontFamily
     {
         get => _fontFamily;
@@ -85,6 +80,7 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
+
     public double FontSize
     {
         get => _fontSize;
@@ -97,6 +93,7 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
+
     public TextAlignment HorizontalTextAlignment
     {
         get => _horizontalTextAlignment;
@@ -109,7 +106,8 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
-    public ObservableCollection<string> ItemsSource
+
+    public ObservableCollection<ComplexItem> ItemsSource
     {
         get => _itemsSource;
         set
@@ -121,6 +119,7 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
+
     public BindingBase ItemDisplayBinding
     {
         get => _itemDisplayBinding;
@@ -133,6 +132,7 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
+
     public int SelectedIndex
     {
         get => _selectedIndex;
@@ -145,18 +145,7 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
-    public object SelectedItem
-    {
-        get => _selectedItem;
-        set
-        {
-            if (_selectedItem != value)
-            {
-                _selectedItem = value;
-                OnPropertyChanged();
-            }
-        }
-    }
+
     public Color TextColor
     {
         get => _textColor;
@@ -169,18 +158,7 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
-    // public TextTransform TextTransform
-    // {
-    //     get => _textTransform;
-    //     set
-    //     {
-    //         if (_textTransform != value)
-    //         {
-    //             _textTransform = value;
-    //             OnPropertyChanged();
-    //         }
-    //     }
-    // }
+
     public string Title
     {
         get => _title;
@@ -193,6 +171,7 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
+
     public Color TitleColor
     {
         get => _titleColor;
@@ -205,16 +184,19 @@ public class PickerViewModal : INotifyPropertyChanged
             }
         }
     }
+
     public TextAlignment VerticalTextAlignment
     {
         get => _verticalTextAlignment;
         set { _verticalTextAlignment = value; OnPropertyChanged(); }
     }
+
     public event PropertyChangedEventHandler PropertyChanged;
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
+    
     public class ComplexItem
     {
         public int Id { get; set; }
