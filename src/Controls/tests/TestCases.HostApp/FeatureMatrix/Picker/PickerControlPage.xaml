@@ -9,7 +9,7 @@
                            Clicked="NavigateToOptionsPage_Clicked"
                            AutomationId="Options"/>
        </ContentPage.ToolbarItems>
-       <Grid RowDefinitions="Auto, Auto, Auto"
+       <Grid RowDefinitions="Auto, Auto"
              ColumnDefinitions="0.5*, 0.5*"
              RowSpacing="10"
              Padding="20">
@@ -26,9 +26,8 @@
                       HorizontalTextAlignment="{Binding HorizontalTextAlignment}"
                       HeightRequest="100"
                       ItemsSource="{Binding ItemsSource}"
-                      ItemDisplayBinding="{Binding .}"
+                      ItemDisplayBinding="{Binding Name}"
                       SelectedIndex="{Binding SelectedIndex}"
-                      SelectedItem="{Binding SelectedItem}"
                       TextColor="{Binding TextColor}"
                       Title="{Binding Title}"
                       TitleColor="{Binding TitleColor}"
@@ -45,19 +44,6 @@
                      Grid.Column="1"
                      AutomationId="SelectedIndexLabel"
                      Text="{Binding SelectedIndex}"
-                     FontSize="20"
-                     HorizontalOptions="Center"
-                     VerticalOptions="CenterAndExpand"/>
-              <Label Grid.Row="2"
-                     Grid.Column="0"
-                     Text="SelectedItem:"
-                     FontSize="20"
-                     HorizontalOptions="Start"
-                     VerticalOptions="CenterAndExpand"/>
-              <Label Grid.Row="2"
-                     Grid.Column="1"
-                     AutomationId="SelectedItemLabel"
-                     Text="{Binding SelectedItem}"
                      FontSize="20"
                      HorizontalOptions="Center"
                      VerticalOptions="CenterAndExpand"/>

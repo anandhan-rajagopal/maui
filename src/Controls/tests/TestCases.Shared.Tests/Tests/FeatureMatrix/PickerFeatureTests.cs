@@ -16,90 +16,99 @@ public class PickerFeatureTests : UITest
         base.FixtureSetup();
         App.NavigateToGallery(PickerFeatureMatrix);
     }
+
     [Test]
     [Category(UITestCategories.Picker)]
-    public void Picker_SetPickerAndCharacterSpacing_VerifyVisualState()
+    public void Picker_SetCharacterSpacing_VerifyVisualState()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("SelectedIndexEntry");
-        App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
         App.WaitForElement("CharacterSpacingEntry");
         App.ClearText("CharacterSpacingEntry");
         App.EnterText("CharacterSpacingEntry", "5");
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        Thread.Sleep(3000);
         // VerifyScreenshot();
     }
 
     [Test]
     [Category(UITestCategories.Picker)]
-    public void Picker_SetPickerAndFontAttributes_VerifyVisualState()
+    public void Picker_SetFontAttributes_VerifyVisualState()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("SelectedIndexEntry");
-        App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
         App.WaitForElement("FontAttributesItalicButton");
         App.Tap("FontAttributesItalicButton");
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        Thread.Sleep(3000);
         // VerifyScreenshot();
     }
 
     [Test]
     [Category(UITestCategories.Picker)]
-    public void Picker_SetPickerAndFontFamily_VerifyVisualState()
+    public void Picker_SetFontFamily_VerifyVisualState()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("SelectedIndexEntry");
-        App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
         App.WaitForElement("FontFamilyDokdoButton");
         App.Tap("FontFamilyDokdoButton");
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        Thread.Sleep(3000);
         // VerifyScreenshot();
     }
 
     [Test]
     [Category(UITestCategories.Picker)]
-    public void Picker_SetPickerAndFontSize_VerifyVisualState()
+    public void Picker_SetFontSize_VerifyVisualState()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("SelectedIndexEntry");
-        App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
         App.WaitForElement("FontSizeEntry");
         App.ClearText("FontSizeEntry");
         App.EnterText("FontSizeEntry", "40");
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        Thread.Sleep(3000);
         // VerifyScreenshot();
     }
 
     [Test]
     [Category(UITestCategories.Picker)]
-    public void Picker_SetPickerAndTextColor_VerifyVisualState()
+    public void Picker_SetHorizontalTextAlignment_VerifyVisualState()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("SelectedIndexEntry");
-        App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
+        App.WaitForElement("HorizontalTextAlignmentCenterButton");
+        App.Tap("HorizontalTextAlignmentCenterButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        // VerifyScreenshot();
+    }
+
+    [Test]
+    [Category(UITestCategories.Picker)]
+    public void Picker_SetHorizontalTextAlignmentAndVerticalTextAlignment_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("HorizontalTextAlignmentCenterButton");
+        App.Tap("HorizontalTextAlignmentCenterButton");
+        App.WaitForElement("VerticalTextAlignmentCenterButton");
+        App.Tap("VerticalTextAlignmentCenterButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        // VerifyScreenshot();
+    }
+
+    [Test]
+    [Category(UITestCategories.Picker)]
+    public void Picker_SetTextColor_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
         App.WaitForElement("TextColorGreenButton");
         App.Tap("TextColorGreenButton");
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        Thread.Sleep(3000);
         // VerifyScreenshot();
     }
 
@@ -109,16 +118,12 @@ public class PickerFeatureTests : UITest
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("SelectedIndexEntry");
-        App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
         App.WaitForElement("FontAttributesItalicButton");
         App.Tap("FontAttributesItalicButton");
         App.WaitForElement("FontFamilyDokdoButton");
         App.Tap("FontFamilyDokdoButton");
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        Thread.Sleep(3000);
         // VerifyScreenshot();
     }
 
@@ -128,9 +133,6 @@ public class PickerFeatureTests : UITest
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("SelectedIndexEntry");
-        App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
         App.WaitForElement("FontAttributesItalicButton");
         App.Tap("FontAttributesItalicButton");
         App.WaitForElement("FontSizeEntry");
@@ -138,7 +140,6 @@ public class PickerFeatureTests : UITest
         App.EnterText("FontSizeEntry", "40");
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        Thread.Sleep(3000);
         // VerifyScreenshot();
     }
 
@@ -148,9 +149,6 @@ public class PickerFeatureTests : UITest
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("SelectedIndexEntry");
-        App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
         App.WaitForElement("FontFamilyDokdoButton");
         App.Tap("FontFamilyDokdoButton");
         App.WaitForElement("FontSizeEntry");
@@ -158,107 +156,138 @@ public class PickerFeatureTests : UITest
         App.EnterText("FontSizeEntry", "40");
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        Thread.Sleep(3000);
         // VerifyScreenshot();
     }
 
+#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // Picker ItemDisplayBinding doesn't support MVVM properly. Issue Link - https://github.com/dotnet/maui/issues/25634
     [Test]
     [Category(UITestCategories.Picker)]
-    public void Picker_SetPickerAndHorizontalTextAlignment_VerifyVisualState()
+    public void Picker_SetItemDisplayBinding()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
-        App.WaitForElement("SelectedIndexEntry");
-        App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
-        App.WaitForElement("HorizontalTextAlignmentCenterButton");
-        App.Tap("HorizontalTextAlignmentCenterButton");
+        App.WaitForElement("ItemDisplayBindingIdButton");
+        App.Tap("ItemDisplayBindingIdButton");        
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        Thread.Sleep(3000);
-        // VerifyScreenshot();
+        App.WaitForElement("PickerControl");
+        var pickerText = App.WaitForElement("PickerControl").GetText();
+        Assert.That(pickerText, Is.EqualTo("2"));
     }
+#endif
 
     [Test]
     [Category(UITestCategories.Picker)]
-    public void Picker_SetPickerAndVerticalTextAlignment_VerifyVisualState()
+    public void Picker_SetSelectedIndex_VerifyVisualState()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
         App.WaitForElement("SelectedIndexEntry");
         App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
-        App.WaitForElement("VerticalTextAlignmentCenterButton");
-        App.Tap("VerticalTextAlignmentCenterButton");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        Thread.Sleep(3000);
-        // VerifyScreenshot();
-    }
-
-    [Test]
-    [Category(UITestCategories.Picker)]
-    public void Picker_SetPickerAndTitle_VerifyVisualState() 
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("TitleEntry");
-        App.ClearText("TitleEntry");
-        App.EnterText("TitleEntry", "Picker Title");
-        App.WaitForElement("Apply");
-        App.Tap("Apply");
-        Thread.Sleep(3000);
-        // VerifyScreenshot();
-    }
-    [Test]
-    [Category(UITestCategories.Picker)]
-    public void Picker_SetPickerAndSelectedIndex_VerifyVisualState()
-    {
-        App.WaitForElement("Options");
-        App.Tap("Options");
-        App.WaitForElement("SelectedIndexEntry");
-        App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
-        App.WaitForElement("SelectedIndexEntry");
-        App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
+        App.EnterText("SelectedIndexEntry", "3");
         App.WaitForElement("Apply");
         App.Tap("Apply");
         App.WaitForElement("SelectedIndexLabel");
         var selectedIndexText = App.WaitForElement("SelectedIndexLabel").GetText();
-        Assert.That(selectedIndexText, Is.EqualTo("1"));
+        Assert.That(selectedIndexText, Is.EqualTo("3"));
     }
+
     [Test]
     [Category(UITestCategories.Picker)]
-    public void Picker_SetPickerAndSelectedItem_VerifyVisualState()
+    public void Picker_SetSelectedItem()
     {
         App.WaitForElement("Options");
         App.Tap("Options");
         App.WaitForElement("SelectedIndexEntry");
         App.ClearText("SelectedIndexEntry");
-        App.EnterText("SelectedIndexEntry", "1");
-        App.WaitForElement("SelectedItemEntry");
-        App.ClearText("SelectedItemEntry");
-        App.EnterText("SelectedItemEntry", "Item 2");
+        App.EnterText("SelectedIndexEntry", "2");
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        App.WaitForElement("SelectedItemLabel");
-        var selectedItemText = App.WaitForElement("SelectedItemLabel").GetText();
-        Assert.That(selectedItemText, Is.EqualTo("Item 2"));
+        App.WaitForElement("PickerControl");
+        var pickerText = App.WaitForElement("PickerControl").GetText();
+        Assert.That(pickerText, Is.EqualTo("Item 2"));
+        // VerifyScreenshot();
+    }
+
+#if TEST_FAILS_ON_CATALYST // In Mac picker items not shown when title is set. Issue link - https://github.com/dotnet/maui/issues/27474
+    [Test]
+    [Category(UITestCategories.Picker)]
+    public void Picker_SetTitle_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("SelectedIndexEntry");
+        App.ClearText("SelectedIndexEntry");
+        App.EnterText("SelectedIndexEntry", "-1");
+        App.WaitForElement("TitleEntry");
+        App.ClearText("TitleEntry");
+        App.EnterText("TitleEntry", "New Picker Title");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+#if MACCATALYST
+        App.WaitForElement("PickerControl");
+        App.Tap("PickerControl");
+        App.TapDisplayAlertButton("Done");
+#endif
+        // VerifyScreenshot();
+    }
+#endif
+
+    [Test]
+    [Category(UITestCategories.Picker)]
+    public void Picker_SetTitleAndFontAttributes_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("SelectedIndexEntry");
+        App.ClearText("SelectedIndexEntry");
+        App.EnterText("SelectedIndexEntry", "-1");
+        App.WaitForElement("TitleEntry");
+        App.ClearText("TitleEntry");
+        App.EnterText("TitleEntry", "Picker Title");
+        App.WaitForElement("FontAttributesItalicButton");
+        App.Tap("FontAttributesItalicButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        // VerifyScreenshot();
     }
 
     [Test]
     [Category(UITestCategories.Picker)]
-    public void Picker_SetTitleAndTitleColor_VerifyVisualState()
+    public void Picker_SetTitleAndFontFamily_VerifyVisualState()
     {
-        App.WaitForElement("Options");                // In Android text can be entered in picker. https://github.com/dotnet/maui/issues/8265
-        App.Tap("Options");                           // In Mac picker items not shown when title is set. https://github.com/dotnet/maui/issues/27474
-        App.ClearText("TitleEntry");                  // In Windows title is shown above the picker. https://github.com/dotnet/maui/issues/6845
-        App.EnterText("TitleEntry", "Picker Title");  // In Mac and iOS title not show again. Even when selected index is set to -1 or selected item set to null.(No bug issue raised for this)
-        App.WaitForElement("TitleColorGreenButton");  // In Mac and iOS title color not set to picker. https://github.com/dotnet/maui/issues/19191
-        App.WaitForElement("Apply");                  // In Mac When opening the Picker, the first item is selected instead of the currently selected item. https://github.com/dotnet/maui/issues/27519
-        App.Tap("Apply");                             // In all platforms selected index set in the picker control not works. https://github.com/dotnet/maui/issues/22028
-        Thread.Sleep(3000);                           // Picker ItemDisplayBinding doesn't support MVVM properly. https://github.com/dotnet/maui/issues/25634
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("SelectedIndexEntry");
+        App.ClearText("SelectedIndexEntry");
+        App.EnterText("SelectedIndexEntry", "-1");
+        App.WaitForElement("TitleEntry");
+        App.ClearText("TitleEntry");
+        App.EnterText("TitleEntry", "Picker Title");
+        App.WaitForElement("FontFamilyDokdoButton");
+        App.Tap("FontFamilyDokdoButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        // VerifyScreenshot();
+    }
+
+    [Test]
+    [Category(UITestCategories.Picker)]
+    public void Picker_SetTitleAndFontSize_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("SelectedIndexEntry");
+        App.ClearText("SelectedIndexEntry");
+        App.EnterText("SelectedIndexEntry", "-1");
+        App.WaitForElement("TitleEntry");
+        App.ClearText("TitleEntry");
+        App.EnterText("TitleEntry", "Picker Title");
+        App.WaitForElement("FontSizeEntry");
+        App.ClearText("FontSizeEntry");
+        App.EnterText("FontSizeEntry", "40");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
         // VerifyScreenshot();
     }
 
@@ -268,6 +297,9 @@ public class PickerFeatureTests : UITest
     {
         App.WaitForElement("Options");
         App.Tap("Options");
+        App.WaitForElement("SelectedIndexEntry");
+        App.ClearText("SelectedIndexEntry");
+        App.EnterText("SelectedIndexEntry", "-1");
         App.WaitForElement("TitleEntry");
         App.ClearText("TitleEntry");
         App.EnterText("TitleEntry", "Picker Title");
@@ -275,9 +307,28 @@ public class PickerFeatureTests : UITest
         App.Tap("HorizontalTextAlignmentCenterButton");
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        Thread.Sleep(3000);
         // VerifyScreenshot();
     }
+
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // In Mac and iOS title color not set to picker. Issue link - https://github.com/dotnet/maui/issues/19191
+    [Test]
+    [Category(UITestCategories.Picker)]
+    public void Picker_SetTitleAndTitleColor_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("SelectedIndexEntry");
+        App.ClearText("SelectedIndexEntry");
+        App.EnterText("SelectedIndexEntry", "-1");
+        App.ClearText("TitleEntry");
+        App.EnterText("TitleEntry", "Picker Title");
+        App.WaitForElement("TitleColorGreenButton");
+        App.Tap("TitleColorGreenButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        // VerifyScreenshot();
+    }
+#endif
 
     [Test]
     [Category(UITestCategories.Picker)]
@@ -285,6 +336,9 @@ public class PickerFeatureTests : UITest
     {
         App.WaitForElement("Options");
         App.Tap("Options");
+        App.WaitForElement("SelectedIndexEntry");
+        App.ClearText("SelectedIndexEntry");
+        App.EnterText("SelectedIndexEntry", "-1");
         App.WaitForElement("TitleEntry");
         App.ClearText("TitleEntry");
         App.EnterText("TitleEntry", "Picker Title");
@@ -292,8 +346,19 @@ public class PickerFeatureTests : UITest
         App.Tap("VerticalTextAlignmentCenterButton");
         App.WaitForElement("Apply");
         App.Tap("Apply");
-        Thread.Sleep(3000);
         // VerifyScreenshot();
     }
 
+    [Test]
+    [Category(UITestCategories.Picker)]
+    public void Picker_SetVerticalTextAlignment_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("VerticalTextAlignmentCenterButton");
+        App.Tap("VerticalTextAlignmentCenterButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        // VerifyScreenshot();
+    }
 }
