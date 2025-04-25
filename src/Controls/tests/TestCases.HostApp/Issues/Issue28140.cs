@@ -13,40 +13,30 @@ namespace Maui.Controls.Sample.Issues
 
         public class MainPage : ContentPage
         {
-            private Label _label;
             private Entry _entry;
             private Button _button;
             private ScrollView _scrollView;
 
             public MainPage()
             {
-                Title = "Test for Issue #28140";
-
                 var stackLayout = new StackLayout();
 
-                _label = new Label
-                {
-                    Text = "This test case tries to reproduce the keyboard dismissal crash in issue #28140",
-                    LineBreakMode = LineBreakMode.WordWrap
-                };
                 _button = new Button
                 {
                     Text = "Crash Test Button",
                     Command = new Command(CrashConditionTest),
-                    AutomationId = "RaceConditionTest"
+                    AutomationId = "CrashConditionTest"
                 };
                 _entry = new Entry
                 {
                     AutomationId = "Entry",
                     Placeholder = "Tap to enter text",
-                    Text = "Type something here"
                 };
 
-                stackLayout.Children.Add(_label);
-                stackLayout.Children.Add(_button);
                 stackLayout.Children.Add(_entry);
+                stackLayout.Children.Add(_button);
 
-                for (int i = 1; i <= 20; i++)
+                for (int i = 1; i <= 40; i++)
                 {
                     stackLayout.Children.Add(new Label
                     {
@@ -65,16 +55,24 @@ namespace Maui.Controls.Sample.Issues
             // This method tries to hit the exact timing window where the crash occurs
             private async void CrashConditionTest()
             {
-                _entry.Focus();
-                await Task.Delay(1000);
-                var newPage = new NewPage();
-                await Navigation.PushAsync(newPage);
+                for (int i = 0; i < 10; i++)
+                {
+                    // Focus entry to show keyboard
+                    _entry.Focus();
+                    
+                    var newPage = new NewPage();
+                    await Navigation.PushAsync(newPage);
+
+                    // Wait briefly then pop back
+                    await Task.Delay(50);
+                    await Navigation.PopAsync();
+                }
+
             }
         }
 
         public class NewPage : ContentPage
         {
-            private bool _pageRemoved = false;
             public NewPage()
             {
                 Content = new ScrollView
@@ -89,28 +87,9 @@ namespace Maui.Controls.Sample.Issues
                                 FontSize = 24,
                                 HorizontalOptions = LayoutOptions.Center
                             },
-                            new Button
-                            {
-                                Text = "Remove Previous Page",
-                                IsEnabled = !_pageRemoved,
-                                Command = new Command((sender) => {
-                                    RemovePreviousPage();
-                                    ((Button)sender).IsEnabled = false;
-                                    _pageRemoved = true;
-                                })
-                            },
                         }
                     }
                 };
-            }
-
-            private void RemovePreviousPage()
-            {
-                if (Navigation.NavigationStack.Count > 1)
-                {
-                    var previousPage = Navigation.NavigationStack[Navigation.NavigationStack.Count - 2];
-                    Navigation.RemovePage(previousPage);
-                }
             }
         }
     }
