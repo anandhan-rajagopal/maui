@@ -3235,5 +3235,45 @@ namespace Microsoft.Maui.UnitTests.Layouts
 			AssertArranged(smallerView, new Rect(0, 0, expectedWidth, heightConstraint));
 			AssertArranged(largerView, new Rect(expectedWidth, 0, expectedWidth, heightConstraint));
 		}
+
+		[Theory, Category(GridStarSizing)]
+		[InlineData(84)]
+		[InlineData(88)]
+		[InlineData(98)]
+		[InlineData(162)]
+		[InlineData(187)]
+		[InlineData(196)]
+		[InlineData(367)]
+		[InlineData(377)]
+		[InlineData(697)]
+		[InlineData(711)]
+		[Category(GridStarSizing)]
+		public void GridRowsDistributeCorrectly(double height)
+		{
+			var totalStars = 25.0;
+			var oneHeight = (double) height / totalStars;
+
+			var grid = CreateGridLayout(rows: "5*,1*,13*,1*,5*");
+			var viewSize0 = new Size(10, 5 * oneHeight);
+			var viewSize1 = new Size(10, 10);
+			var viewSize2 = new Size(10, 10);
+			grid.Height.Returns(height);
+
+			var view0 = CreateTestView(viewSize0);
+			var view1 = CreateTestView(viewSize1);
+			var view2 = CreateTestView(viewSize2);
+
+			SubstituteChildren(grid, view0, view1, view2);
+
+			SetLocation(grid, view0, row: 0);
+			SetLocation(grid, view1, row: 1);
+			SetLocation(grid, view2, row: 3);
+
+			MeasureAndArrangeAuto(grid);
+
+			AssertArranged(view0, 0, 0, viewSize0.Width, oneHeight * 5);
+			AssertArranged(view1, 0, oneHeight * 5, viewSize1.Width, oneHeight * 1);
+			AssertArranged(view2, 0, Math.Round(oneHeight * 19, 2), viewSize2.Width, oneHeight * 1);
+		}
 	}
 }
