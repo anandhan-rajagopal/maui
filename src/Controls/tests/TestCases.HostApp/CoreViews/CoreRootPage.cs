@@ -26,7 +26,13 @@
 				{
 					if (!string.IsNullOrEmpty(searchBar.Text))
 					{
-						await corePageView.NavigateToTest(searchBar.Text);
+						var res = await corePageView.NavigateToTest(searchBar.Text);
+						if (!res)
+						{
+							// Highlight search bar in red to indicate not found
+							searchBar.PlaceholderColor = Colors.Red;
+							searchBar.Placeholder = $"Issue not found or Check the Issue description";
+							searchBar.Text = string.Empty;						}
 					}
 					else
 					{

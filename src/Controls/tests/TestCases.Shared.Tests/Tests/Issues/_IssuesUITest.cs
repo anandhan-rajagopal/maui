@@ -60,6 +60,23 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.EnterText("SearchBar", issue);
 			App.WaitForElement("GoToTestButton");
 			App.Tap("GoToTestButton");
+			var msg = "";
+			try
+			{
+				var text = App.WaitForElement("SearchBar", timeout: TimeSpan.FromMilliseconds(10)).GetText();
+				if (text == "Issue not found or Check the Issue description")
+				{
+					msg = $"The issue '{issue}' was not found. The search bar text is: {text}";
+					throw new Exception($"The issue '{issue}' was not found. The search bar text is: {text}");
+				}
+			}
+			catch (Exception e)
+			{
+				if (e.Message == msg)
+				{
+					throw;
+				}
+			}		
 		}
 	}
 }
