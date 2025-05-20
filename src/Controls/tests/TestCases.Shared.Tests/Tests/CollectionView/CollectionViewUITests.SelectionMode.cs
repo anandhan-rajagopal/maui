@@ -14,7 +14,7 @@ namespace Microsoft.Maui.TestCases.Tests
 
 		[Test]
 		[Category(UITestCategories.CollectionView)]
-		public void SelectionModeNone()
+		public void CollectionView_SelectionModeNone_DisablesSelection()
 		{
 			// Navigate to the selection galleries
 			VisitInitialGallery("Selection");
@@ -29,7 +29,7 @@ namespace Microsoft.Maui.TestCases.Tests
 
 		[Test]
 		[Category(UITestCategories.CollectionView)]
-		public void SelectionModeSingle()
+		public void CollectionView_SelectionModeSingle_SelectsOneItem()
 		{
 			// Navigate to the selection galleries
 			VisitInitialGallery("Selection");
@@ -49,7 +49,7 @@ namespace Microsoft.Maui.TestCases.Tests
 
 		[Test]
 		[Category(UITestCategories.CollectionView)]
-		public void SelectionModeMultiple()
+		public void CollectionView_SelectionModeMultiple_SelectsMultipleItems()
 		{
 			// Navigate to the selection galleries
 			VisitInitialGallery("Selection");

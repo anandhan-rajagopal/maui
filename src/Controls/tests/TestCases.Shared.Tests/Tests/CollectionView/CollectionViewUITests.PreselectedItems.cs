@@ -13,7 +13,7 @@ namespace Microsoft.Maui.TestCases.Tests
 
 		[Test]
 		[Category(UITestCategories.CollectionView)]
-		public void PreselectedItems()
+		public void PreselectedItems_AreDisplayedOnLoad()
 		{
 			// Navigate to the selection galleries
 			VisitInitialGallery("Selection");

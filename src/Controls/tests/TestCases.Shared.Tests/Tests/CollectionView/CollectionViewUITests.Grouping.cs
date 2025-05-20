@@ -29,6 +29,58 @@ namespace Microsoft.Maui.TestCases.Tests
             // group footer
             App.WaitForElement("Total members: 12");
         }
+
+        [Test]
+        [Category(UITestCategories.CollectionView)]
+        public void GroupingAndHeaderWorksWithEmptyGroup()
+        {
+            VisitInitialGallery("Grouping");
+
+            VisitSubGallery("Empty Group");
+
+            // header
+            App.WaitForElement("This is a header");
+            // group header
+            App.WaitForElement("Avengers");
+            // group footer
+            App.WaitForElement("Total members: 0");
+        }
+
+        [Test]
+        [Category(UITestCategories.CollectionView)]
+        public void GroupingAndHeaderWorksWithNoTemplate()
+        {
+            VisitInitialGallery("Grouping");
+
+            VisitSubGallery("No Template");
+
+            // header
+            App.WaitForElement("This is a header");
+            // group header
+            App.WaitForElement("Avengers");
+            // group footer
+            App.WaitForElement("Total members: 12");
+        }
+
+        [Test]
+        [Category(UITestCategories.CollectionView)]
+        public void GroupingWorkWithSelection()
+        {
+            VisitInitialGallery("Grouping");
+
+            VisitSubGallery("Selection");
+
+            // header
+            App.WaitForElement("This is a header");
+            // group header
+            App.WaitForElement("Avengers");
+            // group footer
+            App.WaitForElement("Total members: 12");
+
+            App.WaitForElement("Black Panther");
+            App.Tap("Black Panther");
+            VerifyScreenshot();
+        }
     }
 #endif
 }
