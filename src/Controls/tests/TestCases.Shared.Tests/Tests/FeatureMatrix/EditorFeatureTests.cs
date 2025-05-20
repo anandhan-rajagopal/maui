@@ -20,7 +20,6 @@ public class EditorFeatureTests : UITest
         App.NavigateToGallery(EditorFeatureMatrix);
     }
 
-    //2O
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetAutoSizeAndText_VerifyVisualState()
@@ -39,7 +38,6 @@ public class EditorFeatureTests : UITest
         // VerifyScreenshot();
     }
 
-    //2O
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetAutoSizeAndPlaceholder_VerifyVisualState()
@@ -57,7 +55,7 @@ public class EditorFeatureTests : UITest
         Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
-    //(2F)
+
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetCharacterSpacingAndPlaceholder_VerifyVisualState()  // for windows CharacterSpacing not set to placeholder
@@ -66,15 +64,15 @@ public class EditorFeatureTests : UITest
         App.Tap("Options");
         App.WaitForElement("CharacterSpacingEntry");
         App.ClearText("CharacterSpacingEntry");
-        App.EnterText("CharacterSpacingEntry", "2");
+        App.EnterText("CharacterSpacingEntry", "4");
         App.WaitForElement("PlaceholderEntry");
         App.EnterText("PlaceholderEntry", "PlaceholderText");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(2I)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetCharacterSpacingAndText_VerifyVisualState()
@@ -83,15 +81,15 @@ public class EditorFeatureTests : UITest
         App.Tap("Options");
         App.WaitForElement("CharacterSpacingEntry");
         App.ClearText("CharacterSpacingEntry");
-        App.EnterText("CharacterSpacingEntry", "2");
+        App.EnterText("CharacterSpacingEntry", "4");
         App.WaitForElement("TextEntry");
         App.EnterText("TextEntry", "Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(3D)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontAttributesAndFontFamily_VerifyVisualState()
@@ -109,7 +107,6 @@ public class EditorFeatureTests : UITest
         // VerifyScreenshot();
     }
 
-    //(3E)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontAttributesAndFontSize_VerifyVisualState()
@@ -125,10 +122,10 @@ public class EditorFeatureTests : UITest
         App.EnterText("TextEntry", "Button Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(3G)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontAttributesAndPlaceholder_VerifyVisualState()
@@ -141,10 +138,10 @@ public class EditorFeatureTests : UITest
         App.EnterText("PlaceholderEntry", "Placeholder Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(3I)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontAttributesAndText_VerifyVisualState()
@@ -157,10 +154,10 @@ public class EditorFeatureTests : UITest
         App.EnterText("TextEntry", "Editor Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(3k)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontAttributesAndTextTransform_VerifyVisualState()
@@ -175,10 +172,10 @@ public class EditorFeatureTests : UITest
         App.EnterText("TextEntry", "Editor Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(4E
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontFamilyAndFontSize_VerifyVisualState()
@@ -193,12 +190,11 @@ public class EditorFeatureTests : UITest
         App.WaitForElement("TextEntry");
         App.EnterText("TextEntry", "Editor Text");
         App.WaitForElement("Apply");
-        App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(4G)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontFamilyAndPlaceholder_VerifyVisualState()
@@ -211,9 +207,10 @@ public class EditorFeatureTests : UITest
         App.EnterText("PlaceholderEntry", "Placeholder Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
-    //(4I)
+
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontFamilyAndText_VerifyVisualState()
@@ -226,10 +223,10 @@ public class EditorFeatureTests : UITest
         App.EnterText("TextEntry", "Editor Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(4K)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontFamilyAndTextTransform_VerifyVisualState()
@@ -244,9 +241,10 @@ public class EditorFeatureTests : UITest
         App.EnterText("TextEntry", "Editor Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
-    //(5G)
+
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontSizeAndPlaceholder_VerifyVisualState()
@@ -260,10 +258,10 @@ public class EditorFeatureTests : UITest
         App.EnterText("PlaceholderEntry", "Placeholder Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(5I)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontSizeAndText_VerifyVisualState()
@@ -277,10 +275,10 @@ public class EditorFeatureTests : UITest
         App.EnterText("TextEntry", "Editor Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(5K)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetFontSizeAndTextTransform_VerifyVisualState()
@@ -296,9 +294,10 @@ public class EditorFeatureTests : UITest
         App.EnterText("TextEntry", "Editor Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
-    //(6I)
+
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetMaxLengthAndText()
@@ -309,7 +308,7 @@ public class EditorFeatureTests : UITest
         App.EnterText("TextEntry", "EditorText");
         App.WaitForElement("MaxLengthEntry");
         App.ClearText("MaxLengthEntry");
-        App.EnterText("MaxLengthEntry", "5");        
+        App.EnterText("MaxLengthEntry", "5");
         App.WaitForElement("Apply");
         App.Tap("Apply");
         var text = string.Empty;
@@ -323,7 +322,24 @@ public class EditorFeatureTests : UITest
         Assert.That(text, Is.EqualTo("Edito"));
     }
 
-    //(7O)
+#if TEST_FAILS_ON_ANDROID // In Android, HorizontalTextAlignment is not working. Issue Link - https://github.com/dotnet/maui/issues/10987
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetHorizontalTextAlignmentAndPlaceholder_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("HorizontalTextAlignmentEndButton");
+        App.Tap("HorizontalTextAlignmentEndButton");
+        App.WaitForElement("PlaceholderEntry");
+        App.EnterText("PlaceholderEntry", "Placeholder Text Horizontally End");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        Task.Delay(4000).Wait();
+        // VerifyScreenshot();
+    }
+#endif
+
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetHorizontalTextAlignmentAndText_VerifyVisualState()
@@ -333,13 +349,14 @@ public class EditorFeatureTests : UITest
         App.WaitForElement("HorizontalTextAlignmentCenterButton");
         App.Tap("HorizontalTextAlignmentCenterButton");
         App.WaitForElement("TextEntry");
-        App.EnterText("TextEntry", "Centered Text");
+        App.EnterText("TextEntry", "Text Horizontally Center");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(8O)
+#if TEST_FAILS_ON_ANDROID // While automation Android does not prevent text input when IsReadOnly is set to true
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetIsReadOnlyAndText_VerifyVisualState()
@@ -377,8 +394,8 @@ public class EditorFeatureTests : UITest
         Assert.That(finalText, Is.EqualTo(initialText));
         // VerifyScreenshot();
     }
+#endif
 
-    //(9O)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetIsSpellCheckEnabledAndText_VerifyVisualState()
@@ -395,7 +412,6 @@ public class EditorFeatureTests : UITest
         // VerifyScreenshot();
     }
 
-    //(10O)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetIsTextPredictionEnabledAndText_VerifyVisualState()
@@ -425,12 +441,11 @@ public class EditorFeatureTests : UITest
         App.Tap("Apply");
         App.WaitForElement("EditorControl");
         App.EnterText("EditorControl", "1234567890");
-
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 #endif
 
-    //(8K)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetPlaceholderAndPlaceholderColor_VerifyVisualState()
@@ -440,12 +455,13 @@ public class EditorFeatureTests : UITest
         App.WaitForElement("PlaceholderEntry");
         App.EnterText("PlaceholderEntry", "Placeholder Text");
         App.WaitForElement("PlaceholderColorRedButton");
-        App.Tap("PlaceholderColorRedButton");        
+        App.Tap("PlaceholderColorRedButton");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
-    //(7I)
+
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetPlaceholderAndText_VerifyVisualState()
@@ -458,10 +474,10 @@ public class EditorFeatureTests : UITest
         App.EnterText("TextEntry", "Editor Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
-    
-    //(8J)
+
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetPlaceholderColorAndTextColor_VerifyVisualState()
@@ -476,10 +492,26 @@ public class EditorFeatureTests : UITest
         App.EnterText("PlaceholderEntry", "Placeholder Text");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(9K)
+    [Test]
+    [Category(UITestCategories.Editor)]
+    public void Editor_SetPlaceholderAndVerticalTextAlignment_VerifyVisualState()
+    {
+        App.WaitForElement("Options");
+        App.Tap("Options");
+        App.WaitForElement("PlaceholderEntry");
+        App.EnterText("PlaceholderEntry", "Placeholder Text Vertically End");
+        App.WaitForElement("VerticalTextAlignmentEndButton");
+        App.Tap("VerticalTextAlignmentEndButton");
+        App.WaitForElement("Apply");
+        App.Tap("Apply");
+        Task.Delay(4000).Wait();
+        // VerifyScreenshot();
+    }
+
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetTextAndTextTransform_VerifyVisualState()
@@ -492,10 +524,10 @@ public class EditorFeatureTests : UITest
         App.Tap("TextTransformUppercaseButton");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 
-    //(11O)
     [Test]
     [Category(UITestCategories.Editor)]
     public void Editor_SetTextAndVerticalTextAlignment_VerifyVisualState()
@@ -505,9 +537,10 @@ public class EditorFeatureTests : UITest
         App.WaitForElement("VerticalTextAlignmentEndButton");
         App.Tap("VerticalTextAlignmentEndButton");
         App.WaitForElement("TextEntry");
-        App.EnterText("TextEntry", "End Vertically");
+        App.EnterText("TextEntry", "Text Vertically End");
         App.WaitForElement("Apply");
         App.Tap("Apply");
+        Task.Delay(4000).Wait();
         // VerifyScreenshot();
     }
 }
