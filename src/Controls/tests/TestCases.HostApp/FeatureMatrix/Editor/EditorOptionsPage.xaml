@@ -8,6 +8,7 @@
                            AutomationId="Apply"
                            Clicked="ApplyButton_Clicked"/>
        </ContentPage.ToolbarItems>
+
        <Grid ColumnSpacing="0"
              RowSpacing="1"
              Padding="1"
@@ -16,6 +17,7 @@
              HorizontalOptions="Center">
 
               <!-- AutoSize -->
+
               <Label Grid.Row="0"
                      Grid.Column="0"
                      Text="AutoSize:"
@@ -36,6 +38,7 @@
               </StackLayout>
 
               <!-- CharacterSpacing -->
+
               <Label Grid.Row="1"
                      Grid.Column="0"
                      Text="CharacterSpacing:"
@@ -98,7 +101,6 @@
                                   CheckedChanged="OnFontFamilyRadioButtonCheckedChanged"/>
               </StackLayout>
 
-
               <!-- Font Size -->
 
               <Label Grid.Row="4"
@@ -138,6 +140,7 @@
               </StackLayout>
 
               <!-- IsReadOnly -->
+
               <Label Grid.Row="6"
                      Grid.Column="0"
                      Text="IsReadOnly:"
@@ -158,6 +161,7 @@
               </StackLayout>
 
               <!-- IsSpellCheckEnabled -->
+
               <Label Grid.Row="7"
                      Grid.Column="0"
                      Text="IsSpellCheckEnabled:"
@@ -179,6 +183,7 @@
               </StackLayout>
 
               <!-- IsTextPredictionEnabled -->
+
               <Label Grid.Row="8"
                      Grid.Column="0"
                      Text="IsTextPredictionEnabled:"
@@ -199,6 +204,7 @@
               </StackLayout>
 
               <!-- Keyboard -->
+
               <Label Grid.Row="9"
                      Grid.Column="0"
                      Text="Keyboard:"/>
@@ -250,11 +256,10 @@
 
               </VerticalStackLayout>
 
+              <!-- MaxLength -->
+
               <HorizontalStackLayout Grid.Row="10"
                                      Grid.Column="0">
-
-                     <!-- MaxLength -->
-
                      <Label Text="MaxLength:"
                             VerticalOptions="Center"/>
                      <Entry AutomationId="MaxLengthEntry"
@@ -264,12 +269,11 @@
                             WidthRequest="50"/>
               </HorizontalStackLayout>
 
+              <!-- Placeholder -->
+
               <HorizontalStackLayout Grid.Row="10"
                                      Grid.Column="1"
-                            Padding="10,0,0,0">
-
-                     <!-- Placeholder -->
-
+                                     Padding="10,0,0,0">
                      <Label Text="Placeholder:"
                             VerticalOptions="Center"/>
                      <Entry AutomationId="PlaceholderEntry"
@@ -278,7 +282,6 @@
                             VerticalOptions="Center"
                             WidthRequest="50"/>
               </HorizontalStackLayout>
-
 
               <!-- Placeholder Color -->
 
@@ -318,7 +321,6 @@
                      VerticalOptions="Center"
                      WidthRequest="200"/>
 
-
               <!-- Text Color -->
 
               <Label Grid.Row="13"
@@ -341,7 +343,6 @@
                                   CheckedChanged="OnTextColorRadioButtonCheckedChanged"/>
 
               </StackLayout>
-
 
               <!-- Text Transform -->
 
@@ -388,7 +389,6 @@
                                   Value="End"
                                   CheckedChanged="OnVerticalTextAlignmentRadioButtonCheckedChanged"
                                   AutomationId="VerticalTextAlignmentEndButton"/>
-
               </StackLayout>
        </Grid>
 </ContentPage>
