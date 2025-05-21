@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HTML5 Video Test</title>
+    <style>
+        body { margin: 0; padding: 0; background-color: white; }
+        .video-container { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+        video { max-width: 100%; max-height: 300px; background-color: black; }
+        #video-status { padding: 10px; font-size: 16px; color: black; text-align: center; }
+        .status-indicator { 
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .status-playing { background-color: #00FF00; }
+        .status-paused { background-color: #FF0000; }
+    </style>
+</head>
+<body>
+    <div class="video-container">
+        <video id="test-video" autoplay muted loop playsinline controls>
+            <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div id="video-status">
+        <span class="status-indicator status-paused" id="status-indicator"></span>
+        <span id="status-text">Status: Not Playing</span>
+    </div>
+    
+    <script>
+        const video = document.getElementById('test-video');
+        const indicator = document.getElementById('status-indicator');
+        const statusText = document.getElementById('status-text');
+        
+        video.addEventListener('playing', function() {
+            indicator.classList.remove('status-paused');
+            indicator.classList.add('status-playing');
+            statusText.textContent = 'Status: Playing';
+            window.location.hash = 'playing';
+        });
+        
+        video.addEventListener('pause', function() {
+            indicator.classList.remove('status-playing');
+            indicator.classList.add('status-paused');
+            statusText.textContent = 'Status: Paused';
+            window.location.hash = 'paused';
+        });
+        
+        video.addEventListener('error', function() {
+            statusText.textContent = 'Status: Error loading video';
+            window.location.hash = 'error';
+        });
+        
+        // Force play after a short delay
+        setTimeout(() => {
+            video.play().catch(e => {
+                console.log('AutoPlay failed:', e);
+                statusText.textContent = 'Status: AutoPlay failed';
+                window.location.hash = 'autoplayfailed';
+            });
+        }, 1000);
+    </script>
+</body>
+</html>
