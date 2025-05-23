@@ -108,7 +108,7 @@ namespace Microsoft.Maui.TestCases.Tests
 #if !ANDROID
 			// Android screen is too small to show this label
 			// but we can check for the footer via screenshot
-            App.WaitForElement("This Is A Footer");
+			App.WaitForElement("This Is A Footer");
 #endif
 
 			VerifyScreenshot();
@@ -137,5 +137,18 @@ namespace Microsoft.Maui.TestCases.Tests
 		}
 #endif
 #endif
+
+
+		[Test]
+		[Category(UITestCategories.CollectionView)]
+		public void FooterStringWorks()
+		{
+			// Navigate to the selection galleries
+			VisitInitialGallery("Header Footer");
+
+			// Navigate to the specific sample inside selection galleries
+			VisitSubGallery("Footer Only (String)");
+		}
 	}
 }
+
