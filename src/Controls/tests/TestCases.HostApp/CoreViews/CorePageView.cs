@@ -80,6 +80,7 @@ namespace Maui.Controls.Sample
 			new GalleryPageFactory(() => new CollectionViewFeaturePage(), "CollectionView Feature Matrix"),
 			new GalleryPageFactory(() => new TimePickerControlPage(), "Time Picker Feature Matrix"),
 			new GalleryPageFactory(() => new PickerControlPage(), "Picker Feature Matrix"),
+			new GalleryPageFactory(() => new SwitchControlPage(), "Switch Feature Matrix"),
 		};
 
 		public CorePageView(Page rootPage)
