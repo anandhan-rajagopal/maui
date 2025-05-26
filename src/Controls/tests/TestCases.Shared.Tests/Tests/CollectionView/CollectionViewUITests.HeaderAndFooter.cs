@@ -148,6 +148,8 @@ namespace Microsoft.Maui.TestCases.Tests
 
 			// Navigate to the specific sample inside selection galleries
 			VisitSubGallery("Footer Only (String)");
+
+			App.WaitForElement("This is a footer");
 		}
 	}
 }

@@ -21,9 +21,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			VisitInitialGallery("Default Text");
 
 			// Navigate to the specific sample inside selection galleries
-			VisitSubGallery("Vertical List (Code) ");
+			VisitSubGallery("Vertical List (Code)");
 
 			App.WaitForElement("entryUpdate");
+			App.ClearText("entryUpdate");
 			App.EnterText("entryUpdate", "10");
 
 			App.WaitForElement("btnUpdate");
@@ -40,9 +41,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			VisitInitialGallery("Default Text");
 
 			// Navigate to the specific sample inside selection galleries
-			VisitSubGallery("Horizontal List (Code) ");
+			VisitSubGallery("Horizontal List (Code)");
 
 			App.WaitForElement("entryUpdate");
+			App.ClearText("entryUpdate");
 			App.EnterText("entryUpdate", "5");
 
 			App.WaitForElement("btnUpdate");
@@ -59,9 +61,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			VisitInitialGallery("Default Text");
 
 			// Navigate to the specific sample inside selection galleries
-			VisitSubGallery("Grid (Code) ");
+			VisitSubGallery("Vertical Grid (Code)");
 
 			App.WaitForElement("entryUpdate");
+			App.ClearText("entryUpdate");
 			App.EnterText("entryUpdate", "20");
 
 			App.WaitForElement("btnUpdate");
@@ -78,9 +81,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			VisitInitialGallery("Default Text");
 
 			// Navigate to the specific sample inside selection galleries
-			VisitSubGallery("Horizontal Grid (Code) ");
+			VisitSubGallery("Horizontal Grid (Code)");
 
 			App.WaitForElement("entryUpdate");
+			App.ClearText("entryUpdate");
 			App.EnterText("entryUpdate", "10");
 
 			App.WaitForElement("btnUpdate");
