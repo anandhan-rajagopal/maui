@@ -78,9 +78,11 @@ namespace Maui.Controls.Sample
 			new GalleryPageFactory(() => new WebViewCoreGalleryPage(), "WebView Gallery"),
 			new GalleryPageFactory(() => new SliderControlPage(), "Slider Feature Matrix"),
 			new GalleryPageFactory(() => new CollectionViewFeaturePage(), "CollectionView Feature Matrix"),
+			new GalleryPageFactory(() => new ProgressBarControlPage(), "ProgressBar Feature Matrix"),
 			new GalleryPageFactory(() => new TimePickerControlPage(), "Time Picker Feature Matrix"),
 			new GalleryPageFactory(() => new PickerControlPage(), "Picker Feature Matrix"),
 			new GalleryPageFactory(() => new SwitchControlPage(), "Switch Feature Matrix"),
+			new GalleryPageFactory(() => new RadioButtonControlPage(), "RadioButton Feature Matrix"),
 		};
 
 		public CorePageView(Page rootPage)
