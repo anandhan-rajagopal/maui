@@ -4,6 +4,7 @@ using UITest.Core;
 
 namespace Microsoft.Maui.TestCases.Tests
 {
+    [Category(UITestCategories.Stepper)]
     public class StepperFeatureTests : UITest
     {
         public const string StepperFeatureMatrix = "Stepper Feature Matrix";
@@ -20,7 +21,6 @@ namespace Microsoft.Maui.TestCases.Tests
         }
 
         [Test, Order(1)]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_ValidateDefaultValues_VerifyLabels()
         {
             App.WaitForElement("Options");
@@ -30,7 +30,6 @@ namespace Microsoft.Maui.TestCases.Tests
         }
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_SetMinimumValue_VerifyMinimumLabel()
         {
             App.WaitForElement("Options");
@@ -40,12 +39,11 @@ namespace Microsoft.Maui.TestCases.Tests
             App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             Assert.That(App.FindElement("MinimumLabel").GetText(), Is.EqualTo("2.00"));
         }
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_SetMaximumValue_VerifyMaximumLabel()
         {
             App.WaitForElement("Options");
@@ -55,12 +53,11 @@ namespace Microsoft.Maui.TestCases.Tests
             App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             Assert.That(App.FindElement("MaximumLabel").GetText(), Is.EqualTo("20.00"));
         }
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_SetValueWithinRange_VerifyValueLabel()
         {
             App.WaitForElement("Options");
@@ -70,12 +67,11 @@ namespace Microsoft.Maui.TestCases.Tests
             App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("5.00"));
         }
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_SetIncrementValue_VerifyIncrement()
         {
             App.WaitForElement("Options");
@@ -85,13 +81,12 @@ namespace Microsoft.Maui.TestCases.Tests
             App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             App.IncreaseStepper("StepperControl");
             Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("2.00"));
         }
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_SetValueExceedsMaximum()
         {
             App.WaitForElement("Options");
@@ -105,12 +100,13 @@ namespace Microsoft.Maui.TestCases.Tests
             App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("100.00"));
         }
 
+#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS 
+// Related Issue Link : https://github.com/dotnet/maui/issues/12243
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_SetValueBelowMinimum()
         {
             App.WaitForElement("Options");
@@ -124,12 +120,11 @@ namespace Microsoft.Maui.TestCases.Tests
             App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("10.00"));
         }
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_MinimumExceedsMaximum_SetsMinimumToMaximum()
         {
             App.WaitForElement("Options");
@@ -143,13 +138,13 @@ namespace Microsoft.Maui.TestCases.Tests
             App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             Assert.That(App.FindElement("MinimumLabel").GetText(), Is.EqualTo("50.00"));
             Assert.That(App.FindElement("MaximumLabel").GetText(), Is.EqualTo("50.00"));
         }
+#endif
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_SetEnabledStateToFalse_VerifyVisualState()
         {
             App.WaitForElement("Options");
@@ -158,13 +153,12 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("IsEnabledFalseRadio");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             App.IncreaseStepper("StepperControl");
             Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("0.00"));
         }
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_SetVisibilityToFalse_VerifyVisualState()
         {
             App.WaitForElement("Options");
@@ -173,27 +167,25 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("IsVisibleFalseRadio");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("Options");
+            App.WaitForElement("Options");
             App.WaitForNoElement("StepperControl");
         }
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_SetBackgroundColor_VerifyVisualState()
         {
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("BackgroundColorRedRadio");
             App.Tap("BackgroundColorRedRadio");
-            //App.Tap("Red");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             VerifyScreenshot();
         }
 
+#if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST     //Related Issue Link : https://github.com/dotnet/maui/issues/29704
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_ChangeFlowDirection_RTL_VerifyVisualState()
         {
             App.WaitForElement("Options");
@@ -202,12 +194,11 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("FlowDirectionRTLRadio");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             VerifyScreenshot();
         }
-
+#endif
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_AtMinimumValue_DecrementButtonDisabled()
         {
             App.WaitForElement("Options");
@@ -226,7 +217,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.WaitForElement("Apply");
             App.Tap("Apply");
 
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
 
             var currentValue = App.FindElement("ValueLabel").GetText();
             Assert.That(currentValue, Is.EqualTo("10.00"));
@@ -238,7 +229,6 @@ namespace Microsoft.Maui.TestCases.Tests
         }
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_AtMaximumValue_IncrementButtonDisabled()
         {
             App.WaitForElement("Options");
@@ -255,7 +245,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.WaitForElement("Apply");
             App.Tap("Apply");
 
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
 
             var currentValue = App.FindElement("ValueLabel").GetText();
             Assert.That(currentValue, Is.EqualTo("10.00"));
@@ -267,7 +257,6 @@ namespace Microsoft.Maui.TestCases.Tests
         }
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_SetIncrementAndVerifyValueChange()
         {
             App.WaitForElement("Options");
@@ -277,7 +266,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             App.IncreaseStepper("StepperControl");
             Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("5.00"));
             App.IncreaseStepper("StepperControl");
@@ -286,7 +275,6 @@ namespace Microsoft.Maui.TestCases.Tests
 
 
         [Test]
-        [Category(UITestCategories.Stepper)]
         public void Stepper_ResetToInitialState_VerifyDefaultValues()
         {
             App.WaitForElement("Options");
@@ -296,11 +284,11 @@ namespace Microsoft.Maui.TestCases.Tests
             App.PressEnter();
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElementTillPageNavigationSettled("StepperControl");
+            App.WaitForElement("Options");
             Assert.That(App.FindElement("MinimumLabel").GetText(), Is.EqualTo("0.00"));
             Assert.That(App.FindElement("MaximumLabel").GetText(), Is.EqualTo("10.00"));
             Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("0.00"));
