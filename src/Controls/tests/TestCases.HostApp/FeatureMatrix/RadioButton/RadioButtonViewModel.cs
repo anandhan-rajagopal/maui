@@ -11,13 +11,7 @@ namespace Maui.Controls.Sample
 		private bool _isChecked = false;
 		private string _groupName = "Group1";
 		private object _value = "Value1";
-#if ANDROID  // Set all color properties to null for Windows as default values, and define platform-specific colors for Android, iOS, and Mac Catalyst
 		private Color _borderColor = Color.FromRgba(1, 122, 255, 255);
-#elif IOS || MACCATALYST
-		private Color _borderColor = Color.FromRgba(1, 122, 255, 255);
-#else
-		private Color _borderColor = null;
-#endif
 		private double _borderWidth = 1;
 		private double _characterSpacing = 0;
 		private int _cornerRadius = 0;
