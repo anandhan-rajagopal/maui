@@ -351,6 +351,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.WaitForElement("Options");
 
             App.DecreaseStepper("StepperControl");
+            App.DecreaseStepper("StepperControl");
 
             var currentValue = App.FindElement("ValueLabel").GetText();
             Assert.That(currentValue, Is.EqualTo("0.00"));
