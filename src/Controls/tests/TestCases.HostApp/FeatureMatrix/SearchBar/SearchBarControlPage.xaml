@@ -10,7 +10,8 @@
     </ContentPage.ToolbarItems>
 
     <Grid>
-        <SearchBar VerticalOptions="Start"
+        <SearchBar x:Name="searchBar"
+                   VerticalOptions="Start"
                    AutomationId="SearchBar"
                    HeightRequest="100"
                    CancelButtonColor="{Binding CancelButtonColor}"
@@ -28,6 +29,8 @@
                    MaxLength="{Binding MaxLength}"
                    Placeholder="{Binding Placeholder}"
                    PlaceholderColor="{Binding PlaceholderColor}"
+                   SearchCommand="{Binding SearchCommand}"
+                   SearchCommandParameter="{Binding Text, x:DataType='SearchBar', Source={x:Reference searchBar}}"
                    SelectionLength="{Binding SelectionLength}"
                    Text="{Binding Text}"
                    TextColor="{Binding TextColor}"

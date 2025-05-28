@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace Maui.Controls.Sample;
 
@@ -25,6 +26,16 @@ public class SearchBarViewModel : INotifyPropertyChanged
     private TextTransform _textTransform = TextTransform.Default;
     private TextAlignment _verticalTextAlignment = TextAlignment.Center;
 
+    public SearchBarViewModel()
+    {
+        SearchCommand = new Command<string>(execute: (text) =>
+        {
+            if (text == "SearchCommand")
+            {
+                Text = "Search command executed";
+            }
+        });
+    }
 
     public Color CancelButtonColor
     {
@@ -92,6 +103,7 @@ public class SearchBarViewModel : INotifyPropertyChanged
         get => _placeholderColor;
         set { _placeholderColor = value; OnPropertyChanged(); }
     }
+    public ICommand SearchCommand { get; set; }
     public int SelectionLength
     {
         get => _selectionLength;
