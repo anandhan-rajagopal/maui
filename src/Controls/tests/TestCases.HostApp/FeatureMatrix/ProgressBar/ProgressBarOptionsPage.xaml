@@ -12,7 +12,7 @@
     <!-- Left Column -->
     <StackLayout Grid.Column="0" Padding="10" Spacing="8">
 
-      <Label Text="{Binding Progress, StringFormat='Progress: {0}'}" FontSize="15" />
+      <Label Text="{Binding Progress, StringFormat='Progress: {0:F2}'}" FontSize="15" />
       <Entry x:Name="ProgressEntry" AutomationId="ProgressEntry" TextChanged="OnProgressChanged" Keyboard="Numeric" HorizontalOptions="Start" WidthRequest="100" />
 
       <!-- Flow Direction -->

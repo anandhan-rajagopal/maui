@@ -21,22 +21,6 @@ namespace Microsoft.Maui.TestCases.Tests
 
 		[Test]
 		[Category(UITestCategories.RadioButton)]
-		public void RadioButton_SetIsCheckedAndTextColor_VerifyVisualState()
-		{
-			App.WaitForElement("Options");
-			App.Tap("Options");
-			App.WaitForElement("IsCheckedTrueRadio");
-			App.Tap("IsCheckedTrueRadio");
-			App.WaitForElement("TextColorRedButton");
-			App.Tap("TextColorRedButton");
-			App.WaitForElement("Apply");
-			App.Tap("Apply");
-			App.WaitForElementTillPageNavigationSettled("RadioButtonControl");
-			// VerifyScreenshot();
-		}
-
-		[Test]
-		[Category(UITestCategories.RadioButton)]
 		public void RadioButton_SetTextColorAndBorderColor_VerifyVisualState()
 		{
 			App.WaitForElement("Options");
@@ -135,6 +119,27 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("TextColorBlueButton");
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
+			Task.Delay(4000).Wait(); // Wait for the UI to settle
+			App.WaitForElementTillPageNavigationSettled("RadioButtonControl");
+			// VerifyScreenshot();
+		}
+
+		[Test]
+		[Category(UITestCategories.RadioButton)]
+		public void RadioButton_SetContentAndCharacterSpacing_VerifyVisualState()
+		{
+			App.WaitForElement("Options");
+			App.Tap("Options");
+			App.WaitForElement("ContentEntry");
+			App.ClearText("ContentEntry");
+			App.EnterText("ContentEntry", "Spaced Text");
+			App.PressEnter();
+			App.WaitForElement("CharacterSpacingEntry");
+			App.ClearText("CharacterSpacingEntry");
+			App.EnterText("CharacterSpacingEntry", "10");
+			App.PressEnter();
+			App.WaitForElement("Apply");
+			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("RadioButtonControl");
 			// VerifyScreenshot();
 		}
@@ -191,66 +196,29 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("TextTransformUpper");
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
-			App.WaitForElementTillPageNavigationSettled("RadioButtonControl");
-			// VerifyScreenshot();
+			var text = App.WaitForElement("RadioButtonControl").GetText();
+			Assert.That(text, Is.EqualTo("TRANSFORM THIS")); // For iOS and Mac this line fails
+															 // VerifyScreenshot();
 		}
 
 		[Test]
 		[Category(UITestCategories.RadioButton)]
-		public void RadioButton_SetIsCheckedAndContent_VerifyVisualState()
+		public void RadioButton_SetGroupNameAndIsChecked_VerifyVisualState()
 		{
 			App.WaitForElement("Options");
 			App.Tap("Options");
+			App.WaitForElement("GroupName2Radio");
+			App.Tap("GroupName2Radio");
 			App.WaitForElement("IsCheckedTrueRadio");
 			App.Tap("IsCheckedTrueRadio");
-			App.WaitForElement("ContentEntry");
-			App.ClearText("ContentEntry");
-			App.EnterText("ContentEntry", "Checked Option");
-			App.PressEnter();
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
-			App.WaitForElementTillPageNavigationSettled("RadioButtonControl");
+			App.WaitForElement("Group2RadioButton");
+			App.Tap("Group2RadioButton");
+			var text = App.WaitForElement("IsCheckedLabel").GetText();
+			Assert.That(text, Is.EqualTo("False"));
 			// VerifyScreenshot();
 		}
-
-		[Test]
-		[Category(UITestCategories.RadioButton)]
-		public void RadioButton_SetIsCheckedAndBorderWidth_VerifyVisualState()
-		{
-			App.WaitForElement("Options");
-			App.Tap("Options");
-			App.WaitForElement("IsCheckedTrueRadio");
-			App.Tap("IsCheckedTrueRadio");
-			App.WaitForElement("BorderWidthEntry");
-			App.ClearText("BorderWidthEntry");
-			App.EnterText("BorderWidthEntry", "3");
-			App.PressEnter();
-			App.WaitForElement("Apply");
-			App.Tap("Apply");
-			App.WaitForElementTillPageNavigationSettled("RadioButtonControl");
-			// VerifyScreenshot();
-		}
-
-		[Test]
-		[Category(UITestCategories.RadioButton)]
-		public void RadioButton_SetFontSizeAndCharacterSpacing_VerifyVisualState()
-		{
-			App.WaitForElement("Options");
-			App.Tap("Options");
-			App.WaitForElement("FontSizeEntry");
-			App.ClearText("FontSizeEntry");
-			App.EnterText("FontSizeEntry", "18");
-			App.PressEnter();
-			App.WaitForElement("CharacterSpacingEntry");
-			App.ClearText("CharacterSpacingEntry");
-			App.EnterText("CharacterSpacingEntry", "2");
-			App.PressEnter();
-			App.WaitForElement("Apply");
-			App.Tap("Apply");
-			App.WaitForElementTillPageNavigationSettled("RadioButtonControl");
-			// VerifyScreenshot();
-		}
-
 		[Test]
 		[Category(UITestCategories.RadioButton)]
 		public void RadioButton_SetFontFamilyAndFontAttributes_VerifyVisualState()

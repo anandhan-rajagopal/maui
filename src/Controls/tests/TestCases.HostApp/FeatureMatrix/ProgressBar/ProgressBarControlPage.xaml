@@ -11,7 +11,7 @@
 
   <Grid Padding="20" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto" ColumnDefinitions="0.5*, 0.5*" RowSpacing="10">
     <!-- ProgressBar Control -->
-    <ProgressBar Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  
+    <ProgressBar x:Name="ProgressBar" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  
                Progress="{Binding Progress}"
             ProgressColor="{Binding ProgressColor}"
             BackgroundColor="{Binding BackgroundColor}"
@@ -28,7 +28,7 @@
                HorizontalTextAlignment="Start" 
                Margin="80,0,10,10" />
     <Label Grid.Row="1" Grid.Column="1" 
-               Text="{Binding Progress, StringFormat='{0:F2}'}" 
+               Text="{Binding Source={x:Reference ProgressBar}, Path=Progress, StringFormat='{0:F2}'}"
                FontSize="16" 
                VerticalTextAlignment="Start" 
                HorizontalTextAlignment="Start" AutomationId="ProgressValueLabel"/>

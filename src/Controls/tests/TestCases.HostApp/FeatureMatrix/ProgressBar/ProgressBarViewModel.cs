@@ -24,21 +24,11 @@ namespace Maui.Controls.Sample
 
 		public ProgressBarViewModel()
 		{
-			ProgressBar = new Microsoft.Maui.Controls.ProgressBar
-			{
-				Progress = 0.5,
-				ProgressColor = Colors.Blue
-			};
-
-			// Initialize properties from ProgressBar
-			_progress = ProgressBar.Progress;
-			_progressColor = ProgressBar.ProgressColor;
-			_backgroundColor = Colors.Transparent;
-
+			_progressColor = Colors.Blue;
+			_backgroundColor = Colors.LightGray;
+			_progress = 0.5;
 			ChangeProgressCommand = new Command(ChangeProgress);
 		}
-
-		public Microsoft.Maui.Controls.ProgressBar ProgressBar { get; }
 
 		public ICommand ChangeProgressCommand { get; }
 
@@ -50,7 +40,6 @@ namespace Maui.Controls.Sample
 				if (_progress != value)
 				{
 					_progress = value;
-					ProgressBar.Progress = value;
 					OnPropertyChanged();
 				}
 			}
@@ -64,7 +53,6 @@ namespace Maui.Controls.Sample
 				if (_progressColor != value)
 				{
 					_progressColor = value;
-					ProgressBar.ProgressColor = value;
 					OnPropertyChanged();
 				}
 			}
@@ -78,7 +66,6 @@ namespace Maui.Controls.Sample
 				if (_backgroundColor != value)
 				{
 					_backgroundColor = value;
-					ProgressBar.BackgroundColor = value;
 					OnPropertyChanged();
 				}
 			}
@@ -92,7 +79,6 @@ namespace Maui.Controls.Sample
 				if (_isVisible != value)
 				{
 					_isVisible = value;
-					ProgressBar.IsVisible = value;
 					OnPropertyChanged();
 				}
 			}
@@ -106,7 +92,6 @@ namespace Maui.Controls.Sample
 				if (_isEnabled != value)
 				{
 					_isEnabled = value;
-					ProgressBar.IsEnabled = value;
 					OnPropertyChanged();
 				}
 			}
@@ -120,7 +105,6 @@ namespace Maui.Controls.Sample
 				if (_flowDirection != value)
 				{
 					_flowDirection = value;
-					ProgressBar.FlowDirection = value;
 					OnPropertyChanged();
 				}
 			}
@@ -128,18 +112,7 @@ namespace Maui.Controls.Sample
 
 		void ChangeProgress()
 		{
-			// Toggle between 0.25 and 0.75
 			Progress = Progress < 0.5 ? 0.75 : 0.25;
-		}
-
-		public void ResetProgressBar()
-		{
-			Progress = 0.5;
-			ProgressColor = Colors.Blue;
-			BackgroundColor = Colors.Transparent;
-			IsVisible = true;
-			IsEnabled = true;
-			FlowDirection = FlowDirection.LeftToRight;
 		}
 	}
 }

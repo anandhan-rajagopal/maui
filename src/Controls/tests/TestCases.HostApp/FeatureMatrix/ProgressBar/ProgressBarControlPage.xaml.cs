@@ -10,9 +10,6 @@ namespace Maui.Controls.Sample
 		public ProgressBarControlPage()
 		{
 			_viewModel = new ProgressBarViewModel();
-#if ANDROID
-			BarTextColor = Colors.White;
-#endif
 			PushAsync(new ProgressBarControlMainPage(_viewModel));
 		}
 	}

@@ -26,8 +26,7 @@ namespace Maui.Controls.Sample
 		{
 			if (double.TryParse(ProgressEntry.Text, out double progress))
 			{
-				// Ensure progress is between 0 and 1
-				_viewModel.ProgressBar.Progress = Math.Clamp(progress, 0, 1);
+				_viewModel.Progress = progress;
 			}
 		}
 

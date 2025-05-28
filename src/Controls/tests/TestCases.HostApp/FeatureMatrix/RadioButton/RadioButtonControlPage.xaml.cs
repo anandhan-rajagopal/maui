@@ -10,9 +10,6 @@ namespace Maui.Controls.Sample
 		public RadioButtonControlPage()
 		{
 			_viewModel = new RadioButtonViewModel();
-#if ANDROID
-			BarTextColor = Colors.White;
-#endif
 			PushAsync(new RadioButtonControlMainPage(_viewModel));
 		}
 	}
