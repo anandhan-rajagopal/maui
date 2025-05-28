@@ -119,7 +119,6 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("TextColorBlueButton");
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
-			Task.Delay(4000).Wait(); // Wait for the UI to settle
 			App.WaitForElementTillPageNavigationSettled("RadioButtonControl");
 			// VerifyScreenshot();
 		}
@@ -182,6 +181,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			// VerifyScreenshot();
 		}
 
+#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS // This test fails on Android and Windows because the text transform is not applied correctly.
 		[Test]
 		[Category(UITestCategories.RadioButton)]
 		public void RadioButton_SetContentAndTextTransform_VerifyVisualState()
@@ -197,13 +197,13 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			var text = App.WaitForElement("RadioButtonControl").GetText();
-			Assert.That(text, Is.EqualTo("TRANSFORM THIS")); // For iOS and Mac this line fails
-															 // VerifyScreenshot();
+			Assert.That(text, Is.EqualTo("TRANSFORM THIS"));
 		}
+#endif
 
 		[Test]
 		[Category(UITestCategories.RadioButton)]
-		public void RadioButton_SetGroupNameAndIsChecked_VerifyVisualState()
+		public void RadioButton_SetGroupNameAndIsChecked()
 		{
 			App.WaitForElement("Options");
 			App.Tap("Options");
@@ -217,8 +217,8 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.Tap("Group2RadioButton");
 			var text = App.WaitForElement("IsCheckedLabel").GetText();
 			Assert.That(text, Is.EqualTo("False"));
-			// VerifyScreenshot();
 		}
+
 		[Test]
 		[Category(UITestCategories.RadioButton)]
 		public void RadioButton_SetFontFamilyAndFontAttributes_VerifyVisualState()

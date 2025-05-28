@@ -14,7 +14,7 @@
               <Grid ColumnDefinitions="Auto, Auto"
                     RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                     RowSpacing="1">
-                    
+
                      <!-- Content -->
                      <Label Grid.Row="0"
                             Grid.Column="0"
