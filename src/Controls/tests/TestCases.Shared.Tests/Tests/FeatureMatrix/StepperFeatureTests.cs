@@ -293,5 +293,67 @@ namespace Microsoft.Maui.TestCases.Tests
             Assert.That(App.FindElement("MaximumLabel").GetText(), Is.EqualTo("10.00"));
             Assert.That(App.FindElement("ValueLabel").GetText(), Is.EqualTo("0.00"));
         }
+
+        [Test]
+        public void Stepper_IncrementDoesNotExceedMaximum()
+        {
+            App.WaitForElement("Options");
+            App.Tap("Options");
+
+            App.WaitForElement("MaximumEntry");
+            App.ClearText("MaximumEntry");
+            App.EnterText("MaximumEntry", "10");
+            App.PressEnter();
+
+            App.WaitForElement("IncrementEntry");
+            App.ClearText("IncrementEntry");
+            App.EnterText("IncrementEntry", "3");
+            App.PressEnter();
+
+            App.WaitForElement("Apply");
+            App.Tap("Apply");
+
+            App.WaitForElement("Options");
+
+            App.IncreaseStepper("StepperControl");
+            App.IncreaseStepper("StepperControl");
+            App.IncreaseStepper("StepperControl");
+            App.IncreaseStepper("StepperControl");
+
+            var currentValue = App.FindElement("ValueLabel").GetText();
+            Assert.That(currentValue, Is.EqualTo("10.00"));
+        }
+
+        [Test]
+        public void Stepper_DecrementDoesNotGoBelowMinimum()
+        {
+            App.WaitForElement("Options");
+            App.Tap("Options");
+
+            App.WaitForElement("MinimumEntry");
+            App.ClearText("MinimumEntry");
+            App.EnterText("MinimumEntry", "0");
+            App.PressEnter();
+
+            App.WaitForElement("IncrementEntry");
+            App.ClearText("IncrementEntry");
+            App.EnterText("IncrementEntry", "2");
+            App.PressEnter();
+
+            App.WaitForElement("ValueEntry");
+            App.ClearText("ValueEntry");
+            App.EnterText("ValueEntry", "2");
+            App.PressEnter();
+
+            App.WaitForElement("Apply");
+            App.Tap("Apply");
+
+            App.WaitForElement("Options");
+
+            App.DecreaseStepper("StepperControl");
+
+            var currentValue = App.FindElement("ValueLabel").GetText();
+            Assert.That(currentValue, Is.EqualTo("0.00"));
+        }
     }
 }
