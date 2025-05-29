@@ -11,7 +11,6 @@ namespace Maui.Controls.Sample
         private double _value = 0;
         private bool _isEnabled = true;
         private bool _isVisible = true;
-        private Color _backgroundColor = Colors.Transparent;
         private FlowDirection _flowDirection = FlowDirection.LeftToRight;
 
         public double Minimum
@@ -48,12 +47,6 @@ namespace Maui.Controls.Sample
         {
             get => _isVisible;
             set => SetProperty(ref _isVisible, value);
-        }
-
-        public Color BackgroundColor
-        {
-            get => _backgroundColor;
-            set => SetProperty(ref _backgroundColor, value);
         }
 
         public FlowDirection FlowDirection
