@@ -23,7 +23,7 @@ namespace Microsoft.Maui.TestCases.Tests
 		[Category(UITestCategories.ProgressBar)]
 		public void ProgressBar_ValidateDefaultValues_VerifyLabels()
 		{
-			App.WaitForElement("Options");
+			App.WaitForElement("ProgressBarControl");
 			Assert.That(App.FindElement("ProgressValueLabel").GetText(), Is.EqualTo("0.50"));
 		}
 
@@ -125,8 +125,8 @@ namespace Microsoft.Maui.TestCases.Tests
 		{
 			App.WaitForElement("Options");
 			App.Tap("Options");
-			App.WaitForElement("FlowDirectionRTL");
-			App.Tap("FlowDirectionRTL");
+			App.WaitForElement("FlowDirectionRightToLeftButton");
+			App.Tap("FlowDirectionRightToLeftButton");
 			App.Tap("ProgressColorGreenButton");
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
@@ -140,13 +140,56 @@ namespace Microsoft.Maui.TestCases.Tests
 		{
 			App.WaitForElement("Options");
 			App.Tap("Options");
-			App.WaitForElement("FlowDirectionRTL");
-			App.Tap("FlowDirectionRTL");
+			App.WaitForElement("FlowDirectionRightToLeftButton");
+			App.Tap("FlowDirectionRightToLeftButton");
 			App.Tap("BackgroundColorLightBlueButton");
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("ProgressBarControl");
 			// VerifyScreenshot();
 		}
+
+		[Test]
+		[Category(UITestCategories.ProgressBar)]
+		public void ProgressBar_SetIsVisibleAndProgressValue_VerifyVisualState()
+		{
+			App.WaitForElement("Options");
+			App.Tap("Options");
+			App.WaitForElement("IsVisibleFalseButton");
+			App.Tap("IsVisibleFalseButton");
+			App.WaitForElement("ProgressEntry");
+			App.EnterText("ProgressEntry", "0.75");
+			App.PressEnter();
+			App.WaitForElement("Apply");
+			App.Tap("Apply");
+			App.WaitForElementTillPageNavigationSettled("ProgressBarControl");
+			// VerifyScreenshot();
+		}
+
+		[Test]
+		[Category(UITestCategories.ProgressBar)]
+		public void ProgressBar_SetShadowOpacity_VerifyVisualState()
+		{
+			App.WaitForElement("Options");
+			App.Tap("Options");
+			App.WaitForElement("ShadowTrueButton");
+			App.Tap("ShadowTrueButton");
+			App.WaitForElement("Apply");
+			App.Tap("Apply");
+			App.WaitForElementTillPageNavigationSettled("ProgressBarControl");
+			// VerifyScreenshot();
+		}
+
+		// [Test]
+		// [Category(UITestCategories.ProgressBar)]
+		// public void ProgressBar_AutoChangeProgress_VerifyVisualState()
+		// {
+		// 	App.WaitForElement("ProgressBarControl");
+		// 	App.WaitForElement("AutoChangeProgressButton");
+		// 	App.Tap("AutoChangeProgressButton");
+		// 	App.WaitForElement("ProgressValueLabel");
+		// 	Assert.That(App.FindElement("ProgressValueLabel").GetText(), Is.EqualTo("1.00"));
+		// 	// VerifyScreenshot();
+		// }
 	}
 }

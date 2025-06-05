@@ -42,25 +42,37 @@ namespace Maui.Controls.Sample
 		private void BackgroundColorButton_Clicked(object sender, EventArgs e)
 		{
 			var button = (Button)sender;
-			if (button.Text == "Gray")
-				_viewModel.BackgroundColor = Colors.Gray;
+			if (button.Text == "Red")
+				_viewModel.BackgroundColor = Colors.Red;
 			else if (button.Text == "Light Blue")
 				_viewModel.BackgroundColor = Colors.LightBlue;
 		}
 
-		private void OnFlowDirectionChanged(object sender, EventArgs e)
+		private void OnFlowDirectionChanged(object sender, CheckedChangedEventArgs e)
 		{
-			_viewModel.FlowDirection = FlowDirectionLTR.IsChecked ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+			var radioButton = sender as RadioButton;
+			if (radioButton != null && radioButton.IsChecked)
+			{
+				_viewModel.FlowDirection = radioButton.Content.ToString() == "LeftToRight" ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+			}
 		}
 
-		private void OnIsEnabledCheckedChanged(object sender, CheckedChangedEventArgs e)
+		private void OnIsVisibleRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			_viewModel.IsEnabled = IsEnabledTrueRadio.IsChecked;
+			var radioButton = sender as RadioButton;
+			if (radioButton != null && radioButton.IsChecked)
+			{
+				_viewModel.IsVisible = radioButton.Content.ToString() == "True";
+			}
 		}
 
-		private void OnIsVisibleCheckedChanged(object sender, CheckedChangedEventArgs e)
+		private void OnShadowRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			_viewModel.IsVisible = IsVisibleTrueRadio.IsChecked;
+			var radioButton = sender as RadioButton;
+			if (radioButton.IsChecked)
+			{
+				_viewModel.ShadowOpacity = radioButton.Value.ToString() == "1" ? 1f : 0f;
+			}
 		}
 	}
 }

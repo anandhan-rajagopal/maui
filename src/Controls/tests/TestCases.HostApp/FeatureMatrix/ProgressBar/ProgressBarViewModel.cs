@@ -8,12 +8,12 @@ namespace Maui.Controls.Sample
 {
 	public class ProgressBarViewModel : INotifyPropertyChanged
 	{
-		private Color _progressColor;
-		private Color _backgroundColor;
-		private double _progress;
+		private Color _progressColor = Colors.Blue;
+		private Color _backgroundColor = Colors.Red;
+		private double _progress = 0.5;
 		private bool _isVisible = true;
-		private bool _isEnabled = true;
 		private FlowDirection _flowDirection = FlowDirection.LeftToRight;
+		private float _shadowOpacity = 0f;
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -21,16 +21,6 @@ namespace Maui.Controls.Sample
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
-
-		public ProgressBarViewModel()
-		{
-			_progressColor = Colors.Blue;
-			_backgroundColor = Colors.LightGray;
-			_progress = 0.5;
-			ChangeProgressCommand = new Command(ChangeProgress);
-		}
-
-		public ICommand ChangeProgressCommand { get; }
 
 		public double Progress
 		{
@@ -84,19 +74,6 @@ namespace Maui.Controls.Sample
 			}
 		}
 
-		public bool IsEnabled
-		{
-			get => _isEnabled;
-			set
-			{
-				if (_isEnabled != value)
-				{
-					_isEnabled = value;
-					OnPropertyChanged();
-				}
-			}
-		}
-
 		public FlowDirection FlowDirection
 		{
 			get => _flowDirection;
@@ -110,9 +87,17 @@ namespace Maui.Controls.Sample
 			}
 		}
 
-		void ChangeProgress()
+		public float ShadowOpacity
 		{
-			Progress = Progress < 0.5 ? 0.75 : 0.25;
+			get => _shadowOpacity;
+			set
+			{
+				if (_shadowOpacity != value)
+				{
+					_shadowOpacity = value;
+					OnPropertyChanged();
+				}
+			}
 		}
 	}
 }

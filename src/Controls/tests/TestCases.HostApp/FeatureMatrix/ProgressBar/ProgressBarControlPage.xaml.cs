@@ -30,5 +30,10 @@ namespace Maui.Controls.Sample
 			BindingContext = _viewModel = new ProgressBarViewModel();
 			await Navigation.PushAsync(new ProgressBarOptionsPage(_viewModel));
 		}
+
+		public void AutoChangeProgressButton_Clicked(object sender, EventArgs e)
+		{
+			ProgressBar.ProgressTo(1.0, 2000, Easing.Linear);
+		}
 	}
 }
