@@ -4,14 +4,18 @@
              AutomationId="DragAndDropEventArgs"
              x:Class="Maui.Controls.Sample.DragAndDropEventArgs">
     <StackLayout>
-        <StackLayout Orientation="Horizontal">
+        <StackLayout Orientation="Horizontal" Spacing="20">
             <Label HeightRequest="200" WidthRequest="200" AutomationId="LabelDragElement"
+                   BackgroundColor="LightBlue" Padding="10"
                    Text="Drag me Over the Purple Box, off the purple box, drop me on the purple box, and then verify all the correct events fired">
                 <Label.GestureRecognizers>
                     <DragGestureRecognizer DragStarting="DragStarting" DropCompleted="DropCompleted"></DragGestureRecognizer>
                 </Label.GestureRecognizers>
             </Label>
-            <Label HeightRequest="200" HorizontalOptions="FillAndExpand" Background="Purple" AutomationId="DragTarget">
+            <Label HeightRequest="250" WidthRequest="250" HorizontalOptions="FillAndExpand" 
+                   Background="Purple" TextColor="White" AutomationId="DragTarget"
+                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center"
+                   Text="Drop Target Area">
                 <Label.GestureRecognizers>
                     <DropGestureRecognizer DragLeave="DragLeave" DragOver="DragOver" Drop="Drop"></DropGestureRecognizer>
                 </Label.GestureRecognizers>
@@ -20,6 +24,7 @@
         
         <Label x:Name="dragStartEvent" AutomationId="DragStartEventsLabel" Text="DragStartEvents: "/>
         <Label x:Name="dragOverEvent"  AutomationId="DragOverEventsLabel" Text="DragOverEvents: "/>
+        <Label x:Name="dragOverCountLabel" AutomationId="DragOverCountLabel" Text="DragOver Count: 0"/>
         <Label x:Name="dragLeaveEvent"  AutomationId="DragLeaveEventsLabel" Text="DragLeaveEvents: "/>
         <Label x:Name="dropEvent" AutomationId="DropEventsLabel" Text="DropEventsLabel: "/>
         <Label x:Name="dropCompletedEvent" AutomationId="DropCompletedEventsLabel" Text="DropCompletedEvents: "/>
