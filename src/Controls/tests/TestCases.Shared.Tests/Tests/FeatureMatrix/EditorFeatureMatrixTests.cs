@@ -349,6 +349,39 @@ public class EditorFeatureMatrixTests : UITest
 	}
 
 	[Test]
+	public void Editor_CombinedProperties_VerifyAllApplied()
+	{
+		App.WaitForElement("Options");
+		App.Tap("Options");
+		
+		// Set multiple properties
+		App.WaitForElement("TextEntry");
+		App.ClearText("TextEntry");
+		App.EnterText("TextEntry", "Test Text");
+		
+		App.WaitForElement("FontSizeEntry");
+		App.ClearText("FontSizeEntry");
+		App.EnterText("FontSizeEntry", "16");
+		App.PressEnter();
+		
+		App.WaitForElement("FontAttributesBoldRadio");
+		App.Tap("FontAttributesBoldRadio");
+		
+		App.WaitForElement("AutoSizeTextChangesRadio");
+		App.Tap("AutoSizeTextChangesRadio");
+		
+		App.WaitForElement("Apply");
+		App.Tap("Apply");
+		App.WaitForElement("Options");
+		
+		// Verify all properties are set
+		Assert.That(App.FindElement("TextLabel").GetText(), Is.EqualTo("Test Text"));
+		Assert.That(App.FindElement("FontSizeLabel").GetText(), Is.EqualTo("16.0"));
+		Assert.That(App.FindElement("FontAttributesLabel").GetText(), Is.EqualTo("Bold"));
+		Assert.That(App.FindElement("AutoSizeLabel").GetText(), Is.EqualTo("TextChanges"));
+	}
+
+	[Test]
 	public void Editor_ResetToInitialState_VerifyDefaultValues()
 	{
 		App.WaitForElement("Options");

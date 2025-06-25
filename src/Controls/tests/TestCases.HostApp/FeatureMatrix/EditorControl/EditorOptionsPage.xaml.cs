@@ -24,7 +24,7 @@ public partial class EditorOptionsPage : ContentPage
 		FontFamilyEntry.Text = _viewModel.FontFamily;
 		FontSizeEntry.Text = _viewModel.FontSize.ToString();
 		PlaceholderEntry.Text = _viewModel.Placeholder;
-		MaxLengthEntry.Text = _viewModel.MaxLength.ToString();
+		MaxLengthEntry.Text = _viewModel.MaxLength >= 0 ? _viewModel.MaxLength.ToString() : "";
 	}
 
 	private void ApplyButton_Clicked(object sender, EventArgs e)
@@ -95,7 +95,7 @@ public partial class EditorOptionsPage : ContentPage
 
 	private void OnMaxLengthChanged(object sender, TextChangedEventArgs e)
 	{
-		if (int.TryParse(MaxLengthEntry.Text, out int maxLength))
+		if (int.TryParse(MaxLengthEntry.Text, out int maxLength) && maxLength >= -1)
 		{
 			_viewModel.MaxLength = maxLength;
 		}
