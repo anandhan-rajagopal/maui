@@ -1,146 +1,166 @@
-using System;
 using Microsoft.Maui.Controls;
+using System;
 
 namespace Maui.Controls.Sample;
 
 public partial class EditorOptionsPage : ContentPage
 {
-	private EditorViewModel _viewModel;
+    private EditorViewModel _viewModel;
 
-	public EditorOptionsPage(EditorViewModel viewModel)
-	{
-		InitializeComponent();
-		_viewModel = viewModel;
-		BindingContext = _viewModel;
-		
-		// Initialize the UI with current values
-		InitializeUI();
-	}
+    public EditorOptionsPage(EditorViewModel viewModel)
+    {
+        InitializeComponent();
+        _viewModel = viewModel;
+        BindingContext = _viewModel;
+    }
 
-	private void InitializeUI()
-	{
-		TextEntry.Text = _viewModel.Text;
-		CharacterSpacingEntry.Text = _viewModel.CharacterSpacing.ToString();
-		FontFamilyEntry.Text = _viewModel.FontFamily;
-		FontSizeEntry.Text = _viewModel.FontSize.ToString();
-		PlaceholderEntry.Text = _viewModel.Placeholder;
-		MaxLengthEntry.Text = _viewModel.MaxLength >= 0 ? _viewModel.MaxLength.ToString() : "";
-	}
+    private async void ApplyButton_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 
-	private void ApplyButton_Clicked(object sender, EventArgs e)
-	{
-		Navigation.PopAsync();
-	}
+    private void Entry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is Entry entry && !string.IsNullOrEmpty(entry.Text))
+        {
+            _viewModel.Text = entry.Text;
+        }
+    }
 
-	private void OnTextChanged(object sender, TextChangedEventArgs e)
-	{
-		_viewModel.Text = TextEntry.Text ?? "";
-	}
+    private void FontSizeEntry_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is Entry entry && double.TryParse(entry.Text, out double fontSize))
+        {
+            _viewModel.FontSize = fontSize;
+        }
+    }
 
-	private void OnCharacterSpacingChanged(object sender, TextChangedEventArgs e)
-	{
-		if (double.TryParse(CharacterSpacingEntry.Text, out double spacing))
-		{
-			_viewModel.CharacterSpacing = spacing;
-		}
-	}
+    private void CharacterSpacing_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is Entry entry && double.TryParse(entry.Text, out double spacing))
+        {
+            _viewModel.CharacterSpacing = spacing;
+        }
+    }
 
-	private void OnFontAttributesCheckedChanged(object sender, CheckedChangedEventArgs e)
-	{
-		if (FontAttributesNoneRadio.IsChecked)
-			_viewModel.FontAttributes = FontAttributes.None;
-		else if (FontAttributesBoldRadio.IsChecked)
-			_viewModel.FontAttributes = FontAttributes.Bold;
-		else if (FontAttributesItalicRadio.IsChecked)
-			_viewModel.FontAttributes = FontAttributes.Italic;
-	}
+    private void MaxLength_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is Entry entry && int.TryParse(entry.Text, out int maxLength))
+        {
+            _viewModel.MaxLength = maxLength;
+        }
+    }
 
-	private void OnFontFamilyChanged(object sender, TextChangedEventArgs e)
-	{
-		_viewModel.FontFamily = FontFamilyEntry.Text ?? "";
-	}
+    private void PlaceholderText_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is Entry entry)
+        {
+            _viewModel.Placeholder = entry.Text ?? "";
+        }
+    }
 
-	private void OnFontSizeChanged(object sender, TextChangedEventArgs e)
-	{
-		if (double.TryParse(FontSizeEntry.Text, out double size) && size > 0)
-		{
-			_viewModel.FontSize = size;
-		}
-	}
+    private void FontFamily_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (sender is Entry entry)
+        {
+            _viewModel.FontFamily = entry.Text;
+        }
+    }
 
-	private void OnTextColorCheckedChanged(object sender, CheckedChangedEventArgs e)
-	{
-		if (TextColorBlackRadio.IsChecked)
-			_viewModel.TextColor = Colors.Black;
-		else if (TextColorRedRadio.IsChecked)
-			_viewModel.TextColor = Colors.Red;
-		else if (TextColorBlueRadio.IsChecked)
-			_viewModel.TextColor = Colors.Blue;
-	}
+    private void AutoSize_CheckedChanged(object sender, CheckedChangedEventArgs e)
+    {
+        if (sender is RadioButton radioButton && radioButton.IsChecked)
+        {
+            _viewModel.AutoSize = radioButton.AutomationId switch
+            {
+                "AutoSizeDisabledRadio" => EditorAutoSizeOption.Disabled,
+                "AutoSizeTextChangesRadio" => EditorAutoSizeOption.TextChanges,
+                _ => EditorAutoSizeOption.Disabled
+            };
+        }
+    }
 
-	private void OnPlaceholderChanged(object sender, TextChangedEventArgs e)
-	{
-		_viewModel.Placeholder = PlaceholderEntry.Text ?? "";
-	}
+    private void IsReadOnlyTrueOrFalse_Clicked(object sender, CheckedChangedEventArgs e)
+    {
+        if (sender is RadioButton radioButton && radioButton.IsChecked)
+        {
+            _viewModel.IsReadOnly = radioButton.AutomationId == "ReadOnlyTrue";
+        }
+    }
 
-	private void OnPlaceholderColorCheckedChanged(object sender, CheckedChangedEventArgs e)
-	{
-		if (PlaceholderColorGrayRadio.IsChecked)
-			_viewModel.PlaceholderColor = Colors.Gray;
-		else if (PlaceholderColorRedRadio.IsChecked)
-			_viewModel.PlaceholderColor = Colors.Red;
-		else if (PlaceholderColorBlueRadio.IsChecked)
-			_viewModel.PlaceholderColor = Colors.Blue;
-	}
+    private void IsTextPredictionEnabledTrueOrFalse_Clicked(object sender, CheckedChangedEventArgs e)
+    {
+        if (sender is RadioButton radioButton && radioButton.IsChecked)
+        {
+            _viewModel.IsTextPredictionEnabled = radioButton.AutomationId == "TextPredictionTrue";
+        }
+    }
 
-	private void OnMaxLengthChanged(object sender, TextChangedEventArgs e)
-	{
-		if (int.TryParse(MaxLengthEntry.Text, out int maxLength) && maxLength >= -1)
-		{
-			_viewModel.MaxLength = maxLength;
-		}
-	}
+    private void IsEnabledTrueOrFalse_Clicked(object sender, CheckedChangedEventArgs e)
+    {
+        if (sender is RadioButton radioButton && radioButton.IsChecked)
+        {
+            _viewModel.IsEnabled = radioButton.AutomationId == "EnabledTrue";
+        }
+    }
 
-	private void OnIsReadOnlyCheckedChanged(object sender, CheckedChangedEventArgs e)
-	{
-		_viewModel.IsReadOnly = IsReadOnlyTrueRadio.IsChecked;
-	}
+    private void IsVisibleTrueOrFalse_Clicked(object sender, CheckedChangedEventArgs e)
+    {
+        if (sender is RadioButton radioButton && radioButton.IsChecked)
+        {
+            _viewModel.IsVisible = radioButton.AutomationId == "VisibleTrue";
+        }
+    }
 
-	private void OnIsTextPredictionEnabledCheckedChanged(object sender, CheckedChangedEventArgs e)
-	{
-		_viewModel.IsTextPredictionEnabled = IsTextPredictionEnabledTrueRadio.IsChecked;
-	}
+    private void FlowDirection_Clicked(object sender, CheckedChangedEventArgs e)
+    {
+        if (sender is RadioButton radioButton && radioButton.IsChecked)
+        {
+            _viewModel.FlowDirection = radioButton.AutomationId == "FlowDirectionRightToLeft" 
+                ? FlowDirection.RightToLeft 
+                : FlowDirection.LeftToRight;
+        }
+    }
 
-	private void OnKeyboardCheckedChanged(object sender, CheckedChangedEventArgs e)
-	{
-		if (KeyboardDefaultRadio.IsChecked)
-			_viewModel.Keyboard = Keyboard.Default;
-		else if (KeyboardEmailRadio.IsChecked)
-			_viewModel.Keyboard = Keyboard.Email;
-		else if (KeyboardNumericRadio.IsChecked)
-			_viewModel.Keyboard = Keyboard.Numeric;
-	}
+    private void TextColorButton_Clicked(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+            _viewModel.TextColor = button.BackgroundColor;
+        }
+    }
 
-	private void OnAutoSizeCheckedChanged(object sender, CheckedChangedEventArgs e)
-	{
-		if (AutoSizeDisabledRadio.IsChecked)
-			_viewModel.AutoSize = EditorAutoSizeOption.Disabled;
-		else if (AutoSizeTextChangesRadio.IsChecked)
-			_viewModel.AutoSize = EditorAutoSizeOption.TextChanges;
-	}
+    private void PlaceholderColorButton_Clicked(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+            _viewModel.PlaceholderColor = button.BackgroundColor;
+        }
+    }
 
-	private void OnIsEnabledCheckedChanged(object sender, CheckedChangedEventArgs e)
-	{
-		_viewModel.IsEnabled = IsEnabledTrueRadio.IsChecked;
-	}
+    private void FontAttributesButton_Clicked(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+            _viewModel.FontAttributes = button.AutomationId switch
+            {
+                "FontAttributesBold" => FontAttributes.Bold,
+                "FontAttributesItalic" => FontAttributes.Italic,
+                _ => FontAttributes.None
+            };
+        }
+    }
 
-	private void OnIsVisibleCheckedChanged(object sender, CheckedChangedEventArgs e)
-	{
-		_viewModel.IsVisible = IsVisibleTrueRadio.IsChecked;
-	}
-
-	private void OnFlowDirectionChanged(object sender, CheckedChangedEventArgs e)
-	{
-		_viewModel.FlowDirection = FlowDirectionLTRRadio.IsChecked ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
-	}
+    private void KeyboardButton_Clicked(object sender, EventArgs e)
+    {
+        if (sender is Button button)
+        {
+            _viewModel.Keyboard = button.AutomationId switch
+            {
+                "Email" => Keyboard.Email,
+                "Numeric" => Keyboard.Numeric,
+                _ => Keyboard.Default
+            };
+        }
+    }
 }

@@ -1,138 +1,137 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace Maui.Controls.Sample;
 
 public class EditorViewModel : INotifyPropertyChanged
 {
-	private string _text = "";
-	private double _characterSpacing = 0.0;
-	private FontAttributes _fontAttributes = FontAttributes.None;
-	private string _fontFamily = "";
-	private double _fontSize = 14.0;
-	private Color _textColor = Colors.Black;
-	private string _placeholder = "";
-	private Color _placeholderColor = Colors.Gray;
-	private int _maxLength = -1;
-	private bool _isReadOnly = false;
-	private bool _isTextPredictionEnabled = true;
-	private Keyboard _keyboard = Keyboard.Default;
-	private EditorAutoSizeOption _autoSize = EditorAutoSizeOption.Disabled;
-	private bool _isEnabled = true;
-	private bool _isVisible = true;
-	private FlowDirection _flowDirection = FlowDirection.LeftToRight;
-	private string _textChangedEventText = "";
+    private string _text = "Test Editor";
+    private Color _textColor = Colors.Black;
+    private string _placeholder = "Enter text here";
+    private Color _placeholderColor = Colors.Gray;
+    private double _fontSize = 14;
+    private double _characterSpacing = 0;
+    private int _maxLength = -1;
+    private bool _isReadOnly = false;
+    private bool _isTextPredictionEnabled = false;
+    private Keyboard _keyboard = Keyboard.Default;
+    private string _fontFamily = null;
+    private bool _isVisible = true;
+    private bool _isEnabled = true;
+    private FlowDirection _flowDirection = FlowDirection.LeftToRight;
+    private FontAttributes _fontAttributes = FontAttributes.None;
+    private EditorAutoSizeOption _autoSize = EditorAutoSizeOption.Disabled;
+    private string _textChangedText = "TextChanged: Old='', New='Test Editor'";
 
-	public string Text
-	{
-		get => _text;
-		set => SetProperty(ref _text, value);
-	}
+    public event PropertyChangedEventHandler PropertyChanged;
 
-	public double CharacterSpacing
-	{
-		get => _characterSpacing;
-		set => SetProperty(ref _characterSpacing, value);
-	}
+    public EditorViewModel()
+    {
+    }
 
-	public FontAttributes FontAttributes
-	{
-		get => _fontAttributes;
-		set => SetProperty(ref _fontAttributes, value);
-	}
+    public string Text
+    {
+        get => _text;
+        set { _text = value; OnPropertyChanged(); }
+    }
 
-	public string FontFamily
-	{
-		get => _fontFamily;
-		set => SetProperty(ref _fontFamily, value);
-	}
+    public Color TextColor
+    {
+        get => _textColor;
+        set { _textColor = value; OnPropertyChanged(); }
+    }
 
-	public double FontSize
-	{
-		get => _fontSize;
-		set => SetProperty(ref _fontSize, value);
-	}
+    public string Placeholder
+    {
+        get => _placeholder;
+        set { _placeholder = value; OnPropertyChanged(); }
+    }
 
-	public Color TextColor
-	{
-		get => _textColor;
-		set => SetProperty(ref _textColor, value);
-	}
+    public Color PlaceholderColor
+    {
+        get => _placeholderColor;
+        set { _placeholderColor = value; OnPropertyChanged(); }
+    }
 
-	public string Placeholder
-	{
-		get => _placeholder;
-		set => SetProperty(ref _placeholder, value);
-	}
+    public double FontSize
+    {
+        get => _fontSize;
+        set { _fontSize = value; OnPropertyChanged(); }
+    }
 
-	public Color PlaceholderColor
-	{
-		get => _placeholderColor;
-		set => SetProperty(ref _placeholderColor, value);
-	}
+    public double CharacterSpacing
+    {
+        get => _characterSpacing;
+        set { _characterSpacing = value; OnPropertyChanged(); }
+    }
 
-	public int MaxLength
-	{
-		get => _maxLength;
-		set => SetProperty(ref _maxLength, value);
-	}
+    public int MaxLength
+    {
+        get => _maxLength;
+        set { _maxLength = value; OnPropertyChanged(); }
+    }
 
-	public bool IsReadOnly
-	{
-		get => _isReadOnly;
-		set => SetProperty(ref _isReadOnly, value);
-	}
+    public bool IsReadOnly
+    {
+        get => _isReadOnly;
+        set { _isReadOnly = value; OnPropertyChanged(); }
+    }
 
-	public bool IsTextPredictionEnabled
-	{
-		get => _isTextPredictionEnabled;
-		set => SetProperty(ref _isTextPredictionEnabled, value);
-	}
+    public bool IsTextPredictionEnabled
+    {
+        get => _isTextPredictionEnabled;
+        set { _isTextPredictionEnabled = value; OnPropertyChanged(); }
+    }
 
-	public Keyboard Keyboard
-	{
-		get => _keyboard;
-		set => SetProperty(ref _keyboard, value);
-	}
+    public Keyboard Keyboard
+    {
+        get => _keyboard;
+        set { _keyboard = value; OnPropertyChanged(); }
+    }
 
-	public EditorAutoSizeOption AutoSize
-	{
-		get => _autoSize;
-		set => SetProperty(ref _autoSize, value);
-	}
+    public string FontFamily
+    {
+        get => _fontFamily;
+        set { _fontFamily = value; OnPropertyChanged(); }
+    }
 
-	public bool IsEnabled
-	{
-		get => _isEnabled;
-		set => SetProperty(ref _isEnabled, value);
-	}
+    public bool IsVisible
+    {
+        get => _isVisible;
+        set { _isVisible = value; OnPropertyChanged(); }
+    }
 
-	public bool IsVisible
-	{
-		get => _isVisible;
-		set => SetProperty(ref _isVisible, value);
-	}
+    public bool IsEnabled
+    {
+        get => _isEnabled;
+        set { _isEnabled = value; OnPropertyChanged(); }
+    }
 
-	public FlowDirection FlowDirection
-	{
-		get => _flowDirection;
-		set => SetProperty(ref _flowDirection, value);
-	}
+    public FlowDirection FlowDirection
+    {
+        get => _flowDirection;
+        set { _flowDirection = value; OnPropertyChanged(); }
+    }
 
-	public string TextChangedEventText
-	{
-		get => _textChangedEventText;
-		set => SetProperty(ref _textChangedEventText, value);
-	}
+    public FontAttributes FontAttributes
+    {
+        get => _fontAttributes;
+        set { _fontAttributes = value; OnPropertyChanged(); }
+    }
 
-	public event PropertyChangedEventHandler PropertyChanged;
+    public EditorAutoSizeOption AutoSize
+    {
+        get => _autoSize;
+        set { _autoSize = value; OnPropertyChanged(); }
+    }
 
-	protected void SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "")
-	{
-		if (EqualityComparer<T>.Default.Equals(backingStore, value))
-			return;
+    public string TextChangedText
+    {
+        get => _textChangedText;
+        set { _textChangedText = value; OnPropertyChanged(); }
+    }
 
-		backingStore = value;
-		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-	}
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null) =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }
