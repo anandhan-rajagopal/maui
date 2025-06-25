@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Maui.Controls.Sample"
+             x:Class="Maui.Controls.Sample.EditorControlMainPage"
+             x:DataType="local:EditorViewModel"
+             Title="Editor Feature Matrix">
+
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Options"
+                 Clicked="NavigateToOptionsPage_Clicked"
+                 AutomationId="Options"/>
+  </ContentPage.ToolbarItems>
+
+  <ScrollView Padding="20">
+    <Grid RowDefinitions="Auto, *, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+          ColumnDefinitions="*,*"
+          RowSpacing="10"
+          ColumnSpacing="10"
+          HorizontalOptions="Center"
+          VerticalOptions="Center">
+
+      <!-- Editor Control -->
+      <Editor Grid.Row="0"
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              Text="{Binding Text}"
+              CharacterSpacing="{Binding CharacterSpacing}"
+              FontAttributes="{Binding FontAttributes}"
+              FontFamily="{Binding FontFamily}"
+              FontSize="{Binding FontSize}"
+              TextColor="{Binding TextColor}"
+              Placeholder="{Binding Placeholder}"
+              PlaceholderColor="{Binding PlaceholderColor}"
+              MaxLength="{Binding MaxLength}"
+              IsReadOnly="{Binding IsReadOnly}"
+              IsTextPredictionEnabled="{Binding IsTextPredictionEnabled}"
+              Keyboard="{Binding Keyboard}"
+              AutoSize="{Binding AutoSize}"
+              IsEnabled="{Binding IsEnabled}"
+              IsVisible="{Binding IsVisible}"
+              FlowDirection="{Binding FlowDirection}"
+              TextChanged="OnTextChanged"
+              AutomationId="EditorControl"
+              HeightRequest="120"
+              BackgroundColor="LightGray"/>
+
+      <!-- Text Property -->
+      <Label Grid.Row="1"
+             Grid.Column="0"
+             Text="Text:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="1"
+             Grid.Column="1"
+             AutomationId="TextLabel"
+             Text="{Binding Text}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- Character Spacing -->
+      <Label Grid.Row="2"
+             Grid.Column="0"
+             Text="Character Spacing:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="2"
+             Grid.Column="1"
+             AutomationId="CharacterSpacingLabel"
+             Text="{Binding CharacterSpacing, StringFormat='{0:F1}'}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- Font Attributes -->
+      <Label Grid.Row="3"
+             Grid.Column="0"
+             Text="Font Attributes:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="3"
+             Grid.Column="1"
+             AutomationId="FontAttributesLabel"
+             Text="{Binding FontAttributes}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- Font Family -->
+      <Label Grid.Row="4"
+             Grid.Column="0"
+             Text="Font Family:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="4"
+             Grid.Column="1"
+             AutomationId="FontFamilyLabel"
+             Text="{Binding FontFamily}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- Font Size -->
+      <Label Grid.Row="5"
+             Grid.Column="0"
+             Text="Font Size:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="5"
+             Grid.Column="1"
+             AutomationId="FontSizeLabel"
+             Text="{Binding FontSize, StringFormat='{0:F1}'}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- Text Color -->
+      <Label Grid.Row="6"
+             Grid.Column="0"
+             Text="Text Color:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="6"
+             Grid.Column="1"
+             AutomationId="TextColorLabel"
+             Text="{Binding TextColor}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- Placeholder -->
+      <Label Grid.Row="7"
+             Grid.Column="0"
+             Text="Placeholder:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="7"
+             Grid.Column="1"
+             AutomationId="PlaceholderLabel"
+             Text="{Binding Placeholder}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- Placeholder Color -->
+      <Label Grid.Row="8"
+             Grid.Column="0"
+             Text="Placeholder Color:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="8"
+             Grid.Column="1"
+             AutomationId="PlaceholderColorLabel"
+             Text="{Binding PlaceholderColor}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- Max Length -->
+      <Label Grid.Row="9"
+             Grid.Column="0"
+             Text="Max Length:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="9"
+             Grid.Column="1"
+             AutomationId="MaxLengthLabel"
+             Text="{Binding MaxLength}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- IsReadOnly -->
+      <Label Grid.Row="10"
+             Grid.Column="0"
+             Text="Is ReadOnly:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="10"
+             Grid.Column="1"
+             AutomationId="IsReadOnlyLabel"
+             Text="{Binding IsReadOnly}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- IsTextPredictionEnabled -->
+      <Label Grid.Row="11"
+             Grid.Column="0"
+             Text="Is Text Prediction Enabled:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="11"
+             Grid.Column="1"
+             AutomationId="IsTextPredictionEnabledLabel"
+             Text="{Binding IsTextPredictionEnabled}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- Keyboard -->
+      <Label Grid.Row="12"
+             Grid.Column="0"
+             Text="Keyboard:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="12"
+             Grid.Column="1"
+             AutomationId="KeyboardLabel"
+             Text="{Binding Keyboard}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- AutoSize -->
+      <Label Grid.Row="13"
+             Grid.Column="0"
+             Text="Auto Size:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="13"
+             Grid.Column="1"
+             AutomationId="AutoSizeLabel"
+             Text="{Binding AutoSize}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+
+      <!-- TextChanged Event -->
+      <Label Grid.Row="14"
+             Grid.Column="0"
+             Text="TextChanged Event:"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="Start"/>
+      <Label Grid.Row="14"
+             Grid.Column="1"
+             AutomationId="TextChangedEventLabel"
+             Text="{Binding TextChangedEventText}"
+             FontSize="14"
+             VerticalTextAlignment="Center"
+             HorizontalTextAlignment="End"/>
+    </Grid>
+  </ScrollView>
+</ContentPage>
