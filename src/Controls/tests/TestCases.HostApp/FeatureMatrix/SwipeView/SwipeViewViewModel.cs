@@ -12,7 +12,9 @@ public class SwipeViewViewModel : INotifyPropertyChanged
 	private Color _backgroundColor = Color.FromArgb("#F0F0F0");
 	private Color _swipeItemsBackgroundColor= Color.FromArgb("#6A5ACD");
 	private FlowDirection _flowDirection = FlowDirection.LeftToRight;
-	private double _threshold = 50;
+	private double _threshold = 100;
+    private bool _hasShadow = false;
+    private Shadow _swipeViewShadow = null;
 	private SwipeMode _swipeMode = SwipeMode.Reveal;
 	private SwipeBehaviorOnInvoked _swipeBehavior = SwipeBehaviorOnInvoked.Auto;
 	private string _eventInvokedText = "Event not invoked yet";
@@ -61,6 +63,40 @@ public class SwipeViewViewModel : INotifyPropertyChanged
 	{
 		get => _flowDirection;
 		set { _flowDirection = value; OnPropertyChanged(nameof(FlowDirection)); }
+	}
+	public bool HasShadow
+    {
+        get => _hasShadow;
+        set
+        {
+            if (_hasShadow != value)
+            {
+                _hasShadow = value;
+                SwipeViewShadow = value
+                    ? new Shadow
+                    {
+                        Radius = 10,
+                        Opacity = 1.0f,
+                        Brush = Colors.Black.AsPaint(),
+                        Offset = new Point(5, 5)
+                    }
+                    : null;
+                OnPropertyChanged(nameof(HasShadow));
+            }
+        }
+    }
+
+    public Shadow SwipeViewShadow
+	{
+		get => _swipeViewShadow;
+		set
+		{
+			if (_swipeViewShadow != value)
+			{
+				_swipeViewShadow = value;
+				OnPropertyChanged(nameof(SwipeViewShadow));
+			}
+		}
 	}
 
 	public double Threshold

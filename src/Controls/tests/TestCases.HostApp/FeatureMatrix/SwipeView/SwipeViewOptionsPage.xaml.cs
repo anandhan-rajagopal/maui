@@ -78,7 +78,7 @@ public partial class SwipeViewOptionsPage : ContentPage
 		{
 			"Blue" => Colors.DeepSkyBlue,
 			"Pink" => Colors.PaleVioletRed,
-			"Yellow" => Colors.LemonChiffon,
+			"Yellow" => Color.FromArgb("#FFDB58"),
 			_ => Color.FromArgb("#6A5ACD")
 		};
 	}

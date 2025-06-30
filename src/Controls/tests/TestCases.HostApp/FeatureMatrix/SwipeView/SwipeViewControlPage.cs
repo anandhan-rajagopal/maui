@@ -29,6 +29,9 @@ public class SwipeViewControlMainPage : ContentPage
 			Text = "Options",
 			Command = new Command(async () =>
 			{
+				BindingContext = _viewModel = new SwipeViewViewModel();
+				_viewModel.RequestOpen += dir => UpdateSwipeViewContent("Label", "Label");
+				_viewModel.RequestClose += () => UpdateSwipeViewContent("Label", "Label");
 				await Navigation.PushAsync(new SwipeViewOptionsPage(_viewModel, this));
 			})
 		});
@@ -39,7 +42,6 @@ public class SwipeViewControlMainPage : ContentPage
 			Spacing = 8,
 			Children =
 		{
-			// 1. Title Label
 			new Label
 			{
 				Text = "SwipeView Control Label",
@@ -48,28 +50,16 @@ public class SwipeViewControlMainPage : ContentPage
 				Margin = new Thickness(0, 0, 0, 10)
 			},
 
-			// 2. SwipeView content
 			ApplyContentWithSwipeItems("Label", "Label"),
 
-			// 3. Space 150
 			new BoxView
 			{
 				HeightRequest = 150,
 				Color = Colors.Transparent
 			},
 
-			// 4. Programmatic Actions label
-			new Label
-			{
-				Text = "Programmatic Actions:",
-				FontSize = 11,
-				Margin = new Thickness(0, 10, 0, 0)
-			},
-
-			// 5. Buttons
 			CreateProgrammaticActionButtons(),
 
-			// 6. Event Labels
 			new Label { Text = "Events:", FontSize = 11, FontAttributes = FontAttributes.Bold },
 
 			new Label { FontSize = 11, TextColor = Colors.Red, AutomationId = "EventInvokedLabel" }
@@ -98,11 +88,9 @@ public class SwipeViewControlMainPage : ContentPage
 			case "Label":
 				var label = new Label
 				{
-					Text = "SwipeView Content",
-					FontSize = 18,
-					HeightRequest = 150,
-					HorizontalOptions = LayoutOptions.Center,
-					VerticalOptions = LayoutOptions.Center
+					Text = "The .NET MAUI SwipeView offers flexible swipe gestures with customizable actions via LeftItems, RightItems, TopItems, and BottomItems. Properties like SwipeMode and SwipeBehaviorOnInvoked control whether actions reveal or execute immediately. Verifying these ensures consistent and expected behavior across platforms.",
+					FontSize = 16,
+					HeightRequest = 150
 				};
 
 				finalContent = CreateSwipeView(label, swipeItemType);
@@ -128,7 +116,7 @@ public class SwipeViewControlMainPage : ContentPage
 					ItemsSource = _viewModel.Items,
 					ItemTemplate = new DataTemplate(() =>
 					{
-						var itemLabel = new Label { FontSize = 18 };
+						var itemLabel = new Label { FontSize = 18, HorizontalTextAlignment = TextAlignment.Center };
 						itemLabel.SetBinding(Label.TextProperty, nameof(SwipeViewViewModel.ItemModel.Title));
 
 						var swipeItems = CreateSwipeItems(swipeItemType);
@@ -138,7 +126,13 @@ public class SwipeViewControlMainPage : ContentPage
 							LeftItems = swipeItems,
 							RightItems = swipeItems,
 							TopItems = swipeItems,
-							BottomItems = swipeItems
+							BottomItems = swipeItems,
+							Threshold = _viewModel.Threshold,
+							FlowDirection = _viewModel.FlowDirection,
+							BackgroundColor = _viewModel.BackgroundColor,
+							IsEnabled = _viewModel.IsEnabled,
+							IsVisible = _viewModel.IsVisible,
+							Shadow = _viewModel.SwipeViewShadow
 						};
 
 						swipeView.SetBinding(BindingContextProperty, ".");
@@ -156,10 +150,8 @@ public class SwipeViewControlMainPage : ContentPage
 
 		if (finalContent is SwipeView swipe)
 		{
-			_viewModel.RequestOpen += dir => swipe.Open(dir);
-			_viewModel.RequestClose += () => swipe.Close();
+			WireUpOpenCloseHandlers(swipe);
 		}
-
 		return finalContent;
 	}
 
@@ -177,6 +169,7 @@ public class SwipeViewControlMainPage : ContentPage
 				var labelItem = new SwipeItem
 				{
 					Text = "Label",
+					AutomationId = "SwipeLabelItem",
 					BackgroundColor = _viewModel.SwipeItemsBackgroundColor
 				};
 				labelItem.Invoked += (s, e) => _viewModel.EventInvokedText = "Label Invoked";
@@ -187,6 +180,7 @@ public class SwipeViewControlMainPage : ContentPage
 				var iconItem = new SwipeItem
 				{
 					Text = "Icon",
+					AutomationId = "SwipeIconItem",
 					IconImageSource = "groceries.png",
 					BackgroundColor = _viewModel.SwipeItemsBackgroundColor
 				};
@@ -198,6 +192,8 @@ public class SwipeViewControlMainPage : ContentPage
 				var button = new Button
 				{
 					Text = "Click Me",
+					TextColor = Colors.Black,
+					AutomationId = "SwipeButtonItem",
 					BackgroundColor = _viewModel.SwipeItemsBackgroundColor,
 					Padding = new Thickness(5)
 				};
@@ -225,7 +221,9 @@ public class SwipeViewControlMainPage : ContentPage
 			FlowDirection = _viewModel.FlowDirection,
 			BackgroundColor = _viewModel.BackgroundColor,
 			IsEnabled = _viewModel.IsEnabled,
-			IsVisible = _viewModel.IsVisible
+			IsVisible = _viewModel.IsVisible,
+			Shadow = _viewModel.SwipeViewShadow,
+			AutomationId = "SwipeViewControl"
 		};
 
 		AttachSwipeEvents(swipeView);
@@ -238,7 +236,7 @@ public class SwipeViewControlMainPage : ContentPage
 			_viewModel.SwipeStartedText = $"Swipe Started: {e.SwipeDirection}";
 
 		swipeView.SwipeChanging += (s, e) =>
-			_viewModel.SwipeChangingText = $"Swipe Changing: {e.SwipeDirection}, Offset: {e.Offset}";
+			_viewModel.SwipeChangingText = $"Swipe Changing: {e.SwipeDirection}";
 
 		swipeView.SwipeEnded += (s, e) =>
 			_viewModel.SwipeEndedText = $"Swipe Ended: {e.SwipeDirection}, IsOpen: {(e.IsOpen ? "Open" : "Closed")}";
@@ -288,14 +286,19 @@ public class SwipeViewControlMainPage : ContentPage
 		};
 	}
 
+	private void WireUpOpenCloseHandlers(SwipeView swipeView)
+	{
+		_viewModel.RequestOpen += dir => swipeView.Open(dir);
+		_viewModel.RequestClose += () => swipeView.Close();
+	}
+
 	public void UpdateSwipeViewContent(string contentType, string swipeItemType)
 	{
 		var newContent = ApplyContentWithSwipeItems(contentType, swipeItemType);
 		layout.Children[1] = newContent;
 		if (newContent is SwipeView swipeView)
 		{
-			_viewModel.RequestOpen += dir => swipeView.Open(dir);
-			_viewModel.RequestClose += () => swipeView.Close();
+			WireUpOpenCloseHandlers(swipeView);
 		}
 	}
 
