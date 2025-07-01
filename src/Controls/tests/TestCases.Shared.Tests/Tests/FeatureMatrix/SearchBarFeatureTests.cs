@@ -20,21 +20,46 @@ namespace Microsoft.Maui.TestCases.Tests
 
         [Test]
         [Category(UITestCategories.SearchBar)]
+        public void SearchBar_InitialState_VerifyVisualState()
+        {
+            App.WaitForElement("SearchBar");
+            // VerifyScreenshot();
+        }
+
+        [Test]
+        [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetCancelButtonAndTextColor_VerifyVisualState()
         {
             App.WaitForElement("Options");
             App.Tap("Options");
-            App.WaitForElement("CancelButtonGreenColor");
-            App.Tap("CancelButtonGreenColor");
+            App.WaitForElement("CancelButtonOrangeColor");
+            App.Tap("CancelButtonOrangeColor");
             App.WaitForElement("TextColorRedButton");
             App.Tap("TextColorRedButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
+        [Test]
+        [Category(UITestCategories.SearchBar)]
+        public void SearchBar_SetFlowDirection_VerifyVisualState()
+        {
+            App.WaitForElement("Options");
+            App.Tap("Options");
+            App.WaitForElement("FlowDirectionRTL");
+            App.Tap("FlowDirectionRTL");
+            App.WaitForElement("Apply");
+            App.Tap("Apply");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
+            App.EnterText("SearchBar", "Search Text");
+            App.PressEnter();
+            // VerifyScreenshot();
+        }
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetFontAttributesAndFontFamily_VerifyVisualState()
@@ -47,7 +72,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("FontFamilyMontserratBoldButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
@@ -65,7 +91,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.EnterText("FontSizeEntry", "20");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
@@ -82,6 +109,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.EnterText("PlaceholderEntry", "Placeholder Text");
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
             Task.Delay(4000).Wait();
             // VerifyScreenshot();
         }
@@ -96,7 +124,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("FontAttributesItalicButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
@@ -113,7 +142,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("TextTransformUppercaseButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
@@ -131,7 +161,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.EnterText("FontSizeEntry", "20");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
@@ -148,7 +179,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.EnterText("PlaceholderEntry", "Placeholder Text");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            Task.Delay(4000).Wait();
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
             // VerifyScreenshot();
         }
 
@@ -162,7 +193,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("FontFamilyDokdoButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
@@ -180,7 +212,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.EnterText("PlaceholderEntry", "Placeholder Text");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            Task.Delay(4000).Wait();
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
             // VerifyScreenshot();
         }
 
@@ -195,7 +227,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.EnterText("FontSizeEntry", "20");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
@@ -212,7 +245,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.EnterText("PlaceholderEntry", "Placeholder Text");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            Task.Delay(4000).Wait();
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
             // VerifyScreenshot();
         }
 
@@ -226,7 +259,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("HorizontalTextAlignmentEndButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
@@ -243,12 +277,51 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("VerticalTextAlignmentEndButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
             // VerifyScreenshot();
         }
 
-#if TEST_FAILS_ON_ANDROID
+        [Test]
+        [Category(UITestCategories.SearchBar)]
+        public void SearchBar_SetIsEnabledFalse_VerifyVisualState()
+        {
+            App.WaitForElement("Options");
+            App.Tap("Options");
+            App.WaitForElement("IsEnabledFalseButton");
+            App.Tap("IsEnabledFalseButton");
+            App.WaitForElement("Apply");
+            App.Tap("Apply");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
+            App.EnterText("SearchBar", "ShouldNotAppear");
+            var text = string.Empty;
+#if ANDROID
+            text = App.WaitForElement("SearchBar").GetText();
+#elif IOS || MACCATALYST
+            text = App.WaitForElement(AppiumQuery.ByXPath("//XCUIElementTypeSearchField")).GetText();
+#else
+            text = App.WaitForElement("TextBox").GetText();
+#endif
+            Assert.That(text, Is.EqualTo(string.Empty));
+            // VerifyScreenshot();
+        }
+
+        [Test]
+        [Category(UITestCategories.SearchBar)]
+        public void SearchBar_SetIsVisibleFalse_VerifyVisualState()
+        {
+            App.WaitForElement("Options");
+            App.Tap("Options");
+            App.WaitForElement("IsVisibleFalseButton");
+            App.Tap("IsVisibleFalseButton");
+            App.WaitForElement("Apply");
+            App.Tap("Apply");
+            App.WaitForNoElement("SearchBar");
+        }
+
+#if TEST_FAILS_ON_ANDROID // Issue Link - https://github.com/dotnet/maui/issues/29547
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetIsReadOnlyAndText_VerifyVisualState() // For android IsReadOnly not prevent typing text during automation
@@ -259,7 +332,8 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("IsReadOnlyTrueButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "ReadOnly");
             var text = string.Empty;
 #if ANDROID
@@ -284,9 +358,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("IsSpellCheckEnabledTrueButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Ths is a spleling eror");
-            Task.Delay(4000).Wait();
+            App.PressEnter();
             // VerifyScreenshot();
         }
 
@@ -300,13 +375,14 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("IsTextPredictionEnabledTrueButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "t");
-            Task.Delay(4000).Wait();
+            App.PressEnter();
             // VerifyScreenshot();
         }
 
-#if TestFailsOnMacCatalyst && TestFailsOnWindows // For MacCatalyst and Windows, the virtual keyboard is not displayed
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS // For MacCatalyst and Windows, the virtual keyboard is not displayed
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetKeyboardAndText_VerifyVisualState()
@@ -317,10 +393,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("KeyboardNumericButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
             App.Tap("SearchBar");
             App.EnterText("SearchBar", "1234567890");
-            Task.Delay(4000).Wait();
+            App.PressEnter();
             // VerifyScreenshot();
         }
 #endif
@@ -336,8 +412,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.EnterText("MaxLengthEntry", "10");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
+            App.PressEnter();
             App.WaitForElement("MaxLengthLabel");
             var maxLength = App.WaitForElement("MaxLengthLabel").GetText();
             Assert.That(maxLength, Is.EqualTo("10"));
@@ -357,7 +435,7 @@ namespace Microsoft.Maui.TestCases.Tests
         [Test]
         [Category(UITestCategories.SearchBar)]
         public void SearchBar_SetPlaceholderAndCharacterSpacing_VerifyVisualState() // For windows characterSpacing not set to placeholder text
-		{
+        {
             App.WaitForElement("Options");
             App.Tap("Options");
             App.WaitForElement("PlaceholderEntry");
@@ -367,7 +445,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.EnterText("CharacterSpacingEntry", "10");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            Task.Delay(4000).Wait();
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
             // VerifyScreenshot();
         }
 
@@ -383,7 +461,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("PlaceholderColorRedButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            Task.Delay(4000).Wait();
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
             // VerifyScreenshot();
         }
 
@@ -399,7 +477,7 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("VerticalTextAlignmentEndButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            Task.Delay(4000).Wait();
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
             // VerifyScreenshot();
         }
 
@@ -417,6 +495,24 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("PlaceholderColorRedButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            // VerifyScreenshot();
+        }
+
+        [Test]
+        [Category(UITestCategories.SearchBar)]
+        public void SearchBar_SetShadow_VerifyVisualState()
+        {
+            App.WaitForElement("Options");
+            App.Tap("Options");
+            App.WaitForElement("ShadowTrueButton");
+            App.Tap("ShadowTrueButton");
+            App.WaitForElement("Apply");
+            App.Tap("Apply");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
+            App.EnterText("SearchBar", "Shadow Test");
+            App.PressEnter();
             // VerifyScreenshot();
         }
 
@@ -426,24 +522,15 @@ namespace Microsoft.Maui.TestCases.Tests
         {
             App.WaitForElement("Options");
             App.Tap("Options");
-#if ANDROID
             App.WaitForElement("CharacterSpacingEntry");
             App.ClearText("CharacterSpacingEntry");
             App.EnterText("CharacterSpacingEntry", "10");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "SearchText");
-#else
-            App.WaitForElement("TextEntry");
-            App.EnterText("TextEntry", "SearchText");
-            App.WaitForElement("CharacterSpacingEntry");
-            App.ClearText("CharacterSpacingEntry");
-            App.EnterText("CharacterSpacingEntry", "10");
-            App.WaitForElement("Apply");
-            App.Tap("Apply");
-#endif
-            Task.Delay(4000).Wait();
+            App.PressEnter();
             // VerifyScreenshot();
         }
 
@@ -457,9 +544,10 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("TextTransformUppercaseButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "SearchText");
-            App.WaitForElement("SearchBar");
+            App.PressEnter();
             var text = string.Empty;
 #if ANDROID
             text = App.WaitForElement("SearchBar").GetText();
@@ -481,10 +569,26 @@ namespace Microsoft.Maui.TestCases.Tests
             App.Tap("VerticalTextAlignmentEndButton");
             App.WaitForElement("Apply");
             App.Tap("Apply");
-            App.WaitForElement("SearchBar");
+            App.WaitForElementTillPageNavigationSettled("SearchBar");
+            App.ClearText("SearchBar");
             App.EnterText("SearchBar", "Search Text");
-            App.WaitForElement("SearchBar");
+            App.PressEnter();
             // VerifyScreenshot();
+        }
+
+        [Test]
+        [Category(UITestCategories.SearchBar)]
+        public void SearchBar_PageNavigation_VerifyNavigation()
+        {
+            App.WaitForElement("SearchBar");
+            App.ClearText("SearchBar");
+            App.EnterText("SearchBar", "Page Five");
+            App.WaitForElement("PageFive");
+            App.Tap("PageFive");
+            App.WaitForElement("PageFiveLabel");
+            VerifyScreenshot();
+            App.Back();
+            VerifyScreenshot();
         }
     }
 }

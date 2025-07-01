@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -7,24 +6,30 @@ namespace Maui.Controls.Sample;
 
 public class SearchBarViewModel : INotifyPropertyChanged
 {
-    private Color _cancelButtonColor = default;
+    private Color _cancelButtonColor;
     private double _characterSpacing = 0;
-    private FontAttributes _fontAttributes = default;
+    private FlowDirection _flowDirection = FlowDirection.MatchParent;
+    private FontAttributes _fontAttributes;
     private string _fontFamily = string.Empty;
     private double _fontSize = 14;
     private TextAlignment _horizontalTextAlignment = TextAlignment.Start;
-    private bool _isReadOnly = default;
-    private bool _isSpellCheckEnabled = default;
-    private bool _isTextPredictionEnabled = default;
-    private Keyboard _keyboard = default;
+    private bool _isEnabled = true;
+    private bool _isVisible = true;
+    private bool _isReadOnly = false;
+    private bool _isSpellCheckEnabled = true;
+    private bool _isTextPredictionEnabled = true;
+    private Keyboard _keyboard = Keyboard.Default;
     private int _maxLength = 100;
     private string _placeholder = string.Empty;
-    private Color _placeholderColor = Colors.Gray;
+    private Color _placeholderColor;
     private int _selectionLength = 0;
     private string _text = string.Empty;
-    private Color _textColor = Colors.Black;
+    private Color _textColor;
+    private Shadow _shadow;
     private TextTransform _textTransform = TextTransform.Default;
-    private TextAlignment _verticalTextAlignment = TextAlignment.Center;
+    private TextAlignment _verticalTextAlignment = TextAlignment.Start;
+    private int _cursorPosition = 0;
+    private bool _fontAutoScalingEnabled = true;
 
     public SearchBarViewModel()
     {
@@ -128,6 +133,39 @@ public class SearchBarViewModel : INotifyPropertyChanged
     {
         get => _verticalTextAlignment;
         set { _verticalTextAlignment = value; OnPropertyChanged(); }
+    }
+    public int CursorPosition
+    {
+        get => _cursorPosition;
+        set { _cursorPosition = value; OnPropertyChanged(); }
+    }
+    public bool FontAutoScalingEnabled
+    {
+        get => _fontAutoScalingEnabled;
+        set { _fontAutoScalingEnabled = value; OnPropertyChanged(); }
+    }
+    public FlowDirection FlowDirection
+    {
+        get => _flowDirection;
+        set { _flowDirection = value; OnPropertyChanged(); }
+    }
+
+    public Shadow Shadow
+    {
+        get => _shadow;
+        set { _shadow = value; OnPropertyChanged(); }
+    }
+
+    public bool IsEnabled
+    {
+        get => _isEnabled;
+        set { _isEnabled = value; OnPropertyChanged(); }
+    }
+
+    public bool IsVisible
+    {
+        get => _isVisible;
+        set { _isVisible = value; OnPropertyChanged(); }
     }
 
 

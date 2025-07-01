@@ -1,137 +1,207 @@
-namespace Maui.Controls.Sample
+namespace Maui.Controls.Sample;
+
+public partial class SearchBarOptionsPage : ContentPage
 {
-	public partial class SearchBarOptionsPage : ContentPage
+	private SearchBarViewModel _viewModel;
+	public SearchBarOptionsPage(SearchBarViewModel viewModel)
 	{
-		private SearchBarViewModel _viewModel;
-		public SearchBarOptionsPage(SearchBarViewModel viewModel)
-		{
-			InitializeComponent();
-			_viewModel = viewModel;
-			BindingContext = _viewModel;
-		}
+		InitializeComponent();
+		_viewModel = viewModel;
+		BindingContext = _viewModel;
+	}
 
-		protected override void OnAppearing()
-		{
-			base.OnAppearing();
-		}
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+	}
 
-		private async void ApplyButton_Clicked(object sender, EventArgs e)
-		{
-			await Navigation.PopAsync();
-		}
+	private async void ApplyButton_Clicked(object sender, EventArgs e)
+	{
+		await Navigation.PopAsync();
+	}
 
-		private void OnColorsRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	private void OnCancelButtonColorClicked(object sender, EventArgs e)
+	{
+		var button = sender as Button;
+		if (button != null)
 		{
-			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
-			{
-				_viewModel.CancelButtonColor = radioButton.Content.ToString() == "Red" ? Colors.Red : Colors.Green;
-			}
+			_viewModel.CancelButtonColor = button.Text == "Orange" ? Colors.Orange : Colors.Yellow;
 		}
+	}
 
-		private void OnFontAttributesRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	private void OnFlowDirectionRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
 		{
-			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
-			{
-				_viewModel.FontAttributes = radioButton.Content.ToString() == "Italic" ? FontAttributes.Italic : radioButton.Content.ToString() == "Bold" ? FontAttributes.Bold : FontAttributes.None;
-			}
+			_viewModel.FlowDirection = radioButton.Content.ToString() == "LTR" ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
 		}
-		private void OnFontFamilyRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
-		{
-			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
-			{
-				_viewModel.FontFamily = radioButton.Content.ToString() == "Dokdo" ? "Dokdo" : "MontserratBold";
-			}
-		}
-		private void OnHorizontalTextAlignmentRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
-		{
-			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
-			{
-				_viewModel.HorizontalTextAlignment = radioButton.Content.ToString() == "Center"
-					? TextAlignment.Center
-					: TextAlignment.End;
-			}
-		}
-		private void OnIsReadOnlyRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
-		{
-			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
-			{
-				_viewModel.IsReadOnly = radioButton.Content.ToString() == "True" ? true : false;
-			}
-		}
-		private void OnIsSpellCheckEnabledRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
-		{
-			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
-			{
-				_viewModel.IsSpellCheckEnabled = radioButton.Content.ToString() == "True" ? true : false;
-			}
-		}
-		private void OnIsTextPredictionEnabledRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
-		{
-			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
-			{
-				_viewModel.IsTextPredictionEnabled = radioButton.Content.ToString() == "True" ? true : false;
-			}
-		}
-		private void OnKeyboardRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
-		{
-			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
-			{
-				_viewModel.Keyboard = radioButton.Content.ToString() == "Chat" ? Keyboard.Chat :
-					radioButton.Content.ToString() == "Default" ? Keyboard.Default :
-					radioButton.Content.ToString() == "Email" ? Keyboard.Email :
-					radioButton.Content.ToString() == "Numeric" ? Keyboard.Numeric :
-					radioButton.Content.ToString() == "Plain" ? Keyboard.Plain :
-					radioButton.Content.ToString() == "Telephone" ? Keyboard.Telephone :
-					radioButton.Content.ToString() == "Text" ? Keyboard.Text : Keyboard.Url;
-			}
-		}
-		private void OnPlaceholderColorRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
-		{
-			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
-			{
-				_viewModel.PlaceholderColor = radioButton.Content.ToString() == "Red" ? Colors.Red : Colors.Green;
-			}
-		}
+	}
 
-		private void OnTextColorRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	private void OnFontAttributesRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
 		{
-			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
+			_viewModel.FontAttributes = radioButton.Content.ToString() == "Italic" ? FontAttributes.Italic : FontAttributes.Bold;
+		}
+	}
+
+	private void OnFontFamilyRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
+		{
+			_viewModel.FontFamily = radioButton.Content.ToString() == "Dokdo" ? "Dokdo" : "MontserratBold";
+		}
+	}
+
+	private void OnHorizontalTextAlignmentRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
+		{
+			_viewModel.HorizontalTextAlignment = radioButton.Content.ToString() == "Center"
+				? TextAlignment.Center
+				: TextAlignment.End;
+		}
+	}
+
+	private void OnIsEnabledRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
+		{
+			_viewModel.IsEnabled = false;
+		}
+	}
+
+	private void OnIsVisibleRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
+		{
+			_viewModel.IsVisible = false;
+		}
+	}
+
+	private void OnShadowRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
+		{
+			_viewModel.Shadow = new Shadow { Brush = Colors.Violet, Radius = 10, Offset = new Point(0, 0), Opacity = 1f };
+		}
+	}
+
+	private void OnIsReadOnlyRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
+		{
+			_viewModel.IsReadOnly = radioButton.Content.ToString() == "True" ? true : false;
+		}
+	}
+
+	private void OnIsSpellCheckEnabledRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
+		{
+			_viewModel.IsSpellCheckEnabled = radioButton.Content.ToString() == "True" ? true : false;
+		}
+	}
+
+	private void OnIsTextPredictionEnabledRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
+		{
+			_viewModel.IsTextPredictionEnabled = radioButton.Content.ToString() == "True" ? true : false;
+		}
+	}
+
+	private void OnKeyboardRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
+		{
+			switch (radioButton.Content.ToString())
 			{
-				_viewModel.TextColor = radioButton.Content.ToString() == "Red" ? Colors.Red : Colors.Green;
+				case "Chat":
+					_viewModel.Keyboard = Keyboard.Chat;
+					break;
+				case "Email":
+					_viewModel.Keyboard = Keyboard.Email;
+					break;
+				case "Numeric":
+					_viewModel.Keyboard = Keyboard.Numeric;
+					break;
+				case "Telephone":
+					_viewModel.Keyboard = Keyboard.Telephone;
+					break;
+				case "Text":
+					_viewModel.Keyboard = Keyboard.Text;
+					break;
+				case "URL":
+					_viewModel.Keyboard = Keyboard.Url;
+					break;
+				default:
+					_viewModel.Keyboard = Keyboard.Default;
+					break;
 			}
 		}
+	}
 
-		private void OnTextTransformRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	private void OnPlaceholderColorButtonClicked(object sender, EventArgs e)
+	{
+		var button = sender as Button;
+		if (button != null)
+		{
+			_viewModel.PlaceholderColor = button.Text == "Red" ? Colors.Red : Colors.Green;
+		}
+	}
+
+	private void OnTextColorButtonClicked(object sender, EventArgs e)
+	{
+		var button = sender as Button;
+		if (button != null)
+		{
+			_viewModel.TextColor = button.Text == "Red" ? Colors.Red : Colors.Green;
+		}
+	}
+
+	private void OnTextTransformRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
+		{
+			_viewModel.TextTransform = radioButton.Content.ToString() == "Lowercase"
+				? TextTransform.Lowercase
+				: TextTransform.Uppercase;
+		}
+	}
+
+	private void OnVerticalTextAlignmentRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		var radioButton = sender as RadioButton;
+		if (radioButton.IsChecked)
+		{
+			_viewModel.VerticalTextAlignment = radioButton.Content.ToString() == "Center"
+				? TextAlignment.Center
+				: TextAlignment.End;
+		}
+	}
+
+	private void OnFontAutoScalingRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		if (e.Value)
 		{
 			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
+			if (radioButton.Content.ToString() == "False")
 			{
-				_viewModel.TextTransform = radioButton.Content.ToString() == "Lowercase"
-					? TextTransform.Lowercase
-					: TextTransform.Uppercase;
+				_viewModel.FontAutoScalingEnabled = false;
 			}
 		}
-
-		private void OnVerticalTextAlignmentRadioButtonCheckedChanged(object sender, CheckedChangedEventArgs e)
-		{
-			var radioButton = sender as RadioButton;
-			if (radioButton.IsChecked)
-			{
-				_viewModel.VerticalTextAlignment = radioButton.Content.ToString() == "Center"
-					? TextAlignment.Center
-					: TextAlignment.End;
-			}
-		}
-
 	}
 }
