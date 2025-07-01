@@ -10,17 +10,19 @@ public class SwipeViewViewModel : INotifyPropertyChanged
 	private bool _isEnabled = true;
 	private bool _isVisible = true;
 	private Color _backgroundColor = Color.FromArgb("#F0F0F0");
-	private Color _swipeItemsBackgroundColor= Color.FromArgb("#6A5ACD");
+	private Color _swipeItemsBackgroundColor = Color.FromArgb("#6A5ACD");
 	private FlowDirection _flowDirection = FlowDirection.LeftToRight;
 	private double _threshold = 100;
-    private bool _hasShadow = false;
-    private Shadow _swipeViewShadow = null;
+	private bool _hasShadow = false;
+	private Shadow _swipeViewShadow = null;
 	private SwipeMode _swipeMode = SwipeMode.Reveal;
 	private SwipeBehaviorOnInvoked _swipeBehavior = SwipeBehaviorOnInvoked.Auto;
 	private string _eventInvokedText = "Event not invoked yet";
 	private string _swipeStartedText = "Swipe Started: ";
 	private string _swipeChangingText = "Swipe Changing: ";
 	private string _swipeEndedText = "Swipe Ended: ";
+	private string _selectedSwipeItemType = "Label";
+	private string _selectedContentType = "Label";
 
 	public event PropertyChangedEventHandler PropertyChanged;
 	public event Action<OpenSwipeItem> RequestOpen;
@@ -65,28 +67,28 @@ public class SwipeViewViewModel : INotifyPropertyChanged
 		set { _flowDirection = value; OnPropertyChanged(nameof(FlowDirection)); }
 	}
 	public bool HasShadow
-    {
-        get => _hasShadow;
-        set
-        {
-            if (_hasShadow != value)
-            {
-                _hasShadow = value;
-                SwipeViewShadow = value
-                    ? new Shadow
-                    {
-                        Radius = 10,
-                        Opacity = 1.0f,
-                        Brush = Colors.Black.AsPaint(),
-                        Offset = new Point(5, 5)
-                    }
-                    : null;
-                OnPropertyChanged(nameof(HasShadow));
-            }
-        }
-    }
+	{
+		get => _hasShadow;
+		set
+		{
+			if (_hasShadow != value)
+			{
+				_hasShadow = value;
+				SwipeViewShadow = value
+					? new Shadow
+					{
+						Radius = 10,
+						Opacity = 1.0f,
+						Brush = Colors.Black.AsPaint(),
+						Offset = new Point(5, 5)
+					}
+					: null;
+				OnPropertyChanged(nameof(HasShadow));
+			}
+		}
+	}
 
-    public Shadow SwipeViewShadow
+	public Shadow SwipeViewShadow
 	{
 		get => _swipeViewShadow;
 		set
@@ -140,6 +142,33 @@ public class SwipeViewViewModel : INotifyPropertyChanged
 		get => _swipeEndedText;
 		set { _swipeEndedText = value; OnPropertyChanged(nameof(SwipeEndedText)); }
 	}
+
+	public string SelectedContentType
+	{
+		get => _selectedContentType;
+		set
+		{
+			if (_selectedContentType != value)
+			{
+				_selectedContentType = value;
+				OnPropertyChanged(nameof(SelectedContentType));
+			}
+		}
+	}
+
+	public string SelectedSwipeItemType
+	{
+		get => _selectedSwipeItemType;
+		set
+		{
+			if (_selectedSwipeItemType != value)
+			{
+				_selectedSwipeItemType = value;
+				OnPropertyChanged(nameof(SelectedSwipeItemType));
+			}
+		}
+	}
+
 
 	public ICommand OpenLeftCommand { get; }
 	public ICommand OpenRightCommand { get; }

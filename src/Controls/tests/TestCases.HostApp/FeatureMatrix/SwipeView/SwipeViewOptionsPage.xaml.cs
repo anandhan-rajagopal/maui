@@ -16,6 +16,10 @@ public partial class SwipeViewOptionsPage : ContentPage
 		_viewModel = viewModel;
 		_mainPage = mainPage;
 		BindingContext = _viewModel;
+
+		_selectedContent = viewModel.SelectedContentType;
+		_selectedSwipeItem = viewModel.SelectedSwipeItemType;
+		SetInitialRadioSelections();
 	}
 
 	private async void ApplyButton_Clicked(object sender, EventArgs e)
@@ -105,7 +109,7 @@ public partial class SwipeViewOptionsPage : ContentPage
 
 	private void OnIsEnabledChanged(object sender, CheckedChangedEventArgs e)
 	{
-		if( IsEnabledTrue.IsChecked )
+		if (IsEnabledTrue.IsChecked)
 			_viewModel.IsEnabled = true;
 		else if (IsEnabledFalse.IsChecked)
 			_viewModel.IsEnabled = false;
@@ -125,5 +129,34 @@ public partial class SwipeViewOptionsPage : ContentPage
 			return;
 
 		_selectedSwipeItem = radio.Content?.ToString();
+	}
+
+	private void SetInitialRadioSelections()
+	{
+		switch (_selectedContent)
+		{
+			case "Label":
+				TextContent.IsChecked = true;
+				break;
+			case "Image":
+				ImageContent.IsChecked = true;
+				break;
+			case "CollectionView":
+				CollectionContent.IsChecked = true;
+				break;
+		}
+
+		switch (_selectedSwipeItem)
+		{
+			case "Label":
+				LabelSwipeItem.IsChecked = true;
+				break;
+			case "IconImageSource":
+				IconImageSourceSwipeItem.IsChecked = true;
+				break;
+			case "Button":
+				ButtonSwipeItem.IsChecked = true;
+				break;
+		}
 	}
 }
