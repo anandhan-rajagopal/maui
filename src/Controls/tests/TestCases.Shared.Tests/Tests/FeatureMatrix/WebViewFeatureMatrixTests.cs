@@ -58,7 +58,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			// Check if navigation events fired
 			if (App.FindElements("NavigatingStatusLabel").Count > 0)
 			{
@@ -120,7 +120,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			// Initial state should have no navigation history
 			Assert.That(App.FindElement("CanGoBackLabel").GetText(), Is.EqualTo("False"));
 			Assert.That(App.FindElement("CanGoForwardLabel").GetText(), Is.EqualTo("False"));
@@ -138,14 +138,14 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			// Load second page
 			App.Tap("Options");
 			App.WaitForElement("LoadPage2Button");
 			App.Tap("LoadPage2Button");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			// Now test go back
 			App.WaitForElement("GoBackButton");
 			App.Tap("GoBackButton");
@@ -164,17 +164,17 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			// Load second page then go back
 			App.Tap("Options");
 			App.WaitForElement("LoadPage2Button");
 			App.Tap("LoadPage2Button");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			App.WaitForElement("GoBackButton");
 			App.Tap("GoBackButton");
-			
+
 			// Now test go forward
 			App.WaitForElement("GoForwardButton");
 			App.Tap("GoForwardButton");
@@ -192,7 +192,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			App.WaitForElement("ReloadButton");
 			App.Tap("ReloadButton");
 			VerifyScreenshot();
@@ -209,10 +209,10 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			App.WaitForElement("EvaluateJSButton");
 			App.Tap("EvaluateJSButton");
-			
+
 			// Wait for JavaScript evaluation result
 			App.WaitForElement("JSResultLabel");
 			var jsResult = App.FindElement("JSResultLabel").GetText();
@@ -231,7 +231,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			// Check if navigating event status is displayed
 			if (App.FindElements("NavigatingStatusLabel").Count > 0)
 			{
@@ -252,7 +252,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			// Check if navigated event status is displayed
 			if (App.FindElements("NavigatedStatusLabel").Count > 0)
 			{
@@ -304,7 +304,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			// Reset to defaults
 			App.Tap("Options");
 			App.WaitForElement("UserAgentEntry");
@@ -316,7 +316,7 @@ namespace Microsoft.Maui.TestCases.Tests
 			App.WaitForElement("Apply");
 			App.Tap("Apply");
 			App.WaitForElementTillPageNavigationSettled("WebViewControl");
-			
+
 			// Verify default state
 			Assert.That(App.FindElement("CanGoBackLabel").GetText(), Is.EqualTo("False"));
 			Assert.That(App.FindElement("CanGoForwardLabel").GetText(), Is.EqualTo("False"));
