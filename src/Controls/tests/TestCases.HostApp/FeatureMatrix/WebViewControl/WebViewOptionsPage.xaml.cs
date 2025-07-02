@@ -28,7 +28,8 @@ namespace Maui.Controls.Sample
 
 		private void OnSourceChanged(object sender, CheckedChangedEventArgs e)
 		{
-			if (!e.Value) return;
+			if (!e.Value)
+				return;
 
 			var radioButton = sender as RadioButton;
 			if (radioButton == HtmlSourceRadio)
@@ -61,7 +62,8 @@ namespace Maui.Controls.Sample
 
 		private void OnIsEnabledCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			if (!e.Value) return;
+			if (!e.Value)
+				return;
 
 			var radioButton = sender as RadioButton;
 			_viewModel.IsEnabled = radioButton == IsEnabledTrueRadio;
@@ -69,7 +71,8 @@ namespace Maui.Controls.Sample
 
 		private void OnIsVisibleCheckedChanged(object sender, CheckedChangedEventArgs e)
 		{
-			if (!e.Value) return;
+			if (!e.Value)
+				return;
 
 			var radioButton = sender as RadioButton;
 			_viewModel.IsVisible = radioButton == IsVisibleTrueRadio;

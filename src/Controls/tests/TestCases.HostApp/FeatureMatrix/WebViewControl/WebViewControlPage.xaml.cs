@@ -11,7 +11,7 @@ namespace Maui.Controls.Sample
 			InitializeComponent();
 			_viewModel = new WebViewViewModel();
 			BindingContext = _viewModel;
-			
+
 			// Set the WebView reference in the ViewModel so it can call methods
 			_viewModel.WebViewReference = MainWebView;
 		}

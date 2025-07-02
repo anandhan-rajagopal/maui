@@ -255,7 +255,7 @@ namespace Maui.Controls.Sample
 		public void OnNavigated(object sender, WebNavigatedEventArgs e)
 		{
 			NavigatedStatus = $"Navigated to: {e.Url} - Result: {e.Result}";
-			
+
 			if (WebViewReference != null)
 			{
 				CanGoBack = WebViewReference.CanGoBack;
