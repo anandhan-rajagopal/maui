@@ -5,272 +5,357 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Maui.Controls;
+namespace Maui.Controls.Sample;
 
-namespace Maui.Controls.Sample
+public class WebViewViewModel : INotifyPropertyChanged
 {
-	public class WebViewViewModel : INotifyPropertyChanged
+	private WebViewSource _source;
+	private CookieContainer _cookies;
+	private bool _canGoBack;
+	private bool _canGoForward;
+	private bool _isVisible = true;
+	private Shadow _shadow = null;
+	private string _navigatingStatus;
+	private string _navigatedStatus;
+	private string _processTerminatedStatus;
+	private string _jsEvaluationResult;
+	private bool _isEventStatusLabelVisible = false;
+	public bool IsPageLoaded { get; set; }
+	public event PropertyChangedEventHandler PropertyChanged;
+	public WebViewViewModel()
 	{
-		private WebViewSource _source;
-		private string _userAgent;
-		private CookieContainer _cookies;
-		private bool _canGoBack;
-		private bool _canGoForward;
-		private bool _isEnabled = true;
-		private bool _isVisible = true;
-		private string _navigatingStatus;
-		private string _navigatedStatus;
-		private string _processTerminatedStatus;
-		private string _jsEvaluationResult;
-		private bool _isEventStatusLabelVisible = false;
-
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		public WebViewViewModel()
+		Source = new HtmlWebViewSource
 		{
-			// Initialize with a simple HTML page
-			Source = new HtmlWebViewSource
-			{
-				Html = "<html><body><h1>WebView Feature Matrix Test</h1><p>Initial content loaded.</p><button onclick=\"testFunction()\">Test Button</button><script>function testFunction() { alert('Button clicked!'); }</script></body></html>"
-			};
-
-			GoBackCommand = new Command(OnGoBack, () => CanGoBack);
-			GoForwardCommand = new Command(OnGoForward, () => CanGoForward);
-			ReloadCommand = new Command(OnReload);
-			EvaluateJavaScriptCommand = new Command(OnEvaluateJavaScript);
-		}
-
-		public WebViewSource Source
+			Html = @"
+            <html>
+            <head>
+                <title>HTML WebView Source</title>
+            </head>
+            <body style='font-family:sans-serif; padding:20px;'>
+                <h1>WebView Feature Matrix</h1>
+                <p>This page demonstrates various capabilities of the .NET MAUI WebView control, such as:</p>
+                <ul>
+                    <li>Rendering HTML content</li>
+                    <li>Executing JavaScript</li>
+                    <li>Cookie management</li>
+                    <li>Back/Forward navigation</li>
+                </ul>
+                <h2>Test Content</h2>
+                <p>
+                    This is a longer body paragraph to help test the <strong>EvaluateJavaScript</strong> functionality 
+                    and how it extracts body text. You can use this text to verify substring operations and test scrolling 
+                    or formatting in the WebView.
+                </p>
+                <p>
+                    Try interacting with navigation buttons, loading multiple pages, or checking cookie behavior.
+                </p>
+                <footer style='margin-top:40px; font-size:0.9em; color:gray;'>Generated for testing WebView features.</footer>
+            </body>
+            </html>",
+			BaseUrl = "https://localhost/"
+		};
+		GoBackCommand = new Command(OnGoBack, () => CanGoBack);
+		GoForwardCommand = new Command(OnGoForward, () => CanGoForward);
+		ReloadCommand = new Command(OnReload);
+		EvaluateJavaScriptCommand = new Command(OnEvaluateJavaScript);
+	}
+	public void CopyWebViewStateFrom(WebViewViewModel oldViewModel)
+	{
+		WebViewReference = oldViewModel.WebViewReference;
+		IsPageLoaded = oldViewModel.IsPageLoaded;
+		CanGoBack = oldViewModel.CanGoBack;
+		CanGoForward = oldViewModel.CanGoForward;
+		JsEvaluationResult = oldViewModel.JsEvaluationResult;
+	}
+	public WebViewSource Source
+	{
+		get => _source;
+		set
 		{
-			get => _source;
-			set
+			if (_source != value)
 			{
-				if (_source != value)
-				{
-					_source = value;
-					OnPropertyChanged();
-				}
+				_source = value;
+				JsEvaluationResult = string.Empty;
+				OnPropertyChanged();
 			}
 		}
-
-		public string UserAgent
+	}
+	public CookieContainer Cookies
+	{
+		get => _cookies;
+		set
 		{
-			get => _userAgent;
-			set
+			if (_cookies != value)
 			{
-				if (_userAgent != value)
-				{
-					_userAgent = value;
-					OnPropertyChanged();
-				}
+				_cookies = value;
+				OnPropertyChanged();
+				OnPropertyChanged(nameof(CookiesDisplay));
 			}
 		}
+	}
 
-		public CookieContainer Cookies
+
+	public bool CanGoBack
+	{
+		get => _canGoBack;
+		set
 		{
-			get => _cookies;
-			set
+			if (_canGoBack != value)
 			{
-				if (_cookies != value)
-				{
-					_cookies = value;
-					OnPropertyChanged();
-				}
+				_canGoBack = value;
+				OnPropertyChanged();
+				((Command)GoBackCommand).ChangeCanExecute();
 			}
 		}
-
-		public bool CanGoBack
+	}
+	public bool CanGoForward
+	{
+		get => _canGoForward;
+		set
 		{
-			get => _canGoBack;
-			set
+			if (_canGoForward != value)
 			{
-				if (_canGoBack != value)
-				{
-					_canGoBack = value;
-					OnPropertyChanged();
-					((Command)GoBackCommand).ChangeCanExecute();
-				}
+				_canGoForward = value;
+				OnPropertyChanged();
+				((Command)GoForwardCommand).ChangeCanExecute();
 			}
 		}
-
-		public bool CanGoForward
+	}
+	public bool IsVisible
+	{
+		get => _isVisible;
+		set
 		{
-			get => _canGoForward;
-			set
+			if (_isVisible != value)
 			{
-				if (_canGoForward != value)
-				{
-					_canGoForward = value;
-					OnPropertyChanged();
-					((Command)GoForwardCommand).ChangeCanExecute();
-				}
+				_isVisible = value;
+				OnPropertyChanged();
 			}
 		}
-
-		public bool IsEnabled
+	}
+	public string NavigatingStatus
+	{
+		get => _navigatingStatus;
+		set
 		{
-			get => _isEnabled;
-			set
+			if (_navigatingStatus != value)
 			{
-				if (_isEnabled != value)
+				if (!string.IsNullOrEmpty(value))
 				{
-					_isEnabled = value;
-					OnPropertyChanged();
+					IsEventStatusLabelVisible = true;
 				}
+				_navigatingStatus = value;
+				OnPropertyChanged();
 			}
 		}
-
-		public bool IsVisible
+	}
+	public string NavigatedStatus
+	{
+		get => _navigatedStatus;
+		set
 		{
-			get => _isVisible;
-			set
+			if (_navigatedStatus != value)
 			{
-				if (_isVisible != value)
+				if (!string.IsNullOrEmpty(value))
 				{
-					_isVisible = value;
-					OnPropertyChanged();
+					IsEventStatusLabelVisible = true;
 				}
+				_navigatedStatus = value;
+				OnPropertyChanged();
 			}
 		}
-
-		public string NavigatingStatus
+	}
+	public string ProcessTerminatedStatus
+	{
+		get => _processTerminatedStatus;
+		set
 		{
-			get => _navigatingStatus;
-			set
+			if (_processTerminatedStatus != value)
 			{
-				if (_navigatingStatus != value)
+				if (!string.IsNullOrEmpty(value))
 				{
-					if (!string.IsNullOrEmpty(value))
-					{
-						IsEventStatusLabelVisible = true;
-					}
-					_navigatingStatus = value;
-					OnPropertyChanged();
+					IsEventStatusLabelVisible = true;
 				}
+				_processTerminatedStatus = value;
+				OnPropertyChanged();
 			}
 		}
-
-		public string NavigatedStatus
+	}
+	public string JsEvaluationResult
+	{
+		get => _jsEvaluationResult;
+		set
 		{
-			get => _navigatedStatus;
-			set
+			if (_jsEvaluationResult != value)
 			{
-				if (_navigatedStatus != value)
-				{
-					if (!string.IsNullOrEmpty(value))
-					{
-						IsEventStatusLabelVisible = true;
-					}
-					_navigatedStatus = value;
-					OnPropertyChanged();
-				}
+				_jsEvaluationResult = value;
+				OnPropertyChanged();
 			}
 		}
-
-		public string ProcessTerminatedStatus
+	}
+	public bool IsEventStatusLabelVisible
+	{
+		get => _isEventStatusLabelVisible;
+		set
 		{
-			get => _processTerminatedStatus;
-			set
+			if (_isEventStatusLabelVisible != value)
 			{
-				if (_processTerminatedStatus != value)
-				{
-					if (!string.IsNullOrEmpty(value))
-					{
-						IsEventStatusLabelVisible = true;
-					}
-					_processTerminatedStatus = value;
-					OnPropertyChanged();
-				}
+				_isEventStatusLabelVisible = value;
+				OnPropertyChanged();
 			}
 		}
-
-		public string JsEvaluationResult
+	}
+	public Shadow Shadow
+	{
+		get => _shadow;
+		set { if (_shadow != value) { _shadow = value; OnPropertyChanged(); } }
+	}
+	public ICommand GoBackCommand { get; }
+	public ICommand GoForwardCommand { get; }
+	public ICommand ReloadCommand { get; }
+	public ICommand EvaluateJavaScriptCommand { get; }
+	public WebView WebViewReference { get; set; }
+	private void OnGoBack()
+	{
+		WebViewReference?.GoBack();
+	}
+	private void OnGoForward()
+	{
+		WebViewReference?.GoForward();
+	}
+	private void OnReload()
+	{
+		WebViewReference?.Reload();
+	}
+	private async void OnEvaluateJavaScript()
+	{
+		if (WebViewReference != null)
 		{
-			get => _jsEvaluationResult;
-			set
+			try
 			{
-				if (_jsEvaluationResult != value)
+				var title = await WebViewReference.EvaluateJavaScriptAsync("document.title");
+				if (string.IsNullOrEmpty(title))
 				{
-					_jsEvaluationResult = value;
-					OnPropertyChanged();
+					var bodyText = await WebViewReference.EvaluateJavaScriptAsync("document.body.textContent.substring(0, 20)");
+					JsEvaluationResult = $"JS Result: {bodyText}... (body content)";
+				}
+				else
+				{
+					JsEvaluationResult = $"JS Result: {title}";
 				}
 			}
-		}
-
-		public bool IsEventStatusLabelVisible
-		{
-			get => _isEventStatusLabelVisible;
-			set
+			catch (Exception ex)
 			{
-				if (_isEventStatusLabelVisible != value)
-				{
-					_isEventStatusLabelVisible = value;
-					OnPropertyChanged();
-				}
+				JsEvaluationResult = $"JS Error: {ex.Message}";
 			}
 		}
-
-		public ICommand GoBackCommand { get; }
-		public ICommand GoForwardCommand { get; }
-		public ICommand ReloadCommand { get; }
-		public ICommand EvaluateJavaScriptCommand { get; }
-
-		public WebView WebViewReference { get; set; }
-
-		private void OnGoBack()
+	}
+	public void AddTestCookies()
+	{
+		var domain = GetCookieDomain();
+		if (string.IsNullOrEmpty(domain))
+			return;
+		var cookieContainer = Cookies ?? new CookieContainer();
+		var uri = new Uri($"https://{domain}");
+		var cookie = new Cookie
 		{
-			WebViewReference?.GoBack();
+			Name = "DotNetMAUICookie",
+			Value = "My cookie",
+			Domain = uri.Host,
+			Path = "/",
+			Expires = DateTime.Now.AddDays(1)
+		};
+		try
+		{
+			cookieContainer.Add(uri, cookie);
 		}
-
-		private void OnGoForward()
+		catch
 		{
-			WebViewReference?.GoForward();
+			// Ignore if cookie is malformed
 		}
-
-		private void OnReload()
+		Cookies = cookieContainer;
+	}
+	public void ClearCookiesForCurrentSource()
+	{
+		Cookies = new CookieContainer();
+	}
+	private string GetCookieDomain()
+	{
+		if (Source is UrlWebViewSource urlSource && !string.IsNullOrEmpty(urlSource.Url))
 		{
-			WebViewReference?.Reload();
+			var uri = new Uri(urlSource.Url);
+			var domain = uri.Host;
+			if (domain.StartsWith("www."))
+				domain = domain.Substring(4);
+			return domain;
 		}
-
-		private async void OnEvaluateJavaScript()
+		if (Source is HtmlWebViewSource)
+			return "localhost";
+		return null;
+	}
+	public string CookiesDisplay
+	{
+		get
 		{
-			if (WebViewReference != null)
+			if (Cookies == null || Cookies.Count == 0)
+				return "No cookies available.";
+			try
 			{
-				try
-				{
-					var result = await WebViewReference.EvaluateJavaScriptAsync("document.title");
-					JsEvaluationResult = $"JS Result: {result}";
-				}
-				catch (Exception ex)
-				{
-					JsEvaluationResult = $"JS Error: {ex.Message}";
-				}
+				var domain = GetDomainFromSource();
+				var uri = new Uri($"https://{domain}");
+				var cookieCollection = Cookies.GetCookies(uri);
+				var visibleCookies = cookieCollection.Cast<Cookie>()
+					.Where(c => !IsSystemCookie(c.Name))
+					.ToList();
+				if (visibleCookies.Count == 0)
+					return $" No displayable cookies for domain: {domain}";
+				var cookieText = string.Join("\n", visibleCookies.Select(c => $"{c.Name} = {c.Value}"));
+				return $"Domain: {domain}\nCount: {visibleCookies.Count}\n{cookieText}";
+			}
+			catch (Exception ex)
+			{
+				return $" Error reading cookies: {ex.Message}";
 			}
 		}
-
-		public void OnNavigating(object sender, WebNavigatingEventArgs e)
+	}
+	private string GetDomainFromSource()
+	{
+		if (Source is UrlWebViewSource urlSource && !string.IsNullOrEmpty(urlSource.Url))
 		{
-			NavigatingStatus = $"Navigating to: {e.Url}";
+			var uri = new Uri(urlSource.Url);
+			var domain = uri.Host;
+			return domain.StartsWith("www.") ? domain.Substring(4) : domain;
 		}
-
-		public void OnNavigated(object sender, WebNavigatedEventArgs e)
+		else if (Source is HtmlWebViewSource)
 		{
-			NavigatedStatus = $"Navigated to: {e.Url} - Result: {e.Result}";
-
-			if (WebViewReference != null)
-			{
-				CanGoBack = WebViewReference.CanGoBack;
-				CanGoForward = WebViewReference.CanGoForward;
-			}
+			return "localhost";
 		}
-
-		public void OnProcessTerminated(object sender, EventArgs e)
+		return "unknown";
+	}
+	private bool IsSystemCookie(string name)
+	{
+		var excluded = new[] { "TestCookie", "SessionId" };
+		return excluded.Contains(name, StringComparer.OrdinalIgnoreCase);
+	}
+	public void OnNavigating(object sender, WebNavigatingEventArgs e)
+	{
+		NavigatingStatus = $"Navigating to: {e.Url}";
+	}
+	public void OnNavigated(object sender, WebNavigatedEventArgs e)
+	{
+		NavigatedStatus = $"Navigated: {e.Result}";
+		if (WebViewReference != null)
 		{
-			ProcessTerminatedStatus = "WebView process terminated";
+			CanGoBack = WebViewReference.CanGoBack;
+			CanGoForward = WebViewReference.CanGoForward;
 		}
-
-		protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+	}
+	public void OnProcessTerminated(object sender, EventArgs e)
+	{
+		ProcessTerminatedStatus = "WebView process terminated";
+	}
+	protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+	{
+		PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 	}
 }

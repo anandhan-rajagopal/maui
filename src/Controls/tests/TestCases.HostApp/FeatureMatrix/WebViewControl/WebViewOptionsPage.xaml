@@ -5,71 +5,86 @@
              x:Class="Maui.Controls.Sample.WebViewOptionsPage"
              Title="WebView Options">
   <ContentPage.ToolbarItems>
-    <ToolbarItem Text="Apply" Clicked="ApplyButton_Clicked" AutomationId="Apply"/>
+    <ToolbarItem Text="Apply"
+                 Clicked="ApplyButton_Clicked"
+                 AutomationId="Apply"/>
   </ContentPage.ToolbarItems>
-
-  <ScrollView Padding="10">
-    <Grid ColumnDefinitions="*, *" RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto" ColumnSpacing="15" RowSpacing="10">
-      <!-- Left Column -->
-      <StackLayout Grid.Column="0" Padding="10" Spacing="8">
-
-        <!-- WebView Source -->
-        <Label Text="WebView Source:" FontSize="15" />
-        <StackLayout Orientation="Vertical" Spacing="5">
-          <RadioButton x:Name="HtmlSourceRadio" AutomationId="HtmlSourceRadio" GroupName="Source" Content="HTML Source" IsChecked="True" FontSize="14" CheckedChanged="OnSourceChanged" />
-          <RadioButton x:Name="UrlSourceRadio" AutomationId="UrlSourceRadio" GroupName="Source" Content="URL Source" FontSize="14" CheckedChanged="OnSourceChanged" />
-          <RadioButton x:Name="LocalFileSourceRadio" AutomationId="LocalFileSourceRadio" GroupName="Source" Content="Local File" FontSize="14" CheckedChanged="OnSourceChanged" />
-        </StackLayout>
-
-        <!-- User Agent -->
-        <Label Text="User Agent:" FontSize="15" />
-        <Entry x:Name="UserAgentEntry" AutomationId="UserAgentEntry" TextChanged="OnUserAgentChanged" HorizontalOptions="FillAndExpand" />
-
-        <!-- Is Enabled -->
-        <Label Text="Is Enabled:" FontSize="15" />
-        <StackLayout Orientation="Horizontal">
-          <RadioButton x:Name="IsEnabledTrueRadio" AutomationId="IsEnabledTrueRadio" GroupName="IsEnabled" Content="True" IsChecked="True" FontSize="14" CheckedChanged="OnIsEnabledCheckedChanged" />
-          <RadioButton x:Name="IsEnabledFalseRadio" AutomationId="IsEnabledFalseRadio" GroupName="IsEnabled" Content="False" FontSize="14" CheckedChanged="OnIsEnabledCheckedChanged" />
-        </StackLayout>
-
-        <!-- Is Visible -->
-        <Label Text="Is Visible:" FontSize="15" />
-        <StackLayout Orientation="Horizontal">
-          <RadioButton x:Name="IsVisibleTrueRadio" AutomationId="IsVisibleTrueRadio" GroupName="IsVisible" Content="True" IsChecked="True" FontSize="14" CheckedChanged="OnIsVisibleCheckedChanged" />
-          <RadioButton x:Name="IsVisibleFalseRadio" AutomationId="IsVisibleFalseRadio" GroupName="IsVisible" Content="False" FontSize="14" CheckedChanged="OnIsVisibleCheckedChanged" />
-        </StackLayout>
-      </StackLayout>
-
-      <StackLayout Grid.Column="1" Padding="10" Spacing="12">
-        <!-- Content Options -->
-        <Label Text="Test Content:" FontSize="15" />
-        <StackLayout Orientation="Vertical" Spacing="5">
-          <Button Text="Load HTML Content" Clicked="LoadHtmlContent_Clicked" AutomationId="LoadHtmlContentButton"/>
-          <Button Text="Load Remote URL" Clicked="LoadRemoteUrl_Clicked" AutomationId="LoadRemoteUrlButton"/>
-          <Button Text="Load Multiple Pages" Clicked="LoadMultiplePages_Clicked" AutomationId="LoadMultiplePagesButton"/>
-        </StackLayout>
-
-        <!-- Cookie Management -->
-        <Label Text="Cookie Management:" FontSize="15" />
-        <StackLayout Orientation="Vertical" Spacing="5">
-          <Button Text="Add Test Cookie" Clicked="AddTestCookie_Clicked" AutomationId="AddTestCookieButton"/>
-          <Button Text="Clear Cookies" Clicked="ClearCookies_Clicked" AutomationId="ClearCookiesButton"/>
-        </StackLayout>
-
-        <!-- JavaScript Testing -->
-        <Label Text="JavaScript Testing:" FontSize="15" />
-        <StackLayout Orientation="Vertical" Spacing="5">
-          <Button Text="Test Document Title" Clicked="TestDocumentTitle_Clicked" AutomationId="TestDocumentTitleButton"/>
-          <Button Text="Test Alert Function" Clicked="TestAlertFunction_Clicked" AutomationId="TestAlertFunctionButton"/>
-        </StackLayout>
-
-        <!-- Navigation Testing -->
-        <Label Text="Navigation Testing:" FontSize="15" />
-        <StackLayout Orientation="Vertical" Spacing="5">
-          <Button Text="Load Page 1" Clicked="LoadPage1_Clicked" AutomationId="LoadPage1Button"/>
-          <Button Text="Load Page 2" Clicked="LoadPage2_Clicked" AutomationId="LoadPage2Button"/>
-        </StackLayout>
-      </StackLayout>
-    </Grid>
-  </ScrollView>
+  <VerticalStackLayout Padding="10"
+                       Spacing="10">
+    <Label Text="Source:"
+           FontSize="15"
+           FontAttributes="Bold"/>
+    <HorizontalStackLayout  Spacing="5">
+      <Button x:Name="HtmlSourceButton"
+              AutomationId="HtmlSourceButton"
+              Text="HTML"
+              Clicked="OnHtmlSourceClicked"/>
+      <Button x:Name="MicrosoftUrlButton"
+              AutomationId="MicrosoftUrlButton"
+              Text="Microsoft"
+              Clicked="OnMicrosoftUrlClicked"/>
+      <Button x:Name="GithubUrlButton"
+              AutomationId="GithubUrlButton"
+              Text="Github"
+              Clicked="OnGithubUrlClicked"/>
+    </HorizontalStackLayout>
+    <Label Text="Cookie Management:"
+           FontSize="15"
+           FontAttributes="Bold"/>
+    <HorizontalStackLayout
+      Spacing="5">
+      <Button Text="Add Test Cookie"
+              Clicked="AddTestCookie_Clicked"
+              AutomationId="AddTestCookieButton"/>
+      <Button Text="Clear Cookies"
+              Clicked="ClearCookies_Clicked"
+              AutomationId="ClearCookiesButton"/>
+    </HorizontalStackLayout>
+    <Label Text="Navigation Testing:"
+           FontSize="15"
+           FontAttributes="Bold"/>
+    <HorizontalStackLayout
+      Spacing="2">
+      <Button Text="Page 1"
+              Clicked="LoadPage1_Clicked"
+              AutomationId="LoadPage1Button"/>
+      <Button Text="Page 2"
+              Clicked="LoadPage2_Clicked"
+              AutomationId="LoadPage2Button"/>
+      <Button Text="Multiple Pages"
+              Clicked="LoadMultiplePages_Clicked"
+              AutomationId="LoadMultiplePagesButton"/>
+      <Button Text="Alert Function"
+              Clicked="TestAlertFunction_Clicked"
+              AutomationId="TestAlertFunctionButton"/>
+    </HorizontalStackLayout>
+    <Label Text="Is Visible"
+           FontSize="16"
+           FontAttributes="Bold"/>
+    <HorizontalStackLayout>
+      <RadioButton Content="True"
+                   IsChecked="True"
+                   GroupName="IsVisibleGroup"
+                   CheckedChanged="IsVisibleRadio_CheckedChanged"
+                   AutomationId="IsVisibleTrue"/>
+      <RadioButton Content="False"
+                   GroupName="IsVisibleGroup"
+                   CheckedChanged="IsVisibleRadio_CheckedChanged"
+                   AutomationId="IsVisibleFalse"/>
+    </HorizontalStackLayout>
+    <Label Text="Shadow"
+           FontSize="16"
+           FontAttributes="Bold"/>
+    <HorizontalStackLayout>
+      <RadioButton Content="False"
+                   IsChecked="True"
+                   GroupName="ShadowGroup"
+                   CheckedChanged="ShadowRadio_CheckedChanged"
+                   AutomationId="ShadowFalse"/>
+      <RadioButton Content="True"
+                   GroupName="ShadowGroup"
+                   CheckedChanged="ShadowRadio_CheckedChanged"
+                   AutomationId="ShadowTrue"/>
+    </HorizontalStackLayout>
+  </VerticalStackLayout>
 </ContentPage>
