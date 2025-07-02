@@ -1,151 +1,213 @@
 using System.Net;
 using Microsoft.Maui.Controls;
+namespace Maui.Controls.Sample;
 
-namespace Maui.Controls.Sample
+public partial class WebViewOptionsPage : ContentPage
 {
-	public partial class WebViewOptionsPage : ContentPage
+	private WebViewViewModel _viewModel;
+	public WebViewOptionsPage(WebViewViewModel viewModel)
 	{
-		private WebViewViewModel _viewModel;
-
-		public WebViewOptionsPage(WebViewViewModel viewModel)
+		InitializeComponent();
+		_viewModel = viewModel;
+		BindingContext = _viewModel;
+	}
+	private async void ApplyButton_Clicked(object sender, EventArgs e)
+	{
+		await Navigation.PopAsync();
+	}
+	private void OnHtmlSourceClicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new HtmlWebViewSource
 		{
-			InitializeComponent();
-			_viewModel = viewModel;
-			BindingContext = _viewModel;
-
-			// Initialize form controls with current values
-			UserAgentEntry.Text = _viewModel.UserAgent ?? "";
-			IsEnabledTrueRadio.IsChecked = _viewModel.IsEnabled;
-			IsEnabledFalseRadio.IsChecked = !_viewModel.IsEnabled;
-			IsVisibleTrueRadio.IsChecked = _viewModel.IsVisible;
-			IsVisibleFalseRadio.IsChecked = !_viewModel.IsVisible;
-		}
-
-		private async void ApplyButton_Clicked(object sender, EventArgs e)
+			Html = @"
+            <html>
+            <head>
+                <title>HTML WebView Source</title>
+            </head>
+            <body style='font-family:sans-serif; padding:20px;'>
+                <h1>WebView Feature Matrix</h1>
+                <p>This page demonstrates various capabilities of the .NET MAUI WebView control, such as:</p>
+                <ul>
+                    <li>Rendering HTML content</li>
+                    <li>Executing JavaScript</li>
+                    <li>Cookie management</li>
+                    <li>Back/Forward navigation</li>
+                </ul>
+                <h2>Test Content</h2>
+                <p>
+                    This is a longer body paragraph to help test the <strong>EvaluateJavaScript</strong> functionality 
+                    and how it extracts body text. You can use this text to verify substring operations and test scrolling 
+                    or formatting in the WebView.
+                </p>
+                <p>
+                    Try interacting with navigation buttons, loading multiple pages, or checking cookie behavior.
+                </p>
+                <footer style='margin-top:40px; font-size:0.9em; color:gray;'>Generated for testing WebView features.</footer>
+            </body>
+            </html>",
+			BaseUrl = "https://localhost/"
+		};
+	}
+	private void OnMicrosoftUrlClicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new UrlWebViewSource
 		{
-			await Navigation.PopAsync();
-		}
-
-		private void OnSourceChanged(object sender, CheckedChangedEventArgs e)
+			Url = "https://www.microsoft.com"
+		};
+	}
+	private void OnGithubUrlClicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new UrlWebViewSource
 		{
-			if (!e.Value)
-				return;
+			Url = "https://github.com/dotnet/maui"
+		};
+	}
+	private void LoadMultiplePages_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new HtmlWebViewSource
+		{
+			Html = @"
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Multiple Pages Navigation</title>
+        <style>
+            body { font-family: Arial; padding: 16px; line-height: 1.6; }
+            h1 { color: #3366cc; }
+            a {
+                display: inline-block;
+                margin: 10px 5px;
+                padding: 10px 16px;
+                background-color: #0078D4;
+                color: white;
+                text-decoration: none;
+                border-radius: 5px;
+            }
+            a:hover { background-color: #005a9e; }
+        </style>
+    </head>
+    <body>
+        <h1>Welcome to Page 1</h1>
+        <p>This is the first page.</p>
+        <p><a href='https://dotnet.microsoft.com'>Go to Page 2 (Microsoft)</a></p>
+        <p><a href='https://github.com/dotnet/maui'>Go to Page 3 (GitHub)</a></p>
+    </body>
+    </html>"
+		};
+	}
+	private void AddTestCookie_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.AddTestCookies();
+	}
+	private void ClearCookies_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.ClearCookiesForCurrentSource();
+	}
 
-			var radioButton = sender as RadioButton;
-			if (radioButton == HtmlSourceRadio)
+	private void TestDocumentTitle_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new HtmlWebViewSource
+		{
+			Html = "<html><head><title>WebView Test Page</title></head><body><h1>Page with Title</h1><p>This page has a title that can be retrieved via JavaScript.</p></body></html>"
+		};
+	}
+
+	private void TestAlertFunction_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new HtmlWebViewSource
+		{
+			Html = "<html><head><title>WebView Test Alert Function</title></head><body><h1>Alert Test Page</h1><p>This page tests JavaScript alert functionality.</p><button onclick=\"alert('Test Alert')\">Test Alert</button><script>setTimeout(function() { console.log('Page loaded'); }, 1000);</script></body></html>"
+		};
+	}
+
+	private void LoadPage1_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new HtmlWebViewSource
+		{
+			Html = @"<!DOCTYPE html>
+        <html>
+        <head>
+            <title>Navigation Test - Page 1</title>
+            <meta charset='utf-8'>
+        </head>
+        <body>
+            <h1>Navigation Test - Page 1</h1>
+            <p>This is the first page for navigation testing.</p>
+            <a href='#' onclick='loadPage2()'>Go to Page 2</a>
+            <script>
+                function loadPage2() {
+                    document.body.innerHTML = `
+                        <h1>Navigation Test - Page 2</h1>
+                        <p>This is the second page content rendered dynamically.</p>
+                        <button onclick='loadPage1()'>Go Back</button>
+                    `;
+                    // Update title when content changes
+                    document.title = 'Navigation Test - Page 2 (Dynamic)';
+                }
+                function loadPage1() {
+                    document.body.innerHTML = `
+                        <h1>Navigation Test - Page 1</h1>
+                        <p>This is the first page for navigation testing.</p>
+                        <a href='#' onclick='loadPage2()'>Go to Page 2</a>
+                    `;
+                    // Update title when content changes
+                    document.title = 'Navigation Test - Page 1';
+                }
+                
+                // Helper function for JavaScript evaluation
+                window.testEvaluation = function() {
+                    return 'JavaScript working on navigation page!';
+                };
+            </script>
+        </body>
+        </html>",
+			BaseUrl = "https://localhost/"
+		};
+	}
+	private void LoadPage2_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new HtmlWebViewSource
+		{
+			Html = @"<!DOCTYPE html>
+        <html>
+        <head>
+            <title>Navigation Test - Page 2</title>
+            <meta charset='utf-8'>
+        </head>
+        <body>
+            <h1>Navigation Test - Page 2</h1>
+            <p>This is the second page for navigation testing.</p>
+            <button onclick='history.back()'>Go Back</button>
+            <script>
+                // Helper function for JavaScript evaluation
+                window.testEvaluation = function() {
+                    return 'JavaScript working on Page 2!';
+                };
+            </script>
+        </body>
+        </html>",
+			BaseUrl = "https://localhost/"
+		};
+	}
+	private void IsVisibleRadio_CheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		if (!(sender is RadioButton rb) || !rb.IsChecked)
+			return;
+		_viewModel.IsVisible = rb.Content?.ToString() == "True";
+	}
+	private void ShadowRadio_CheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		if (e.Value && BindingContext is WebViewViewModel vm)
+		{
+			var rb = sender as RadioButton;
+			if (rb?.Content?.ToString() == "True")
 			{
-				_viewModel.Source = new HtmlWebViewSource
-				{
-					Html = "<html><body><h1>HTML WebView Source</h1><p>This content is loaded from HTML string.</p><button onclick=\"testAlert()\">Test Alert</button><script>function testAlert() { alert('Alert from HTML!'); }</script></body></html>"
-				};
+				vm.Shadow = new Shadow { Brush = Brush.Black, Offset = new Point(5, 5), Radius = 5, Opacity = 0.5f };
 			}
-			else if (radioButton == UrlSourceRadio)
+			else if (rb?.Content?.ToString() == "False")
 			{
-				_viewModel.Source = new UrlWebViewSource
-				{
-					Url = "https://www.microsoft.com"
-				};
+				vm.Shadow = null!;
 			}
-			else if (radioButton == LocalFileSourceRadio)
-			{
-				_viewModel.Source = new HtmlWebViewSource
-				{
-					Html = "<html><body><h1>Local File Simulation</h1><p>This simulates local file content.</p></body></html>"
-				};
-			}
-		}
-
-		private void OnUserAgentChanged(object sender, TextChangedEventArgs e)
-		{
-			_viewModel.UserAgent = e.NewTextValue;
-		}
-
-		private void OnIsEnabledCheckedChanged(object sender, CheckedChangedEventArgs e)
-		{
-			if (!e.Value)
-				return;
-
-			var radioButton = sender as RadioButton;
-			_viewModel.IsEnabled = radioButton == IsEnabledTrueRadio;
-		}
-
-		private void OnIsVisibleCheckedChanged(object sender, CheckedChangedEventArgs e)
-		{
-			if (!e.Value)
-				return;
-
-			var radioButton = sender as RadioButton;
-			_viewModel.IsVisible = radioButton == IsVisibleTrueRadio;
-		}
-
-		private void LoadHtmlContent_Clicked(object sender, EventArgs e)
-		{
-			_viewModel.Source = new HtmlWebViewSource
-			{
-				Html = "<html><body><h1>Dynamic HTML Content</h1><p>This is dynamically loaded HTML content with <strong>formatted text</strong>.</p><button onclick=\"showMessage()\">Click Me</button><script>function showMessage() { document.body.innerHTML += '<p>Button clicked at ' + new Date() + '</p>'; }</script></body></html>"
-			};
-		}
-
-		private void LoadRemoteUrl_Clicked(object sender, EventArgs e)
-		{
-			_viewModel.Source = new UrlWebViewSource
-			{
-				Url = "https://github.com/dotnet/maui"
-			};
-		}
-
-		private void LoadMultiplePages_Clicked(object sender, EventArgs e)
-		{
-			// Load first page that has navigation to create history
-			_viewModel.Source = new HtmlWebViewSource
-			{
-				Html = "<html><body><h1>Page 1</h1><p>This is the first page.</p><a href=\"data:text/html,<html><body><h1>Page 2</h1><p>This is the second page.</p></body></html>\">Go to Page 2</a></body></html>"
-			};
-		}
-
-		private void AddTestCookie_Clicked(object sender, EventArgs e)
-		{
-			var cookieContainer = new CookieContainer();
-			var cookie = new Cookie("TestCookie", "TestValue", "/", "microsoft.com");
-			cookieContainer.Add(cookie);
-			_viewModel.Cookies = cookieContainer;
-		}
-
-		private void ClearCookies_Clicked(object sender, EventArgs e)
-		{
-			_viewModel.Cookies = new CookieContainer();
-		}
-
-		private void TestDocumentTitle_Clicked(object sender, EventArgs e)
-		{
-			_viewModel.Source = new HtmlWebViewSource
-			{
-				Html = "<html><head><title>Test Page Title</title></head><body><h1>Page with Title</h1><p>This page has a title that can be retrieved via JavaScript.</p></body></html>"
-			};
-		}
-
-		private void TestAlertFunction_Clicked(object sender, EventArgs e)
-		{
-			_viewModel.Source = new HtmlWebViewSource
-			{
-				Html = "<html><body><h1>Alert Test Page</h1><p>This page tests JavaScript alert functionality.</p><button onclick=\"alert('Test Alert')\">Test Alert</button><script>setTimeout(function() { console.log('Page loaded'); }, 1000);</script></body></html>"
-			};
-		}
-
-		private void LoadPage1_Clicked(object sender, EventArgs e)
-		{
-			_viewModel.Source = new HtmlWebViewSource
-			{
-				Html = "<html><body><h1>Navigation Test - Page 1</h1><p>This is the first page for navigation testing.</p><a href=\"#page2\" onclick=\"loadPage2()\">Go to Page 2</a><script>function loadPage2() { window.location.href = 'data:text/html,<html><body><h1>Navigation Test - Page 2</h1><p>This is the second page.</p></body></html>'; }</script></body></html>"
-			};
-		}
-
-		private void LoadPage2_Clicked(object sender, EventArgs e)
-		{
-			_viewModel.Source = new HtmlWebViewSource
-			{
-				Html = "<html><body><h1>Navigation Test - Page 2</h1><p>This is the second page for navigation testing.</p><button onclick=\"history.back()\">Go Back</button></body></html>"
-			};
 		}
 	}
 }

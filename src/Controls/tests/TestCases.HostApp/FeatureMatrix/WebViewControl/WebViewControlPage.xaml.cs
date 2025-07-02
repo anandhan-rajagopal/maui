@@ -1,40 +1,44 @@
 using Microsoft.Maui.Controls;
+namespace Maui.Controls.Sample;
 
-namespace Maui.Controls.Sample
+public class WebViewControlPage : NavigationPage
 {
-	public partial class WebViewControlPage : ContentPage
+	private WebViewViewModel _viewModel;
+	public WebViewControlPage()
 	{
-		private WebViewViewModel _viewModel;
-
-		public WebViewControlPage()
-		{
-			InitializeComponent();
-			_viewModel = new WebViewViewModel();
-			BindingContext = _viewModel;
-
-			// Set the WebView reference in the ViewModel so it can call methods
-			_viewModel.WebViewReference = MainWebView;
-		}
-
-		private async void NavigateToOptionsPage_Clicked(object sender, EventArgs e)
-		{
-			var optionsPage = new WebViewOptionsPage(_viewModel);
-			await Navigation.PushAsync(optionsPage);
-		}
-
-		private void OnWebViewNavigating(object sender, WebNavigatingEventArgs e)
-		{
-			_viewModel.OnNavigating(sender, e);
-		}
-
-		private void OnWebViewNavigated(object sender, WebNavigatedEventArgs e)
-		{
-			_viewModel.OnNavigated(sender, e);
-		}
-
-		private void OnWebViewProcessTerminated(object sender, EventArgs e)
-		{
-			_viewModel.OnProcessTerminated(sender, e);
-		}
+		_viewModel = new WebViewViewModel();
+		BindingContext = _viewModel;
+		PushAsync(new WebViewControlMainPage(_viewModel));
+	}
+}
+public partial class WebViewControlMainPage : ContentPage
+{
+	private WebViewViewModel _viewModel;
+	public WebViewControlMainPage(WebViewViewModel viewModel)
+	{
+		InitializeComponent();
+		_viewModel = viewModel;
+		BindingContext = _viewModel;
+		_viewModel.WebViewReference = WebViewControl;
+	}
+	private async void NavigateToOptionsPage_Clicked(object sender, EventArgs e)
+	{
+		var oldViewModel = _viewModel;
+		_viewModel = new WebViewViewModel();
+		_viewModel.CopyWebViewStateFrom(oldViewModel);
+		BindingContext = _viewModel;
+		await Navigation.PushAsync(new WebViewOptionsPage(_viewModel));
+	}
+	private void OnWebViewNavigating(object sender, WebNavigatingEventArgs e)
+	{
+		_viewModel.OnNavigating(sender, e);
+	}
+	private void OnWebViewNavigated(object sender, WebNavigatedEventArgs e)
+	{
+		_viewModel.OnNavigated(sender, e);
+	}
+	private void OnWebViewProcessTerminated(object sender, EventArgs e)
+	{
+		_viewModel.OnProcessTerminated(sender, e);
 	}
 }
