@@ -211,7 +211,7 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("LightGreenBackground");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
+		App.WaitForElement("SwipeViewImage");
 		VerifyScreenshot();
 	}
 
@@ -227,7 +227,7 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("LightPinkBackground");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
+		App.WaitForElement("SwipeViewCollectionItem");
 		VerifyScreenshot();
 	}
 
@@ -257,7 +257,7 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("FlowDirectionRightToLeft");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
+		App.WaitForElement("SwipeViewImage");
 		VerifyScreenshot();
 	}
 
@@ -273,7 +273,7 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("FlowDirectionRightToLeft");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
+		App.WaitForElement("SwipeViewCollectionItem");
 		VerifyScreenshot();
 	}
 
@@ -303,7 +303,7 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("ShadowCheckBox");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
+		App.WaitForElement("SwipeViewImage");
 		VerifyScreenshot();
 	}
 
@@ -334,8 +334,8 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("IsEnabledFalse");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
-		App.SwipeLeftToRight("SwipeViewControl");
+		App.WaitForElement("SwipeViewImage");
+		App.SwipeLeftToRight("SwipeViewImage");
 		App.WaitForNoElement("Label");
 	}
 
@@ -351,8 +351,8 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("IsEnabledFalse");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
-		App.SwipeLeftToRight("SwipeViewControl");
+		App.WaitForElement("SwipeViewCollectionItem");
+		App.SwipeLeftToRight("SwipeViewCollectionItem");
 		App.WaitForNoElement("Label");
 	}
 
@@ -381,7 +381,7 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("IsVisibleFalse");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForNoElement("SwipeViewControl");
+		App.WaitForNoElement("SwipeViewImage");
 	}
 
 	[Test]
@@ -396,7 +396,7 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("IsVisibleFalse");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForNoElement("SwipeViewControl");
+		App.WaitForNoElement("SwipeViewCollectionItem");
 	}
 
 	[Test]
@@ -426,8 +426,8 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("ExecuteSwipeMode");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
-		App.SwipeLeftToRight("SwipeViewControl");
+		App.WaitForElement("SwipeViewImage");
+		App.SwipeLeftToRight("SwipeViewImage");
 		Assert.That(App.WaitForElement("EventInvokedLabel").GetText(), Is.EqualTo("Label Invoked"));
 	}
 
@@ -443,8 +443,8 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("ExecuteSwipeMode");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
-		App.SwipeLeftToRight("SwipeViewControl");
+		App.WaitForElement("SwipeViewCollectionItem");
+		App.SwipeLeftToRight("SwipeViewCollectionItem");
 		Assert.That(App.WaitForElement("EventInvokedLabel").GetText(), Is.EqualTo("Label Invoked"));
 	}
 
@@ -457,7 +457,7 @@ public class SwipeViewFeatureTests : UITest
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("SwipeViewControl");
-		App.SwipeRightToLeft("SwipeViewControl");
+		App.SwipeLeftToRight("SwipeViewControl");
 		App.WaitForElement("Label");
 		App.Tap("Label");
 		App.WaitForNoElement("Label");
@@ -471,15 +471,15 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("ImageContent");
 		App.Tap("ImageContent");
-		App.WaitForElement("ImageSwipeItem");
-		App.Tap("ImageSwipeItem");
+		App.WaitForElement("IconImageSourceSwipeItem");
+		App.Tap("IconImageSourceSwipeItem");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
-		App.SwipeRightToLeft("SwipeViewControl");
-		App.WaitForElement("SwipeIconItem");
-		App.Tap("SwipeIconItem");
-		App.WaitForNoElement("SwipeIconItem");
+		App.WaitForElement("SwipeViewImage");
+		App.SwipeLeftToRight("SwipeViewImage");
+		App.WaitForElement("Icon");
+		App.Tap("Icon");
+		App.WaitForNoElement("Icon");
 	}
 
 	[Test]
@@ -494,11 +494,11 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("ButtonSwipeItem");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
+		App.WaitForElement("SwipeViewCollectionItem");
 		App.SwipeRightToLeft("Item 3");
-		App.WaitForElement("SwipeButtonItem");
-		App.Tap("SwipeButtonItem");
-		App.WaitForNoElement("SwipeButtonItem");
+		App.WaitForElement("Click Me");
+		App.Tap("Click Me");
+		App.WaitForNoElement("Click Me");
 	}
 
 	[Test]
@@ -507,8 +507,8 @@ public class SwipeViewFeatureTests : UITest
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
-		App.WaitForElement("SwipeBehaviorOnInvokedRemainOpen");
-		App.Tap("SwipeBehaviorOnInvokedRemainOpen");
+		App.WaitForElement("RemainOpenSwipeBehavior");
+		App.Tap("RemainOpenSwipeBehavior");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("SwipeViewControl");
@@ -524,8 +524,8 @@ public class SwipeViewFeatureTests : UITest
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
-		App.WaitForElement("SwipeBehaviorOnInvokedClose");
-		App.Tap("SwipeBehaviorOnInvokedClose");
+		App.WaitForElement("CloseSwipeBehavior");
+		App.Tap("CloseSwipeBehavior");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("SwipeViewControl");
@@ -559,8 +559,8 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("ExecuteSwipeMode");
 		App.Tap("ExecuteSwipeMode");
-		App.WaitForElement("SwipeBehaviorOnInvokedRemainOpen");
-		App.Tap("SwipeBehaviorOnInvokedRemainOpen");
+		App.WaitForElement("RemainOpenSwipeBehavior");
+		App.Tap("RemainOpenSwipeBehavior");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("SwipeViewControl");
@@ -578,8 +578,8 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("ExecuteSwipeMode");
 		App.Tap("ExecuteSwipeMode");
-		App.WaitForElement("SwipeBehaviorOnInvokedClose");
-		App.Tap("SwipeBehaviorOnInvokedClose");
+		App.WaitForElement("CloseSwipeBehavior");
+		App.Tap("CloseSwipeBehavior");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("SwipeViewControl");
@@ -649,7 +649,7 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("Apply");
 		App.WaitForElement("SwipeViewControl");
 		App.ScrollDown("SwipeViewControl");
-		App.WaitForElement("SwipeIconItem");
+		App.WaitForElement("Icon");
 	}
 
 	[Test]
@@ -664,7 +664,7 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("Apply");
 		App.WaitForElement("SwipeViewControl");
 		App.ScrollDown("SwipeViewControl");
-		App.WaitForElement("SwipeButtonItem");
+		App.WaitForElement("Click Me");
 	}
 
 	[Test]
@@ -679,7 +679,7 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("LabelSwipeItem");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
+		App.WaitForElement("SwipeViewCollectionItem");
 		App.SwipeRightToLeft("Item 3");
 		App.SwipeRightToLeft("Item 6");
 		App.WaitForElement("Label");
@@ -698,10 +698,10 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("IconImageSourceSwipeItem");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
+		App.WaitForElement("SwipeViewCollectionItem");
 		App.SwipeRightToLeft("Item 2");
 		App.SwipeRightToLeft("Item 4");
-		App.WaitForElement("SwipeIconItem");
+		App.WaitForElement("Icon");
 		VerifyScreenshot();
 	}
 
@@ -717,10 +717,10 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("ButtonSwipeItem");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
+		App.WaitForElement("SwipeViewCollectionItem");
 		App.SwipeRightToLeft("Item 1");
 		App.SwipeRightToLeft("Item 5");
-		App.WaitForElement("SwipeButtonItem");
+		App.WaitForElement("Click Me");
 		VerifyScreenshot();
 	}
 
@@ -736,8 +736,8 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("LabelSwipeItem");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
-		App.SwipeRightToLeft("SwipeViewControl");
+		App.WaitForElement("SwipeViewImage");
+		App.SwipeRightToLeft("SwipeViewImage");
 		App.WaitForElement("Label");
 	}
 
@@ -753,9 +753,9 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("IconImageSourceSwipeItem");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
-		App.SwipeRightToLeft("SwipeViewControl");
-		App.WaitForElement("SwipeIconItem");
+		App.WaitForElement("SwipeViewImage");
+		App.SwipeRightToLeft("SwipeViewImage");
+		App.WaitForElement("Icon");
 	}
 
 	[Test]
@@ -770,9 +770,9 @@ public class SwipeViewFeatureTests : UITest
 		App.Tap("ButtonSwipeItem");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("SwipeViewControl");
-		App.SwipeRightToLeft("SwipeViewControl");
-		App.WaitForElement("SwipeButtonItem");
+		App.WaitForElement("SwipeViewImage");
+		App.SwipeRightToLeft("SwipeViewImage");
+		App.WaitForElement("Click Me");
 	}
 
 	[Test]
