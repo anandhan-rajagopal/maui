@@ -4,7 +4,7 @@ using UITest.Appium;
 using UITest.Core;
 namespace Microsoft.Maui.TestCases.Tests;
 
-public class WebViewFeatureMatrixTests : UITest
+public class WebViewFeatureTests : UITest
 {
 	public const string WebViewFeatureMatrix = "WebView Feature Matrix";
 	public const string Options = "Options";
@@ -22,7 +22,7 @@ public class WebViewFeatureMatrixTests : UITest
 	public const string AddTestCookieButton = "AddTestCookieButton";
 	public const string ClearCookiesButton = "ClearCookiesButton";
 	public const string CookieStatusMainLabel = "CookieStatusMainLabel";
-	public WebViewFeatureMatrixTests(TestDevice device)
+	public WebViewFeatureTests(TestDevice device)
 		: base(device)
 	{
 	}
