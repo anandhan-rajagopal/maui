@@ -114,10 +114,8 @@ public class SwipeViewControlMainPage : ContentPage
 				var image = new Image
 				{
 					Source = "dotnet_bot.png",
-					Aspect = Aspect.AspectFit,
 					HeightRequest = 150,
 					WidthRequest = 150,
-					VerticalOptions = LayoutOptions.Center,
 					AutomationId = "SwipeViewImage"
 				};
 
