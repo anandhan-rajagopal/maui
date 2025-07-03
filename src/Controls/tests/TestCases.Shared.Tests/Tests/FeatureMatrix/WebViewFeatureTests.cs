@@ -168,6 +168,45 @@ public class WebViewFeatureTests : UITest
 
 	[Test]
 	[Category(UITestCategories.WebView)]
+	public void WebView_TestCookieManagement_VerifyAddCookieWithUrlSource()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(GithubUrlButton);
+		App.Tap(GithubUrlButton);
+		App.WaitForElement(AddTestCookieButton);
+		App.Tap(AddTestCookieButton);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElementTillPageNavigationSettled(Options);
+		var cookiesStatusText = App.FindElement(CookieStatusMainLabel).GetText();
+		Assert.That(cookiesStatusText, Does.Contain("Domain: github.com").And.Contain("Count: 1").And.Contain("DotNetMAUICookie = My cookie"));
+	}
+
+	[Test]
+	[Category(UITestCategories.WebView)]
+	public void WebView_TestCookieManagement_VerifyAddCookieAndEvaluateJavaScript()
+	{
+		App.WaitForElement(Options);
+		App.Tap(Options);
+		App.WaitForElement(AddTestCookieButton);
+		App.Tap(AddTestCookieButton);
+		App.WaitForElement(HtmlSourceButton);
+		App.Tap(HtmlSourceButton);
+		App.WaitForElement(Apply);
+		App.Tap(Apply);
+		App.WaitForElementTillPageNavigationSettled(Options);
+		App.WaitForElement(EvaluateJSButton);
+		App.Tap(EvaluateJSButton);
+		App.WaitForElement(JSResultLabel);
+		var jsResult = App.FindElement(JSResultLabel).GetText();
+		Assert.That(jsResult, Is.EqualTo("JS Result: HTML WebView Source"));
+		var cookiesStatusText = App.FindElement(CookieStatusMainLabel).GetText();
+		Assert.That(cookiesStatusText, Does.Contain("Domain: localhost").And.Contain("Count: 1").And.Contain("DotNetMAUICookie = My cookie"));
+	}
+
+	[Test]
+	[Category(UITestCategories.WebView)]
 	public void WebView_TestClearCookies_VerifyCookiesCleared()
 	{
 		App.WaitForElement(Options);
@@ -187,17 +226,14 @@ public class WebViewFeatureTests : UITest
 	{
 		App.WaitForElement(Options);
 		App.Tap(Options);
-		App.WaitForElement(HtmlSourceButton);
-		App.Tap(HtmlSourceButton);
+		App.WaitForElement(GithubUrlButton);
+		App.Tap(GithubUrlButton);
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
 		App.WaitForElement("ReloadButton");
 		App.Tap("ReloadButton");
-		App.WaitForElement(EvaluateJSButton);
-		App.Tap(EvaluateJSButton);
-		App.WaitForElement(JSResultLabel);
-		var jsResult = App.FindElement(JSResultLabel).GetText();
-		Assert.That(jsResult, Is.EqualTo("JS Result: HTML WebView Source"));
+		var navigatedText = App.FindElement(NavigatedStatusLabel).GetText();
+		Assert.That(navigatedText, Is.EqualTo("Navigated: Success"));
 	}
 
 	[Test]
@@ -250,6 +286,7 @@ public class WebViewFeatureTests : UITest
 		App.WaitForNoElement(WebViewControl);
 	}
 
+#if TEST_FAILS_ON_WINDOWS // Issue Link: https://github.com/dotnet/maui/issues/29812
 	[Test]
 	[Category(UITestCategories.WebView)]
 	public void VerfiyWebViewWithShadow()
@@ -260,7 +297,8 @@ public class WebViewFeatureTests : UITest
 		App.Tap("ShadowTrue");
 		App.WaitForElement(Apply);
 		App.Tap(Apply);
-		App.WaitForElementTillPageNavigationSettled(Options);
+		App.WaitForElementTillPageNavigationSettled(Options, timeout: TimeSpan.FromSeconds(3));
 		VerifyScreenshot();
 	}
+#endif
 }

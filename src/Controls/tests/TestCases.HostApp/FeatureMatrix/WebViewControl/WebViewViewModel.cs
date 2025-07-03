@@ -52,7 +52,6 @@ public class WebViewViewModel : INotifyPropertyChanged
                 <footer style='margin-top:40px; font-size:0.9em; color:gray;'>Generated for testing WebView features.</footer>
             </body>
             </html>",
-			BaseUrl = "https://localhost/"
 		};
 		GoBackCommand = new Command(OnGoBack, () => CanGoBack);
 		GoForwardCommand = new Command(OnGoForward, () => CanGoForward);
@@ -332,15 +331,39 @@ public class WebViewViewModel : INotifyPropertyChanged
 		}
 		return "unknown";
 	}
+
 	private bool IsSystemCookie(string name)
 	{
 		var excluded = new[] { "TestCookie", "SessionId" };
 		return excluded.Contains(name, StringComparer.OrdinalIgnoreCase);
 	}
+
 	public void OnNavigating(object sender, WebNavigatingEventArgs e)
 	{
-		NavigatingStatus = $"Navigating to: {e.Url}";
+
+		if (Source is HtmlWebViewSource)
+		{
+			NavigatingStatus = "Navigating to: Embedded HTML";
+		}
+		else if (Source is UrlWebViewSource)
+		{
+			try
+			{
+				var uri = new Uri(e.Url);
+				NavigatingStatus = $"Navigating to: {uri.Host}";
+			}
+			catch
+			{
+				var shortUrl = e.Url?.Length > 40 ? e.Url.Substring(0, 40) + "..." : e.Url;
+				NavigatingStatus = $"Navigating to: {shortUrl}";
+			}
+		}
+		else
+		{
+			NavigatingStatus = "Navigating...";
+		}
 	}
+
 	public void OnNavigated(object sender, WebNavigatedEventArgs e)
 	{
 		NavigatedStatus = $"Navigated: {e.Result}";

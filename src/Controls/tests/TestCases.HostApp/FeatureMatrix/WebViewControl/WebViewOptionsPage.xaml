@@ -54,9 +54,6 @@
       <Button Text="Multiple Pages"
               Clicked="LoadMultiplePages_Clicked"
               AutomationId="LoadMultiplePagesButton"/>
-      <Button Text="Alert Function"
-              Clicked="TestAlertFunction_Clicked"
-              AutomationId="TestAlertFunctionButton"/>
     </HorizontalStackLayout>
     <Label Text="Is Visible"
            FontSize="16"
