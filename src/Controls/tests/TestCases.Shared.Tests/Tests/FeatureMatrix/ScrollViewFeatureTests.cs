@@ -921,7 +921,6 @@ public class ScrollViewFeatureTests : UITest
 		Assert.That(scrollY, Is.GreaterThan("0"), "ScrollY should not be zero after scrolling down with Orientation Both");
 	}
 
-
 	[Test]
 	[Category(UITestCategories.ScrollView)]
 	public void VerifyScrollViewWithOrientationNeither()
