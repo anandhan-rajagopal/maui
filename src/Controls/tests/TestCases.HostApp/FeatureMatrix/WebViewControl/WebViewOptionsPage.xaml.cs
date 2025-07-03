@@ -4,22 +4,22 @@ namespace Maui.Controls.Sample;
 
 public partial class WebViewOptionsPage : ContentPage
 {
-    private WebViewViewModel _viewModel;
-    public WebViewOptionsPage(WebViewViewModel viewModel)
-    {
-        InitializeComponent();
-        _viewModel = viewModel;
-        BindingContext = _viewModel;
-    }
-    private async void ApplyButton_Clicked(object sender, EventArgs e)
-    {
-        await Navigation.PopAsync();
-    }
-    private void OnHtmlSourceClicked(object sender, EventArgs e)
-    {
-        _viewModel.Source = new HtmlWebViewSource
-        {
-            Html = @"
+	private WebViewViewModel _viewModel;
+	public WebViewOptionsPage(WebViewViewModel viewModel)
+	{
+		InitializeComponent();
+		_viewModel = viewModel;
+		BindingContext = _viewModel;
+	}
+	private async void ApplyButton_Clicked(object sender, EventArgs e)
+	{
+		await Navigation.PopAsync();
+	}
+	private void OnHtmlSourceClicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new HtmlWebViewSource
+		{
+			Html = @"
             <html>
             <head>
                 <title>HTML WebView Source</title>
@@ -45,30 +45,30 @@ public partial class WebViewOptionsPage : ContentPage
                 <footer style='margin-top:40px; font-size:0.9em; color:gray;'>Generated for testing WebView features.</footer>
             </body>
             </html>",
-        };
-    }
+		};
+	}
 
-    private void OnMicrosoftUrlClicked(object sender, EventArgs e)
-    {
-        _viewModel.Source = new UrlWebViewSource
-        {
-            Url = "https://www.microsoft.com"
-        };
-    }
+	private void OnMicrosoftUrlClicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new UrlWebViewSource
+		{
+			Url = "https://www.microsoft.com"
+		};
+	}
 
-    private void OnGithubUrlClicked(object sender, EventArgs e)
-    {
-        _viewModel.Source = new UrlWebViewSource
-        {
-            Url = "https://github.com/dotnet/maui"
-        };
-    }
+	private void OnGithubUrlClicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new UrlWebViewSource
+		{
+			Url = "https://github.com/dotnet/maui"
+		};
+	}
 
-    private void LoadMultiplePages_Clicked(object sender, EventArgs e)
-    {
-        _viewModel.Source = new HtmlWebViewSource
-        {
-            Html = @"
+	private void LoadMultiplePages_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new HtmlWebViewSource
+		{
+			Html = @"
     <!DOCTYPE html>
     <html>
     <head>
@@ -95,32 +95,32 @@ public partial class WebViewOptionsPage : ContentPage
         <p><a href='https://github.com/dotnet/maui'>Go to Page 3 (GitHub)</a></p>
     </body>
     </html>"
-        };
-    }
+		};
+	}
 
-    private void AddTestCookie_Clicked(object sender, EventArgs e)
-    {
-        _viewModel.AddTestCookies();
-    }
+	private void AddTestCookie_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.AddTestCookies();
+	}
 
-    private void ClearCookies_Clicked(object sender, EventArgs e)
-    {
-        _viewModel.ClearCookiesForCurrentSource();
-    }
+	private void ClearCookies_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.ClearCookiesForCurrentSource();
+	}
 
-    private void TestDocumentTitle_Clicked(object sender, EventArgs e)
-    {
-        _viewModel.Source = new HtmlWebViewSource
-        {
-            Html = "<html><head><title>WebView Test Page</title></head><body><h1>Page with Title</h1><p>This page has a title that can be retrieved via JavaScript.</p></body></html>"
-        };
-    }
+	private void TestDocumentTitle_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new HtmlWebViewSource
+		{
+			Html = "<html><head><title>WebView Test Page</title></head><body><h1>Page with Title</h1><p>This page has a title that can be retrieved via JavaScript.</p></body></html>"
+		};
+	}
 
-    private void LoadPage1_Clicked(object sender, EventArgs e)
-    {
-        _viewModel.Source = new HtmlWebViewSource
-        {
-            Html = @"<!DOCTYPE html>
+	private void LoadPage1_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new HtmlWebViewSource
+		{
+			Html = @"<!DOCTYPE html>
         <html>
         <head>
             <title>Navigation Test - Page 1</title>
@@ -157,14 +157,14 @@ public partial class WebViewOptionsPage : ContentPage
             </script>
         </body>
         </html>",
-        };
-    }
+		};
+	}
 
-    private void LoadPage2_Clicked(object sender, EventArgs e)
-    {
-        _viewModel.Source = new HtmlWebViewSource
-        {
-            Html = @"<!DOCTYPE html>
+	private void LoadPage2_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.Source = new HtmlWebViewSource
+		{
+			Html = @"<!DOCTYPE html>
         <html>
         <head>
             <title>Navigation Test - Page 2</title>
@@ -182,29 +182,29 @@ public partial class WebViewOptionsPage : ContentPage
             </script>
         </body>
         </html>",
-        };
-    }
+		};
+	}
 
-    private void IsVisibleRadio_CheckedChanged(object sender, CheckedChangedEventArgs e)
-    {
-        if (!(sender is RadioButton rb) || !rb.IsChecked)
-            return;
-        _viewModel.IsVisible = rb.Content?.ToString() == "True";
-    }
+	private void IsVisibleRadio_CheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		if (!(sender is RadioButton rb) || !rb.IsChecked)
+			return;
+		_viewModel.IsVisible = rb.Content?.ToString() == "True";
+	}
 
-    private void ShadowRadio_CheckedChanged(object sender, CheckedChangedEventArgs e)
-    {
-        if (e.Value && BindingContext is WebViewViewModel vm)
-        {
-            var rb = sender as RadioButton;
-            if (rb?.Content?.ToString() == "True")
-            {
-                vm.Shadow = new Shadow { Brush = Brush.Black, Offset = new Point(5, 5), Radius = 5, Opacity = 0.5f };
-            }
-            else if (rb?.Content?.ToString() == "False")
-            {
-                vm.Shadow = null!;
-            }
-        }
-    }
+	private void ShadowRadio_CheckedChanged(object sender, CheckedChangedEventArgs e)
+	{
+		if (e.Value && BindingContext is WebViewViewModel vm)
+		{
+			var rb = sender as RadioButton;
+			if (rb?.Content?.ToString() == "True")
+			{
+				vm.Shadow = new Shadow { Brush = Brush.Black, Offset = new Point(5, 5), Radius = 5, Opacity = 0.5f };
+			}
+			else if (rb?.Content?.ToString() == "False")
+			{
+				vm.Shadow = null!;
+			}
+		}
+	}
 }
