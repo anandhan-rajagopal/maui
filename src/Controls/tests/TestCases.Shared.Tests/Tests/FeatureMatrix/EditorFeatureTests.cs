@@ -56,7 +56,7 @@ public class EditorFeatureTests : UITest
 		App.WaitForElement("TestEditor");
 		App.ClearText("TestEditor");
 		App.EnterText("TestEditor", "New Text");
-
+		App.DismissKeyboard();
 #if !ANDROID
 		Assert.That(App.WaitForElement("TextChangedLabel").GetText(), Is.EqualTo("TextChanged: Old='New Tex', New='New Text'"));
 #else
@@ -109,7 +109,7 @@ public class EditorFeatureTests : UITest
 		VerifyScreenshot(cropBottom: CropBottomValue);
 	}
 
-#if TEST_FAILS_ON_ANDROID //After setting IsReadOnly to true, the Cursor remains visible on Android even when IsCursorVisible is set to false, which is not the expected behavior.
+#if TEST_FAILS_ON_ANDROID // On Android, using App.EnterText in UI tests (e.g., with Appium UITest) can programmatically enter text into an Editor control even if its IsReadOnly property is set to true.
 	[Test]
 	public void VerifyTextEditorWhenSetAsReadOnly()
 	{
@@ -120,7 +120,6 @@ public class EditorFeatureTests : UITest
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("TestEditor");
-		// On Android, using App.EnterText in UI tests (e.g., with Appium UITest) can programmatically enter text into an Editor control even if its IsReadOnly property is set to true.
 		App.EnterText("TestEditor", "123");
 		Assert.That(App.WaitForElement("TestEditor").GetText(), Is.EqualTo("Test Editor"));
 	}
@@ -238,7 +237,7 @@ public class EditorFeatureTests : UITest
 		Assert.That(App.WaitForElement("TestEditor").GetText(), Is.EqualTo("Test E"));
 	}
 
-#if TEST_FAILS_ON_ANDROID //After setting IsReadOnly to true, the Cursor remains visible on Android even when IsCursorVisible is set to false, which is not the expected behavior.
+#if TEST_FAILS_ON_ANDROID // On Android, using App.EnterText in UI tests (e.g., with Appium UITest) can programmatically enter text into an Editor control even if its IsReadOnly property is set to true.
 	[Test]
 	public void VerifyMaxLengthWhenIsReadOnlyTrue()
 	{
@@ -255,7 +254,6 @@ public class EditorFeatureTests : UITest
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("TestEditor");
-		// On Android, using App.EnterText in UI tests (e.g., with Appium UITest) can programmatically enter text into an Editor control even if its IsReadOnly property is set to true.
 		App.EnterText("TestEditor", "123");
 		Assert.That(App.WaitForElement("TestEditor").GetText(), Is.EqualTo("Test E"));
 
@@ -373,7 +371,7 @@ public class EditorFeatureTests : UITest
 		App.WaitForElement("TestEditor");
 		App.Tap("TestEditor");
 		App.DismissKeyboard();
-		Assert.That(App.WaitForElement("CursorPositionEntry").GetText(), Is.EqualTo("10"));
+		Assert.That(App.WaitForElement("CursorPositionEntry").GetText(), Is.EqualTo("11"));
 	}
 
 	[Test]
@@ -395,12 +393,11 @@ public class EditorFeatureTests : UITest
 		App.WaitForElement("TestEditor");
 		App.Tap("TestEditor");
 		App.DismissKeyboard();
-		Assert.That(App.WaitForElement("CursorPositionEntry").GetText(), Is.EqualTo("10"));
+		Assert.That(App.WaitForElement("CursorPositionEntry").GetText(), Is.EqualTo("11"));
 		Assert.That(App.WaitForElement("SelectionLengthEntry").GetText(), Is.EqualTo("0"));
 	}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_WINDOWS // On Windows, cursor position and selection length still work when the Entry is set to read-only  
-	//On android After setting IsReadOnly to true, the Cursor remains visible on Android even when IsCursorVisible is set to false, which is not the expected behavior.
+#if TEST_FAILS_ON_WINDOWS // On Windows, cursor position and selection length still work when the Entry is set to read-only
 	[Test]
 	public void VerifyCursorPositionWhenIsReadOnlyTrue()
 	{
@@ -436,7 +433,7 @@ public class EditorFeatureTests : UITest
 #endif
 
 #if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS //keybord type is not supported on Windows and Maccatalyst platforms
-	[Test]
+	[Test, Order(5)]
 	public void VerifyTextWhenKeyboardTypeSet()
 	{
 		App.WaitForElement("Options");
@@ -447,7 +444,7 @@ public class EditorFeatureTests : UITest
 		App.Tap("Apply");
 		App.WaitForElement("TestEditor");
 		App.Tap("TestEditor");
-		VerifyScreenshotWithKeyboardHandling();
+		VerifyScreenshot();
 	}
 
 #if TEST_FAILS_ON_ANDROID //related issue:https://github.com/dotnet/maui/issues/26968
@@ -489,7 +486,6 @@ public class EditorFeatureTests : UITest
 		App.WaitForElement("TestEditor");
 		App.EnterText("TestEditor", "123");
 		Assert.That(App.WaitForElement("TestEditor").GetText(), Is.EqualTo("Test Editor"));
-
 	}
 #endif
 
@@ -606,7 +602,37 @@ public class EditorFeatureTests : UITest
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("TestEditor");
-		Assert.That(App.WaitForElement("TestEditor").GetText(), Is.EqualTo("TEST ENTRY"));
+		Assert.That(App.WaitForElement("TestEditor").GetText(), Is.EqualTo("TEST EDITOR"));
+	}
+
+	[Test]
+	public void VerifyTextWhenAutoSizeTextChangesSet()
+	{
+		App.WaitForElement("Options");
+		App.Tap("Options");
+		App.WaitForElement("AutoSizeTextChanges");
+		App.Tap("AutoSizeTextChanges");
+		App.WaitForElement("FontSizeEntry");
+		App.ClearText("FontSizeEntry");
+		App.EnterText("FontSizeEntry", "30");
+		App.WaitForElement("Apply");
+		App.Tap("Apply");
+		App.WaitForElement("TestEditor");
+		VerifyScreenshotWithKeyboardHandling();
+	}
+
+	[Test]
+	public void VerifyTextWhenAutoSizeDisabled()
+	{
+		App.WaitForElement("Options");
+		App.Tap("Options");
+		App.WaitForElement("FontSizeEntry");
+		App.ClearText("FontSizeEntry");
+		App.EnterText("FontSizeEntry", "30");
+		App.WaitForElement("Apply");
+		App.Tap("Apply");
+		App.WaitForElement("TestEditor");
+		VerifyScreenshotWithKeyboardHandling();
 	}
 
 #if TEST_FAILS_ON_WINDOWS //related issue link: https://github.com/dotnet/maui/issues/29812
@@ -640,20 +666,6 @@ public class EditorFeatureTests : UITest
 		VerifyScreenshot(cropBottom: CropBottomValue);
 	}
 #endif
-
-	[Test]
-	public void VerifyPlaceholderWithClearButtonVisible()
-	{
-		App.WaitForElement("Options");
-		App.Tap("Options");
-		App.WaitForElement("TextEntryChanged");
-		App.ClearText("TextEntryChanged");
-		App.WaitForElement("Apply");
-		App.Tap("Apply");
-		App.WaitForElement("TestEditor");
-		App.Tap("TestEditor");
-		VerifyScreenshotWithKeyboardHandling("PlaceholderWithClearButtonVisible");
-	}
 
 	[Test]
 	public void VerifyPlaceholderWithHorizontalAlignment()
@@ -741,6 +753,40 @@ public class EditorFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("FontAttributesItalic");
 		App.Tap("FontAttributesItalic");
+		App.WaitForElement("TextEntryChanged");
+		App.ClearText("TextEntryChanged");
+		App.WaitForElement("Apply");
+		App.Tap("Apply");
+		App.WaitForElement("TestEditor");
+		VerifyScreenshot(cropBottom: CropBottomValue);
+	}
+
+	[Test]
+	public void VerifyPlaceholderWithAutoSzizeDiabled()
+	{
+		App.WaitForElement("Options");
+		App.Tap("Options");
+		App.WaitForElement("FontSizeEntry");
+		App.ClearText("FontSizeEntry");
+		App.EnterText("FontSizeEntry", "30");
+		App.WaitForElement("TextEntryChanged");
+		App.ClearText("TextEntryChanged");
+		App.WaitForElement("Apply");
+		App.Tap("Apply");
+		App.WaitForElement("TestEditor");
+		VerifyScreenshot(cropBottom: CropBottomValue);
+	}
+
+	[Test]
+	public void VerifyPlaceholderWithAutoSizeTextChanges()
+	{
+		App.WaitForElement("Options");
+		App.Tap("Options");
+		App.WaitForElement("AutoSizeTextChanges");
+		App.Tap("AutoSizeTextChanges");
+		App.WaitForElement("FontSizeEntry");
+		App.ClearText("FontSizeEntry");
+		App.EnterText("FontSizeEntry", "30");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
