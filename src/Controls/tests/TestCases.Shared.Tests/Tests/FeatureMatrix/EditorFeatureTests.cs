@@ -526,6 +526,9 @@ public class EditorFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("FlowDirectionRightToLeft");
 		App.Tap("FlowDirectionRightToLeft");
+		App.WaitForElement("PlaceholderText");
+		App.ClearText("PlaceholderText");
+		App.EnterText("PlaceholderText", "Enter your name");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
@@ -543,11 +546,10 @@ public class EditorFeatureTests : UITest
 		App.WaitForElement("PlaceholderText");
 		App.ClearText("PlaceholderText");
 		App.EnterText("PlaceholderText", "Enter your name");
+		App.WaitForElement("TextEntryChanged");
+		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
-		App.WaitForElement("TestEditor");
-		App.ClearText("TestEditor");
-		App.DismissKeyboard();
 		VerifyScreenshot(cropBottom: CropBottomValue);
 	}
 
@@ -558,11 +560,14 @@ public class EditorFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("PlaceholderColorRed");
 		App.Tap("PlaceholderColorRed");
+		App.WaitForElement("PlaceholderText");
+		App.ClearText("PlaceholderText");
+		App.EnterText("PlaceholderText", "Enter your name");
+		App.WaitForElement("TextEntryChanged");
+		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("TestEditor");
-		App.ClearText("TestEditor");
-		App.DismissKeyboard();
 		VerifyScreenshot(cropBottom: CropBottomValue);
 	}
 
@@ -658,6 +663,9 @@ public class EditorFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("ShadowCheckBox");
 		App.Tap("ShadowCheckBox");
+		App.WaitForElement("PlaceholderText");
+		App.ClearText("PlaceholderText");
+		App.EnterText("PlaceholderText", "Enter your name");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
@@ -674,6 +682,9 @@ public class EditorFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("HCenter");
 		App.Tap("HCenter");
+		App.WaitForElement("PlaceholderText");
+		App.ClearText("PlaceholderText");
+		App.EnterText("PlaceholderText", "Enter your name");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
@@ -689,6 +700,9 @@ public class EditorFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("VStart");
 		App.Tap("VStart");
+		App.WaitForElement("PlaceholderText");
+		App.ClearText("PlaceholderText");
+		App.EnterText("PlaceholderText", "Enter your name");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
@@ -706,6 +720,9 @@ public class EditorFeatureTests : UITest
 		App.WaitForElement("CharacterSpacing");
 		App.ClearText("CharacterSpacing");
 		App.EnterText("CharacterSpacing", "5");
+		App.WaitForElement("PlaceholderText");
+		App.ClearText("PlaceholderText");
+		App.EnterText("PlaceholderText", "Enter your name");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
@@ -722,6 +739,9 @@ public class EditorFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("FontFamily");
 		App.EnterText("FontFamily", "MontserratBold");
+		App.WaitForElement("PlaceholderText");
+		App.ClearText("PlaceholderText");
+		App.EnterText("PlaceholderText", "Enter your name");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
@@ -738,6 +758,9 @@ public class EditorFeatureTests : UITest
 		App.WaitForElement("FontSizeEntry");
 		App.ClearText("FontSizeEntry");
 		App.EnterText("FontSizeEntry", "20");
+		App.WaitForElement("PlaceholderText");
+		App.ClearText("PlaceholderText");
+		App.EnterText("PlaceholderText", "Enter your name");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
@@ -753,6 +776,9 @@ public class EditorFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("FontAttributesItalic");
 		App.Tap("FontAttributesItalic");
+		App.WaitForElement("PlaceholderText");
+		App.ClearText("PlaceholderText");
+		App.EnterText("PlaceholderText", "Enter your name");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
@@ -769,6 +795,9 @@ public class EditorFeatureTests : UITest
 		App.WaitForElement("FontSizeEntry");
 		App.ClearText("FontSizeEntry");
 		App.EnterText("FontSizeEntry", "30");
+		App.WaitForElement("PlaceholderText");
+		App.ClearText("PlaceholderText");
+		App.EnterText("PlaceholderText", "Enter your name");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
@@ -784,6 +813,9 @@ public class EditorFeatureTests : UITest
 		App.Tap("Options");
 		App.WaitForElement("AutoSizeTextChanges");
 		App.Tap("AutoSizeTextChanges");
+		App.WaitForElement("PlaceholderText");
+		App.ClearText("PlaceholderText");
+		App.EnterText("PlaceholderText", "Enter your name");
 		App.WaitForElement("FontSizeEntry");
 		App.ClearText("FontSizeEntry");
 		App.EnterText("FontSizeEntry", "30");
