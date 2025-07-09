@@ -87,6 +87,7 @@ namespace Maui.Controls.Sample
 			new GalleryPageFactory(() => new LabelControlPage(), "Label Feature Matrix"),
 			new GalleryPageFactory(() => new CarouselViewFeaturePage(), "CarouselView Feature Matrix"),
 			new GalleryPageFactory(() => new BoxViewControlPage(), "BoxView Feature Matrix"),
+			new GalleryPageFactory(() => new WebViewControlPage(), "WebView Feature Matrix"),
 		};
 
 		public CorePageView(Page rootPage)
@@ -135,7 +136,7 @@ namespace Maui.Controls.Sample
 				{
 					var realize = page.Realize();
 
-				    Dispatcher.Dispatch(() => Application.Current.MainPage = realize);
+					Dispatcher.Dispatch(() => Application.Current.MainPage = realize);
 				}
 
 				SelectedItem = null;
