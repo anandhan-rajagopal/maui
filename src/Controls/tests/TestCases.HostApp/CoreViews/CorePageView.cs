@@ -92,7 +92,7 @@ namespace Maui.Controls.Sample
 			new GalleryPageFactory(() => new ImageControlPage(), "Image Feature Matrix"),
 			new GalleryPageFactory(() => new ImageButtonControlPage(), "ImageButton Feature Matrix"),
 			new GalleryPageFactory(() => new BoxViewControlPage(), "BoxView Feature Matrix"),
-			new GalleryPageFactory(() => new ToolbarFeaturePage(), "Toolbar Feature Matrix"),
+			new GalleryPageFactory(() => new EditorControlPage(), "Editor Feature Matrix"),
 		};
 
 		public CorePageView(Page rootPage)
@@ -141,7 +141,7 @@ namespace Maui.Controls.Sample
 				{
 					var realize = page.Realize();
 
-					Dispatcher.Dispatch(() => Application.Current.MainPage = realize);
+				    Dispatcher.Dispatch(() => Application.Current.MainPage = realize);
 				}
 
 				SelectedItem = null;
