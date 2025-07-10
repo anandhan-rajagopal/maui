@@ -31,6 +31,7 @@ public partial class EditorControlMainPage : ContentPage
         BindingContext = _viewModel = new EditorViewModel();
         _viewModel.Text = "Test Editor";
         _viewModel.Placeholder = "Enter text here";
+        _viewModel.VerticalTextAlignment = TextAlignment.End;
         _viewModel.CursorPosition = 0;
         _viewModel.SelectionLength = 0;
         await Navigation.PushAsync(new EditorOptionsPage(_viewModel));

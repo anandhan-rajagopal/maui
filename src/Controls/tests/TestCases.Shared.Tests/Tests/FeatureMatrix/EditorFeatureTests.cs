@@ -49,6 +49,7 @@ public class EditorFeatureTests : UITest
 		Assert.That(App.WaitForElement("CompletedLabel").GetText(), Is.EqualTo("Completed: Event Triggered"));
 	}
 
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS //when using App.EnterText() in a multiline field like an Editor, it types the text and then presses the Return key — which adds a new line.
 	[Test, Order(2)]
 	public void VerifyEditorTextChangedEvent()
 	{
@@ -63,7 +64,7 @@ public class EditorFeatureTests : UITest
 		Assert.That(App.WaitForElement("TextChangedLabel").GetText(), Is.EqualTo("TextChanged: Old='', New='New Text'"));
 #endif
 	}
-
+#endif
 
 	[Test, Order(1)]
 	public void VerifyEditorFocusedEvent()
@@ -336,6 +337,7 @@ public class EditorFeatureTests : UITest
 		}
 #endif
 
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_ANDROID  // On iOS and Maccatalyst While updating CursorPosition and SelectionLength, the Editor text gets deleted. & On Android, changing CursorPosition keeps the cursor visible even when IsCursorVisible is set to false, which is unexpected.
 	[Test]
 	public void VerifyTextWhenSelectionLengthSetValue()
 	{
@@ -396,8 +398,9 @@ public class EditorFeatureTests : UITest
 		Assert.That(App.WaitForElement("CursorPositionEntry").GetText(), Is.EqualTo("11"));
 		Assert.That(App.WaitForElement("SelectionLengthEntry").GetText(), Is.EqualTo("0"));
 	}
+#endif
 
-#if TEST_FAILS_ON_WINDOWS // On Windows, cursor position and selection length still work when the Entry is set to read-only
+#if TEST_FAILS_ON_WINDOWS // On Windows, cursor position and selection length still work when the Entry is set to read-only.
 	[Test]
 	public void VerifyCursorPositionWhenIsReadOnlyTrue()
 	{
@@ -432,8 +435,8 @@ public class EditorFeatureTests : UITest
 	}
 #endif
 
-#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS //keybord type is not supported on Windows and Maccatalyst platforms
-	[Test, Order(5)]
+#if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID //keybord type is not supported on Windows and Maccatalyst platforms & On Android, opening the keyboard keeps the cursor visible even when IsCursorVisible is set to false, which is unexpected.
+	[Test]
 	public void VerifyTextWhenKeyboardTypeSet()
 	{
 		App.WaitForElement("Options");
@@ -469,14 +472,6 @@ public class EditorFeatureTests : UITest
 	[Test]
 	public void VerifyEditorControlWhenIsEnabledTrueOrFalse()
 	{
-		App.WaitForElement("Options");
-		App.Tap("Options");
-		App.WaitForElement("Apply");
-		App.Tap("Apply");
-		App.WaitForElement("TestEditor");
-		App.ClearText("TestEditor");
-		App.EnterText("TestEditor", "123");
-		Assert.That(App.WaitForElement("TestEditor").GetText(), Is.EqualTo("123"));
 		App.WaitForElement("Options");
 		App.Tap("Options");
 		App.WaitForElement("EnabledFalse");

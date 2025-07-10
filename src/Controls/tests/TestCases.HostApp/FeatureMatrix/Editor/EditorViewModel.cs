@@ -12,7 +12,7 @@ public class EditorViewModel : INotifyPropertyChanged
     private double _fontSize = 14;
     private double _heightrequest = -1;
     private TextAlignment _horizontalTextAlignment = TextAlignment.Start;
-    private TextAlignment _verticalTextAlignment = TextAlignment.Center;
+    private TextAlignment _verticalTextAlignment = TextAlignment.End;
     private double _characterSpacing = 0;
     private ReturnType _returnType = ReturnType.Default;
     private int _maxLength = -1;
