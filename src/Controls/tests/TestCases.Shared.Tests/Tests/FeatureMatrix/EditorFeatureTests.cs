@@ -31,7 +31,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test, Order(0)]
-	public void VerifyInitialEventStates()
+	public void VerifyEditorInitialEventStates()
 	{
 		App.WaitForElement("TestEditor");
 		Assert.That(App.WaitForElement("UnfocusedLabel").GetText(), Is.EqualTo("Unfocused: Not triggered"));
@@ -86,7 +86,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyTextWhenAlingnedHorizontally()
+	public void VerifyEditorTextWhenAlingnedHorizontally()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -99,7 +99,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyTextWhenAlingnedVertically()
+	public void VerifyEditorTextWhenAlingnedVertically()
 	{
 		App.Tap("Options");
 		App.WaitForElement("VEnd");
@@ -127,7 +127,7 @@ public class EditorFeatureTests : UITest
 #endif
 
 	[Test]
-	public void VerifyTextWhenFontFamilySetValue()
+	public void VerifyEditorTextWhenFontFamilySetValue()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -140,7 +140,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyTextWhenCharacterSpacingSetValues()
+	public void VerifyEditorTextWhenCharacterSpacingSetValues()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -154,7 +154,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyHorizontalTextAlignmentBasedOnCharacterSpacing()
+	public void VerifyEditorHorizontalTextAlignmentBasedOnCharacterSpacing()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -170,7 +170,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyVerticalTextAlignmentBasedOnCharacterSpacing()
+	public void VerifyEditorVerticalTextAlignmentBasedOnCharacterSpacing()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -186,7 +186,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyCharacterSpacingWhenFontFamily()
+	public void VerifyEditorCharacterSpacingWhenFontFamily()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -202,7 +202,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyCharacterSpacingWhenMaxLengthSet()
+	public void VerifyEditorCharacterSpacingWhenMaxLengthSet()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -222,7 +222,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyTextWhenMaxLengthSetValue()
+	public void VerifyEditorTextWhenMaxLengthSetValue()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -240,7 +240,7 @@ public class EditorFeatureTests : UITest
 
 #if TEST_FAILS_ON_ANDROID // On Android, using App.EnterText in UI tests (e.g., with Appium UITest) can programmatically enter text into an Editor control even if its IsReadOnly property is set to true.
 	[Test]
-	public void VerifyMaxLengthWhenIsReadOnlyTrue()
+	public void VerifyEditorMaxLengthWhenIsReadOnlyTrue()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -262,7 +262,7 @@ public class EditorFeatureTests : UITest
 #endif
 
 	[Test]
-	public void VerifyHorizontalTextAlignmentWhenVerticalTextAlignmentSet()
+	public void VerifyEditorHorizontalTextAlignmentWhenVerticalTextAlignmentSet()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -277,7 +277,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyTextWhenTextColorSetCorrectly()
+	public void VerifyEditorTextWhenTextColorSetCorrectly()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -290,7 +290,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyTextWhenFontSizeSetCorrectly()
+	public void VerifyEditorTextWhenFontSizeSetCorrectly()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -305,7 +305,7 @@ public class EditorFeatureTests : UITest
 
 #if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS //related issue link: https://github.com/dotnet/maui/issues/29833
 		[Test]
-		public void VerifyTextWhenIsTextPredictionEnabledTrueOrFalse()
+		public void VerifyEditorTextWhenIsTextPredictionEnabledTrueOrFalse()
 		{
 			App.WaitForElement("Options");
 			App.Tap("Options");
@@ -321,7 +321,7 @@ public class EditorFeatureTests : UITest
 		}
 
 		[Test]
-		public void VerifyTextWhenIsSpellCheckEnabledTrueOrFalse()
+		public void VerifyEditorTextWhenIsSpellCheckEnabledTrueOrFalse()
 		{
 			App.WaitForElement("Options");
 			App.Tap("Options");
@@ -339,7 +339,7 @@ public class EditorFeatureTests : UITest
 
 #if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_ANDROID  // On iOS and Maccatalyst While updating CursorPosition and SelectionLength, the Editor text gets deleted. & On Android, changing CursorPosition keeps the cursor visible even when IsCursorVisible is set to false, which is unexpected.
 	[Test]
-	public void VerifyTextWhenSelectionLengthSetValue()
+	public void VerifyEditorTextWhenSelectionLengthSetValue()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -358,7 +358,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyTextWhenCursorPositionValueSet()
+	public void VerifyEditorTextWhenCursorPositionValueSet()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -377,7 +377,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyCursorPositionWhenSelectionLengthSetValue()
+	public void VerifyEditorCursorPositionWhenSelectionLengthSetValue()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -402,7 +402,7 @@ public class EditorFeatureTests : UITest
 
 #if TEST_FAILS_ON_WINDOWS // On Windows, cursor position and selection length still work when the Entry is set to read-only.
 	[Test]
-	public void VerifyCursorPositionWhenIsReadOnlyTrue()
+	public void VerifyEditorCursorPositionWhenIsReadOnlyTrue()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -416,7 +416,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifySelectionLenghtWhenIsReadOnlyTrue()
+	public void VerifyEditorSelectionLenghtWhenIsReadOnlyTrue()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -437,7 +437,7 @@ public class EditorFeatureTests : UITest
 
 #if TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_ANDROID //keybord type is not supported on Windows and Maccatalyst platforms & On Android, opening the keyboard keeps the cursor visible even when IsCursorVisible is set to false, which is unexpected.
 	[Test]
-	public void VerifyTextWhenKeyboardTypeSet()
+	public void VerifyEditorTextWhenKeyboardTypeSet()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -452,7 +452,7 @@ public class EditorFeatureTests : UITest
 
 #if TEST_FAILS_ON_ANDROID //related issue:https://github.com/dotnet/maui/issues/26968
 	[Test]
-	public void VerifyTextWhenReturnTypeSet()
+	public void VerifyEditorTextWhenReturnTypeSet()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -515,7 +515,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyPlaceholderWhenFlowDirectionSet()
+	public void VerifyEditorPlaceholderWhenFlowDirectionSet()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -580,7 +580,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyTextWhenFontAttributesSet()
+	public void VerifyEditorTextWhenFontAttributesSet()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -593,7 +593,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyTextWhenTextTransFormSet()
+	public void VerifyEditorTextWhenTextTransFormSet()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -606,15 +606,15 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyTextWhenAutoSizeTextChangesSet()
+	public void VerifyEditorTextWhenAutoSizeTextChangesSet()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
 		App.WaitForElement("AutoSizeTextChanges");
 		App.Tap("AutoSizeTextChanges");
-		App.WaitForElement("FontSizeEntry");
-		App.ClearText("FontSizeEntry");
-		App.EnterText("FontSizeEntry", "30");
+		App.WaitForElement("TextEntryChanged");
+		App.ClearText("TextEntryChanged");
+		App.EnterText("TextEntryChanged", "An Editor can be made to auto-size to its content by setting the Editor.AutoSize property to TextChanges");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("TestEditor");
@@ -622,13 +622,13 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyTextWhenAutoSizeDisabled()
+	public void VerifyEditorTextWhenAutoSizeDisabled()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
-		App.WaitForElement("FontSizeEntry");
-		App.ClearText("FontSizeEntry");
-		App.EnterText("FontSizeEntry", "30");
+		App.WaitForElement("TextEntryChanged");
+		App.ClearText("TextEntryChanged");
+		App.EnterText("TextEntryChanged", "Disabled indicates that automatic resizing is disabled, and is the default value");
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("TestEditor");
@@ -652,7 +652,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyPlaceholderWithShadow()
+	public void VerifyEditorPlaceholderWithShadow()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -671,7 +671,7 @@ public class EditorFeatureTests : UITest
 #endif
 
 	[Test]
-	public void VerifyPlaceholderWithHorizontalAlignment()
+	public void VerifyEditorPlaceholderWithHorizontalAlignment()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -689,7 +689,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyPlaceholderWithVerticalAlignment()
+	public void VerifyEditorPlaceholderWithVerticalAlignment()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -708,7 +708,7 @@ public class EditorFeatureTests : UITest
 
 #if TEST_FAILS_ON_WINDOWS //related issue link: https://github.com/dotnet/maui/issues/30071
 	[Test]
-	public void VerifyPlaceholderWithCharacterSpacing()
+	public void VerifyEditorPlaceholderWithCharacterSpacing()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -728,7 +728,7 @@ public class EditorFeatureTests : UITest
 #endif
 
 	[Test]
-	public void VerifyPlaceholderWithFontFamily()
+	public void VerifyEditorPlaceholderWithFontFamily()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -746,7 +746,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyPlaceholderWithFontSize()
+	public void VerifyEditorPlaceholderWithFontSize()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -765,7 +765,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyPlaceholderWithFontAttributes()
+	public void VerifyEditorPlaceholderWithFontAttributes()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -783,16 +783,13 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyPlaceholderWithAutoSzizeDiabled()
+	public void VerifyEditorPlaceholderWithAutoSizeDiabled()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
-		App.WaitForElement("FontSizeEntry");
-		App.ClearText("FontSizeEntry");
-		App.EnterText("FontSizeEntry", "30");
 		App.WaitForElement("PlaceholderText");
 		App.ClearText("PlaceholderText");
-		App.EnterText("PlaceholderText", "Enter your name");
+		App.EnterText("PlaceholderText", "Disabled indicates that automatic resizing is disabled, and is the default value");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
@@ -802,7 +799,7 @@ public class EditorFeatureTests : UITest
 	}
 
 	[Test]
-	public void VerifyPlaceholderWithAutoSizeTextChanges()
+	public void VerifyEditorPlaceholderWithAutoSizeTextChanges()
 	{
 		App.WaitForElement("Options");
 		App.Tap("Options");
@@ -810,10 +807,7 @@ public class EditorFeatureTests : UITest
 		App.Tap("AutoSizeTextChanges");
 		App.WaitForElement("PlaceholderText");
 		App.ClearText("PlaceholderText");
-		App.EnterText("PlaceholderText", "Enter your name");
-		App.WaitForElement("FontSizeEntry");
-		App.ClearText("FontSizeEntry");
-		App.EnterText("FontSizeEntry", "30");
+		App.EnterText("PlaceholderText", "An Editor can be made to auto-size to its content by setting the Editor.AutoSize property to TextChanges");
 		App.WaitForElement("TextEntryChanged");
 		App.ClearText("TextEntryChanged");
 		App.WaitForElement("Apply");
