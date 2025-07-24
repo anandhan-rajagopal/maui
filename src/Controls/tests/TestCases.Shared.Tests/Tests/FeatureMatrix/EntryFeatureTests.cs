@@ -93,7 +93,10 @@ public class EntryFeatureTests : UITest
 		App.WaitForElement("Apply");
 		App.Tap("Apply");
 		App.WaitForElement("TestEntry");
+		App.WaitForElement("Entry Control");
+#if !IOS
 		App.Tap("TestEntry");
+#endif
 		VerifyScreenshotWithKeyboardHandlingOrSetException(ref exception, "ClearButtonVisiblityButton_TextPresent");
 		App.WaitForElement("TestEntry");
 		App.ClearText("TestEntry");
