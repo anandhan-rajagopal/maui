@@ -12,13 +12,16 @@
              Margin="5,10,0,0">
 
               <!-- Button -->
-              <VerticalStackLayout Grid.Row="0"
-                                   Grid.Column="0"
-                                   Grid.ColumnSpan="2">
-                     <Button Text="App Theme Change"
-                             Clicked="OnButtonClicked"
-                             HorizontalOptions="Center"/>
-              </VerticalStackLayout>
+              <Button Grid.Row="0"
+                      Grid.Column="0"
+                      Text="Light Theme"
+                      Clicked="OnLightThemeButtonClicked"
+                      HorizontalOptions="Center"/>
+              <Button Grid.Row="0"
+                      Grid.Column="1"
+                      Text="Dark Theme"
+                      Clicked="OnDarkThemeButtonClicked"
+                      HorizontalOptions="Center"/>
 
               <!-- Border -->
               <HorizontalStackLayout Grid.Row="1"
@@ -38,7 +41,8 @@
                                      Grid.Column="1">
                      <Label Text="CheckBox: "
                             VerticalOptions="Center"/>
-                     <CheckBox IsChecked="true"/>
+                     <CheckBox IsChecked="true"
+                               Color="{AppThemeBinding Light=Blue, Dark=Red}"/>
               </HorizontalStackLayout>
 
               <!-- DatePicker -->
@@ -46,7 +50,8 @@
                                      Grid.Column="0">
                      <Label Text="DatePicker: "
                             VerticalOptions="Center"/>
-                     <DatePicker Date="06/21/2022"/>
+                     <DatePicker Date="06/21/2022"
+                                 TextColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
               </HorizontalStackLayout>
 
               <!-- Entry -->
@@ -54,7 +59,8 @@
                                      Grid.Column="1">
                      <Label Text="Entry: "
                             VerticalOptions="Center"/>
-                     <Entry Placeholder="Entry Placeholder"/>
+                     <Entry Text="Entry Text"
+                            TextColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
               </HorizontalStackLayout>
 
               <!-- RadioButton -->
@@ -64,9 +70,11 @@
                      <Label Text="RadioButton: "
                             VerticalOptions="Center"/>
                      <StackLayout>
-                            <RadioButton Content="Cat"/>
+                            <RadioButton Content="Cat"
+                                         TextColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
                             <RadioButton Content="Monkey"
-                                         IsChecked="true"/>
+                                         IsChecked="true"
+                                         TextColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
                      </StackLayout>
               </HorizontalStackLayout>
 
@@ -75,7 +83,8 @@
                                      Grid.Column="1">
                      <Label Text="Editor: "
                             VerticalOptions="Center"/>
-                     <Editor Placeholder="Editor Placeholder"
+                     <Editor Text="Editor Placeholder"
+                             TextColor="{AppThemeBinding Light=Blue, Dark=Red}"
                              WidthRequest="140"
                              HeightRequest="50"
                              VerticalOptions="Center"/>
@@ -108,7 +117,8 @@
                      <Label Text="Picker: "
                             VerticalOptions="Center"/>
                      <Picker x:Name="picker"
-                             Title="Select a monkey">
+                             Title="Select a monkey"
+                             TextColor="{AppThemeBinding Light=Blue, Dark=Red}">
                             <Picker.ItemsSource>
                                    <x:Array Type="{x:Type x:String}">
                                           <x:String>Baboon</x:String>
@@ -137,7 +147,8 @@
               <VerticalStackLayout Grid.Row="8"
                                    Grid.Column="0"
                                    Grid.ColumnSpan="2">
-                     <SearchBar Text="SearchBar Control"/>
+                     <SearchBar Text="SearchBar Control"
+                                TextColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
               </VerticalStackLayout>
 
               <!-- Slider -->
@@ -160,6 +171,7 @@
                      <Label Text="Label: "
                             VerticalOptions="Center"/>
                      <Label Text="Label Text"
+                            TextColor="{AppThemeBinding Light=Blue, Dark=Red}"
                             VerticalOptions="Center"/>
               </HorizontalStackLayout>
 
@@ -189,7 +201,8 @@
                                      Grid.Column="1">
                      <Label Text="TimePicker: "
                             VerticalOptions="Center"/>
-                     <TimePicker Time="4:15:26"/>
+                     <TimePicker Time="4:15:26"
+                                 TextColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
               </HorizontalStackLayout>
 
               <!-- TitleBar -->
@@ -198,7 +211,8 @@
                                      Grid.ColumnSpan="2">
                      <Label Text="TitleBar: "
                             VerticalOptions="Center"/>
-                     <TitleBar Title="My App"/>
+                     <TitleBar Title="My App"
+                               ForegroundColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
               </HorizontalStackLayout>
        </Grid>
 </ContentPage>
