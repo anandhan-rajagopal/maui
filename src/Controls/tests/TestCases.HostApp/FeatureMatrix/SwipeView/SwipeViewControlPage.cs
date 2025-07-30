@@ -44,7 +44,13 @@ public class SwipeViewControlMainPage : ContentPage
 				_viewModel.SwipeEndedText = "Swipe Ended: ";
 				_viewModel.SelectedSwipeItemType = "Label";
 				_viewModel.SelectedContentType = "Label";
-				await Navigation.PushAsync(new SwipeViewOptionsPage(_viewModel, this));
+				var optionsPage = new SwipeViewOptionsPage(viewModel, this);
+				optionsPage.SwipeViewOptionsApplied += (content, swipeItem) =>
+				{
+					UpdateSwipeViewContent(content, swipeItem);
+				};
+				await Navigation.PushAsync(optionsPage);
+
 			})
 		});
 

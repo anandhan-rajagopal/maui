@@ -21,11 +21,14 @@ public partial class SwipeViewOptionsPage : ContentPage
 		_selectedSwipeItem = viewModel.SelectedSwipeItemType;
 		SetInitialRadioSelections();
 	}
-
+	public event Action<string, string> SwipeViewOptionsApplied;
+ 
 	private async void ApplyButton_Clicked(object sender, EventArgs e)
 	{
+		_viewModel.SelectedContentType = _selectedContent;
+		_viewModel.SelectedSwipeItemType = _selectedSwipeItem;
+		SwipeViewOptionsApplied?.Invoke(_selectedContent, _selectedSwipeItem);
 		await Navigation.PopAsync();
-		_mainPage?.UpdateSwipeViewContent(_selectedContent, _selectedSwipeItem);
 	}
 
 	private void OnSwipeModeChanged(object sender, CheckedChangedEventArgs e)
