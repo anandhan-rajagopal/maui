@@ -7,16 +7,13 @@ public partial class AppThemePage : ContentPage
 		InitializeComponent();
 	}
 
-	public void OnButtonClicked(object sender, EventArgs e)
+	public void OnLightThemeButtonClicked(object sender, EventArgs e)
 	{
-		var currentTheme = Application.Current!.UserAppTheme;
+		Application.Current.UserAppTheme = AppTheme.Light;
+	}
 
-		Application.Current.UserAppTheme = currentTheme switch
-		{
-			AppTheme.Light => AppTheme.Dark,
-			AppTheme.Dark => AppTheme.Light,
-			AppTheme.Unspecified => AppTheme.Dark,
-			_ => AppTheme.Light
-		};
+	public void OnDarkThemeButtonClicked(object sender, EventArgs e)
+	{
+		Application.Current.UserAppTheme = AppTheme.Dark;
 	}
 }
