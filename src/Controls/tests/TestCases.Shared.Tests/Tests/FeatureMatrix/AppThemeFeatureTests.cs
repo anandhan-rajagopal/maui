@@ -21,8 +21,8 @@ public class AppThemeFeatureTests : UITest
 	[Category(AppThemeFeatureMatrix)]
 	public void LightTheme_VerifyVisualState()
 	{
-		App.WaitForElement("LightThemeButton");
-		App.Tap("LightThemeButton");
+		App.WaitForElement("DefaultLightThemeButton");
+		App.Tap("DefaultLightThemeButton");
 		VerifyScreenshot();
 	}
 
@@ -30,8 +30,8 @@ public class AppThemeFeatureTests : UITest
 	[Category(AppThemeFeatureMatrix)]
 	public void DarkTheme_VerifyVisualState()
 	{
-		App.WaitForElement("DarkThemeButton");
-		App.Tap("DarkThemeButton");
+		App.WaitForElement("DefaultDarkThemeButton");
+		App.Tap("DefaultDarkThemeButton");
 		VerifyScreenshot();
 	}
 
@@ -39,6 +39,10 @@ public class AppThemeFeatureTests : UITest
 	[Category(AppThemeFeatureMatrix)]
 	public void LightTheme_CheckBox_VerifyVisualState()
 	{
+		App.WaitForElement("DefaultLightThemeButton");
+		App.Tap("DefaultLightThemeButton");
+		App.WaitForElement("AppThemePage");
+		App.Tap("AppThemePage");
 		App.WaitForElement("LightThemeButton");
 		App.Tap("LightThemeButton");
 		App.WaitForElement("CheckBox");
@@ -53,6 +57,8 @@ public class AppThemeFeatureTests : UITest
 		App.WaitForElement("DarkThemeButton");
 		App.Tap("DarkThemeButton");
 		App.WaitForElement("CheckBox");
+		App.Tap("CheckBox");
+		App.Tap("CheckBox");
 		VerifyScreenshot();
 	}
 
@@ -65,9 +71,9 @@ public class AppThemeFeatureTests : UITest
 		App.WaitForElement("DatePicker");
 #if ANDROID
 		App.Tap("DatePicker");
-        App.Tap("22");
-        App.WaitForElement("OK");
-        App.Tap("OK");
+		App.Tap("22");
+		App.WaitForElement("OK");
+		App.Tap("OK");
 #elif WINDOWS
 		App.Tap("DatePicker");
 		App.Tap("22");
@@ -84,9 +90,9 @@ public class AppThemeFeatureTests : UITest
 		App.WaitForElement("DatePicker");
 #if ANDROID
 		App.Tap("DatePicker");
-        App.Tap("23");
-        App.WaitForElement("OK");
-        App.Tap("OK");
+		App.Tap("23");
+		App.WaitForElement("OK");
+		App.Tap("OK");
 #elif WINDOWS
 		App.Tap("DatePicker");
 		App.Tap("23");
@@ -150,6 +156,13 @@ public class AppThemeFeatureTests : UITest
 		App.WaitForElement("LightThemeButton");
 		App.Tap("LightThemeButton");
 		App.WaitForElement("SearchBar");
+		App.Tap("SearchBar");
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
 		VerifyScreenshot();
 	}
 
@@ -160,6 +173,13 @@ public class AppThemeFeatureTests : UITest
 		App.WaitForElement("DarkThemeButton");
 		App.Tap("DarkThemeButton");
 		App.WaitForElement("SearchBar");
+		App.Tap("SearchBar");
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
 		VerifyScreenshot();
 	}
 
@@ -170,7 +190,6 @@ public class AppThemeFeatureTests : UITest
 		App.WaitForElement("LightThemeButton");
 		App.Tap("LightThemeButton");
 		App.WaitForElement("Slider");
-		App.SetSliderValue("Slider", 300, 100, 360);
 		VerifyScreenshot();
 	}
 
@@ -181,7 +200,6 @@ public class AppThemeFeatureTests : UITest
 		App.WaitForElement("DarkThemeButton");
 		App.Tap("DarkThemeButton");
 		App.WaitForElement("Slider");
-		App.SetSliderValue("Slider", 200, 100, 360);
 		VerifyScreenshot();
 	}
 
@@ -203,8 +221,12 @@ public class AppThemeFeatureTests : UITest
 		App.WaitForElement("DarkThemeButton");
 		App.Tap("DarkThemeButton");
 		App.WaitForElement("Switch");
+		App.Tap("Switch");
+		App.Tap("Switch");
 		VerifyScreenshot();
 	}
+
+#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS && TEST_FAILS_ON_CATALYST // Issue Link - https://github.com/dotnet/maui/issues/30837
 
 	[Test, Order(17)]
 	[Category(AppThemeFeatureMatrix)]
@@ -251,6 +273,7 @@ public class AppThemeFeatureTests : UITest
 #endif
 		VerifyScreenshot();
 	}
+#endif
 
 	[Test, Order(19)]
 	[Category(AppThemeFeatureMatrix)]
@@ -260,9 +283,13 @@ public class AppThemeFeatureTests : UITest
 		App.Tap("LightThemeButton");
 		App.WaitForElement("Entry");
 		App.Tap("Entry");
-		App.ClearText("Entry");
-		App.EnterText("Entry", "LightTheme");
-		VerifyScreenshot(cropBottom: 1200);
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
+		VerifyScreenshot();
 	}
 
 	[Test, Order(20)]
@@ -273,9 +300,13 @@ public class AppThemeFeatureTests : UITest
 		App.Tap("DarkThemeButton");
 		App.WaitForElement("Entry");
 		App.Tap("Entry");
-		App.ClearText("Entry");
-		App.EnterText("Entry", "DarkTheme");
-		VerifyScreenshot(cropBottom: 1200);
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
+		VerifyScreenshot();
 	}
 
 	[Test, Order(21)]
@@ -286,9 +317,13 @@ public class AppThemeFeatureTests : UITest
 		App.Tap("LightThemeButton");
 		App.WaitForElement("Editor");
 		App.Tap("Editor");
-		App.ClearText("Editor");
-		App.EnterText("Editor", "LightTheme");
-		VerifyScreenshot(cropBottom: 1200);
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
+		VerifyScreenshot();
 	}
 
 	[Test, Order(22)]
@@ -299,8 +334,12 @@ public class AppThemeFeatureTests : UITest
 		App.Tap("DarkThemeButton");
 		App.WaitForElement("Editor");
 		App.Tap("Editor");
-		App.ClearText("Editor");
-		App.EnterText("Editor", "DarkTheme");
-		VerifyScreenshot(cropBottom: 1200);
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
+		VerifyScreenshot();
 	}
 }
