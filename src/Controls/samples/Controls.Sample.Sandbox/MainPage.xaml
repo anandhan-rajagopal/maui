@@ -1,16 +1,20 @@
-﻿<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            x:Class="Maui.Controls.Sample.MainPage"
-            xmlns:local="clr-namespace:Maui.Controls.Sample">
-    
-    <!-- NavigationPage Tab - Tests Push/Pop/PopToRoot navigation -->
-    <NavigationPage Title="Navigation" IconImageSource="tab_about.png">
-        <x:Arguments>
-            <local:NavigationTestPage />
-        </x:Arguments>
-    </NavigationPage>
-    
-    <!-- FlyoutPage Tab - Tests Replace navigation -->
-    <local:FlyoutTestPage Title="Flyout" IconImageSource="tab_feed.png" />
-    
-</TabbedPage>
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui.Controls.Sample.MainPage"
+             xmlns:local="clr-namespace:Maui.Controls.Sample">
+        <ContentPage.ToolbarItems>
+                <ToolbarItem Text="MainPage"
+                             Clicked="NavigateToMainPage_Clicked"/>
+        </ContentPage.ToolbarItems>
+        <StackLayout VerticalOptions="Center"
+                     Spacing="20">
+                <Button Text="Go To Flyout"
+                        Clicked="OnGoToFlyoutClicked"/>
+                <Button Text="Go To Navigation"
+                        Clicked="OnGoToNavigationClicked"/>
+                <Button Text="Go To Tabbed"
+                        Clicked="OnGoToTabbedClicked"/>
+                <Button Text="Go To Shell"
+                        Clicked="OnGoToShellClicked"/>
+        </StackLayout>
+</ContentPage>

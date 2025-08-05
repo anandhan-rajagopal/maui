@@ -51,6 +51,18 @@
     <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="FlyoutPages.xaml.cs">
+      <DependentUpon>FlyoutPages.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="NavigationPages.xaml.cs">
+      <DependentUpon>NavigationPages.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="TabPage.xaml.cs">
+      <DependentUpon>TabPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
   <Import Project="$(MauiSrcDirectory)Maui.InTree.props" Condition=" '$(UseMaui)' != 'true' " />
 
 </Project>
