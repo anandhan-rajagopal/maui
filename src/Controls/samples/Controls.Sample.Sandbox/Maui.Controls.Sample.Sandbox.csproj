@@ -55,6 +55,9 @@
     <Compile Update="FlyoutPages.xaml.cs">
       <DependentUpon>FlyoutPages.xaml</DependentUpon>
     </Compile>
+    <Compile Update="FlyoutTabbedPages.xaml.cs">
+      <DependentUpon>FlyoutTabbedPages.xaml</DependentUpon>
+    </Compile>
     <Compile Update="NavigationPages.xaml.cs">
       <DependentUpon>NavigationPages.xaml</DependentUpon>
     </Compile>

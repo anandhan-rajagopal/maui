@@ -5,10 +5,20 @@ public partial class TabPage : TabbedPage
 	public TabPage()
 	{
 		InitializeComponent();
+		Children.Add(new NavigationTabPages());
 		Children.Add(new TabPageOne());
 		Children.Add(new TabPageTwo());
 		Children.Add(new TabPageThree());
 		Children.Add(new GoToMainPage());
+	}
+}
+
+public class NavigationTabPages : NavigationPage
+{
+	public NavigationTabPages()
+	{
+		Title = "Navigation Pages";
+		Navigation.PushAsync(new NavigationPages());
 	}
 }
 

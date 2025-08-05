@@ -22,6 +22,16 @@ public partial class MainPage : ContentPage
 		}
 	}
 
+	[Obsolete]
+	public void OnGoToFlyoutTabbedPagesClicked(object sender, EventArgs e)
+	{
+		var window = Application.Current?.Windows.FirstOrDefault();
+		if (window != null)
+		{
+			window.Page = new FlyoutTabbedPages();
+		}
+	}
+
 	public void OnGoToNavigationClicked(object sender, EventArgs e)
 	{
 		var window = Application.Current?.Windows.FirstOrDefault();

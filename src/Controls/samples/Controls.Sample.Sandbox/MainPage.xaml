@@ -10,6 +10,8 @@
                      Spacing="20">
                 <Button Text="Go To Flyout"
                         Clicked="OnGoToFlyoutClicked"/>
+                <Button Text="Go To FlyoutTabbedPages"
+                        Clicked="OnGoToFlyoutTabbedPagesClicked"/>
                 <Button Text="Go To Navigation"
                         Clicked="OnGoToNavigationClicked"/>
                 <Button Text="Go To Tabbed"

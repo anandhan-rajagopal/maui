@@ -30,14 +30,19 @@ public partial class NavigationPages : ContentPage
 			{
 				new Label { Text = "Navigation Events Test", FontSize = 18, FontAttributes = FontAttributes.Bold },
 				new Label { Text = "Test Push/Pop navigation types" },
+				_navigatedToLabel,
+				_navigatingFromLabel,
+				_navigatedFromLabel,
 				new Button
 				{
 					Text = "Push Second Page",
 					Command = new Command(() => Navigation.PushAsync(new NavigationPageOne()))
 				},
-				_navigatedToLabel,
-				_navigatingFromLabel,
-				_navigatedFromLabel,
+				new Button
+				{
+					Text = "Push Tabbed Page",
+					Command = new Command(() => Navigation.PushAsync(new TabPage()))
+				},
 				new Button
 				{
 					Text = "Go To Main Page Button",
@@ -96,6 +101,9 @@ public class NavigationPageOne : ContentPage
 			Children =
 			{
 				new Label { Text = "First Page", FontSize = 18, FontAttributes = FontAttributes.Bold },
+				_navigatedToLabel,
+				_navigatingFromLabel,
+				_navigatedFromLabel,
 				new Button
 				{
 					Text = "Pop Back",
@@ -106,9 +114,6 @@ public class NavigationPageOne : ContentPage
 					Text = "Push Second Page",
 					Command = new Command(() => Navigation.PushAsync(new NavigationPageTwo()))
 				},
-				_navigatedToLabel,
-				_navigatingFromLabel,
-				_navigatedFromLabel
 			}
 		};
 	}
@@ -156,6 +161,9 @@ public class NavigationPageTwo : ContentPage
 			Children =
 			{
 				new Label { Text = "Second Page", FontSize = 18, FontAttributes = FontAttributes.Bold },
+				_navigatedToLabel,
+				_navigatingFromLabel,
+				_navigatedFromLabel,
 				new Button
 				{
 					Text = "Pop Back",
@@ -165,10 +173,7 @@ public class NavigationPageTwo : ContentPage
 				{
 					Text = "Push Third Page",
 					Command = new Command(() => Navigation.PushAsync(new NavigationPageThree()))
-				},
-				_navigatedToLabel,
-				_navigatingFromLabel,
-				_navigatedFromLabel
+				}
 			}
 		};
 	}
@@ -216,6 +221,9 @@ public class NavigationPageThree : ContentPage
 			Children =
 			{
 				new Label { Text = "Third Page", FontSize = 18, FontAttributes = FontAttributes.Bold },
+				_navigatedToLabel,
+				_navigatingFromLabel,
+				_navigatedFromLabel,
 				new Button
 				{
 					Text = "Insert Fourth Page",
@@ -234,10 +242,7 @@ public class NavigationPageThree : ContentPage
 				{
 					Text = "Pop to Root",
 					Command = new Command(() => Navigation.PopToRootAsync())
-				},
-				_navigatedToLabel,
-				_navigatingFromLabel,
-				_navigatedFromLabel
+				}
 			}
 		};
 	}
@@ -284,6 +289,9 @@ public class NavigationPageFour : ContentPage
 			Children =
 			{
 				new Label { Text = "Fourth Page", FontSize = 18, FontAttributes = FontAttributes.Bold },
+				_navigatedToLabel,
+				_navigatingFromLabel,
+				_navigatedFromLabel,
 				new Button
 				{
 					Text = "Pop Back",
@@ -293,10 +301,7 @@ public class NavigationPageFour : ContentPage
 				{
 					Text = "Pop to Root",
 					Command = new Command(() => Navigation.PopToRootAsync())
-				},
-				_navigatedToLabel,
-				_navigatingFromLabel,
-				_navigatedFromLabel
+				}
 			}
 		};
 	}
