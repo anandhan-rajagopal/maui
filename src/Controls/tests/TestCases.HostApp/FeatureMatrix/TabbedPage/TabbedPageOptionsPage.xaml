@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Maui.Controls.Sample"
+             x:Class="Maui.Controls.Sample.TabbedPageOptionsPage"
+             x:DataType="local:TabbedPageViewModel"
+             Title="TabbedPage Options">
+
+    <StackLayout Padding="20"
+                 Spacing="5">
+
+        <!-- Apply Button -->
+        <Button Text="Apply Changes"
+                Clicked="ApplyButton_Clicked"
+                BackgroundColor="LightBlue"
+                AutomationId="ApplyButton"/>
+
+        <!-- Bar Background Color Section -->
+        <Label Text="Bar Background Color"
+               FontSize="18"
+               FontAttributes="Bold"/>
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Blue"
+                    Clicked="BarBackgroundColorButton_Clicked"
+                    BackgroundColor="Blue"
+                    TextColor="White"
+                    AutomationId="BlueBarBackgroundButton"/>
+            <Button Text="Red"
+                    Clicked="BarBackgroundColorButton_Clicked"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    AutomationId="RedBarBackgroundButton"/>
+            <Button Text="Green"
+                    Clicked="BarBackgroundColorButton_Clicked"
+                    BackgroundColor="Green"
+                    TextColor="White"
+                    AutomationId="GreenBarBackgroundButton"/>
+        </StackLayout>
+
+        <!-- Bar Text Color Section -->
+        <Label Text="Bar Text Color"
+               FontSize="18"
+               FontAttributes="Bold"/>
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Black"
+                    Clicked="BarTextColorButton_Clicked"
+                    BackgroundColor="Black"
+                    TextColor="White"
+                    AutomationId="BlackBarTextButton"/>
+            <Button Text="White"
+                    Clicked="BarTextColorButton_Clicked"
+                    BackgroundColor="White"
+                    TextColor="Black"
+                    AutomationId="WhiteBarTextButton"/>
+            <Button Text="Red"
+                    Clicked="BarTextColorButton_Clicked"
+                    BackgroundColor="Red"
+                    TextColor="White"
+                    AutomationId="RedBarTextButton"/>
+        </StackLayout>
+
+        <!-- Selected Tab Color Section -->
+        <Label Text="Selected Tab Color"
+               FontSize="18"
+               FontAttributes="Bold"/>
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Blue"
+                    Clicked="SelectedTabColorButton_Clicked"
+                    BackgroundColor="Blue"
+                    TextColor="White"
+                    AutomationId="BlueSelectedTabButton"/>
+            <Button Text="Orange"
+                    Clicked="SelectedTabColorButton_Clicked"
+                    BackgroundColor="Orange"
+                    TextColor="Black"
+                    AutomationId="OrangeSelectedTabButton"/>
+            <Button Text="Purple"
+                    Clicked="SelectedTabColorButton_Clicked"
+                    BackgroundColor="Purple"
+                    TextColor="White"
+                    AutomationId="PurpleSelectedTabButton"/>
+        </StackLayout>
+
+        <!-- Unselected Tab Color Section -->
+        <Label Text="Unselected Tab Color"
+               FontSize="18"
+               FontAttributes="Bold"/>
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Gray"
+                    Clicked="UnselectedTabColorButton_Clicked"
+                    BackgroundColor="Gray"
+                    TextColor="White"
+                    AutomationId="GrayUnselectedTabButton"/>
+            <Button Text="LightGray"
+                    Clicked="UnselectedTabColorButton_Clicked"
+                    BackgroundColor="LightGray"
+                    TextColor="Black"
+                    AutomationId="LightGrayUnselectedTabButton"/>
+            <Button Text="DarkGray"
+                    Clicked="UnselectedTabColorButton_Clicked"
+                    BackgroundColor="DarkGray"
+                    TextColor="White"
+                    AutomationId="DarkGrayUnselectedTabButton"/>
+        </StackLayout>
+
+        <!-- Bar Background Brush Section -->
+        <Label Text="Bar Background Brush"
+               FontSize="18"
+               FontAttributes="Bold"/>
+        <StackLayout Orientation="Horizontal">
+            <Button Text="Gradient"
+                    Clicked="BarBackgroundBrushButton_Clicked"
+                    BackgroundColor="Magenta"
+                    TextColor="White"
+                    AutomationId="GradientBarBackgroundButton"/>
+            <Button Text="Solid"
+                    Clicked="BarBackgroundBrushButton_Clicked"
+                    BackgroundColor="Cyan"
+                    TextColor="Black"
+                    AutomationId="SolidBarBackgroundButton"/>
+        </StackLayout>
+
+        <!-- IsVisible Section -->
+        <Label Text="IsVisible"
+               FontSize="18"
+               FontAttributes="Bold"/>
+        <StackLayout Orientation="Horizontal">
+            <RadioButton Content="False"
+                         CheckedChanged="OnIsVisibleChanged"
+                         AutomationId="FalseIsVisibleRadio"/>
+        </StackLayout>
+
+        <!-- IsEnabled Section -->
+        <Label Text="IsEnabled"
+               FontSize="18"
+               FontAttributes="Bold"/>
+        <StackLayout Orientation="Horizontal">
+            <RadioButton Content="False"
+                         CheckedChanged="OnIsEnabledChanged"
+                         AutomationId="FalseIsEnabledRadio"/>
+        </StackLayout>
+
+        <!-- FlowDirection Section -->
+        <Label Text="FlowDirection"
+               FontSize="18"
+               FontAttributes="Bold"/>
+        <StackLayout Orientation="Horizontal">
+            <RadioButton Content="Left to Right"
+                         IsChecked="True"
+                         CheckedChanged="OnFlowDirectionChanged"
+                         AutomationId="LeftToRightFlowRadio"/>
+            <RadioButton Content="Right to Left"
+                         CheckedChanged="OnFlowDirectionChanged"
+                         AutomationId="RightToLeftFlowRadio"/>
+        </StackLayout>
+    </StackLayout>
+</ContentPage>
