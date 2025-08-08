@@ -10,9 +10,9 @@ public class TabbedPageViewModel : INotifyPropertyChanged
 {
 	private Brush _barBackground = null;
 	private Color _barBackgroundColor = Colors.Transparent;
-	private Color _barTextColor = Colors.Black;
-	private Color _selectedTabColor = Colors.Blue;
-	private Color _unselectedTabColor = Colors.Gray;
+	private Color _barTextColor = Colors.White;
+	private Color _selectedTabColor = Colors.Orange;
+	private Color _unselectedTabColor = Colors.LightGray;
 	private bool _isVisible = true;
 	private bool _isEnabled = true;
 	private FlowDirection _flowDirection = FlowDirection.LeftToRight;

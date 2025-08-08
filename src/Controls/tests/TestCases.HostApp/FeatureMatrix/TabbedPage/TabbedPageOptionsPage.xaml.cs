@@ -1,7 +1,3 @@
-using System;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-
 namespace Maui.Controls.Sample;
 
 public partial class TabbedPageOptionsPage : ContentPage
@@ -20,6 +16,29 @@ public partial class TabbedPageOptionsPage : ContentPage
 		Navigation.PopModalAsync();
 	}
 
+	private void BarBackgroundBrushButton_Clicked(object sender, EventArgs e)
+	{
+		var button = (Button)sender;
+		switch (button.Text)
+		{
+			case "Gradient":
+				_viewModel.BarBackground = new LinearGradientBrush(
+					new GradientStopCollection
+					{
+						new GradientStop(Colors.Blue, 0.0f),
+						new GradientStop(Colors.Green, 1.0f)
+					},
+					new Point(0, 0), new Point(1, 1));
+				break;
+			case "Solid":
+				_viewModel.BarBackground = new SolidColorBrush(Colors.Cyan);
+				break;
+			default:
+				_viewModel.BarBackground = null;
+				break;
+		}
+	}
+
 	private void BarBackgroundColorButton_Clicked(object sender, EventArgs e)
 	{
 		var button = (Button)sender;
@@ -27,9 +46,6 @@ public partial class TabbedPageOptionsPage : ContentPage
 		{
 			case "Blue":
 				_viewModel.BarBackgroundColor = Colors.Blue;
-				break;
-			case "Red":
-				_viewModel.BarBackgroundColor = Colors.Red;
 				break;
 			case "Green":
 				_viewModel.BarBackgroundColor = Colors.Green;
@@ -45,9 +61,6 @@ public partial class TabbedPageOptionsPage : ContentPage
 			case "Black":
 				_viewModel.BarTextColor = Colors.Black;
 				break;
-			case "White":
-				_viewModel.BarTextColor = Colors.White;
-				break;
 			case "Red":
 				_viewModel.BarTextColor = Colors.Red;
 				break;
@@ -59,9 +72,6 @@ public partial class TabbedPageOptionsPage : ContentPage
 		var button = (Button)sender;
 		switch (button.Text)
 		{
-			case "Blue":
-				_viewModel.SelectedTabColor = Colors.Blue;
-				break;
 			case "Orange":
 				_viewModel.SelectedTabColor = Colors.Orange;
 				break;
@@ -76,41 +86,11 @@ public partial class TabbedPageOptionsPage : ContentPage
 		var button = (Button)sender;
 		switch (button.Text)
 		{
-			case "Gray":
-				_viewModel.UnselectedTabColor = Colors.Gray;
-				break;
 			case "LightGray":
 				_viewModel.UnselectedTabColor = Colors.LightGray;
 				break;
 			case "DarkGray":
 				_viewModel.UnselectedTabColor = Colors.DarkGray;
-				break;
-		}
-	}
-
-	private void BarBackgroundBrushButton_Clicked(object sender, EventArgs e)
-	{
-		var button = (Button)sender;
-		switch (button.Text)
-		{
-			case "Gradient":
-				_viewModel.BarBackground = new LinearGradientBrush
-				{
-					StartPoint = new Point(0, 0),
-					EndPoint = new Point(1, 0),
-					GradientStops = new GradientStopCollection
-					{
-						new GradientStop(Colors.Red, 0.0f),
-						new GradientStop(Colors.Orange, 0.5f),
-						new GradientStop(Colors.Yellow, 1.0f)
-					}
-				};
-				break;
-			case "Solid":
-				_viewModel.BarBackground = new SolidColorBrush(Colors.Cyan);
-				break;
-			default:
-				_viewModel.BarBackground = null;
 				break;
 		}
 	}
