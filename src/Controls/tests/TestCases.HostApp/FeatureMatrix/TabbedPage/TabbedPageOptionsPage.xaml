@@ -27,7 +27,7 @@
                                 AutomationId="GradientBarBackgroundButton"/>
                         <Button Text="Solid"
                                 Clicked="BarBackgroundBrushButton_Clicked"
-                                BackgroundColor="Cyan"
+                                BackgroundColor="Yellow"
                                 TextColor="Black"
                                 AutomationId="SolidBarBackgroundButton"/>
                 </StackLayout>

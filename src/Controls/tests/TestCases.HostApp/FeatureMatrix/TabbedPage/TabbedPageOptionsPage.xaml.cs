@@ -22,19 +22,19 @@ public partial class TabbedPageOptionsPage : ContentPage
 		switch (button.Text)
 		{
 			case "Gradient":
-				_viewModel.BarBackground = new LinearGradientBrush(
-					new GradientStopCollection
-					{
-						new GradientStop(Colors.Blue, 0.0f),
-						new GradientStop(Colors.Green, 1.0f)
-					},
-					new Point(0, 0), new Point(1, 1));
+				_viewModel.BarBackground = new LinearGradientBrush
+				{
+					StartPoint = new Point(0, 0),
+					EndPoint = new Point(1, 1),
+					GradientStops = new GradientStopCollection
+			{
+				new GradientStop { Color = Colors.Red, Offset = 0.0f },
+				new GradientStop { Color = Colors.Blue, Offset = 1.0f }
+			}
+				};
 				break;
 			case "Solid":
-				_viewModel.BarBackground = new SolidColorBrush(Colors.Cyan);
-				break;
-			default:
-				_viewModel.BarBackground = null;
+				_viewModel.BarBackground = new SolidColorBrush(Colors.Yellow);
 				break;
 		}
 	}
