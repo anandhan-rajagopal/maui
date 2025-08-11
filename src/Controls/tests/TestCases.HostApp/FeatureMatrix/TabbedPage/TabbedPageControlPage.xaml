@@ -5,12 +5,9 @@
             x:Class="Maui.Controls.Sample.TabbedPageControlPage"
             x:DataType="local:TabbedPageViewModel"
             BarBackground="{Binding BarBackground}"
-            BarBackgroundColor="{Binding BarBackgroundColor}"
             BarTextColor="{Binding BarTextColor}"
             SelectedTabColor="{Binding SelectedTabColor}"
             UnselectedTabColor="{Binding UnselectedTabColor}"
-            IsVisible="{Binding IsVisible}"
             IsEnabled="{Binding IsEnabled}"
             FlowDirection="{Binding FlowDirection}"
-            AutomationId="TabbedPageControl">
-</TabbedPage>
+            AutomationId="TabbedPageControl"/>

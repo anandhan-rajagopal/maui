@@ -27,28 +27,14 @@ public partial class TabbedPageOptionsPage : ContentPage
 					StartPoint = new Point(0, 0),
 					EndPoint = new Point(1, 1),
 					GradientStops = new GradientStopCollection
-			{
-				new GradientStop { Color = Colors.Red, Offset = 0.0f },
-				new GradientStop { Color = Colors.Blue, Offset = 1.0f }
-			}
+					{
+						new GradientStop { Color = Colors.Red, Offset = 0.0f },
+						new GradientStop { Color = Colors.Blue, Offset = 1.0f }
+					}
 				};
 				break;
 			case "Solid":
-				_viewModel.BarBackground = new SolidColorBrush(Colors.Yellow);
-				break;
-		}
-	}
-
-	private void BarBackgroundColorButton_Clicked(object sender, EventArgs e)
-	{
-		var button = (Button)sender;
-		switch (button.Text)
-		{
-			case "Blue":
-				_viewModel.BarBackgroundColor = Colors.Blue;
-				break;
-			case "Green":
-				_viewModel.BarBackgroundColor = Colors.Green;
+				_viewModel.BarBackground = new SolidColorBrush(Colors.Blue);
 				break;
 		}
 	}
@@ -61,8 +47,8 @@ public partial class TabbedPageOptionsPage : ContentPage
 			case "Black":
 				_viewModel.BarTextColor = Colors.Black;
 				break;
-			case "Red":
-				_viewModel.BarTextColor = Colors.Red;
+			case "Green":
+				_viewModel.BarTextColor = Colors.Green;
 				break;
 		}
 	}
@@ -95,15 +81,6 @@ public partial class TabbedPageOptionsPage : ContentPage
 		}
 	}
 
-	private void OnIsVisibleChanged(object sender, CheckedChangedEventArgs e)
-	{
-		var radioButton = sender as RadioButton;
-		if (radioButton != null && radioButton.IsChecked)
-		{
-			_viewModel.IsVisible = false;
-		}
-	}
-
 	private void OnIsEnabledChanged(object sender, CheckedChangedEventArgs e)
 	{
 		var radioButton = sender as RadioButton;
@@ -118,7 +95,7 @@ public partial class TabbedPageOptionsPage : ContentPage
 		var radioButton = sender as RadioButton;
 		if (radioButton != null && radioButton.IsChecked)
 		{
-			_viewModel.FlowDirection = radioButton.Content.ToString() == "Left to Right" ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
+			_viewModel.FlowDirection = radioButton.Content.ToString() == "LeftToRight" ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
 		}
 	}
 }

@@ -1,19 +1,14 @@
-using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
 
 namespace Maui.Controls.Sample;
 
 public class TabbedPageViewModel : INotifyPropertyChanged
 {
-	private Brush _barBackground = null;
-	private Color _barBackgroundColor = Colors.Transparent;
-	private Color _barTextColor = Colors.White;
+	private Brush _barBackground = new SolidColorBrush(Colors.Transparent);
+	private Color _barTextColor = Colors.Red;
 	private Color _selectedTabColor = Colors.Orange;
 	private Color _unselectedTabColor = Colors.LightGray;
-	private bool _isVisible = true;
 	private bool _isEnabled = true;
 	private FlowDirection _flowDirection = FlowDirection.LeftToRight;
 
@@ -27,19 +22,6 @@ public class TabbedPageViewModel : INotifyPropertyChanged
 			if (_barBackground != value)
 			{
 				_barBackground = value;
-				OnPropertyChanged();
-			}
-		}
-	}
-
-	public Color BarBackgroundColor
-	{
-		get => _barBackgroundColor;
-		set
-		{
-			if (_barBackgroundColor != value)
-			{
-				_barBackgroundColor = value;
 				OnPropertyChanged();
 			}
 		}
@@ -79,19 +61,6 @@ public class TabbedPageViewModel : INotifyPropertyChanged
 			if (_unselectedTabColor != value)
 			{
 				_unselectedTabColor = value;
-				OnPropertyChanged();
-			}
-		}
-	}
-
-	public bool IsVisible
-	{
-		get => _isVisible;
-		set
-		{
-			if (_isVisible != value)
-			{
-				_isVisible = value;
 				OnPropertyChanged();
 			}
 		}

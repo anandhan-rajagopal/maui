@@ -12,45 +12,28 @@
                 <!-- Apply Button -->
                 <Button Text="Apply Changes"
                         Clicked="ApplyButton_Clicked"
-                        BackgroundColor="LightBlue"
+                        BackgroundColor="Blue"
                         AutomationId="ApplyButton"/>
 
-                <!-- Bar Background Brush Section -->
-                <Label Text="Bar Background Brush"
+                <!-- BarBackground Brush  -->
+                <Label Text="BarBackground Brush"
                        FontSize="18"
                        FontAttributes="Bold"/>
                 <StackLayout Orientation="Horizontal">
                         <Button Text="Gradient"
                                 Clicked="BarBackgroundBrushButton_Clicked"
-                                BackgroundColor="Magenta"
+                                BackgroundColor="Violet"
                                 TextColor="White"
                                 AutomationId="GradientBarBackgroundButton"/>
                         <Button Text="Solid"
                                 Clicked="BarBackgroundBrushButton_Clicked"
-                                BackgroundColor="Yellow"
-                                TextColor="Black"
+                                BackgroundColor="Blue"
+                                TextColor="White"
                                 AutomationId="SolidBarBackgroundButton"/>
                 </StackLayout>
 
-                <!-- Bar Background Color Section -->
-                <Label Text="Bar Background Color"
-                       FontSize="18"
-                       FontAttributes="Bold"/>
-                <StackLayout Orientation="Horizontal">
-                        <Button Text="Blue"
-                                Clicked="BarBackgroundColorButton_Clicked"
-                                BackgroundColor="Blue"
-                                TextColor="White"
-                                AutomationId="BlueBarBackgroundButton"/>
-                        <Button Text="Green"
-                                Clicked="BarBackgroundColorButton_Clicked"
-                                BackgroundColor="Green"
-                                TextColor="White"
-                                AutomationId="GreenBarBackgroundButton"/>
-                </StackLayout>
-
-                <!-- Bar Text Color Section -->
-                <Label Text="Bar Text Color"
+                <!-- BarText Color -->
+                <Label Text="BarText Color"
                        FontSize="18"
                        FontAttributes="Bold"/>
                 <StackLayout Orientation="Horizontal">
@@ -59,15 +42,15 @@
                                 BackgroundColor="Black"
                                 TextColor="White"
                                 AutomationId="BlackBarTextButton"/>
-                        <Button Text="Red"
+                        <Button Text="Green"
                                 Clicked="BarTextColorButton_Clicked"
-                                BackgroundColor="Red"
+                                BackgroundColor="Green"
                                 TextColor="White"
-                                AutomationId="RedBarTextButton"/>
+                                AutomationId="GreenBarTextButton"/>
                 </StackLayout>
 
-                <!-- Selected Tab Color Section -->
-                <Label Text="Selected Tab Color"
+                <!-- SelectedTab Color -->
+                <Label Text="SelectedTab Color"
                        FontSize="18"
                        FontAttributes="Bold"/>
                 <StackLayout Orientation="Horizontal">
@@ -83,8 +66,8 @@
                                 AutomationId="PurpleSelectedButton"/>
                 </StackLayout>
 
-                <!-- Unselected Tab Color Section -->
-                <Label Text="Unselected Tab Color"
+                <!-- UnselectedTab Color -->
+                <Label Text="UnselectedTab Color"
                        FontSize="18"
                        FontAttributes="Bold"/>
                 <StackLayout Orientation="Horizontal">
@@ -100,17 +83,7 @@
                                 AutomationId="DarkGrayUnselectedButton"/>
                 </StackLayout>
 
-                <!-- IsVisible Section -->
-                <Label Text="IsVisible"
-                       FontSize="18"
-                       FontAttributes="Bold"/>
-                <StackLayout Orientation="Horizontal">
-                        <RadioButton Content="False"
-                                     CheckedChanged="OnIsVisibleChanged"
-                                     AutomationId="IsVisibleFalseRadio"/>
-                </StackLayout>
-
-                <!-- IsEnabled Section -->
+                <!-- IsEnabled -->
                 <Label Text="IsEnabled"
                        FontSize="18"
                        FontAttributes="Bold"/>
@@ -120,16 +93,15 @@
                                      AutomationId="IsEnabledFalseRadio"/>
                 </StackLayout>
 
-                <!-- FlowDirection Section -->
+                <!-- FlowDirection -->
                 <Label Text="FlowDirection"
                        FontSize="18"
                        FontAttributes="Bold"/>
                 <StackLayout Orientation="Horizontal">
-                        <RadioButton Content="Left to Right"
-                                     IsChecked="True"
+                        <RadioButton Content="LeftToRight"
                                      CheckedChanged="OnFlowDirectionChanged"
                                      AutomationId="LeftToRightFlowRadio"/>
-                        <RadioButton Content="Right to Left"
+                        <RadioButton Content="RightToLeft"
                                      CheckedChanged="OnFlowDirectionChanged"
                                      AutomationId="RightToLeftFlowRadio"/>
                 </StackLayout>

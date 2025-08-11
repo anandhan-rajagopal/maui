@@ -27,23 +27,24 @@ public class HomePage : ContentPage
 	{
 		AutomationId = "HOME PAGE";
 		Title = "HOME PAGE";
-		IconImageSource = "dotnet_bot.png";
+		IconImageSource = "coffee.png";
 		Content = new StackLayout
 		{
-			Padding = new Thickness(20),
 			Children =
 			{
 				new Label
 				{
+					HorizontalOptions= LayoutOptions.Start,
+					Text = "This is the first tab in the TabbedPage",
+					WidthRequest = 300
+				},
+				new Label
+				{
+					AutomationId = "HomePageLabel",
 					Text = "Home Page Content",
 					FontSize = 18,
 					HorizontalOptions = LayoutOptions.Center,
 					VerticalOptions = LayoutOptions.CenterAndExpand
-				},
-				new Label
-				{
-					Text = "This is the first tab in the TabbedPage",
-					HorizontalOptions = LayoutOptions.Center
 				}
 			}
 		};
@@ -56,23 +57,24 @@ public class SecondPage : ContentPage
 	{
 		AutomationId = "SECOND PAGE";
 		Title = "SECOND PAGE";
-		IconImageSource = "dotnet_bot.png";
+		IconImageSource = "coffee.png";
 		Content = new StackLayout
 		{
-			Padding = new Thickness(20),
 			Children =
 			{
 				new Label
 				{
+					HorizontalOptions= LayoutOptions.Start,
+					Text = "This is the second tab in the TabbedPage",
+					WidthRequest = 300
+				},
+				new Label
+				{
+					AutomationId = "SecondPageLabel",
 					Text = "Second Page Content",
 					FontSize = 18,
 					HorizontalOptions = LayoutOptions.Center,
 					VerticalOptions = LayoutOptions.CenterAndExpand
-				},
-				new Label
-				{
-					Text = "This is the second tab in the TabbedPage",
-					HorizontalOptions = LayoutOptions.Center
 				}
 			}
 		};
@@ -84,7 +86,7 @@ public class ThirdPage : ContentPage
 	public ThirdPage(EventHandler navigateToOptions)
 	{
 		Title = "THIRD PAGE";
-		IconImageSource = "dotnet_bot.png";
+		IconImageSource = "coffee.png";
 		AutomationId = "THIRD PAGE";
 
 		var optionsButton = new Button
@@ -96,22 +98,23 @@ public class ThirdPage : ContentPage
 
 		Content = new StackLayout
 		{
-			Padding = new Thickness(20),
 			Children =
 			{
+				optionsButton,
 				new Label
 				{
+					HorizontalOptions= LayoutOptions.Start,
+					Text = "This is the third tab in the TabbedPage",
+					WidthRequest = 300
+				},
+				new Label
+				{
+					AutomationId = "ThirdPageLabel",
 					Text = "Third Page Content",
 					FontSize = 18,
 					HorizontalOptions = LayoutOptions.Center,
-					VerticalOptions = LayoutOptions.CenterAndExpand
+					VerticalOptions = LayoutOptions.CenterAndExpand,
 				},
-				new Label
-				{
-					Text = "This is the third tab in the TabbedPage",
-					HorizontalOptions = LayoutOptions.Center
-				},
-				optionsButton
 			}
 		};
 	}
