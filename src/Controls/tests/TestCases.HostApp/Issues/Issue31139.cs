@@ -25,7 +25,6 @@ public class Issue31139 : ContentPage
 
 public class Issue31139ViewModel : INotifyPropertyChanged
 {
-    //bool flag = true;
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected virtual void OnPropertyChanged(string propertyName)
@@ -37,51 +36,22 @@ public class Issue31139ViewModel : INotifyPropertyChanged
     {
         Thread t = new Thread(() =>
         {
-            Thread t = new Thread(() =>
+            var stopwatch = new Stopwatch();
+            stopwatch.Restart();
+
+            while (true)
             {
-                var stopwatch = new Stopwatch();
-                stopwatch.Restart();
-
-                while (true)
+                try
                 {
-                    try
-                    {
-                        Status = "Time elapsed: " + stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff");
-                    } catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-
-                    Thread.Sleep(1000);
+                    Status = "Success";
                 }
-            });
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
 
-            t.IsBackground = true;
-            t.Start();
-            // var stopwatch = new Stopwatch();
-            // stopwatch.Restart();
-
-            // while (true)
-            // {
-            //     try
-            //     {
-            //         if (flag)
-            //         {
-            //             Status = "Test";
-            //             flag = false;
-            //         }
-            //         else
-            //         {
-            //             Status = "Success";
-            //         }
-            //     }
-            //     catch (Exception ex)
-            //     {
-            //         Console.WriteLine(ex);
-            //     }
-
-            //     Thread.Sleep(1000);
-            // }
+                Thread.Sleep(1000);
+            }
         });
 
         t.IsBackground = true;
