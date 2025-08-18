@@ -18,7 +18,7 @@ public class Issue31139 : ContentPage
         BindingContext = new Issue31139ViewModel();
 
         var label = new Label();
-        label.SetBinding(Label.TextProperty, nameof(Issue31139ViewModel.Time));
+        label.SetBinding(Label.TextProperty, nameof(Issue31139ViewModel.Status));
         this.Content = label;
 	}
 }
@@ -43,7 +43,7 @@ public class Issue31139ViewModel : INotifyPropertyChanged
             {
                 try
                 {
-                    Time = "Time elapsed: " + stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff");
+                    Status = "Success";
                 }
                 catch (Exception ex)
                 {
@@ -58,16 +58,16 @@ public class Issue31139ViewModel : INotifyPropertyChanged
         t.Start();
     }
 
-    private string _time = string.Empty;
-    public string Time
+    private string _status = string.Empty;
+    public string Status
     {
-        get => _time;
+        get => _status;
         private set
         {
-            if (_time != value)
+            if (_status != value)
             {
-                _time = value;
-                OnPropertyChanged(nameof(Time));
+                _status = value;
+                OnPropertyChanged(nameof(Status));
             }
         }
     }
