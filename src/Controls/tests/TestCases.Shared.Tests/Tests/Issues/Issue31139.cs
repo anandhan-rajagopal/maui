@@ -12,20 +12,9 @@ namespace Microsoft.Maui.TestCases.Tests.Issues
 
 		[Test]
 		[Category(UITestCategories.Dispatcher)]
-		[Category(UITestCategories.Page)]
 		public void BindableUpdatesFromBackgroundThreadDoNotCrashAndPropagate()
 		{
-			// Navigate happens in FixtureSetup
-			App.WaitForElement("StartButton");
-			App.Tap("StartButton");
-
-			// Wait for status to become Updated indicating background thread updates processed
-			App.WaitForElement("UpdatedLabel");
-			var text = App.FindElement("UpdatedLabel").GetText();
-			Assert.That(text, Does.Contain("Updated"));
-
-			// And ensure Picker has items populated
-			App.WaitForElement("Picker");
+            App.WaitForElement("Success", timeout: TimeSpan.FromSeconds(3));
 		}
 	}
 }

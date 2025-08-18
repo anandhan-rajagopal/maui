@@ -25,6 +25,7 @@ public class Issue31139 : ContentPage
 
 public class Issue31139ViewModel : INotifyPropertyChanged
 {
+    //bool flag = true;
     public event PropertyChangedEventHandler PropertyChanged;
 
     protected virtual void OnPropertyChanged(string propertyName)
@@ -36,22 +37,51 @@ public class Issue31139ViewModel : INotifyPropertyChanged
     {
         Thread t = new Thread(() =>
         {
-            var stopwatch = new Stopwatch();
-            stopwatch.Restart();
-
-            while (true)
+            Thread t = new Thread(() =>
             {
-                try
-                {
-                    Status = "Success";
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex);
-                }
+                var stopwatch = new Stopwatch();
+                stopwatch.Restart();
 
-                Thread.Sleep(1000);
-            }
+                while (true)
+                {
+                    try
+                    {
+                        Status = "Time elapsed: " + stopwatch.Elapsed.ToString(@"hh\:mm\:ss\.fff");
+                    } catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+
+                    Thread.Sleep(1000);
+                }
+            });
+
+            t.IsBackground = true;
+            t.Start();
+            // var stopwatch = new Stopwatch();
+            // stopwatch.Restart();
+
+            // while (true)
+            // {
+            //     try
+            //     {
+            //         if (flag)
+            //         {
+            //             Status = "Test";
+            //             flag = false;
+            //         }
+            //         else
+            //         {
+            //             Status = "Success";
+            //         }
+            //     }
+            //     catch (Exception ex)
+            //     {
+            //         Console.WriteLine(ex);
+            //     }
+
+            //     Thread.Sleep(1000);
+            // }
         });
 
         t.IsBackground = true;
