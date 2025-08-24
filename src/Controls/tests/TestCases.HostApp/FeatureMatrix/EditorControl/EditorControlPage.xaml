@@ -1,0 +1,48 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Maui.Controls.Sample"
+             x:DataType="local:EditorViewModel"
+             x:Class="Maui.Controls.Sample.EditorControlMainPage">
+       <VerticalStackLayout Padding="20"
+                    Spacing="8">
+              <Label Text="Editor Control"
+                     FontSize="20" Margin="0,0,0,50"
+                     HorizontalOptions="Center"/>
+
+              <Editor x:Name="EditorControl" 
+                      Text="{Binding Text}"
+                      Placeholder="{Binding Placeholder}"
+                      PlaceholderColor="{Binding PlaceholderColor}"
+                      TextColor="{Binding TextColor}"
+                      FontSize="{Binding FontSize}"
+                      CharacterSpacing="{Binding CharacterSpacing}"
+                      IsReadOnly="{Binding IsReadOnly}"
+                      IsTextPredictionEnabled="{Binding IsTextPredictionEnabled}"
+                      MaxLength="{Binding MaxLength}"
+                      Keyboard="{Binding Keyboard}"
+                      FontFamily="{Binding FontFamily}"
+                      IsVisible="{Binding IsVisible}"
+                      IsEnabled="{Binding IsEnabled}"
+                      FlowDirection="{Binding FlowDirection}"
+                      HeightRequest="120"
+                      FontAttributes="{Binding FontAttributes}"
+                      AutoSize="{Binding AutoSize}"
+                      TextChanged="EditorControl_TextChanged"
+                      AutomationId="TestEditor"/>
+
+              <Grid HeightRequest="30"/>
+              
+              <Label Text="Events:"
+                     FontSize="11"/>
+              <Label x:Name="TextChangedLabel"
+                     Text="{Binding TextChangedText}"
+                     AutomationId="TextChangedLabel"
+                     FontSize="11"/>
+       </VerticalStackLayout>
+
+       <ContentPage.ToolbarItems>
+              <ToolbarItem Text="Options"
+                           Clicked="NavigateToOptionsPage_Clicked"
+                           AutomationId="Options"/>
+       </ContentPage.ToolbarItems>
+</ContentPage>

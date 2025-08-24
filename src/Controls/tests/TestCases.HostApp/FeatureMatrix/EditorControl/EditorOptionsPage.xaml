@@ -1,0 +1,313 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Maui.Controls.Sample"
+             x:DataType="local:EditorViewModel"
+             x:Class="Maui.Controls.Sample.EditorOptionsPage">
+       <ContentPage.ToolbarItems>
+              <ToolbarItem Text="Apply"
+                           Clicked="ApplyButton_Clicked"
+                           AutomationId="Apply"/>
+       </ContentPage.ToolbarItems>
+       <ScrollView Padding="10">
+              <Grid ColumnDefinitions="*, *"
+                    RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                    ColumnSpacing="8"
+                    RowSpacing="12">
+                     <!-- Left Column: Editor property toggles and settings -->
+                     <VerticalStackLayout Grid.Column="0" Spacing="12">
+                            <!-- Text -->
+                            <HorizontalStackLayout Spacing="8">
+                                   <Label Text="Text:"
+                                          FontSize="12"
+                                          VerticalTextAlignment="Center"
+                                          WidthRequest="80"/>
+                                   <Entry x:Name="TextEntry"
+                                          Text="{Binding Text}"
+                                          TextChanged="Entry_TextChanged"
+                                          AutomationId="TextEntryChanged"
+                                          WidthRequest="120"/>
+                            </HorizontalStackLayout>
+                            <!-- Font Size -->
+                            <HorizontalStackLayout Spacing="8">
+                                   <Label Text="Font Size:"
+                                          FontSize="12"
+                                          VerticalTextAlignment="Center"
+                                          WidthRequest="80"/>
+                                   <Entry x:Name="FontSizeEntry"
+                                          Text="{Binding FontSize}"
+                                          TextChanged="FontSizeEntry_TextChanged"
+                                          AutomationId="FontSizeEntry"
+                                          WidthRequest="120"
+                                          Keyboard="Numeric"/>
+                            </HorizontalStackLayout>
+                            <!-- Character Spacing -->
+                            <HorizontalStackLayout Spacing="8">
+                                   <Label Text="Char Space:"
+                                          FontSize="12"
+                                          VerticalTextAlignment="Center"
+                                          WidthRequest="80"/>
+                                   <Entry x:Name="CharacterSpacing"
+                                          Text="{Binding CharacterSpacing}"
+                                          TextChanged="CharacterSpacing_TextChanged"
+                                          AutomationId="CharacterSpacing"
+                                          WidthRequest="120"
+                                          Keyboard="Numeric"/>
+                            </HorizontalStackLayout>
+                            <!-- Max Length -->
+                            <HorizontalStackLayout Spacing="8">
+                                   <Label Text="Max Length:"
+                                          FontSize="12"
+                                          VerticalTextAlignment="Center"
+                                          WidthRequest="80"/>
+                                   <Entry x:Name="MaxLength"
+                                          Text="{Binding MaxLength}"
+                                          TextChanged="MaxLength_TextChanged"
+                                          AutomationId="MaxLength"
+                                          WidthRequest="120"
+                                          Keyboard="Numeric"/>
+                            </HorizontalStackLayout>
+                            <!-- Placeholder -->
+                            <HorizontalStackLayout Spacing="8">
+                                   <Label Text="Placeholder:"
+                                          FontSize="12"
+                                          VerticalTextAlignment="Center"
+                                          WidthRequest="80"/>
+                                   <Entry x:Name="PlaceholderText"
+                                          Text="{Binding Placeholder}"
+                                          TextChanged="PlaceholderText_TextChanged"
+                                          AutomationId="PlaceholderText"
+                                          WidthRequest="120"/>
+                            </HorizontalStackLayout>
+                            <!-- Font Family -->
+                            <HorizontalStackLayout Spacing="8">
+                                   <Label Text="Font Family:"
+                                          FontSize="12"
+                                          VerticalTextAlignment="Center"
+                                          WidthRequest="80"/>
+                                   <Entry x:Name="FontFamily"
+                                          Text="{Binding FontFamily}"
+                                          TextChanged="FontFamily_TextChanged"
+                                          AutomationId="FontFamily"
+                                          WidthRequest="120"/>
+                            </HorizontalStackLayout>
+                     </VerticalStackLayout>
+                     
+                     <!-- Right Column: Toggle options -->
+                     <VerticalStackLayout Grid.Column="1" Spacing="12">
+                            <!-- AutoSize -->
+                            <StackLayout>
+                                   <Label Text="AutoSize:"
+                                          FontSize="12"/>
+                                   <HorizontalStackLayout Spacing="4">
+                                          <RadioButton x:Name="AutoSizeDisabled"
+                                                      Content="Disabled"
+                                                      FontSize="10"
+                                                      GroupName="AutoSize"
+                                                      IsChecked="True"
+                                                      AutomationId="AutoSizeDisabledRadio"
+                                                      CheckedChanged="AutoSize_CheckedChanged"/>
+                                          <RadioButton x:Name="AutoSizeTextChanges"
+                                                      Content="TextChanges"
+                                                      FontSize="10"
+                                                      GroupName="AutoSize"
+                                                      AutomationId="AutoSizeTextChangesRadio"
+                                                      CheckedChanged="AutoSize_CheckedChanged"/>
+                                   </HorizontalStackLayout>
+                            </StackLayout>
+                            
+                            <!-- IsReadOnly -->
+                            <StackLayout>
+                                   <Label Text="IsReadOnly:"
+                                          FontSize="12"/>
+                                   <HorizontalStackLayout Spacing="4">
+                                          <RadioButton x:Name="IsReadOnlyTrue"
+                                                      Content="True"
+                                                      FontSize="10"
+                                                      GroupName="ReadOnly"
+                                                      AutomationId="ReadOnlyTrue"
+                                                      CheckedChanged="IsReadOnlyTrueOrFalse_Clicked"/>
+                                          <RadioButton x:Name="IsReadOnlyFalse"
+                                                      IsChecked="True"
+                                                      Content="False"
+                                                      FontSize="10"
+                                                      GroupName="ReadOnly"
+                                                      AutomationId="ReadOnlyFalse"
+                                                      CheckedChanged="IsReadOnlyTrueOrFalse_Clicked"/>
+                                   </HorizontalStackLayout>
+                            </StackLayout>
+                            
+                            <!-- IsTextPredictionEnabled -->
+                            <StackLayout>
+                                   <Label Text="TextPrediction:"
+                                          FontSize="12"/>
+                                   <HorizontalStackLayout Spacing="4">
+                                          <RadioButton x:Name="TextPredictionTrue"
+                                                      Content="True"
+                                                      FontSize="10"
+                                                      GroupName="TextPrediction"
+                                                      AutomationId="TextPredictionTrue"
+                                                      CheckedChanged="IsTextPredictionEnabledTrueOrFalse_Clicked"/>
+                                          <RadioButton x:Name="TextPredictionFalse"
+                                                      IsChecked="True"
+                                                      Content="False"
+                                                      FontSize="10"
+                                                      GroupName="TextPrediction"
+                                                      AutomationId="TextPredictionFalse"
+                                                      CheckedChanged="IsTextPredictionEnabledTrueOrFalse_Clicked"/>
+                                   </HorizontalStackLayout>
+                            </StackLayout>
+                            
+                            <!-- IsEnabled -->
+                            <StackLayout>
+                                   <Label Text="IsEnabled:"
+                                          FontSize="12"/>
+                                   <HorizontalStackLayout Spacing="4">
+                                          <RadioButton x:Name="EnabledTrue"
+                                                      IsChecked="True"
+                                                      Content="True"
+                                                      FontSize="10"
+                                                      GroupName="Enabled"
+                                                      AutomationId="EnabledTrue"
+                                                      CheckedChanged="IsEnabledTrueOrFalse_Clicked"/>
+                                          <RadioButton x:Name="EnabledFalse"
+                                                      Content="False"
+                                                      FontSize="10"
+                                                      GroupName="Enabled"
+                                                      AutomationId="EnabledFalse"
+                                                      CheckedChanged="IsEnabledTrueOrFalse_Clicked"/>
+                                   </HorizontalStackLayout>
+                            </StackLayout>
+                            
+                            <!-- IsVisible -->
+                            <StackLayout>
+                                   <Label Text="IsVisible:"
+                                          FontSize="12"/>
+                                   <HorizontalStackLayout Spacing="4">
+                                          <RadioButton x:Name="VisibleTrue"
+                                                      IsChecked="True"
+                                                      Content="True"
+                                                      FontSize="10"
+                                                      GroupName="Visible"
+                                                      AutomationId="VisibleTrue"
+                                                      CheckedChanged="IsVisibleTrueOrFalse_Clicked"/>
+                                          <RadioButton x:Name="VisibleFalse"
+                                                      Content="False"
+                                                      FontSize="10"
+                                                      GroupName="Visible"
+                                                      AutomationId="VisibleFalse"
+                                                      CheckedChanged="IsVisibleTrueOrFalse_Clicked"/>
+                                   </HorizontalStackLayout>
+                            </StackLayout>
+                            
+                            <!-- FlowDirection -->
+                            <StackLayout>
+                                   <Label Text="FlowDirection:"
+                                          FontSize="12"/>
+                                   <HorizontalStackLayout Spacing="4">
+                                          <RadioButton x:Name="FlowDirectionLeftToRight"
+                                                      IsChecked="True"
+                                                      Content="LTR"
+                                                      FontSize="10"
+                                                      GroupName="FlowDirection"
+                                                      AutomationId="FlowDirectionLeftToRight"
+                                                      CheckedChanged="FlowDirection_Clicked"/>
+                                          <RadioButton x:Name="FlowDirectionRightToLeft"
+                                                      Content="RTL"
+                                                      FontSize="10"
+                                                      GroupName="FlowDirection"
+                                                      AutomationId="FlowDirectionRightToLeft"
+                                                      CheckedChanged="FlowDirection_Clicked"/>
+                                   </HorizontalStackLayout>
+                            </StackLayout>
+                            
+                            <!-- Text Color -->
+                            <StackLayout>
+                                   <Label Text="Text Color:"
+                                          FontSize="12"/>
+                                   <HorizontalStackLayout Spacing="4">
+                                          <Button Text="Black"
+                                                  BackgroundColor="Black"
+                                                  TextColor="White"
+                                                  FontSize="10"
+                                                  AutomationId="TextColorBlack"
+                                                  Clicked="TextColorButton_Clicked"/>
+                                          <Button Text="Red"
+                                                  BackgroundColor="Red"
+                                                  TextColor="White"
+                                                  FontSize="10"
+                                                  AutomationId="TextColorRed"
+                                                  Clicked="TextColorButton_Clicked"/>
+                                          <Button Text="Blue"
+                                                  BackgroundColor="Blue"
+                                                  TextColor="White"
+                                                  FontSize="10"
+                                                  AutomationId="TextColorBlue"
+                                                  Clicked="TextColorButton_Clicked"/>
+                                   </HorizontalStackLayout>
+                            </StackLayout>
+                            
+                            <!-- Placeholder Color -->
+                            <StackLayout>
+                                   <Label Text="Placeholder Color:"
+                                          FontSize="12"/>
+                                   <HorizontalStackLayout Spacing="4">
+                                          <Button Text="Gray"
+                                                  BackgroundColor="Gray"
+                                                  TextColor="White"
+                                                  FontSize="10"
+                                                  AutomationId="PlaceholderColorGray"
+                                                  Clicked="PlaceholderColorButton_Clicked"/>
+                                          <Button Text="Red"
+                                                  BackgroundColor="Red"
+                                                  TextColor="White"
+                                                  FontSize="10"
+                                                  AutomationId="PlaceholderColorRed"
+                                                  Clicked="PlaceholderColorButton_Clicked"/>
+                                   </HorizontalStackLayout>
+                            </StackLayout>
+                            
+                            <!-- Font Attributes -->
+                            <StackLayout>
+                                   <Label Text="Font Attributes:"
+                                          FontSize="12"/>
+                                   <HorizontalStackLayout Spacing="4">
+                                          <Button Text="None"
+                                                  FontSize="10"
+                                                  AutomationId="FontAttributesNone"
+                                                  Clicked="FontAttributesButton_Clicked"/>
+                                          <Button Text="Bold"
+                                                  FontSize="10"
+                                                  FontAttributes="Bold"
+                                                  AutomationId="FontAttributesBold"
+                                                  Clicked="FontAttributesButton_Clicked"/>
+                                          <Button Text="Italic"
+                                                  FontSize="10"
+                                                  FontAttributes="Italic"
+                                                  AutomationId="FontAttributesItalic"
+                                                  Clicked="FontAttributesButton_Clicked"/>
+                                   </HorizontalStackLayout>
+                            </StackLayout>
+                            
+                            <!-- Keyboard -->
+                            <StackLayout>
+                                   <Label Text="Keyboard:"
+                                          FontSize="12"/>
+                                   <HorizontalStackLayout Spacing="4">
+                                          <Button Text="Default"
+                                                  FontSize="10"
+                                                  AutomationId="Default"
+                                                  Clicked="KeyboardButton_Clicked"/>
+                                          <Button Text="Email"
+                                                  FontSize="10"
+                                                  AutomationId="Email"
+                                                  Clicked="KeyboardButton_Clicked"/>
+                                          <Button Text="Numeric"
+                                                  FontSize="10"
+                                                  AutomationId="Numeric"
+                                                  Clicked="KeyboardButton_Clicked"/>
+                                   </HorizontalStackLayout>
+                            </StackLayout>
+                     </VerticalStackLayout>
+              </Grid>
+       </ScrollView>
+</ContentPage>
