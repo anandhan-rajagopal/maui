@@ -98,4 +98,121 @@ public partial class TabbedPageOptionsPage : ContentPage
 			_viewModel.FlowDirection = radioButton.Content.ToString() == "LeftToRight" ? FlowDirection.LeftToRight : FlowDirection.RightToLeft;
 		}
 	}
+
+	private void ItemsSourceOne_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.ItemsSource = _viewModel.ItemsSourceOne;
+	}
+
+	private void ItemsSourceTwo_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.ItemsSource = _viewModel.ItemsSourceTwo;
+	}
+
+	private void OnTemplateOneClicked(object sender, EventArgs e)
+	{
+		_viewModel.ItemTemplate = new DataTemplate(() =>
+		{
+			var label = new Label
+			{
+				FontAttributes = FontAttributes.Bold,
+				FontSize = 18,
+				HorizontalOptions = LayoutOptions.Center
+			};
+			label.SetBinding(Label.TextProperty, "Name");
+
+			var image = new Image
+			{
+				HorizontalOptions = LayoutOptions.Center,
+				WidthRequest = 200,
+				HeightRequest = 200
+			};
+			image.SetBinding(Image.SourceProperty, "ImageUrl");
+			
+			var page = new ContentPage
+			{
+				IconImageSource = "dotnet_bot.png",
+				Content = new StackLayout
+				{
+					Padding = new Thickness(5, 25),
+					Children =
+					{
+						new Label
+						{
+							Text = "Template One",
+							FontAttributes = FontAttributes.Bold,
+							FontSize = 18,
+							HorizontalOptions = LayoutOptions.Center
+						},
+						label,
+						image
+					}
+				}
+			};
+			page.SetBinding(ContentPage.TitleProperty, new Binding("Name"));
+			return page;
+		});
+	}
+
+	private void OnTemplateTwoClicked(object sender, EventArgs e)
+	{
+		_viewModel.ItemTemplate = new DataTemplate(() =>
+		{
+			var image = new Image
+			{
+				HorizontalOptions = LayoutOptions.Center,
+				WidthRequest = 200,
+				HeightRequest = 200
+			};
+			image.SetBinding(Image.SourceProperty, "ImageUrl");
+
+			var label = new Label
+			{
+				FontAttributes = FontAttributes.Bold,
+				FontSize = 18,
+				HorizontalOptions = LayoutOptions.Center
+			};
+			label.SetBinding(Label.TextProperty, "Name");
+
+			var page = new ContentPage
+			{
+				IconImageSource = "fruitsicon.png",
+				Content = new StackLayout
+				{
+					Padding = new Thickness(5, 25),
+					Children =
+					{
+						new Label
+						{
+							Text = "Template Two",
+							FontAttributes = FontAttributes.Bold,
+							FontSize = 18,
+							HorizontalOptions = LayoutOptions.Center
+						},
+						new HorizontalStackLayout
+						{
+							Children =
+							{
+								image,
+								label
+							}
+						}
+					}
+				}
+			};
+			page.SetBinding(ContentPage.TitleProperty, new Binding("Name"));
+			return page;
+		});
+	}
+
+	private void SelectItemOneButton_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.SelectedItem = _viewModel.ItemsSource.FirstOrDefault();
+	}
+
+	private void SelectItemTwoButton_Clicked(object sender, EventArgs e)
+	{
+		_viewModel.SelectedItem = _viewModel.ItemsSource.LastOrDefault();
+	}
+
 }

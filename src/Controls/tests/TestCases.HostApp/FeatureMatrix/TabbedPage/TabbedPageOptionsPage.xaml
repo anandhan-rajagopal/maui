@@ -105,5 +105,47 @@
                                      CheckedChanged="OnFlowDirectionChanged"
                                      AutomationId="RightToLeftFlowRadio"/>
                 </StackLayout>
+
+                <!-- ItemsSource -->
+                <Label Text="ItemsSource"
+                       FontSize="18"
+                       FontAttributes="Bold"/>
+                <StackLayout Orientation="Horizontal">
+                        <Button Text="ItemsSourceOne"
+                                Clicked="ItemsSourceOne_Clicked"
+                                BackgroundColor="LightBlue"
+                                AutomationId="ItemsSourceOneButton"/>
+                        <Button Text="ItemsSourceTwo"
+                                Clicked="ItemsSourceTwo_Clicked"
+                                BackgroundColor="LightPink"
+                                AutomationId="ItemsSourceTwoButton"/>
+                </StackLayout>
+
+                <!-- SelectedItem Test -->
+                <HorizontalStackLayout>
+                        <Label Text="SelectedItem"
+                               FontSize="18"
+                               FontAttributes="Bold"/>
+                        <Button Text="Select Tab"
+                                Clicked="SelectItemOneButton_Clicked"
+                                BackgroundColor="LightGreen"
+                                AutomationId="SelectItemOneButton"/>
+                        <Button Text="Deselect Tab"
+                                Clicked="SelectItemTwoButton_Clicked"
+                                BackgroundColor="LightCoral"
+                                AutomationId="SelectItemTwoButton"/>
+                </HorizontalStackLayout>
+
+                <!-- ItemTemplate Info -->
+                <HorizontalStackLayout>
+                        <Label Text="ItemTemplate"
+                               FontSize="14"
+                               TextColor="Gray"
+                               Margin="0,10,0,0"/>
+                        <Button Text="Template One"
+                                        Clicked="OnTemplateOneClicked"/>
+                        <Button Text="Template Two"
+                                        Clicked="OnTemplateTwoClicked"/>
+                </HorizontalStackLayout>
         </StackLayout>
 </ContentPage>
