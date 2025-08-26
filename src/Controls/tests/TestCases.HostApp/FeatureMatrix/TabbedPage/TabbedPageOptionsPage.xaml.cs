@@ -131,7 +131,7 @@ public partial class TabbedPageOptionsPage : ContentPage
 			
 			var page = new ContentPage
 			{
-				IconImageSource = "dotnet_bot.png",
+				IconImageSource = "coffee.png",
 				Content = new StackLayout
 				{
 					Padding = new Thickness(5, 25),
@@ -170,7 +170,8 @@ public partial class TabbedPageOptionsPage : ContentPage
 			{
 				FontAttributes = FontAttributes.Bold,
 				FontSize = 18,
-				HorizontalOptions = LayoutOptions.Center
+				HorizontalOptions = LayoutOptions.Center,
+				VerticalOptions = LayoutOptions.Center
 			};
 			label.SetBinding(Label.TextProperty, "Name");
 

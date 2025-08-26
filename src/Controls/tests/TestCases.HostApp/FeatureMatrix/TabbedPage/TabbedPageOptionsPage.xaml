@@ -6,20 +6,31 @@
              x:DataType="local:TabbedPageViewModel"
              Title="TabbedPage Options">
 
-        <StackLayout Padding="20"
-                     Spacing="5">
+        <Grid ColumnSpacing="0"
+              RowSpacing="20"
+              RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+              ColumnDefinitions="0.5*,0.5*"
+              HorizontalOptions="Center"
+              VerticalOptions="Center">
 
                 <!-- Apply Button -->
-                <Button Text="Apply Changes"
+                <Button Grid.Row="0"
+                        Grid.ColumnSpan="2"
+                        Text="Apply Changes"
                         Clicked="ApplyButton_Clicked"
                         BackgroundColor="Blue"
                         AutomationId="ApplyButton"/>
 
                 <!-- BarBackground Brush  -->
-                <Label Text="BarBackground Brush"
+                <Label Grid.Row="1"
+                       Grid.Column="0"
+                       Text="BarBackground Brush: "
                        FontSize="18"
                        FontAttributes="Bold"/>
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Grid.Row="1"
+                             Grid.Column="2"
+                             Orientation="Horizontal"
+                             Spacing="2">
                         <Button Text="Gradient"
                                 Clicked="BarBackgroundBrushButton_Clicked"
                                 BackgroundColor="Violet"
@@ -33,10 +44,15 @@
                 </StackLayout>
 
                 <!-- BarText Color -->
-                <Label Text="BarText Color"
+                <Label Grid.Row="2"
+                       Grid.Column="0"
+                       Text="BarText Color: "
                        FontSize="18"
                        FontAttributes="Bold"/>
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Grid.Row="2"
+                             Grid.Column="1"
+                             Orientation="Horizontal"
+                             Spacing="2">
                         <Button Text="Black"
                                 Clicked="BarTextColorButton_Clicked"
                                 BackgroundColor="Black"
@@ -50,10 +66,15 @@
                 </StackLayout>
 
                 <!-- SelectedTab Color -->
-                <Label Text="SelectedTab Color"
+                <Label Grid.Row="3"
+                       Grid.Column="0"
+                       Text="SelectedTab Color: "
                        FontSize="18"
                        FontAttributes="Bold"/>
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Grid.Row="3"
+                             Grid.Column="1"
+                             Orientation="Horizontal"
+                             Spacing="2">
                         <Button Text="Orange"
                                 Clicked="SelectedTabColorButton_Clicked"
                                 BackgroundColor="Orange"
@@ -67,10 +88,15 @@
                 </StackLayout>
 
                 <!-- UnselectedTab Color -->
-                <Label Text="UnselectedTab Color"
+                <Label Grid.Row="4"
+                       Grid.Column="0"
+                       Text="UnselectedTab Color: "
                        FontSize="18"
                        FontAttributes="Bold"/>
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Grid.Row="4"
+                             Grid.Column="1"
+                             Orientation="Horizontal"
+                             Spacing="2">
                         <Button Text="LightGray"
                                 Clicked="UnselectedTabColorButton_Clicked"
                                 BackgroundColor="LightGray"
@@ -84,20 +110,26 @@
                 </StackLayout>
 
                 <!-- IsEnabled -->
-                <Label Text="IsEnabled"
+                <Label Grid.Row="5"
+                       Grid.Column="0"
+                       Text="IsEnabled: "
                        FontSize="18"
                        FontAttributes="Bold"/>
-                <StackLayout Orientation="Horizontal">
-                        <RadioButton Content="False"
-                                     CheckedChanged="OnIsEnabledChanged"
-                                     AutomationId="IsEnabledFalseRadio"/>
-                </StackLayout>
+                <RadioButton Grid.Row="5"
+                             Grid.Column="1"
+                             Content="False"
+                             CheckedChanged="OnIsEnabledChanged"
+                             AutomationId="IsEnabledFalseRadio"/>
 
                 <!-- FlowDirection -->
-                <Label Text="FlowDirection"
+                <Label Grid.Row="6"
+                       Grid.Column="0"
+                       Text="FlowDirection: "
                        FontSize="18"
                        FontAttributes="Bold"/>
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Grid.Row="6"
+                             Grid.Column="1"
+                             Orientation="Horizontal">
                         <RadioButton Content="LeftToRight"
                                      CheckedChanged="OnFlowDirectionChanged"
                                      AutomationId="LeftToRightFlowRadio"/>
@@ -107,25 +139,33 @@
                 </StackLayout>
 
                 <!-- ItemsSource -->
-                <Label Text="ItemsSource"
+                <Label Grid.Row="7"
+                       Grid.Column="0"
+                       Text="ItemsSource: "
                        FontSize="18"
                        FontAttributes="Bold"/>
-                <StackLayout Orientation="Horizontal">
-                        <Button Text="ItemsSourceOne"
+                <StackLayout Grid.Row="7"
+                             Grid.Column="1"
+                             Orientation="Horizontal" Spacing="2">
+                        <Button Text="SourceOne"
                                 Clicked="ItemsSourceOne_Clicked"
                                 BackgroundColor="LightBlue"
                                 AutomationId="ItemsSourceOneButton"/>
-                        <Button Text="ItemsSourceTwo"
+                        <Button Text="SourceTwo"
                                 Clicked="ItemsSourceTwo_Clicked"
                                 BackgroundColor="LightPink"
                                 AutomationId="ItemsSourceTwoButton"/>
                 </StackLayout>
 
                 <!-- SelectedItem Test -->
-                <HorizontalStackLayout>
-                        <Label Text="SelectedItem"
-                               FontSize="18"
-                               FontAttributes="Bold"/>
+                <Label Grid.Row="8"
+                       Grid.Column="0"
+                       Text="SelectedItem: "
+                       FontSize="18"
+                       FontAttributes="Bold"/>
+                <StackLayout Grid.Row="8"
+                             Grid.Column="1"
+                             Orientation="Horizontal" Spacing="2">
                         <Button Text="Select Tab"
                                 Clicked="SelectItemOneButton_Clicked"
                                 BackgroundColor="LightGreen"
@@ -134,18 +174,21 @@
                                 Clicked="SelectItemTwoButton_Clicked"
                                 BackgroundColor="LightCoral"
                                 AutomationId="SelectItemTwoButton"/>
-                </HorizontalStackLayout>
+                </StackLayout>
 
-                <!-- ItemTemplate Info -->
-                <HorizontalStackLayout>
-                        <Label Text="ItemTemplate"
-                               FontSize="14"
-                               TextColor="Gray"
-                               Margin="0,10,0,0"/>
-                        <Button Text="Template One"
-                                        Clicked="OnTemplateOneClicked"/>
-                        <Button Text="Template Two"
-                                        Clicked="OnTemplateTwoClicked"/>
-                </HorizontalStackLayout>
-        </StackLayout>
+                <!-- ItemTemplate -->
+                <Label Grid.Row="9"
+                       Grid.Column="0"
+                       Text="ItemTemplate: "
+                       FontSize="18"
+                       FontAttributes="Bold"/>
+                <StackLayout Grid.Row="9"
+                             Grid.Column="1"
+                             Orientation="Horizontal">
+                        <Button Text="TemplateOne"
+                                Clicked="OnTemplateOneClicked"/>
+                        <Button Text="TemplateTwo"
+                                Clicked="OnTemplateTwoClicked"/>
+                </StackLayout>
+        </Grid>
 </ContentPage>
