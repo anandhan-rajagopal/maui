@@ -46,6 +46,7 @@ public class TabbedPageViewModel : INotifyPropertyChanged
 	public TabbedPageViewModel()
 	{
 		ItemsSource = ItemsSourceOne;
+		SelectedItem = ItemsSourceOne.FirstOrDefault();
 		ItemTemplate = new DataTemplate(() =>
 		{
 			var label = new Label

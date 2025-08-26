@@ -146,7 +146,8 @@
                        FontAttributes="Bold"/>
                 <StackLayout Grid.Row="7"
                              Grid.Column="1"
-                             Orientation="Horizontal" Spacing="2">
+                             Orientation="Horizontal"
+                             Spacing="2">
                         <Button Text="SourceOne"
                                 Clicked="ItemsSourceOne_Clicked"
                                 BackgroundColor="LightBlue"
@@ -157,38 +158,39 @@
                                 AutomationId="ItemsSourceTwoButton"/>
                 </StackLayout>
 
-                <!-- SelectedItem Test -->
-                <Label Grid.Row="8"
-                       Grid.Column="0"
-                       Text="SelectedItem: "
-                       FontSize="18"
-                       FontAttributes="Bold"/>
-                <StackLayout Grid.Row="8"
-                             Grid.Column="1"
-                             Orientation="Horizontal" Spacing="2">
-                        <Button Text="Select Tab"
-                                Clicked="SelectItemOneButton_Clicked"
-                                BackgroundColor="LightGreen"
-                                AutomationId="SelectItemOneButton"/>
-                        <Button Text="Deselect Tab"
-                                Clicked="SelectItemTwoButton_Clicked"
-                                BackgroundColor="LightCoral"
-                                AutomationId="SelectItemTwoButton"/>
-                </StackLayout>
-
                 <!-- ItemTemplate -->
-                <Label Grid.Row="9"
+                <Label Grid.Row="8"
                        Grid.Column="0"
                        Text="ItemTemplate: "
                        FontSize="18"
                        FontAttributes="Bold"/>
-                <StackLayout Grid.Row="9"
+                <StackLayout Grid.Row="8"
                              Grid.Column="1"
                              Orientation="Horizontal">
                         <Button Text="TemplateOne"
                                 Clicked="OnTemplateOneClicked"/>
                         <Button Text="TemplateTwo"
                                 Clicked="OnTemplateTwoClicked"/>
+                </StackLayout>
+
+                <!-- SelectedItem -->
+                <Label Grid.Row="9"
+                       Grid.Column="0"
+                       Text="SelectedItem: "
+                       FontSize="18"
+                       FontAttributes="Bold"/>
+                <StackLayout Grid.Row="9"
+                             Grid.Column="1"
+                             Orientation="Horizontal"
+                             Spacing="2">
+                        <Entry x:Name="selectedItemEntry"
+                               Text="1"
+                               Keyboard="Numeric"
+                               WidthRequest="100"/>
+                        <Button Text="Select Tab"
+                                Clicked="SelectItemButton_Clicked"
+                                BackgroundColor="LightGreen"
+                                AutomationId="SelectItemButton"/>
                 </StackLayout>
         </Grid>
 </ContentPage>

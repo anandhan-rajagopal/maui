@@ -128,7 +128,7 @@ public partial class TabbedPageOptionsPage : ContentPage
 				HeightRequest = 200
 			};
 			image.SetBinding(Image.SourceProperty, "ImageUrl");
-			
+
 			var page = new ContentPage
 			{
 				IconImageSource = "coffee.png",
@@ -216,4 +216,12 @@ public partial class TabbedPageOptionsPage : ContentPage
 		_viewModel.SelectedItem = _viewModel.ItemsSource.LastOrDefault();
 	}
 
+	private void SelectItemButton_Clicked(object sender, EventArgs e)
+	{
+		var index = int.Parse(selectedItemEntry.Text);
+		if (index > 0 && index <= _viewModel.ItemsSource.Count)
+		{
+			_viewModel.SelectedItem = _viewModel.ItemsSource[index - 1];
+		}
+	}
 }
