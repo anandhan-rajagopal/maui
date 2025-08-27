@@ -19,6 +19,7 @@
                       Text="Light Theme"
                       TextColor="{AppThemeBinding Light=Blue, Dark=Red}"
                       BackgroundColor="{AppThemeBinding Light=Green, Dark=Yellow}"
+                      BorderColor="{AppThemeBinding Light=SlateBlue, Dark=DarkOrange}"
                       Clicked="OnLightThemeButtonClicked"
                       HorizontalOptions="Center"/>
               <Button Grid.Row="0"
@@ -27,6 +28,7 @@
                       Text="Dark Theme"
                       TextColor="{AppThemeBinding Light=Blue, Dark=Red}"
                       BackgroundColor="{AppThemeBinding Light=Green, Dark=Yellow}"
+                      BorderColor="{AppThemeBinding Light=SlateBlue, Dark=DarkOrange}"
                       Clicked="OnDarkThemeButtonClicked"
                       HorizontalOptions="Center"/>
 
@@ -72,6 +74,7 @@
                      <local:UITestEntry AutomationId="Entry"
                                         TextColor="{AppThemeBinding Light=Blue, Dark=Red}"
                                         BackgroundColor="{AppThemeBinding Light=Green, Dark=Yellow}"
+                                        PlaceholderColor="{AppThemeBinding Light=DarkGray, Dark=LightGray}"
                                         IsCursorVisible="False"
                                         IsSpellCheckEnabled="False"
                                         ClearButtonVisibility="WhileEditing"
@@ -89,10 +92,14 @@
                      <StackLayout>
                             <RadioButton AutomationId="RadioButton_Cat"
                                          Content="Cat"
+                                         BorderColor="{AppThemeBinding Light=Indigo, Dark=OrangeRed}"
+                                         BackgroundColor="{AppThemeBinding Light=Lavender, Dark=DimGray}"
                                          TextColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
                             <RadioButton AutomationId="RadioButton_Monkey"
                                          Content="Monkey"
                                          IsChecked="true"
+                                         BorderColor="{AppThemeBinding Light=Indigo, Dark=OrangeRed}"
+                                         BackgroundColor="{AppThemeBinding Light=Lavender, Dark=DimGray}"
                                          TextColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
                      </StackLayout>
               </HorizontalStackLayout>
@@ -105,6 +112,7 @@
                      <local:UITestEditor AutomationId="Editor"
                                          TextColor="{AppThemeBinding Light=Blue, Dark=Red}"
                                          BackgroundColor="{AppThemeBinding Light=Green, Dark=Yellow}"
+                                         PlaceholderColor="{AppThemeBinding Light=SlateGray, Dark=LightSteelBlue}"
                                          IsCursorVisible="False"
                                          IsSpellCheckEnabled="False"
                                          Placeholder="Editor Placeholder"
@@ -122,6 +130,7 @@
                                      TextColor="{AppThemeBinding Light=Blue, Dark=Red}"
                                      BackgroundColor="{AppThemeBinding Light=Green, Dark=Yellow}"
                                      CancelButtonColor="{AppThemeBinding Light=Blue, Dark=Red}"
+                                     PlaceholderColor="{AppThemeBinding Light=Gray, Dark=Silver}"
                                      IsCursorVisible="False"
                                      IsSpellCheckEnabled="False"
                                      Placeholder="SearchBar Placeholder"
@@ -131,6 +140,7 @@
               <HorizontalStackLayout Grid.Row="5"
                                      Grid.Column="0">
                      <Label Text="Image: "
+                            BackgroundColor="{AppThemeBinding Light=AliceBlue, Dark=Black}"
                             VerticalOptions="Center"/>
                      <Image Source="dotnet_bot.png"
                             HeightRequest="50"/>
@@ -142,6 +152,7 @@
                      <Label Text="BoxView: "
                             VerticalOptions="Center"/>
                      <BoxView Color="{AppThemeBinding Light=Green, Dark=Yellow}"
+                              BackgroundColor="{AppThemeBinding Light=Beige, Dark=DarkSlateGray}"
                               WidthRequest="50"
                               HeightRequest="50"/>
               </HorizontalStackLayout>
@@ -153,6 +164,8 @@
                      <Label Text="ImageButton: "
                             VerticalOptions="Center"/>
                      <ImageButton Source="dotnet_bot.png"
+                                  BorderColor="{AppThemeBinding Light=SeaGreen, Dark=Orchid}"
+                                  BackgroundColor="{AppThemeBinding Light=Bisque, Dark=SlateGray}"
                                   HeightRequest="50"/>
               </HorizontalStackLayout>
 
@@ -177,6 +190,7 @@
                              x:Name="picker"
                              TextColor="{AppThemeBinding Light=Blue, Dark=Red}"
                              BackgroundColor="{AppThemeBinding Light=Green, Dark=Yellow}"
+                             TitleColor="{AppThemeBinding Light=Indigo, Dark=Goldenrod}"
                              SelectedIndex="4"
                              WidthRequest="200"
                              Title="Select a monkey">
@@ -201,6 +215,7 @@
                      <Label Text="ProgressBar: "
                             VerticalOptions="Center"/>
                      <ProgressBar BackgroundColor="{AppThemeBinding Light=Green, Dark=Yellow}"
+                                  ProgressColor="{AppThemeBinding Light=MediumOrchid, Dark=LightSeaGreen}"
                                   Progress="0.5"
                                   WidthRequest="300"/>
               </HorizontalStackLayout>
@@ -216,6 +231,8 @@
                      <Slider AutomationId="Slider"
                              x:Name="slider"
                              BackgroundColor="{AppThemeBinding Light=Green, Dark=Yellow}"
+                             MaximumTrackColor="{AppThemeBinding Light=HotPink, Dark=CadetBlue}"
+                             MinimumTrackColor="{AppThemeBinding Light=Gold, Dark=DarkSeaGreen}"
                              Maximum="360"
                              Minimum="100"
                              Value="150"
@@ -256,7 +273,8 @@
                             VerticalOptions="Center"/>
                      <Switch AutomationId="Switch"
                              BackgroundColor="{AppThemeBinding Light=Green, Dark=Yellow}"
-                             OnColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
+                             OnColor="{AppThemeBinding Light=Blue, Dark=Red}"
+                             ThumbColor="{AppThemeBinding Light=Black, Dark=White}"/>
               </HorizontalStackLayout>
 
               <!-- TimePicker -->
