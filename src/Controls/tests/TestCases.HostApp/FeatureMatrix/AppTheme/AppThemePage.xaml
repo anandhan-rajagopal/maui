@@ -95,12 +95,14 @@
                             <RadioButton AutomationId="RadioButton_Cat"
                                          Content="Cat"
                                          BorderColor="{AppThemeBinding Light=Indigo, Dark=OrangeRed}"
+                                         BorderWidth="3"
                                          BackgroundColor="{AppThemeBinding Light=Lavender, Dark=DimGray}"
                                          TextColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
                             <RadioButton AutomationId="RadioButton_Monkey"
                                          Content="Monkey"
                                          IsChecked="true"
                                          BorderColor="{AppThemeBinding Light=Indigo, Dark=OrangeRed}"
+                                         BorderWidth="3"
                                          BackgroundColor="{AppThemeBinding Light=Lavender, Dark=DimGray}"
                                          TextColor="{AppThemeBinding Light=Blue, Dark=Red}"/>
                      </StackLayout>
