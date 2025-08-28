@@ -20,6 +20,7 @@
                       TextColor="{AppThemeBinding Light=Blue, Dark=Red}"
                       BackgroundColor="{AppThemeBinding Light=Green, Dark=Yellow}"
                       BorderColor="{AppThemeBinding Light=SlateBlue, Dark=DarkOrange}"
+                      BorderWidth="3"
                       Clicked="OnLightThemeButtonClicked"
                       HorizontalOptions="Center"/>
               <Button Grid.Row="0"
@@ -29,6 +30,7 @@
                       TextColor="{AppThemeBinding Light=Blue, Dark=Red}"
                       BackgroundColor="{AppThemeBinding Light=Green, Dark=Yellow}"
                       BorderColor="{AppThemeBinding Light=SlateBlue, Dark=DarkOrange}"
+                      BorderWidth="3"
                       Clicked="OnDarkThemeButtonClicked"
                       HorizontalOptions="Center"/>
 
@@ -140,9 +142,9 @@
               <HorizontalStackLayout Grid.Row="5"
                                      Grid.Column="0">
                      <Label Text="Image: "
-                            BackgroundColor="{AppThemeBinding Light=AliceBlue, Dark=Black}"
                             VerticalOptions="Center"/>
                      <Image Source="dotnet_bot.png"
+                            BackgroundColor="{AppThemeBinding Light=AliceBlue, Dark=Black}"
                             HeightRequest="50"/>
               </HorizontalStackLayout>
 
@@ -165,8 +167,10 @@
                             VerticalOptions="Center"/>
                      <ImageButton Source="dotnet_bot.png"
                                   BorderColor="{AppThemeBinding Light=SeaGreen, Dark=Orchid}"
+                                  BorderWidth="5"
                                   BackgroundColor="{AppThemeBinding Light=Bisque, Dark=SlateGray}"
-                                  HeightRequest="50"/>
+                                  HeightRequest="50"
+                                  WidthRequest="100"/>
               </HorizontalStackLayout>
 
               <!-- Shapes -->

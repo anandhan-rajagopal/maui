@@ -342,4 +342,106 @@ public class AppThemeFeatureTests : UITest
 #endif
 		VerifyScreenshot();
 	}
+
+	[Test, Order(23)]
+	[Category(AppThemeFeatureMatrix)]
+	public void LightTheme_EntryAndPlaceholderColor_VerifyVisualState()
+	{
+		App.WaitForElement("LightThemeButton");
+		App.Tap("LightThemeButton");
+		App.WaitForElement("Entry");
+		App.ClearText("Entry");
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
+		VerifyScreenshot();
+	}
+
+	[Test, Order(24)]
+	[Category(AppThemeFeatureMatrix)]
+	public void DarkTheme_EntryAndPlaceholderColor_VerifyVisualState()
+	{
+		App.WaitForElement("DarkThemeButton");
+		App.Tap("DarkThemeButton");
+		App.WaitForElement("Entry");
+		App.ClearText("Entry");
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
+		VerifyScreenshot();
+	}
+
+	[Test, Order(25)]
+	[Category(AppThemeFeatureMatrix)]
+	public void LightTheme_EditorAndPlaceholderColor_VerifyVisualState()
+	{
+		App.WaitForElement("LightThemeButton");
+		App.Tap("LightThemeButton");
+		App.WaitForElement("Editor");
+		App.ClearText("Entry");
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
+		VerifyScreenshot();
+	}
+
+	[Test, Order(26)]
+	[Category(AppThemeFeatureMatrix)]
+	public void DarkTheme_EditorAndPlaceholderColor_VerifyVisualState()
+	{
+		App.WaitForElement("DarkThemeButton");
+		App.Tap("DarkThemeButton");
+		App.WaitForElement("Editor");
+		App.ClearText("Editor");
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
+		VerifyScreenshot();
+	}
+
+	[Test, Order(27)]
+	[Category(AppThemeFeatureMatrix)]
+	public void LightTheme_SearchBarAndPlaceholderColor_VerifyVisualState()
+	{
+		App.WaitForElement("LightThemeButton");
+		App.Tap("LightThemeButton");
+		App.WaitForElement("SearchBar");
+		App.ClearText("SearchBar");
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
+		VerifyScreenshot();
+	}
+
+	[Test, Order(28)]
+	[Category(AppThemeFeatureMatrix)]
+	public void DarkTheme_SearchBarAndPlaceholderColor_VerifyVisualState()
+	{
+		App.WaitForElement("DarkThemeButton");
+		App.Tap("DarkThemeButton");
+		App.WaitForElement("SearchBar");
+		App.ClearText("SearchBar");
+#if ANDROID || IOS
+		if (App.IsKeyboardShown())
+		{
+			App.DismissKeyboard();
+		}
+#endif
+		VerifyScreenshot();
+	}
 }
