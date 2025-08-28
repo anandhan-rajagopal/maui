@@ -26,6 +26,8 @@ public class TabbedPageFeatureTests : UITest
 		VerifyScreenshot();
 	}
 
+#if TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/14572
+
 	[Test, Order(2)]
 	[Category(UITestCategories.TabbedPage)]
 	public void TabbedPage_InitialState_VerifyFunctionalState()
@@ -40,6 +42,7 @@ public class TabbedPageFeatureTests : UITest
 		App.WaitForElement("Tab5Label");
 		VerifyScreenshot();
 	}
+#endif
 
 	[Test, Order(3)]
 	[Category(UITestCategories.TabbedPage)]
@@ -54,6 +57,8 @@ public class TabbedPageFeatureTests : UITest
 		App.WaitForElement("Tab1Label");
 		VerifyScreenshot();
 	}
+
+#if TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/14572
 
 	[Test, Order(4)]
 	[Category(UITestCategories.TabbedPage)]
@@ -88,6 +93,7 @@ public class TabbedPageFeatureTests : UITest
 		App.Tap("TAB 3");
 		VerifyScreenshot();
 	}
+#endif
 
 	[Test, Order(6)]
 	[Category(UITestCategories.TabbedPage)]
@@ -195,6 +201,8 @@ public class TabbedPageFeatureTests : UITest
 		VerifyScreenshot();
 	}
 
+#if TEST_FAILS_ON_WINDOWS // Issue Link - https://github.com/dotnet/maui/issues/14572
+
 	[Test, Order(13)]
 	[Category(UITestCategories.TabbedPage)]
 	public void TabbedPage_SelectedAndUnselectedTabColor_Verify()
@@ -213,6 +221,7 @@ public class TabbedPageFeatureTests : UITest
 		App.Tap("TAB 2");
 		VerifyScreenshot();
 	}
+#endif
 
 #if TEST_FAILS_ON_IOS && TEST_FAILS_ON_CATALYST // Issue Link - https://github.com/dotnet/maui/issues/31121
 
@@ -314,7 +323,7 @@ public class TabbedPageFeatureTests : UITest
 		VerifyScreenshot();
 	}
 
-#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS // Android does not show the More button, Issue Link - https://github.com/dotnet/maui/issues/31377
+#if TEST_FAILS_ON_ANDROID && TEST_FAILS_ON_CATALYST && TEST_FAILS_ON_IOS && TEST_FAILS_ON_WINDOWS // Android does not show the More button, Issue Link - https://github.com/dotnet/maui/issues/31377, https://github.com/dotnet/maui/issues/14572
 
 	[Test, Order(20)]
 	[Category(UITestCategories.TabbedPage)]
