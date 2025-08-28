@@ -119,6 +119,7 @@ public partial class TabbedPageOptionsPage : ContentPage
 				FontSize = 18,
 				HorizontalOptions = LayoutOptions.Center
 			};
+			label.SetBinding(Label.AutomationIdProperty, "Id");
 			label.SetBinding(Label.TextProperty, "Name");
 
 			var image = new Image
@@ -131,6 +132,7 @@ public partial class TabbedPageOptionsPage : ContentPage
 
 			var page = new ContentPage
 			{
+				AutomationId = "ContentPageOne",
 				IconImageSource = "coffee.png",
 				Content = new StackLayout
 				{
@@ -173,10 +175,12 @@ public partial class TabbedPageOptionsPage : ContentPage
 				HorizontalOptions = LayoutOptions.Center,
 				VerticalOptions = LayoutOptions.Center
 			};
+			label.SetBinding(Label.AutomationIdProperty, "Id");
 			label.SetBinding(Label.TextProperty, "Name");
 
 			var page = new ContentPage
 			{
+				AutomationId = "ContentPageTwo",
 				IconImageSource = "fruitsicon.png",
 				Content = new StackLayout
 				{

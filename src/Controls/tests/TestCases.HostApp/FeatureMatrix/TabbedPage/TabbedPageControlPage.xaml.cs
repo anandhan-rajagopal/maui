@@ -18,7 +18,7 @@ public partial class TabbedPageControlMainPage : TabbedPage
 		InitializeComponent();
 		_viewModel = viewModel;
 		BindingContext = _viewModel;
-		var button = new Button { Text = "Options" };
+		var button = new Button { AutomationId = "Options", Text = "Options" };
 		button.Clicked += NavigateToOptionsPage_Clicked;
 		NavigationPage.SetTitleView(this, button);
 	}

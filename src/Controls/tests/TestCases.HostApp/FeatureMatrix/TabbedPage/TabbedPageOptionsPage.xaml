@@ -167,9 +167,11 @@
                 <StackLayout Grid.Row="8"
                              Grid.Column="1"
                              Orientation="Horizontal">
-                        <Button Text="TemplateOne"
+                        <Button AutomationId="TemplateOneButton"
+                                Text="TemplateOne"
                                 Clicked="OnTemplateOneClicked"/>
-                        <Button Text="TemplateTwo"
+                        <Button AutomationId="TemplateTwoButton"
+                                Text="TemplateTwo"
                                 Clicked="OnTemplateTwoClicked"/>
                 </StackLayout>
 
@@ -184,6 +186,7 @@
                              Orientation="Horizontal"
                              Spacing="2">
                         <Entry x:Name="selectedItemEntry"
+                               AutomationId="SelectedItemEntry"
                                Text="1"
                                Keyboard="Numeric"
                                WidthRequest="100"/>

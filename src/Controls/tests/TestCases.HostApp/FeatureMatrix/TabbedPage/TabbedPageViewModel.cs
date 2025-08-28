@@ -15,32 +15,51 @@ public class TabbedPageViewModel : INotifyPropertyChanged
 	private ObservableCollection<TabbedPageItemSource> _itemsSource;
 	private DataTemplate _itemTemplate;
 	private object _selectedItem;
+#if ANDROID
 	public ObservableCollection<TabbedPageItemSource> ItemsSourceOne { get; } = new ObservableCollection<TabbedPageItemSource>
 	{
-		new TabbedPageItemSource { Name = "Tab 1", ImageUrl = "dotnet_bot.png" },
-		new TabbedPageItemSource { Name = "Tab 2", ImageUrl = "dotnet_bot.png" },
-		new TabbedPageItemSource { Name = "Tab 3", ImageUrl = "dotnet_bot.png" },
-		new TabbedPageItemSource { Name = "Tab 4", ImageUrl = "dotnet_bot.png" },
-		new TabbedPageItemSource { Name = "Tab 5", ImageUrl = "dotnet_bot.png" },
-		new TabbedPageItemSource { Name = "Tab 6", ImageUrl = "dotnet_bot.png" },
-		new TabbedPageItemSource { Name = "Tab 7", ImageUrl = "dotnet_bot.png" },
-		new TabbedPageItemSource { Name = "Tab 8", ImageUrl = "dotnet_bot.png" },
-		new TabbedPageItemSource { Name = "Tab 9", ImageUrl = "dotnet_bot.png" },
-		new TabbedPageItemSource { Name = "Tab 10", ImageUrl = "dotnet_bot.png" }
+		new TabbedPageItemSource { Name = "TAB 1", Id = "Tab1Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 2", Id = "Tab2Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 3", Id = "Tab3Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 4", Id = "Tab4Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 5", Id = "Tab5Label", ImageUrl = "dotnet_bot.png" }
 	};
 	public ObservableCollection<TabbedPageItemSource> ItemsSourceTwo { get; } = new ObservableCollection<TabbedPageItemSource>
 	{
-		new TabbedPageItemSource { Name = "Apple", ImageUrl = "apple.png" },
-		new TabbedPageItemSource { Name = "Cherry", ImageUrl = "cherry.png" },
-		new TabbedPageItemSource { Name = "Grape", ImageUrl = "grape.png" },
-		new TabbedPageItemSource { Name = "Kiwi", ImageUrl = "kiwi.png" },
-		new TabbedPageItemSource { Name = "Lemon", ImageUrl = "lemon.png" },
-		new TabbedPageItemSource { Name = "Mango", ImageUrl = "mango.png" },
-		new TabbedPageItemSource { Name = "Orange", ImageUrl = "orange.png" },
-		new TabbedPageItemSource { Name = "Pineapple", ImageUrl = "pineapple.png" },
-		new TabbedPageItemSource { Name = "Pomegranate", ImageUrl = "pomegranate.png" },
-		new TabbedPageItemSource { Name = "Strawberry", ImageUrl = "strawberry.png" }
+		new TabbedPageItemSource { Name = "APPLE", Id="AppleLabel", ImageUrl = "apple.png" },
+		new TabbedPageItemSource { Name = "CHERRY", Id="CherryLabel", ImageUrl = "cherry.png" },
+		new TabbedPageItemSource { Name = "GRAPE", Id="GrapeLabel", ImageUrl = "grape.png" },
+		new TabbedPageItemSource { Name = "KIWI", Id="KiwiLabel", ImageUrl = "kiwi.png" },
+		new TabbedPageItemSource { Name = "MANGO", Id="MangoLabel", ImageUrl = "mango.png" }
 	};
+#else
+	public ObservableCollection<TabbedPageItemSource> ItemsSourceOne { get; } = new ObservableCollection<TabbedPageItemSource>
+	{
+		new TabbedPageItemSource { Name = "TAB 1", Id="Tab1Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 2", Id="Tab2Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 3", Id="Tab3Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 4", Id="Tab4Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 5", Id="Tab5Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 6", Id="Tab6Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 7", Id="Tab7Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 8", Id="Tab8Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 9", Id="Tab9Label", ImageUrl = "dotnet_bot.png" },
+		new TabbedPageItemSource { Name = "TAB 10", Id="Tab10Label", ImageUrl = "dotnet_bot.png" }
+	};
+	public ObservableCollection<TabbedPageItemSource> ItemsSourceTwo { get; } = new ObservableCollection<TabbedPageItemSource>
+	{
+		new TabbedPageItemSource { Name = "APPLE", Id="AppleLabel", ImageUrl = "apple.png" },
+		new TabbedPageItemSource { Name = "CHERRY", Id="CherryLabel", ImageUrl = "cherry.png" },
+		new TabbedPageItemSource { Name = "GRAPE", Id="GrapeLabel", ImageUrl = "grape.png" },
+		new TabbedPageItemSource { Name = "KIWI", Id="KiwiLabel", ImageUrl = "kiwi.png" },
+		new TabbedPageItemSource { Name = "LEMON", Id="LemonLabel", ImageUrl = "lemon.png" },
+		new TabbedPageItemSource { Name = "MANGO", Id="MangoLabel", ImageUrl = "mango.png" },
+		new TabbedPageItemSource { Name = "ORANGE", Id="OrangeLabel", ImageUrl = "orange.png" },
+		new TabbedPageItemSource { Name = "PINEAPPLE", Id="PineappleLabel", ImageUrl = "pineapple.png" },
+		new TabbedPageItemSource { Name = "POMEGRANATE", Id="PomegranateLabel", ImageUrl = "pomegranate.png" },
+		new TabbedPageItemSource { Name = "STRAWBERRY", Id="StrawberryLabel", ImageUrl = "strawberry.png" }
+	};
+#endif
 	public event PropertyChangedEventHandler PropertyChanged;
 
 	public TabbedPageViewModel()
@@ -55,6 +74,7 @@ public class TabbedPageViewModel : INotifyPropertyChanged
 				FontSize = 18,
 				HorizontalOptions = LayoutOptions.Center
 			};
+			label.SetBinding(Label.AutomationIdProperty, "Id");
 			label.SetBinding(Label.TextProperty, "Name");
 
 			var image = new Image
@@ -67,6 +87,7 @@ public class TabbedPageViewModel : INotifyPropertyChanged
 
 			var page = new ContentPage
 			{
+				AutomationId = "ContentPageOne",
 				IconImageSource = "coffee.png",
 				Content = new StackLayout
 				{
@@ -216,5 +237,6 @@ public class TabbedPageViewModel : INotifyPropertyChanged
 public class TabbedPageItemSource
 {
 	public string Name { get; set; }
+	public string Id { get; set; }
 	public string ImageUrl { get; set; }
 }
