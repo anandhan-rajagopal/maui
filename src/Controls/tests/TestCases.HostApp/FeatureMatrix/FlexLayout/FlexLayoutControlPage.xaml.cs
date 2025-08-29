@@ -22,6 +22,7 @@ public partial class FlexLayoutControlMainPage : ContentPage
 
     async void NavigateToOptionsPage_Clicked(object sender, EventArgs e)
     {
+        BindingContext = _viewModel = new FlexLayoutViewModel();
         await Navigation.PushAsync(new FlexLayoutOptionsPage(_viewModel));
     }
 }

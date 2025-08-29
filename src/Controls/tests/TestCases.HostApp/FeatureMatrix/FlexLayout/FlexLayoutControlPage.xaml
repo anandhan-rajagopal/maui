@@ -11,7 +11,7 @@
                      AutomationId="Options"/>
     </ContentPage.ToolbarItems>
 
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+    <Grid RowDefinitions="*,Auto,Auto,Auto,Auto,Auto,Auto"
           ColumnDefinitions="*">
         <FlexLayout x:Name="MainFlexLayout"
                     AutomationId="FlexLayoutControl"
@@ -22,49 +22,73 @@
                     JustifyContent="{Binding JustifyContent}"
                     Wrap="{Binding Wrap}"
                     BackgroundColor="LightGray"
-                    Padding="10"
+                    HeightRequest="320"
                     Margin="0,10,0,10">
-                     <Border AutomationId="Child1"
-                                   BackgroundColor="#4e79a7"
-                                   FlexLayout.AlignSelf="{Binding Child1AlignSelf}"
-                                   FlexLayout.Grow="{Binding Child1Grow}"
-                                   FlexLayout.Order="{Binding Child1Order}"
-                                   FlexLayout.Shrink="{Binding Child1Shrink}"
-                                   FlexLayout.Basis="{Binding Child1Basis}"
-                                   WidthRequest="60"
-                                   HeightRequest="60"
-                                   StrokeThickness="0"
-                                   StrokeShape="RoundRectangle 8">
-                            <Label Text="Child1"
-                                      TextColor="White"
-                                      FontSize="12"
-                                      HorizontalOptions="Center"
-                                      VerticalOptions="Center"/>
-                     </Border>
-                     <Border AutomationId="Child2"
-                                   BackgroundColor="#59a14f"
-                                   WidthRequest="60"
-                                   HeightRequest="60"
-                                   StrokeThickness="0"
-                                   StrokeShape="RoundRectangle 8">
-                            <Label Text="Child2"
-                                      TextColor="White"
-                                      FontSize="12"
-                                      HorizontalOptions="Center"
-                                      VerticalOptions="Center"/>
-                     </Border>
-                     <Border AutomationId="Child3"
-                                   BackgroundColor="#e15759"
-                                   WidthRequest="60"
-                                   HeightRequest="60"
-                                   StrokeThickness="0"
-                                   StrokeShape="RoundRectangle 8">
-                            <Label Text="Child3"
-                                      TextColor="White"
-                                      FontSize="12"
-                                      HorizontalOptions="Center"
-                                      VerticalOptions="Center"/>
-                     </Border>
+            <Border AutomationId="Child1"
+                    BackgroundColor="#4e79a7"
+                    FlexLayout.AlignSelf="{Binding Child1AlignSelf}"
+                    FlexLayout.Grow="{Binding Child1Grow}"
+                    FlexLayout.Order="{Binding Child1Order}"
+                    FlexLayout.Shrink="{Binding Child1Shrink}"
+                    FlexLayout.Basis="{Binding Child1Basis}"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 8">
+                <Label Text="Child1"
+                       TextColor="White"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Border>
+            <Border AutomationId="Child2"
+                    BackgroundColor="#59a14f"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 8">
+                <Label Text="Child2"
+                       TextColor="White"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Border>
+            <Border AutomationId="Child3"
+                    BackgroundColor="#e15759"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 8">
+                <Label Text="Child3"
+                       TextColor="White"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Border>
+            <Border AutomationId="Child4"
+                    BackgroundColor="#FFDA8D00"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 8">
+                <Label Text="Child4"
+                       TextColor="White"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Border>
+            <Border AutomationId="Child5"
+                    BackgroundColor="#FF009DC0"
+                    WidthRequest="70"
+                    HeightRequest="70"
+                    StrokeThickness="0"
+                    StrokeShape="RoundRectangle 8">
+                <Label Text="Child5"
+                       TextColor="White"
+                       FontSize="12"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </Border>
         </FlexLayout>
 
         <Grid Grid.Row="1"
