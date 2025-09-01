@@ -25,6 +25,7 @@ public partial class FlexLayoutOptionsPage : ContentPage
         if (Enum.TryParse<FlexAlignContent>(rb.Content.ToString(), out var v))
             _viewModel.AlignContent = v;
     }
+
     void OnAlignItemsChanged(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value)
@@ -33,6 +34,7 @@ public partial class FlexLayoutOptionsPage : ContentPage
         if (Enum.TryParse<FlexAlignItems>(rb.Content.ToString(), out var v))
             _viewModel.AlignItems = v;
     }
+
     void OnDirectionChanged(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value)
@@ -41,6 +43,7 @@ public partial class FlexLayoutOptionsPage : ContentPage
         if (Enum.TryParse<FlexDirection>(rb.Content.ToString(), out var v))
             _viewModel.Direction = v;
     }
+
     void OnJustifyContentChanged(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value)
@@ -49,6 +52,7 @@ public partial class FlexLayoutOptionsPage : ContentPage
         if (Enum.TryParse<FlexJustify>(rb.Content.ToString(), out var v))
             _viewModel.JustifyContent = v;
     }
+
     void OnWrapChanged(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value)
@@ -57,6 +61,12 @@ public partial class FlexLayoutOptionsPage : ContentPage
         if (Enum.TryParse<FlexWrap>(rb.Content.ToString(), out var v))
             _viewModel.Wrap = v;
     }
+
+    void OnHeightAndWidthRequestClicked(object sender, EventArgs e)
+    {
+        _viewModel.HeightAndWidthRequest = _viewModel.HeightAndWidthRequest == 70 ? 100 : 70;
+    }
+
     void OnChild1AlignSelfChanged(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value)
@@ -65,6 +75,7 @@ public partial class FlexLayoutOptionsPage : ContentPage
         if (Enum.TryParse<FlexAlignSelf>(rb.Content.ToString(), out var v))
             _viewModel.Child1AlignSelf = v;
     }
+
     void OnChild1BasisChanged(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value)
@@ -72,6 +83,7 @@ public partial class FlexLayoutOptionsPage : ContentPage
         var rb = (RadioButton)sender;
         _viewModel.Child1BasisMode = rb.Content.ToString();
     }
+
     void OnChild1PositionChanged(object sender, CheckedChangedEventArgs e)
     {
         if (!e.Value)

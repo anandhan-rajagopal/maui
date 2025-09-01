@@ -9,6 +9,7 @@ public class FlexLayoutViewModel : INotifyPropertyChanged
     private FlexAlignContent _alignContent = FlexAlignContent.Stretch;
     private FlexAlignItems _alignItems = FlexAlignItems.Stretch;
     private FlexDirection _direction = FlexDirection.Row;
+    private double _heightAndWidthRequest = 70;
     private FlexJustify _justifyContent = FlexJustify.Start;
     private FlexWrap _wrap = FlexWrap.NoWrap;
 
@@ -34,6 +35,11 @@ public class FlexLayoutViewModel : INotifyPropertyChanged
     {
         get => _direction;
         set { _direction = value; OnPropertyChanged(); }
+    }
+    public double HeightAndWidthRequest
+    {
+        get => _heightAndWidthRequest;
+        set { _heightAndWidthRequest = value; OnPropertyChanged(); }
     }
     public FlexJustify JustifyContent
     {

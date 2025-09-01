@@ -11,9 +11,7 @@
                            AutomationId="Apply"/>
        </ContentPage.ToolbarItems>
 
-       <Grid ColumnSpacing="0"
-             RowSpacing="10"
-             RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+       <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
              ColumnDefinitions="Auto,Auto">
 
               <!-- AlignContent -->
@@ -37,9 +35,15 @@
                                          Content="Start"
                                          AutomationId="AlignContentStartButton"
                                          CheckedChanged="OnAlignContentChanged"/>
+                     </HorizontalStackLayout>
+                     <HorizontalStackLayout>
                             <RadioButton GroupName="AlignContent"
                                          Content="End"
                                          AutomationId="AlignContentEndButton"
+                                         CheckedChanged="OnAlignContentChanged"/>
+                            <RadioButton GroupName="AlignContent"
+                                         Content="SpaceAround"
+                                         AutomationId="AlignContentSpaceAroundButton"
                                          CheckedChanged="OnAlignContentChanged"/>
                      </HorizontalStackLayout>
                      <HorizontalStackLayout>
@@ -47,39 +51,38 @@
                                          Content="SpaceBetween"
                                          AutomationId="AlignContentSpaceBetweenButton"
                                          CheckedChanged="OnAlignContentChanged"/>
-                            <RadioButton GroupName="AlignContent"
-                                         Content="SpaceAround"
-                                         AutomationId="AlignContentSpaceAroundButton"
-                                         CheckedChanged="OnAlignContentChanged"/>
                      </HorizontalStackLayout>
               </VerticalStackLayout>
 
               <!-- AlignItems -->
               <Label Grid.Row="1"
                      Grid.Column="0"
-                     VerticalOptions="Center"
                      FontSize="18"
                      Text="AlignItems: "/>
-              <HorizontalStackLayout Grid.Row="1"
-                                     Grid.Column="1">
-                     <RadioButton GroupName="AlignItems"
-                                  Content="Stretch"
-                                  IsChecked="True"
-                                  AutomationId="AlignItemsStretchButton"
-                                  CheckedChanged="OnAlignItemsChanged"/>
-                     <RadioButton GroupName="AlignItems"
-                                  Content="Center"
-                                  AutomationId="AlignItemsCenterButton"
-                                  CheckedChanged="OnAlignItemsChanged"/>
-                     <RadioButton GroupName="AlignItems"
-                                  Content="Start"
-                                  AutomationId="AlignItemsStartButton"
-                                  CheckedChanged="OnAlignItemsChanged"/>
-                     <RadioButton GroupName="AlignItems"
-                                  Content="End"
-                                  AutomationId="AlignItemsEndButton"
-                                  CheckedChanged="OnAlignItemsChanged"/>
-              </HorizontalStackLayout>
+              <VerticalStackLayout Grid.Row="1"
+                                   Grid.Column="1">
+                     <HorizontalStackLayout>
+                            <RadioButton GroupName="AlignItems"
+                                         Content="Stretch"
+                                         IsChecked="True"
+                                         AutomationId="AlignItemsStretchButton"
+                                         CheckedChanged="OnAlignItemsChanged"/>
+                            <RadioButton GroupName="AlignItems"
+                                         Content="Center"
+                                         AutomationId="AlignItemsCenterButton"
+                                         CheckedChanged="OnAlignItemsChanged"/>
+                     </HorizontalStackLayout>
+                     <HorizontalStackLayout>
+                            <RadioButton GroupName="AlignItems"
+                                         Content="Start"
+                                         AutomationId="AlignItemsStartButton"
+                                         CheckedChanged="OnAlignItemsChanged"/>
+                            <RadioButton GroupName="AlignItems"
+                                         Content="End"
+                                         AutomationId="AlignItemsEndButton"
+                                         CheckedChanged="OnAlignItemsChanged"/>
+                     </HorizontalStackLayout>
+              </VerticalStackLayout>
 
               <!-- Direction -->
               <Label Grid.Row="2"
@@ -98,15 +101,17 @@
                                          Content="RowReverse"
                                          AutomationId="DirectionRowReverseButton"
                                          CheckedChanged="OnDirectionChanged"/>
+                     </HorizontalStackLayout>
+                     <HorizontalStackLayout>
                             <RadioButton GroupName="Direction"
                                          Content="Column"
                                          AutomationId="DirectionColumnButton"
                                          CheckedChanged="OnDirectionChanged"/>
+                            <RadioButton GroupName="Direction"
+                                         Content="ColumnReverse"
+                                         AutomationId="DirectionColumnReverseButton"
+                                         CheckedChanged="OnDirectionChanged"/>
                      </HorizontalStackLayout>
-                     <RadioButton GroupName="Direction"
-                                  Content="ColumnReverse"
-                                  AutomationId="DirectionColumnReverseButton"
-                                  CheckedChanged="OnDirectionChanged"/>
               </VerticalStackLayout>
 
               <!-- JustifyContent -->
@@ -126,9 +131,15 @@
                                          Content="SpaceAround"
                                          AutomationId="JustifyContentSpaceAroundButton"
                                          CheckedChanged="OnJustifyContentChanged"/>
+                     </HorizontalStackLayout>
+                     <HorizontalStackLayout>
                             <RadioButton GroupName="JustifyContent"
                                          Content="SpaceEvenly"
                                          AutomationId="JustifyContentSpaceEvenlyButton"
+                                         CheckedChanged="OnJustifyContentChanged"/>
+                            <RadioButton GroupName="JustifyContent"
+                                         Content="End"
+                                         AutomationId="JustifyContentEndButton"
                                          CheckedChanged="OnJustifyContentChanged"/>
                      </HorizontalStackLayout>
                      <HorizontalStackLayout>
@@ -140,10 +151,6 @@
                                          Content="Center"
                                          AutomationId="JustifyContentCenterButton"
                                          CheckedChanged="OnJustifyContentChanged"/>
-                            <RadioButton GroupName="JustifyContent"
-                                         Content="End"
-                                         AutomationId="JustifyContentEndButton"
-                                         CheckedChanged="OnJustifyContentChanged"/>
                      </HorizontalStackLayout>
               </VerticalStackLayout>
 
@@ -152,22 +159,28 @@
                      Grid.Column="0"
                      FontSize="18"
                      Text="Wrap: "/>
-              <HorizontalStackLayout Grid.Row="4"
-                                     Grid.Column="1">
-                     <RadioButton GroupName="Wrap"
-                                  Content="NoWrap"
-                                  IsChecked="True"
-                                  AutomationId="WrapNoWrapButton"
-                                  CheckedChanged="OnWrapChanged"/>
-                     <RadioButton GroupName="Wrap"
-                                  Content="Wrap"
-                                  AutomationId="WrapWrapButton"
-                                  CheckedChanged="OnWrapChanged"/>
-                     <RadioButton GroupName="Wrap"
-                                  Content="Reverse"
-                                  AutomationId="WrapReverseButton"
-                                  CheckedChanged="OnWrapChanged"/>
-              </HorizontalStackLayout>
+              <VerticalStackLayout Grid.Row="4"
+                                   Grid.Column="1">
+                     <HorizontalStackLayout>
+                            <RadioButton GroupName="Wrap"
+                                         Content="NoWrap"
+                                         IsChecked="True"
+                                         AutomationId="WrapNoWrapButton"
+                                         CheckedChanged="OnWrapChanged"/>
+                            <RadioButton GroupName="Wrap"
+                                         Content="Reverse"
+                                         AutomationId="WrapReverseButton"
+                                         CheckedChanged="OnWrapChanged"/>
+                     </HorizontalStackLayout>
+                     <HorizontalStackLayout Spacing="1">
+                            <RadioButton GroupName="Wrap"
+                                         Content="Wrap"
+                                         AutomationId="WrapWrapButton"
+                                         CheckedChanged="OnWrapChanged"/>
+                            <Button Text="HeightAndWidthRequest"
+                                    Clicked="OnHeightAndWidthRequestClicked"/>
+                     </HorizontalStackLayout>
+              </VerticalStackLayout>
 
               <!-- Child1 Properties -->
               <Label Grid.Row="5"
@@ -191,14 +204,16 @@
                                          AutomationId="Child1AlignSelfStartButton"
                                          CheckedChanged="OnChild1AlignSelfChanged"/>
                      </HorizontalStackLayout>
-                     <RadioButton GroupName="Child1AlignSelf"
-                                  Content="End"
-                                  AutomationId="Child1AlignSelfEndButton"
-                                  CheckedChanged="OnChild1AlignSelfChanged"/>
-                     <RadioButton GroupName="Child1AlignSelf"
-                                  Content="Stretch"
-                                  AutomationId="Child1AlignSelfStretchButton"
-                                  CheckedChanged="OnChild1AlignSelfChanged"/>
+                     <HorizontalStackLayout>
+                            <RadioButton GroupName="Child1AlignSelf"
+                                         Content="End"
+                                         AutomationId="Child1AlignSelfEndButton"
+                                         CheckedChanged="OnChild1AlignSelfChanged"/>
+                            <RadioButton GroupName="Child1AlignSelf"
+                                         Content="Stretch"
+                                         AutomationId="Child1AlignSelfStretchButton"
+                                         CheckedChanged="OnChild1AlignSelfChanged"/>
+                     </HorizontalStackLayout>
               </VerticalStackLayout>
 
               <Label Grid.Row="6"
@@ -225,22 +240,26 @@
                      Grid.Column="0"
                      FontSize="18"
                      Text="Child1 Basis: "/>
-              <HorizontalStackLayout Grid.Row="7"
-                                     Grid.Column="1">
-                     <RadioButton GroupName="Child1Basis"
-                                  Content="Auto"
-                                  IsChecked="True"
-                                  AutomationId="Child1BasisAutoButton"
-                                  CheckedChanged="OnChild1BasisChanged"/>
-                     <RadioButton GroupName="Child1Basis"
-                                  Content="Fixed100"
-                                  AutomationId="Child1BasisFixed100Button"
-                                  CheckedChanged="OnChild1BasisChanged"/>
-                     <RadioButton GroupName="Child1Basis"
-                                  Content="Percent50"
-                                  AutomationId="Child1BasisPercent50Button"
-                                  CheckedChanged="OnChild1BasisChanged"/>
-              </HorizontalStackLayout>
+              <VerticalStackLayout Grid.Row="7"
+                                   Grid.Column="1">
+                     <HorizontalStackLayout>
+                            <RadioButton GroupName="Child1Basis"
+                                         Content="Auto"
+                                         IsChecked="True"
+                                         AutomationId="Child1BasisAutoButton"
+                                         CheckedChanged="OnChild1BasisChanged"/>
+                            <RadioButton GroupName="Child1Basis"
+                                         Content="Fixed100"
+                                         AutomationId="Child1BasisFixed100Button"
+                                         CheckedChanged="OnChild1BasisChanged"/>
+                     </HorizontalStackLayout>
+                     <HorizontalStackLayout>
+                            <RadioButton GroupName="Child1Basis"
+                                         Content="Percent50"
+                                         AutomationId="Child1BasisPercent50Button"
+                                         CheckedChanged="OnChild1BasisChanged"/>
+                     </HorizontalStackLayout>
+              </VerticalStackLayout>
 
               <Label Grid.Row="8"
                      Grid.Column="0"
