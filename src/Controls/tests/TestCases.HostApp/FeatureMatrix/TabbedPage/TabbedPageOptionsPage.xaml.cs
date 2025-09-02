@@ -210,16 +210,6 @@ public partial class TabbedPageOptionsPage : ContentPage
 		});
 	}
 
-	private void SelectItemOneButton_Clicked(object sender, EventArgs e)
-	{
-		_viewModel.SelectedItem = _viewModel.ItemsSource.FirstOrDefault();
-	}
-
-	private void SelectItemTwoButton_Clicked(object sender, EventArgs e)
-	{
-		_viewModel.SelectedItem = _viewModel.ItemsSource.LastOrDefault();
-	}
-
 	private void SelectItemButton_Clicked(object sender, EventArgs e)
 	{
 		var index = int.Parse(selectedItemEntry.Text);

@@ -88,7 +88,7 @@ public class TabbedPageViewModel : INotifyPropertyChanged
 			var page = new ContentPage
 			{
 				AutomationId = "ContentPageOne",
-				IconImageSource = "coffee.png",
+				IconImageSource = "bank.png",
 				Content = new StackLayout
 				{
 					Padding = new Thickness(5, 25),

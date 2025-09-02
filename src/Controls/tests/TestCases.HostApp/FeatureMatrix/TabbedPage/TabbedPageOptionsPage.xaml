@@ -102,12 +102,20 @@
                 </StackLayout>
 
                 <!-- Apply Button -->
+                <Label Grid.Row="4"
+                       Grid.Column="0"
+                       Text="Apply Button: "
+                       FontSize="18"
+                       FontAttributes="Bold"/>
                 <Button Grid.Row="4"
-                        Grid.ColumnSpan="2"
-                        Text="Apply Changes"
-                        Clicked="ApplyButton_Clicked"
+                        Grid.Column="1"
+                        AutomationId="ApplyButton"
                         BackgroundColor="Blue"
-                        AutomationId="ApplyButton"/>
+                        Clicked="ApplyButton_Clicked"
+                        HorizontalOptions="Start"
+                        Text="Apply Changes"
+                        TextColor="White"
+                        WidthRequest="150"/>
 
                 <!-- IsEnabled -->
                 <Label Grid.Row="5"
@@ -169,9 +177,13 @@
                              Orientation="Horizontal">
                         <Button AutomationId="TemplateOneButton"
                                 Text="TemplateOne"
+                                BackgroundColor="Teal"
+                                TextColor="White"
                                 Clicked="OnTemplateOneClicked"/>
                         <Button AutomationId="TemplateTwoButton"
                                 Text="TemplateTwo"
+                                BackgroundColor="Gold"
+                                TextColor="Black"
                                 Clicked="OnTemplateTwoClicked"/>
                 </StackLayout>
 
@@ -189,7 +201,7 @@
                                AutomationId="SelectedItemEntry"
                                Text="1"
                                Keyboard="Numeric"
-                               WidthRequest="100"/>
+                               WidthRequest="80"/>
                         <Button Text="Select Tab"
                                 Clicked="SelectItemButton_Clicked"
                                 BackgroundColor="LightGreen"
