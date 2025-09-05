@@ -15,9 +15,9 @@ public class FlexLayoutViewModel : INotifyPropertyChanged
 
     // Child 1 properties
     private FlexAlignSelf _child1AlignSelf = FlexAlignSelf.Auto;
-    private int _child1Grow = 0;
+    private float _child1Grow = 0;
     private int _child1Order = 0;
-    private int _child1Shrink = 1;
+    private float _child1Shrink = 1;
     private string _child1BasisMode = "Auto"; // Auto | Fixed100 | Percent50
     private FlexPosition _child1Position = FlexPosition.Relative;
 
@@ -57,7 +57,7 @@ public class FlexLayoutViewModel : INotifyPropertyChanged
         get => _child1AlignSelf;
         set { _child1AlignSelf = value; OnPropertyChanged(); }
     }
-    public int Child1Grow
+    public float Child1Grow
     {
         get => _child1Grow;
         set { _child1Grow = value; OnPropertyChanged(); }
@@ -67,7 +67,7 @@ public class FlexLayoutViewModel : INotifyPropertyChanged
         get => _child1Order;
         set { _child1Order = value; OnPropertyChanged(); }
     }
-    public int Child1Shrink
+    public float Child1Shrink
     {
         get => _child1Shrink;
         set { _child1Shrink = value; OnPropertyChanged(); }

@@ -177,7 +177,8 @@
                                          Content="Wrap"
                                          AutomationId="WrapWrapButton"
                                          CheckedChanged="OnWrapChanged"/>
-                            <Button Text="HeightAndWidthRequest"
+                            <Button AutomationId="HeightAndWidthRequestButton"
+                                    Text="HeightAndWidthRequest"
                                     Clicked="OnHeightAndWidthRequestClicked"/>
                      </HorizontalStackLayout>
               </VerticalStackLayout>
@@ -219,18 +220,29 @@
               <Label Grid.Row="6"
                      Grid.Column="0"
                      FontSize="18"
-                     Text="Child1 Grow: "/>
+                     Text="Child1"
+                     VerticalOptions="Center"/>
               <HorizontalStackLayout Grid.Row="6"
                                      Grid.Column="1">
-                     <Entry WidthRequest="60"
+                     <Label Margin="7,0,0,0"
+                            Text="Grow:"
+                            TextColor="Black"
+                            VerticalOptions="Center"/>
+                     <Entry WidthRequest="20"
                             Keyboard="Numeric"
                             Text="{Binding Child1Grow}"
                             AutomationId="Child1GrowEntry"/>
-                     <Entry WidthRequest="60"
+                     <Label Text="Shrink:"
+                            TextColor="Black"
+                            VerticalOptions="Center"/>
+                     <Entry WidthRequest="20"
                             Keyboard="Numeric"
                             Text="{Binding Child1Shrink}"
                             AutomationId="Child1ShrinkEntry"/>
-                     <Entry WidthRequest="60"
+                     <Label Text="Order:"
+                            TextColor="Black"
+                            VerticalOptions="Center"/>
+                     <Entry WidthRequest="20"
                             Keyboard="Numeric"
                             Text="{Binding Child1Order}"
                             AutomationId="Child1OrderEntry"/>

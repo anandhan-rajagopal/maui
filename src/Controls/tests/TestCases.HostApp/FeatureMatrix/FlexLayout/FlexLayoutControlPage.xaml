@@ -21,8 +21,8 @@
                           Direction="{Binding Direction}"
                           JustifyContent="{Binding JustifyContent}"
                           Wrap="{Binding Wrap}"
+                          Position="{Binding Child1Position}"
                           BackgroundColor="LightGray"
-                          HeightRequest="320"
                           Margin="0,10,0,10">
                      <Border AutomationId="Child1"
                              BackgroundColor="#4e79a7"
@@ -35,7 +35,8 @@
                              HeightRequest="{Binding HeightAndWidthRequest}"
                              StrokeThickness="0"
                              StrokeShape="RoundRectangle 8">
-                            <Label Text="Child1"
+                            <Label AutomationId="Child1"
+                                   Text="Child1"
                                    TextColor="White"
                                    FontSize="12"
                                    HorizontalOptions="Center"
@@ -47,7 +48,8 @@
                              HeightRequest="{Binding HeightAndWidthRequest}"
                              StrokeThickness="0"
                              StrokeShape="RoundRectangle 8">
-                            <Label Text="Child2"
+                            <Label AutomationId="Child2"
+                                   Text="Child2"
                                    TextColor="White"
                                    FontSize="12"
                                    HorizontalOptions="Center"
@@ -59,7 +61,8 @@
                              HeightRequest="{Binding HeightAndWidthRequest}"
                              StrokeThickness="0"
                              StrokeShape="RoundRectangle 8">
-                            <Label Text="Child3"
+                            <Label AutomationId="Child3"
+                                   Text="Child3"
                                    TextColor="White"
                                    FontSize="12"
                                    HorizontalOptions="Center"
@@ -71,7 +74,8 @@
                              HeightRequest="{Binding HeightAndWidthRequest}"
                              StrokeThickness="0"
                              StrokeShape="RoundRectangle 8">
-                            <Label Text="Child4"
+                            <Label AutomationId="Child4"
+                                   Text="Child4"
                                    TextColor="White"
                                    FontSize="12"
                                    HorizontalOptions="Center"
@@ -83,7 +87,8 @@
                              HeightRequest="{Binding HeightAndWidthRequest}"
                              StrokeThickness="0"
                              StrokeShape="RoundRectangle 8">
-                            <Label Text="Child5"
+                            <Label AutomationId="Child5"
+                                   Text="Child5"
                                    TextColor="White"
                                    FontSize="12"
                                    HorizontalOptions="Center"
@@ -92,24 +97,12 @@
               </FlexLayout>
 
               <Grid Grid.Row="1"
+                    RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
                     ColumnDefinitions="Auto,*"
                     ColumnSpacing="8"
                     RowSpacing="4"
                     Padding="10"
                     AutomationId="PropertyLabelsGrid">
-                     <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                     </Grid.RowDefinitions>
                      <Label Grid.Row="0"
                             Text="AlignContent:"/>
                      <Label Grid.Row="0"
@@ -176,6 +169,17 @@
                             Grid.Column="1"
                             AutomationId="Child1PositionLabel"
                             Text="{Binding Child1Position}"/>
+                     <Button Grid.Row="11"
+                             AutomationId="AddChildrenButton"
+                             Clicked="AddChildButton_Clicked"
+                             Text="Add Children"/>
+                     <Button Grid.Row="11"
+                             Grid.Column="1"
+                             AutomationId="RemoveChildrenButton"
+                             Clicked="RemoveChildButton_Clicked"
+                             Text="Remove Children"
+                             HorizontalOptions="Start"
+                             WidthRequest="200"/>
               </Grid>
        </Grid>
 </ContentPage>
